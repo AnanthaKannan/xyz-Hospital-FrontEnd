@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["src/config/*"],
+      "@libs/*": ["src/libs/*"],
+      "@component/*": ["src/component/*"],
+      "@reusable/*": ["src/reusable/*"],
+      "@service/*": ["src/service/*"]
+    }
+  }
+}
