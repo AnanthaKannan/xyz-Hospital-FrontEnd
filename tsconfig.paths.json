@@ -6,7 +6,8 @@
       "@libs/*": ["src/libs/*"],
       "@component/*": ["src/component/*"],
       "@reusable/*": ["src/reusable/*"],
-      "@service/*": ["src/service/*"]
+      "@service/*": ["src/service/*"],
+      "@type/*": ["src/type/*"]
     }
   }
 }
