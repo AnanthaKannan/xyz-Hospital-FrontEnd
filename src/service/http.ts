@@ -108,19 +108,11 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
   ****************/
 
-  export const put = (apiUrl:string, query = null,  data:any= null) => {
+  export const put = (apiUrl:string, data:any= null) => {
 
     
 
     let qryString = `${url}${apiUrl}`;
-
-    if (query !== null) {
-
-      const keys = Object.keys(query);
-
-      keys.forEach((key, i) => qryString += `${i===0 ? '?' : '&'}${key}=${query[key]}`)
-
-    }
 
     console.log("data", data,'qryString', qryString)
 
@@ -150,7 +142,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
     .then(function (response) {
 
-      console.log('postResponse', response)
+      console.log('putResponse', response)
 
       return response;
 

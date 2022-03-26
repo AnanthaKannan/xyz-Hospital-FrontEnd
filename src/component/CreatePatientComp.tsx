@@ -1,16 +1,18 @@
 import Hb from '../reusable/Hb'
 import TextBox from '../reusable/TextBox'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
 import { onHandleChange, convertToDigit } from '../lib';
-import { addPatient } from '../service/patient.service';
+import { addPatient, updatePatient } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
+import {useLocation, useNavigate} from 'react-router-dom';
 
  
 type formikInitialValueType = {
+  _id ?: number,
   name: string,
   age: string,
   email: string,
@@ -21,6 +23,8 @@ type formikInitialValueType = {
 
 const CreatePatientComp = () => {
 
+  const location = useLocation();
+  const navigate = useNavigate();
   const [formikInitialValue, setFormikInitialValue] = useState<formikInitialValueType>({
     name: "",
     age: '',
@@ -30,6 +34,22 @@ const CreatePatientComp = () => {
     password: ""
   });
 
+  useEffect(() => {
+    const state: any = location.state;
+    console.log(state)
+    if (state._id) {
+      setFormikInitialValue({
+        _id: state._id,
+        name: state.name,
+        age: state.age,
+        email: state.email,
+        phone: state.phone,
+        dob: state.dob,
+        password: state.password
+      })
+    }
+  },[])
+  
   const { setLoader } = useLoadContext();
 
   const validationSchema = Yup.object({
@@ -46,7 +66,12 @@ const CreatePatientComp = () => {
 
   const onSubmit = (values:formikInitialValueType, { setErrors, setFieldValue, resetForm}: any) => {
     console.log(values);
-    createPatient(values, resetForm, setErrors);
+    if(values._id)
+      updatePatient_(values, resetForm, setErrors);
+    else
+      createPatient(values, resetForm, setErrors);
+
+    
     // resetForm();
   }
 
@@ -68,6 +93,28 @@ const CreatePatientComp = () => {
       toast.success("Patient created successfully.");
       console.log('Patient added successfully');
       resetForm();
+  }
+
+  const updatePatient_ = async(values: formikInitialValueType, resetForm: Function, setErrors:Function) => {
+    console.log('updatePatient_', values);
+    setLoader(true);
+    const result = await updatePatient(values._id ,values);
+    console.log('result', result.status);
+    setLoader(false);
+    if (result.status === 409) {
+      const data = result.data;
+      toast.error(data.message);
+      return
+    }
+    else if(result.status !== 200) {
+      toast.error("Oops! Something went wrong. Please try again later.");
+      return;
+    }
+    
+    if(result.status === 200) {
+      toast.success("Patient updated successfully.");
+      navigate('/list-patient');
+    }
   }
 
   const handleReset = (setFieldValue: Function, resetForm: Function): void => {
@@ -146,10 +193,19 @@ const CreatePatientComp = () => {
                   </div>
 
                   <div className='mt-3 d-flex justify-content-end'>
-                
-                <ClickButton className='mx-4' onClick={() =>handleReset(setFieldValue, resetForm)} text="Cancel" color='default' id='patient-cancel' />
-                <SubmitButton onSubmit={handleSubmit} text="Submit" id='patient-submit' />
-  
+                    {
+                      formikInitialValue._id ?
+                <div>
+                    <ClickButton className='mx-4' onClick={() => navigate('/list-patient')} text="Cancel" color='default' id='patient-cancel' />
+                    <SubmitButton onSubmit={handleSubmit} text="Update" id='patient-submit' />
+                </div>
+                :
+                <div>
+                  <ClickButton className='mx-4' onClick={() =>handleReset(setFieldValue, resetForm)} text="Cancel" color='default' id='patient-cancel' />
+                  <SubmitButton onSubmit={handleSubmit} text="Submit" id='patient-submit' />
+                </div>
+                    }
+               
                 </div>
                 </div>
 

@@ -1,4 +1,5 @@
 import { MdOutlineDeleteOutline, MdOutlineEditNote } from 'react-icons/md';
+import { BiMessageAltDetail } from 'react-icons/bi';
 const size = 20
 
 // export const ImageCellRender = ({}) => {
@@ -28,3 +29,12 @@ export const  EditCellRender = (props: any) => {
       </div>
   );
 };
+
+export const  ViewCellRender = (props: any) => {
+    return (
+        <div>
+            <BiMessageAltDetail size={size} className='pointer' />
+        </div>
+    );
+  };
+  

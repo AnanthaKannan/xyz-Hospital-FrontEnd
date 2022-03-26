@@ -42,6 +42,12 @@ export const listPatientColumnDef: any = [
     filter: true,
   },
   {
+    headerName: "View",
+    field: "view",
+    cellRenderer: "ViewCellRender",
+    width: 100
+  },
+  {
     headerName: "Delete",
     field: "delete",
     cellRenderer: "DeleteCellRender",
@@ -52,6 +58,6 @@ export const listPatientColumnDef: any = [
     field: "edit",
     cellRenderer: "EditCellRender",
     width: 100,
-  }
+  },
 ]
 

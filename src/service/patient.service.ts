@@ -19,9 +19,14 @@ export const deletePatient = (_id:number) => {
     return http.delete(`${api}/${_id}`);
 }
 
+export const updatePatient = (_id:any, data:object) => {
+    return http.put(`${api}/${_id}`, data);
+}
+
 export default {
     addPatient,
     listPatient,
     deletePatient,
-    getPatient
+    getPatient,
+    updatePatient
 }

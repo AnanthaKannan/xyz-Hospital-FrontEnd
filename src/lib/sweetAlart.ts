@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export const sweetDeleteData = (deleteService: Function, text:string = '', ) => {
+export const sweetConfirmation = (callBackFn: Function, confirmButtonText:string, text:string = '') => {
 
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -15,13 +15,13 @@ export const sweetDeleteData = (deleteService: Function, text:string = '', ) => 
    text: text,
    icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: 'Yes, delete it!',
+    confirmButtonText: confirmButtonText, //'Yes, delete it!',
     cancelButtonText: 'No, cancel!',
     reverseButtons: true
   }).then( async(result) => {
     console.log('result', result);
     if (result.isConfirmed) {
-      await deleteService();
+      await callBackFn();
       // const { status, msg} = await deleteService();
       // if (status) {
       //   swalWithBootstrapButtons.fire( 'Deleted!', msg, 'success' );

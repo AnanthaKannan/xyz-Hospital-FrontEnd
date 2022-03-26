@@ -5,11 +5,15 @@ import { listPatientColumnDef } from "./columnDef";
 import { toast } from "react-toastify";
 import Hb from "../reusable/Hb";
 import { useLoadContext } from "../reusable/LoaderContext";
-import { DeleteCellRender, EditCellRender } from "../reusable/CellRender";
-import { sweetDeleteData } from "../lib/sweetAlart";
+import { DeleteCellRender, EditCellRender, ViewCellRender } from "../reusable/CellRender";
+import { sweetConfirmation } from "../lib/sweetAlart";
+import { useNavigate } from 'react-router-dom';
+
 
 const ListPatientComp = () => {
   const [rowData, setRowData] = useState<object[]>([]);
+  const navigate = useNavigate();
+
   const { setLoader } = useLoadContext();
 
   useEffect(() => {
@@ -35,28 +39,31 @@ const ListPatientComp = () => {
     if (result.status === 204) {
       toast.success("Patient deleted successfully.");
       listPatient_();
-      // return {
-      //   success: true,
-      //   meg: "Patient deleted successfully.",
-      // }
     } else {
       toast.error("Oops! Something went wrong. Please try again later.");
     }
   };
+  
 
-  const onCellClicked = (event: any) => {
+  const onCellClicked = async(event: any) => {
     console.log(event);
     const { column, data, colDef } = event;
     
     if(colDef.field === 'edit'){
       console.log('edit', data._id);
-      alert('edit');
+      sweetConfirmation(() => {
+        return navigate('/create-patient',{state:data})
+      }, 'Yes, Update it!');
+    }
+    else if(colDef.field === 'view'){
+      console.log('view', data._id);
+      navigate('/view-patient',{state:data})
     }
     else if(colDef.field === 'delete'){
       console.log('delete', data._id);
-      sweetDeleteData(() => {
+      sweetConfirmation(() => {
         return deletePatient_(data._id);
-      })
+      }, 'Yes, delete it!')
     }
   };
 
@@ -70,6 +77,7 @@ const ListPatientComp = () => {
         frameworkComponents={{
           DeleteCellRender,
           EditCellRender,
+          ViewCellRender
         }}
       />
     </div>
