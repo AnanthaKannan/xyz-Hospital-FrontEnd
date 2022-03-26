@@ -48,3 +48,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 
 [TS Reference](https://github.com/AnanthaKannan/JAVASCRIPT-BASIC/blob/master/typescript.js)
+
+
+https://staging.hospitalrun.io/patients/new

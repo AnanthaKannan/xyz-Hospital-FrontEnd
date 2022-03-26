@@ -5,8 +5,6 @@
       "@config/*": ["src/config/*"],
       "@libs/*": ["src/libs/*"],
       "@page/*": ["src/page/*"],
-      "@component/*": ["../src/component/*"],
-      "@reusable/*": ["src/reusable/*"],
       "@service/*": ["src/service/*"],
       "@type/*": ["src/type/*"]
     }

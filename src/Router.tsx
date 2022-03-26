@@ -1,6 +1,7 @@
 import { type } from "os";
 import  CreateDoctor from "./page/CreateDoctor";
-import React from 'react'
+import  CreatePatient from "./page/CreatePatient";
+import CreateHospital from "./page/CreateHospital";
 
 
 
@@ -11,11 +12,19 @@ type routeType = {
 
 const routes: routeType[] = [
   {
+    COMPONENT: <CreatePatient />,
+    PATH: '/create-patient'
+  },
+  {
+    COMPONENT: <CreateHospital />,
+    PATH: '/create-hospital'
+  },
+  {
     COMPONENT: <CreateDoctor />,
     PATH: '/create-doctor'
   },
   {
-    COMPONENT: <CreateDoctor />,
+    COMPONENT: <CreatePatient />,
     PATH: '/'
   }
 ]

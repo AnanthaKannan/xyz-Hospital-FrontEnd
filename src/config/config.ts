@@ -5,7 +5,7 @@ type configType = {
 }
 
 export const config: configType = {
-  apiURL:"http://localhost:4000",
+  apiURL:"https://4kzj8450nb.execute-api.us-east-1.amazonaws.com/dev",
 };
 
 export default config

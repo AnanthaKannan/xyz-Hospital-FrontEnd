@@ -1,7 +1,13 @@
+import Container from '../reusable/Container';
 import React from 'react'
+import CreatePatientComp from '../component/CreatePatientComp';
 
-export const CreatePatient = () => {
+const CreatePatient = () => {
   return (
-    <div>CreatePatient</div>
+    <Container title='Create Patient'>
+      <CreatePatientComp />
+    </Container>
   )
 }
+
+export default CreatePatient;
