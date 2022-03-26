@@ -2,7 +2,7 @@ import { type } from "os";
 import  CreateDoctor from "./page/CreateDoctor";
 import  CreatePatient from "./page/CreatePatient";
 import CreateHospital from "./page/CreateHospital";
-
+import ListPatient from "./page/ListPatient";
 
 
 type routeType = {
@@ -20,8 +20,8 @@ const routes: routeType[] = [
     PATH: '/create-hospital'
   },
   {
-    COMPONENT: <CreateDoctor />,
-    PATH: '/create-doctor'
+    COMPONENT: <ListPatient />,
+    PATH: '/list-patient'
   },
   {
     COMPONENT: <CreatePatient />,

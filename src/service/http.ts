@@ -26,8 +26,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'x-access-token': `${ sessionStorage.getItem('token')}`
+        'Authorization': `${ sessionStorage.getItem('token')}`
       },
       url: qryString
     };

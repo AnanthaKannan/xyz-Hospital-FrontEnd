@@ -7,7 +7,7 @@ export const addPatient = (data: object) => {
     return http.post(`${api}`, data);
 }
 
-export const getPatient = (data:dataType) => {
+export const listPatient = (data:dataType) => {
     return http.get(`${api}`, data);
 }
 
@@ -21,7 +21,7 @@ export const deletePatientById = (data: dataType) => {
 
 export default {
     addPatient,
-    getPatient,
+    listPatient,
     deletePatientById,
     getPatientById
 }

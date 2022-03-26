@@ -52,3 +52,10 @@ export type containerType = {
 }
 
 export type targetType = { target: HTMLInputElement }
+
+export type agGirdReactType = {
+  columnDefs: object[],
+  onCellClicked: Function,
+  frameworkComponents?: object,
+  rowData: object[]
+}
