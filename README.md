@@ -51,3 +51,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 
 https://staging.hospitalrun.io/patients/new
+
+
+Account: honey-bee
+UserName: AnanthaKannan

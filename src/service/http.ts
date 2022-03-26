@@ -1,6 +1,6 @@
-import { config } from '@config/config';
 import axios, { AxiosRequestConfig, AxiosResponse} from 'axios';
 import { type } from 'os';
+import { config } from '../config';
 
 const url = config.apiURL;
 
@@ -66,46 +66,27 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
   export const post = (apiUrl:string, data:Object) => {
 
     console.log("===>post")
-
     const options:AxiosRequestConfig = {
       method: 'POST',
-
       headers: {
-
         'content-type': 'application/json',
-
-        'x-access-token': `${ sessionStorage.getItem('token')}`
-
+        'Authorization': `${ sessionStorage.getItem('token')}`
       },
-
       data: data,
-
       url: `${url}${apiUrl}`,
-
     };
 
     return axios(options)
-
       .then(function (response) {
-
         console.log('postResponse', response)
-
         return response;
-
       })
-
       .catch(function (err) {
-
         console.log("err", err.response);
-
         if(!err.response)
-
           return { status: 500 }
-
         err && err.response && unAuthorizeTest(err.response.status);
-
         return err.response;
-
       });
 
   }

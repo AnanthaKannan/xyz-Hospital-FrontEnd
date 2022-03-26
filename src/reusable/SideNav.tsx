@@ -41,7 +41,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
           </SubMenu>
         </Menu>
       </ProSidebar>
-      <div className='m-4 w-100'>
+      <div className='container mt-5'>
             {children}
       </div>
     </div>

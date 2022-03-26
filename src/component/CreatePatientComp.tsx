@@ -3,8 +3,12 @@ import TextBox from '../reusable/TextBox'
 import { useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
-import { targetType } from '@type/type';
 import { ClickButton, SubmitButton } from '../reusable/Button';
+import { onHandleChange, convertToDigit } from '../lib';
+import { addPatient } from '../service/patient.service';
+import { toast } from 'react-toastify';
+import { useLoadContext } from '../reusable/LoaderContext';
+
  
 type formikInitialValueType = {
   name: string,
@@ -26,35 +30,44 @@ const CreatePatientComp = () => {
     password: ""
   });
 
+  const { setLoader } = useLoadContext();
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .required()
       .min(3, 'Name must be at least 3 characters')
       .max(30, 'Name must be less than 30 characters'),
-    age: Yup.number().required('Age is required')
-    .positive('Age must be positive')
-    .integer('Age must be integer'),
-    email: Yup.string().email('Invalid email address'),
-    phone: Yup.string(),
-    dob: Yup.string(),
+    age: Yup.string().required('Age is required').min(1, 'Age must be at least 1 characters').max(3, 'Age must be less than 3 characters'),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    phone: Yup.string().required('Phone is required'),
+    dob: Yup.string().required('Date of birth is required'),
     password: Yup.string()
   });
 
-  
-  const onHandleChange =  (e:any, handleChange:Function) => {
-    const element = {
-      target:{
-        id: e.target.id,
-        value: e.target.value.trimStart()
-      }
-    }
-    handleChange(element)
+  const onSubmit = (values:formikInitialValueType, { setErrors, setFieldValue, resetForm}: any) => {
+    console.log(values);
+    createPatient(values, resetForm, setErrors);
+    // resetForm();
   }
 
-  const onSubmit = (values:any) => {
-    alert()
-    console.log(values);
-    // resetForm();
+  const createPatient = async(values: formikInitialValueType, resetForm: Function, setErrors:Function) => {
+    setLoader(true);
+    const result = await addPatient(values);
+    console.log('result', result.status);
+    setLoader(false);
+    if (result.status === 409) {
+      const data = result.data;
+      toast.error(data.message);
+      return
+    }
+    if(result.status !== 201) {
+      toast.error("Oops! Something went wrong. Please try again later.");
+      return;
+    }
+
+      toast.success("Patient created successfully.");
+      console.log('Patient added successfully');
+      resetForm();
   }
 
   const handleReset = (setFieldValue: Function, resetForm: Function): void => {
@@ -66,6 +79,9 @@ const CreatePatientComp = () => {
     // setFieldValue('dob', null);
     // setFieldValue('password', '');
   }
+
+ 
+
   return (
     <div className=''>
       <Hb text='New Patient' />
@@ -102,7 +118,10 @@ const CreatePatientComp = () => {
                     <TextBox
                       heading='Age'
                       id='age'
-                      onChange={(e) => onHandleChange(e, handleChange)}
+                      onChange={(e) => {
+                        setFieldValue('age', convertToDigit(e, 2))
+                      }}
+                      // onChange={(e) => onHandleChange(e, handleChange)}
                       value={values.age}
                       errorMsg={touched.age && errors.age}
                     />
