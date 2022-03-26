@@ -11,17 +11,17 @@ export const listPatient = (data:dataType) => {
     return http.get(`${api}`, data);
 }
 
-export const getPatientById = (data:dataType) => {
+export const getPatient = (data:dataType) => {
     return http.get(`${api}`, data);
 }
 
-export const deletePatientById = (data: dataType) => {
-    return http.delete(`${api}`, data);
+export const deletePatient = (_id:number) => {
+    return http.delete(`${api}/${_id}`);
 }
 
 export default {
     addPatient,
     listPatient,
-    deletePatientById,
-    getPatientById
+    deletePatient,
+    getPatient
 }

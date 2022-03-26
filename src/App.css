@@ -8,6 +8,6 @@
   color: red !important;
 }
 
-/* .ag-theme-balham .ag-row {
-  font-size: 16px !important;
-} */
+.pointer{
+  cursor: pointer;
+}

@@ -5,7 +5,7 @@ export const listPatientColumnDef: any = [
     field: "_id",
     sortable: true,
     filter: true,
-    // width: 100,
+    width: 100,
     // cellStyle: {
     //   textAlign: "center"
     // }
@@ -40,6 +40,18 @@ export const listPatientColumnDef: any = [
     field: "phone",
     sortable: true,
     filter: true,
+  },
+  {
+    headerName: "Delete",
+    field: "delete",
+    cellRenderer: "DeleteCellRender",
+    width: 100,
+  },
+  {
+    headerName: "Edit",
+    field: "edit",
+    cellRenderer: "EditCellRender",
+    width: 100,
   }
 ]
 

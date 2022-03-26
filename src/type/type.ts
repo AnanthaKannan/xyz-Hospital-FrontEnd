@@ -59,3 +59,49 @@ export type agGirdReactType = {
   frameworkComponents?: object,
   rowData: object[]
 }
+
+type availableDayType = {
+  sunday: boolean,
+  monday: boolean,
+  tuesday: boolean,
+  wednesday: boolean,
+  thursday: boolean,
+  friday: boolean,
+  saturday: boolean
+}
+
+type availableTimeType = [{
+  from: string,
+  to: string
+}]
+
+export type patientValueType = {
+  _hospitalId: string,
+  name: string,
+  availableTime: availableTimeType,
+  availableDay: availableDayType,
+  timePerPatient: string,
+  specialist: string
+}
+
+
+// {        "_id": "{{$guid}}",
+//         "_hospitalId":"623092db3378b2575cb96ecd",
+//         "name":"{{$randomFullName}}",
+//        "availableTime":[{
+//       "from": "7",
+//       "to": "10"
+//     }],
+//      "availableDay": {
+//       "sunday": "true",
+//       "monday": "true",
+//       "tuesday": "true",
+//       "wednesday": "true",
+//       "thursday": "true",
+//       "friday": "true",
+//       "saturday": "true"
+//     },
+//         "timePerPatient":"10",
+//         "specialist":"ganesh"
+        
+// }

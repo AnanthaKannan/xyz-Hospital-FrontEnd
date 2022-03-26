@@ -34,10 +34,13 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
           <MenuItem active={true} icon={<RiHospitalLine />}>Dashboard 2</MenuItem>
           <MenuItem icon={<RiHospitalLine />}>Dashboard 3</MenuItem>
           <MenuItem icon={<RiHospitalLine />}>Dashboard 4</MenuItem>
+          <SubMenu title="Doctor" icon={<FaUsers />}>
+            <MenuItem > <Link to="/create-doctor" /> Create Doctor</MenuItem>
+            <MenuItem> <Link to="/list-doctor" />List Doctor</MenuItem>
+          </SubMenu>
           <SubMenu title="Patient" icon={<FaUsers />}>
-            <MenuItem> New Patient</MenuItem>
-            <MenuItem>List Patient</MenuItem>
-            <MenuItem>Appoinment</MenuItem>
+            <MenuItem> <Link to="/create-patient" /> New Patient</MenuItem>
+            <MenuItem> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>
         </Menu>
       </ProSidebar>

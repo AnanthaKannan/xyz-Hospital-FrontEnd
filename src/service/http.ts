@@ -134,7 +134,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
         'content-type': 'application/json',
 
-        'x-access-token': `${ sessionStorage.getItem('token')}`
+        'Authorization': `${ sessionStorage.getItem('token')}`
 
       },
 
@@ -210,7 +210,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
         'content-type': 'application/json',
 
-        'x-access-token': `${ sessionStorage.getItem('token')}`
+        'Authorization': `${ sessionStorage.getItem('token')}`
 
       },
 

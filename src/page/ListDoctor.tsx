@@ -1,10 +1,10 @@
 import Container from '../reusable/Container';
-import ListPatientComp from '../component/ListPatientComp';
+import ListDoctorComp from '../component/ListDoctorComp';
 
 const ListPatient = () => {
   return (
-    <Container title='List Patient'>
-      <ListPatientComp />
+    <Container title='List Doctor'>
+      <ListDoctorComp />
   </Container>
   )
 }

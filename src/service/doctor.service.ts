@@ -2,29 +2,29 @@ import http from './http';
 import { dataType } from '@type/type';
 
 
-const api: string = '/api/doctor';
+const api: string = '/doctor';
 
 export const addDoctor = (data: object) => {
-    return http.post(`${api}/addDoctor`, data);
+    return http.post(`${api}`, data);
 }
 
 
-export const getDoctorListByHospitalId = (_id:string, data: dataType) => {
-    return http.get(`${api}/getDoctorListByHospitalId`, data);
+export const listDoctor = (data=null) => {
+    return http.get(`${api}`, data);
 }
 
 
-export const getDoctorDetailById = (data: dataType) => {
-    return http.get(`${api}/getDoctorDetailById`, data);
+export const getDoctor = (data: dataType) => {
+    return http.get(`${api}`, data);
 }
 
-export const deleteDoctorById = (data: dataType) => {
-    return http.delete(`${api}/deleteDoctorById`, data);
+export const deleteDoctor = (data: dataType) => {
+    return http.delete(`${api}`, data);
 }
 
 export default {
     addDoctor,
-    deleteDoctorById,
-    getDoctorListByHospitalId,
-    getDoctorDetailById
+    deleteDoctor,
+    listDoctor,
+    getDoctor
 }

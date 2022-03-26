@@ -1,11 +1,11 @@
-
+import Container from '../reusable/Container';
 import CreateDoctorComp from '../component/CreateDoctorComp'
 
 const CreateDoctor = () => {
   return (
-    <div>
-      <CreateDoctorComp />
-    </div>
+    <Container title='List Patient'>
+    <CreateDoctorComp />
+</Container>
   )
 }
 
