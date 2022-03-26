@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
 import {useLocation, useNavigate} from 'react-router-dom';
 import { patientDetailsType } from '../type/type';
+import DatePickerRe from '../reusable/DatePickerRe';
 
 const CreatePatientComp = () => {
 
@@ -137,6 +138,14 @@ const CreatePatientComp = () => {
 
                 <div className="row">
                   <div className="col-md-3">
+                  {/* <DatePickerRe 
+                    onChange={handleChange}
+                    id='dob'
+                    value={values.dob}
+                    errorMsg={touched.dob && errors.dob}
+                    heading='DOB' 
+                    /> */}
+
                     <TextBox
                       heading='Name'
                       id='name'
@@ -175,7 +184,7 @@ const CreatePatientComp = () => {
                       errorMsg={touched.phone && errors.phone}
                     />
                   </div>
-                  <div className="col-md-3">
+                  {/* <div className="col-md-3">
                     <TextBox
                       heading='Date of birth'
                       id='dob'
@@ -183,7 +192,7 @@ const CreatePatientComp = () => {
                       value={values.dob}
                       errorMsg={touched.dob && errors.dob}
                     />
-                  </div>
+                  </div> */}
 
                   <div className='mt-3 d-flex justify-content-end'>
                     {
