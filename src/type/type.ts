@@ -8,7 +8,7 @@ export type TextBoxType = {
   className?: string | "",
   readOnly?: boolean,
   type?: string,
-  errorMsg: string | undefined | false,
+  errorMsg ?: string | undefined | false,
   heading: string,
   id: string
 }
@@ -84,24 +84,12 @@ export type patientValueType = {
   specialist: string
 }
 
-
-// {        "_id": "{{$guid}}",
-//         "_hospitalId":"623092db3378b2575cb96ecd",
-//         "name":"{{$randomFullName}}",
-//        "availableTime":[{
-//       "from": "7",
-//       "to": "10"
-//     }],
-//      "availableDay": {
-//       "sunday": "true",
-//       "monday": "true",
-//       "tuesday": "true",
-//       "wednesday": "true",
-//       "thursday": "true",
-//       "friday": "true",
-//       "saturday": "true"
-//     },
-//         "timePerPatient":"10",
-//         "specialist":"ganesh"
-        
-// }
+export type patientDetailsType = {
+  _id ?: number,
+  name: string,
+  age: string,
+  email: string,
+  phone: string,
+  dob: string,
+  password: string
+}

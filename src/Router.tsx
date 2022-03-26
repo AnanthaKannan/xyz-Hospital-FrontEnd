@@ -4,6 +4,7 @@ import  CreatePatient from "./page/CreatePatient";
 import CreateHospital from "./page/CreateHospital";
 import ListPatient from "./page/ListPatient";
 import ListDoctor from "./page/ListDoctor";
+import PatientRecord from "./page/PatientRecord";
 
 type routeType = {
     PATH: string,
@@ -30,6 +31,10 @@ const routes: routeType[] = [
   {
     COMPONENT: <ListPatient />,
     PATH: '/list-patient'
+  },
+  {
+    COMPONENT: <PatientRecord />,
+    PATH: '/patient-record'
   },
   {
     COMPONENT: <CreatePatient />,

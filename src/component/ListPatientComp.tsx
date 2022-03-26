@@ -57,7 +57,7 @@ const ListPatientComp = () => {
     }
     else if(colDef.field === 'view'){
       console.log('view', data._id);
-      navigate('/view-patient',{state:data})
+      navigate('/patient-record',{state:data})
     }
     else if(colDef.field === 'delete'){
       console.log('delete', data._id);

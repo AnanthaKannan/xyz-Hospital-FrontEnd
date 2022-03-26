@@ -9,23 +9,13 @@ import { addPatient, updatePatient } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
 import {useLocation, useNavigate} from 'react-router-dom';
-
- 
-type formikInitialValueType = {
-  _id ?: number,
-  name: string,
-  age: string,
-  email: string,
-  phone: string,
-  dob: string,
-  password: string
-}
+import { patientDetailsType } from '../type/type';
 
 const CreatePatientComp = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const [formikInitialValue, setFormikInitialValue] = useState<formikInitialValueType>({
+  const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>({
     name: "",
     age: '',
     email: "",
@@ -37,7 +27,7 @@ const CreatePatientComp = () => {
   useEffect(() => {
     const state: any = location.state;
     console.log(state)
-    if (state._id) {
+    if (state?._id) {
       setFormikInitialValue({
         _id: state._id,
         name: state.name,
@@ -47,6 +37,9 @@ const CreatePatientComp = () => {
         dob: state.dob,
         password: state.password
       })
+    }
+    else{
+      console.log('else state is here')
     }
   },[])
   
@@ -64,7 +57,7 @@ const CreatePatientComp = () => {
     password: Yup.string()
   });
 
-  const onSubmit = (values:formikInitialValueType, { setErrors, setFieldValue, resetForm}: any) => {
+  const onSubmit = (values:patientDetailsType, { setErrors, setFieldValue, resetForm}: any) => {
     console.log(values);
     if(values._id)
       updatePatient_(values, resetForm, setErrors);
@@ -75,7 +68,7 @@ const CreatePatientComp = () => {
     // resetForm();
   }
 
-  const createPatient = async(values: formikInitialValueType, resetForm: Function, setErrors:Function) => {
+  const createPatient = async(values: patientDetailsType, resetForm: Function, setErrors:Function) => {
     setLoader(true);
     const result = await addPatient(values);
     console.log('result', result.status);
@@ -95,7 +88,7 @@ const CreatePatientComp = () => {
       resetForm();
   }
 
-  const updatePatient_ = async(values: formikInitialValueType, resetForm: Function, setErrors:Function) => {
+  const updatePatient_ = async(values: patientDetailsType, resetForm: Function, setErrors:Function) => {
     console.log('updatePatient_', values);
     setLoader(true);
     const result = await updatePatient(values._id ,values);
