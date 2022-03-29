@@ -9,15 +9,18 @@ const TextEditor = () => {
   const [text, setText] = useState('')
 
   const handleChange = (value: any) => {
+    console.log(value)
     setText(value)
   }
+
 
   return (
     <div>
       <ReactQuill value={text}
       theme="snow" 
-      
-                  onChange={handleChange} />
+      placeholder='Write your description here'
+    
+      onChange={handleChange} />
     </div>
   )
 }

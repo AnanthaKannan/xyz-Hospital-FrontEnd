@@ -11,3 +11,9 @@
 .pointer{
   cursor: pointer;
 }
+
+
+.ql-editor > *{
+  font-size: medium !important;
+  /* height: 300px !important; */
+}

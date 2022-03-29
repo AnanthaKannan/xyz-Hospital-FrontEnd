@@ -40,7 +40,8 @@ const PatientRecordComp = () => {
   },[])
   
 
-  const onHandleChange = () => {
+  const onHandleSubmit = () => {
+      console.log('submit')
   }
 
   return (
@@ -55,9 +56,11 @@ const PatientRecordComp = () => {
        </div>
 
        <TextEditor />
+       <br />
       <div>
-      <div>
+      <div className="d-flex justify-content-end">
                     <ClickButton className='mx-4' onClick={() => navigate('/list-patient')} text="Cancel" color='default' id='patient-cancel' />
+                    <ClickButton className='' onClick={onHandleSubmit} text="Submit" color='secondary' id='submit' />
                     {/* <SubmitButton onSubmit={handleSubmit} text="Update" id='patient-submit' /> */}
                 </div>
       </div>
