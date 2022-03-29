@@ -138,14 +138,7 @@ const CreatePatientComp = () => {
 
                 <div className="row">
                   <div className="col-md-3">
-                  {/* <DatePickerRe 
-                    onChange={handleChange}
-                    id='dob'
-                    value={values.dob}
-                    errorMsg={touched.dob && errors.dob}
-                    heading='DOB' 
-                    /> */}
-
+                  
                     <TextBox
                       heading='Name'
                       id='name'
@@ -182,6 +175,15 @@ const CreatePatientComp = () => {
                       onChange={(e) => onHandleChange(e, handleChange)}
                       value={values.phone}
                       errorMsg={touched.phone && errors.phone}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                  <DatePickerRe 
+                    onChange={setFieldValue}
+                    id='dob'
+                    value={values.dob}
+                    errorMsg={touched.dob && errors.dob}
+                    heading='DOB' 
                     />
                   </div>
                   {/* <div className="col-md-3">

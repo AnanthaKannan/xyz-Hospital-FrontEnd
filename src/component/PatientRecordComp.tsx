@@ -4,6 +4,7 @@ import { ClickButton, SubmitButton } from '../reusable/Button';
 import {useLocation, useNavigate} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { patientDetailsType } from '../type/type';
+import TextEditor from "../reusable/TextEditor";
 
 const PatientRecordComp = () => {
 
@@ -52,6 +53,8 @@ const PatientRecordComp = () => {
         <p>Email: {patientDetails.email}</p>
         <p>Phone: {patientDetails.phone}</p>
        </div>
+
+       <TextEditor />
       <div>
       <div>
                     <ClickButton className='mx-4' onClick={() => navigate('/list-patient')} text="Cancel" color='default' id='patient-cancel' />

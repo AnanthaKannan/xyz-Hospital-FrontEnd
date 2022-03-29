@@ -2,6 +2,8 @@ import { SidebarHeader, ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-si
 import { RiHospitalLine } from 'react-icons/ri';
 import { FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+
 
 import 'react-pro-sidebar/dist/css/styles.css';
 
@@ -11,7 +13,14 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
     <div>
         <div className='bg-primary px-2'>
           <div className='d-flex align-items-center p-2'>
-          <RiHospitalLine size={40} />  <h4 className='m-0 text-white p-2'>Hospital Name</h4>
+          {/* <RiHospitalLine size={40} />  */}
+          {/* <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar> */}
+          <Avatar alt="Remy Sharp" 
+            sx={{ width: 50, height: 50 }}
+            src={require("../assets/hospitalLogo.jpg")} />
+
+
+           <h4 className='m-0 text-white p-2'>Hospital Name</h4>
           </div>
 
           <div>
