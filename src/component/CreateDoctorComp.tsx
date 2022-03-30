@@ -8,9 +8,20 @@ import { onHandleChange, convertToDigit } from '../lib';
 import { addPatient } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
-import { patientValueType } from '../type/type';
+import { patientValueType, availableDayType } from '../type/type';
+import CheckBox from '../reusable/CheckBox';
+import { GrAddCircle, GrSubtractCircle } from 'react-icons/gr';
+import TimePicker from "../reusable/TimePickerRe";
 
-
+const availableDays = {
+  monday: false,
+  tuesday: false,
+  wednesday: false,
+  thursday: false,
+  friday: false,
+  saturday: false,
+  sunday: false
+}
 
 const CreateDoctorComp = () => {
 
@@ -20,16 +31,12 @@ const CreateDoctorComp = () => {
     specialist: "",
     availableTime: [{ from: "", to: "" }],
     timePerPatient: "",
-    availableDay: {
-      monday: false,
-      tuesday: false,
-      wednesday: false,
-      thursday: false,
-      friday: false,
-      saturday: false,
-      sunday: false
-    },
+    availableDay: availableDays,
   });
+  const [selectedTime, setSelectedTime] = useState([{
+    from: null, to: null
+  }])
+  const [availableDay, setAvailableDay] = useState<any>(availableDays)
 
   const { setLoader } = useLoadContext();
 
@@ -69,6 +76,10 @@ const CreateDoctorComp = () => {
     // setFieldValue('password', '');
   }
 
+  const onHandleCheckBox = (isChecked: boolean, name: any) => {
+    setAvailableDay({...availableDay, [name]: isChecked})
+  }
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .required()
@@ -80,6 +91,22 @@ const CreateDoctorComp = () => {
     dob: Yup.string().required('Date of birth is required'),
     password: Yup.string()
   });
+
+  const addTimeSheet = () => {
+    const lastSelectedTime = selectedTime.slice(selectedTime.length -1, selectedTime.length);
+    if(!lastSelectedTime[0].from || !lastSelectedTime[0].to){
+      toast.info("Please select the From and To in the doctor available time");
+      return
+    }
+    console.log('lastSelectedTime', lastSelectedTime)
+    setSelectedTime([...selectedTime, { from: null, to: null }])
+  }
+
+
+  const removeTimeSheet = () => {
+    const updatedTime = selectedTime.slice(0, selectedTime.length - 1);
+    setSelectedTime([...updatedTime])
+  }
 
   return (
     <div className=''>
@@ -104,15 +131,6 @@ const CreateDoctorComp = () => {
                     />
                   </div>
                   <div className="col-md-3">
-                    {/* <TextBox
-                      heading='Email'
-                      id='email'
-                      onChange={(e) => onHandleChange(e, handleChange)}
-                      value={values.email}
-                      errorMsg={touched.email && errors.email}
-                    /> */}
-                  </div>
-                  <div className="col-md-3">
                     <TextBox
                       heading='Time Per Patient'
                       id='timePerPatient'
@@ -130,15 +148,38 @@ const CreateDoctorComp = () => {
                       errorMsg={touched.specialist && errors.specialist}
                     />
                   </div>
-                  <div className="col-md-3">
-                    {/* <TextBox
-                      heading='Date of birth'
-                      id='dob'
-                      onChange={(e) => onHandleChange(e, handleChange)}
-                      value={values.dob}
-                      errorMsg={touched.dob && errors.dob}
-                    /> */}
+                 
+
+                  <div className='mt-3'>
+              <h6>Select doctor available Days</h6>
+              {
+                ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day: string) => {
+                  return <CheckBox label={day} name={day.toLowerCase()}
+                  checked={availableDay[day.toLowerCase()]}
+                  onChange={onHandleCheckBox} />
+                })
+              }
+                
+            </div>
+
+            <div className="col-md-6 ">
+                <div className='border rounded p-4'>
+                  <div className='d-flex justify-content-between align-items-center'>
+                  <h6>Select doctor available time</h6>
+                  <div className='d-flex'>
+                    <h6 className='pointer mr-2' onClick={addTimeSheet} > <GrAddCircle size={20}/> </h6>
+                    { selectedTime.length > 1 && <h6 className='pointer' onClick={removeTimeSheet}> 
+                    <GrSubtractCircle size={20}/> </h6> }
                   </div>
+                  </div>
+                  {
+                    selectedTime.map((obj, index )=> <TimePicker 
+                      setSelectedTime={setSelectedTime} 
+                      selectedTime={selectedTime}
+                      index={index} />)
+                  }
+                </div>
+              </div>
 
                   <div className='mt-3 d-flex justify-content-end'>
                 

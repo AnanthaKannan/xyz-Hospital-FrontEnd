@@ -3,7 +3,7 @@ import CreateDoctorComp from '../component/CreateDoctorComp'
 
 const CreateDoctor = () => {
   return (
-    <Container title='List Patient'>
+    <Container title='Create Doctor'>
     <CreateDoctorComp />
 </Container>
   )

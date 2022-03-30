@@ -60,7 +60,7 @@ export type agGirdReactType = {
   rowData: object[]
 }
 
-type availableDayType = {
+export type availableDayType = {
   sunday: boolean,
   monday: boolean,
   tuesday: boolean,
