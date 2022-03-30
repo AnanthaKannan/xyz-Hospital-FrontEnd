@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import ReactQuill from 'react-quill'; // ES6
-// import * as ReactQuill from 'react-quill'; // Typescript
-// const ReactQuill = require('react-quill'); // CommonJS
+import ReactQuill from 'react-quill'; 
 import 'react-quill/dist/quill.snow.css'; // ES6
 
-const TextEditor = () => {
+const TextEditor = ({text, setText}: any) => {
 
-  const [text, setText] = useState('')
+  
 
   const handleChange = (value: any) => {
-    console.log(value)
+    // console.log(value)
     setText(value)
   }
 

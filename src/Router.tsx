@@ -5,6 +5,7 @@ import CreateHospital from "./page/CreateHospital";
 import ListPatient from "./page/ListPatient";
 import ListDoctor from "./page/ListDoctor";
 import PatientRecord from "./page/PatientRecord";
+import FeedBack from "./page/FeedBack";
 
 type routeType = {
     PATH: string,
@@ -12,6 +13,10 @@ type routeType = {
 }
 
 const routes: routeType[] = [
+  {
+    COMPONENT: <FeedBack />,
+    PATH: '/feed-back'
+  },
   {
     COMPONENT: <CreatePatient />,
     PATH: '/create-patient'

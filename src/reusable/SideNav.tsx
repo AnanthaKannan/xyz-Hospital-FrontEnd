@@ -47,6 +47,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
             <MenuItem> <Link to="/create-patient" /> New Patient</MenuItem>
             <MenuItem> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>
+          <MenuItem icon={<RiHospitalLine />}>FeedBack <Link to="/feed-back" /> </MenuItem>
         </Menu>
       </ProSidebar>
       <div className='container-fluid mt-3'>

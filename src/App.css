@@ -1,4 +1,6 @@
 .app {
+  /* min-height: 100vh;
+  max-height: 500vh; */
   height: 100vh;
   display: flex;
   position: relative;
