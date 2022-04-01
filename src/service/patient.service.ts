@@ -4,6 +4,7 @@ import { dataType } from '@type/type';
 const api = '/patient';
 
 export const addPatient = (data: object) => {
+    console.log('dataObj', data);
     return http.post(`${api}`, data);
 }
 

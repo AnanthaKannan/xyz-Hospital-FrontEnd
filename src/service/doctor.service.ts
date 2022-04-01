@@ -4,27 +4,32 @@ import { dataType } from '@type/type';
 
 const api: string = '/doctor';
 
-export const addDoctor = (data: object) => {
+export const post = (data: object) => {
     return http.post(`${api}`, data);
 }
 
 
-export const listDoctor = (data=null) => {
+export const list = (data=null) => {
     return http.get(`${api}`, data);
 }
 
 
-export const getDoctor = (data: dataType) => {
+export const get = (data: dataType) => {
     return http.get(`${api}`, data);
 }
 
-export const deleteDoctor = (data: dataType) => {
-    return http.delete(`${api}`, data);
+export const delete_ = (_id: number) => {
+    return http.delete(`${api}/${_id}`);
+}
+
+export const put = (_id:number, data:object) => {
+    return http.put(`${api}/${_id}`, data);
 }
 
 export default {
-    addDoctor,
-    deleteDoctor,
-    listDoctor,
-    getDoctor
+    list,
+    post,
+    get,
+    delete_,
+    put
 }

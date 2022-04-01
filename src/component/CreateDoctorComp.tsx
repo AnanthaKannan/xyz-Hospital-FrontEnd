@@ -1,17 +1,18 @@
 import Hb from '../reusable/Hb'
 import TextBox from '../reusable/TextBox'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
 import { onHandleChange, convertToDigit } from '../lib';
-import { addPatient } from '../service/patient.service';
+import { post, put } from '../service/doctor.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
-import { patientValueType, availableDayType } from '../type/type';
+import { doctorValueType, availableDayType } from '../type/type';
 import CheckBox from '../reusable/CheckBox';
 import { GrAddCircle, GrSubtractCircle } from 'react-icons/gr';
 import TimePicker from "../reusable/TimePickerRe";
+import {useLocation, useNavigate} from 'react-router-dom';
 
 const availableDays = {
   monday: false,
@@ -25,11 +26,11 @@ const availableDays = {
 
 const CreateDoctorComp = () => {
 
-  const [formikInitialValue, setFormikInitialValue] = useState<patientValueType>({
+  const [formikInitialValue, setFormikInitialValue] = useState<doctorValueType>({
     name: "",
-    _hospitalId: "",
+    _hospitalId: null,
     specialist: "",
-    availableTime: [{ from: "", to: "" }],
+    availableTime: [{ from: null, to: null }],
     timePerPatient: "",
     availableDay: availableDays,
   });
@@ -37,23 +38,73 @@ const CreateDoctorComp = () => {
     from: null, to: null
   }])
   const [availableDay, setAvailableDay] = useState<any>(availableDays)
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const { setLoader } = useLoadContext();
 
-  const onSubmit = (values:patientValueType, { setErrors, setFieldValue, resetForm}: any) => {
+
+  useEffect(() => {
+    const state: any = location.state;
+    console.log('mystateishere', state)
+    if (state?._id) {
+      setFormikInitialValue({
+        _id: state._id,
+        name: state.name,
+        _hospitalId: Number(state._hospitalId),
+        specialist: state.specialist,
+        availableTime: state.availableTime,
+        timePerPatient: state.timePerPatient,
+        availableDay: state.availableDay
+      })
+      setSelectedTime(state.availableTime);
+      setAvailableDay(state.availableDay);
+    }
+    else {
+      console.log('else state is here')
+    }
+  }, [])
+
+  const onSubmit = (values:any, { setErrors, setFieldValue, resetForm}: any) => {
+    values.availableTime = selectedTime;
+    values.availableDay = availableDay;
+    values._hospitalId = 2;
     console.log(values);
-    createPatient(values, resetForm, setErrors);
-    // resetForm();
+
+    if(values._id)
+      updateDoctor(values, resetForm, setErrors);
+    else
+    createDoctor(values, resetForm, setErrors);
   }
 
-  const createPatient = async(values: patientValueType, resetForm: Function, setErrors:Function) => {
+  const updateDoctor = async(values: doctorValueType, resetForm: Function, setErrors:Function) => {
     setLoader(true);
-    const result = await addPatient(values);
+    const result = await put(values._id, values);
+    console.log('result', result.status);
+    setLoader(false);
+    if(result.status === 200){
+      toast.success('Doctor updated successfully');
+      navigate('/list-doctor');
+    }
+    else if(result.status === 409) {
+      const data = result.data;
+      toast.error(data.message);
+      return
+    }
+    else {
+      toast.error("Oops! Something went wrong. Please try again later.");
+      return;
+    }
+  }
+
+
+  const createDoctor = async(values: doctorValueType, resetForm: Function, setErrors:Function) => {
+    setLoader(true);
+    const result = await post(values);
     console.log('result', result.status);
     setLoader(false);
     if (result.status === 409) {
       const data = result.data;
-      toast.error(data.message);
+      toast.error('Doctor already exists');
       return
     }
     if(result.status !== 201) {
@@ -61,13 +112,16 @@ const CreateDoctorComp = () => {
       return;
     }
 
-      toast.success("Patient created successfully.");
-      console.log('Patient added successfully');
+      toast.success("Doctor created successfully");
       resetForm();
   }
 
   const handleReset = (setFieldValue: Function, resetForm: Function): void => {
+    if(formikInitialValue._id)
+      navigate('/list-doctor');
+      
     resetForm();
+    
     // setFieldValue('name', '');
     // setFieldValue('age', null);
     // setFieldValue('email', '');
@@ -85,11 +139,11 @@ const CreateDoctorComp = () => {
       .required()
       .min(3, 'Name must be at least 3 characters')
       .max(30, 'Name must be less than 30 characters'),
-    age: Yup.string().required('Age is required').min(1, 'Age must be at least 1 characters').max(3, 'Age must be less than 3 characters'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    phone: Yup.string().required('Phone is required'),
-    dob: Yup.string().required('Date of birth is required'),
-    password: Yup.string()
+    // age: Yup.string().required('Age is required').min(1, 'Age must be at least 1 characters').max(3, 'Age must be less than 3 characters'),
+    // email: Yup.string().email('Invalid email address').required('Email is required'),
+    // phone: Yup.string().required('Phone is required'),
+    // dob: Yup.string().required('Date of birth is required'),
+    // password: Yup.string()
   });
 
   const addTimeSheet = () => {
@@ -155,6 +209,7 @@ const CreateDoctorComp = () => {
               {
                 ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day: string) => {
                   return <CheckBox label={day} name={day.toLowerCase()}
+                  key={day}
                   checked={availableDay[day.toLowerCase()]}
                   onChange={onHandleCheckBox} />
                 })
@@ -163,7 +218,7 @@ const CreateDoctorComp = () => {
             </div>
 
             <div className="col-md-6 ">
-                <div className='border rounded p-4'>
+                <div className='border rounded p-4 mt-3'>
                   <div className='d-flex justify-content-between align-items-center'>
                   <h6>Select doctor available time</h6>
                   <div className='d-flex'>

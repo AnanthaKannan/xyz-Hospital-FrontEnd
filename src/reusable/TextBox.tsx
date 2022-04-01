@@ -1,7 +1,7 @@
 
 import { TextBoxType } from '@type/type';
 
-const TextBox = ({onChange, value, className='', readOnly=false, type='text', errorMsg='', heading='', id}: TextBoxType) => {
+const TextBox = ({onChange, value, className='', readOnly=false, type='text', errorMsg='', heading='', id}: any) => {
   return (
     <div className='mb-3'>
       <label className='text-muted' htmlFor={id}>{heading}</label>

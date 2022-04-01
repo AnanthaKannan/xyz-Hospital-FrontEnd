@@ -71,12 +71,13 @@ export type availableDayType = {
 }
 
 type availableTimeType = [{
-  from: string,
-  to: string
+  from: number,
+  to: number
 }]
 
-export type patientValueType = {
-  _hospitalId: string,
+export type doctorValueType = {
+  _id ?: number,
+  _hospitalId: number,
   name: string,
   availableTime: availableTimeType,
   availableDay: availableDayType,

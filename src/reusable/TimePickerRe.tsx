@@ -5,7 +5,7 @@ import { timeList } from "../lib/times";
 export default function TimePickerRe({
   index,
   setSelectedTime,
-  selectedTime,
+  selectedTime, 
 }: {
   index: number;
   setSelectedTime: Function;
@@ -29,22 +29,19 @@ export default function TimePickerRe({
   };
 
   const getTimeList = (timeIndex: number, state: "from" | "to") => {
-    console.log("timeIndex", timeIndex, "index", index);
-    console.log("state", state);
+    // console.log("timeIndex", timeIndex, "index", index);
+    // console.log("state", state);
 
     if (state === "from") {
       if(index !== 0){
       timeIndex = selectedTime[index - 1].to;
-      console.log('first timeIndex', timeIndex)
+      // console.log('first timeIndex', timeIndex)
       const lastSelectedTime = timeList_.filter(
         (obj) => obj.value > timeIndex
       );
       return lastSelectedTime;
       }
-      // if (!timeIndex || index === 0) {
-      //   console.log("timeList_", timeList_);
         return timeList_;
-      // }
     }
 
     if (state === "to") {
@@ -61,6 +58,7 @@ export default function TimePickerRe({
         <DropDown
           className="mt-2 mb-2"
           list={getTimeList(selectedTime[index].to, "from")}
+          value={selectedTime[index].from}
           heading="Start Time"
           id={`startTime${index}`}
           onChange={(e: any) => onChange(e, "from")}
@@ -71,6 +69,7 @@ export default function TimePickerRe({
           className="mt-2 mb-3"
           list={getTimeList(selectedTime[index].from, "to")}
           heading="Start Time"
+          value={selectedTime[index].to}
           id={`startTime${index}`}
           onChange={(e: any) => onChange(e, "to")}
         />
