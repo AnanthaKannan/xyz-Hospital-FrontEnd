@@ -1,102 +1,79 @@
-import React, { useState, useEffect } from "react";
-import DropDown from "./DropDown";
-import TimePicker from 'react-times';
-// use material theme
-import 'react-times/css/material/default.css';
-// or you can use classic theme
-import 'react-times/css/classic/default.css';
+import React from "react";
+import DropDown from "../reusable/DropDown";
+import { timeList } from "../lib/times";
 
-export default function TimePickerRe({ index, setSelectedTime, selectedTime}: any) {
-
-  const [from, setFrom] = useState([]);
-  const [to, setTo] = useState<any>([]);
-
-  useEffect(() => {
-    onInit();
-  }, []);
-
-  const onInit = async () => {
-    const fromData = await getTimeByBetween(15);
-
-    // setFrom([...fromData]);
-  };
-
-  const getTimeByBetween = async (timeInterval: any, from = 0, to = 1440) => {
-    const sendData = {
-      timeInterval,
-      from,
-      to,
+export default function TimePickerRe({
+  index,
+  setSelectedTime,
+  selectedTime,
+}: {
+  index: number;
+  setSelectedTime: Function;
+  selectedTime: { from: number; to: number }[];
+}) {
+  const timeList_ = timeList.map((obj) => {
+    return {
+      value: obj.index,
+      label: `${obj.hour}: ${obj.minute} ${obj.ampm}`,
     };
-    // const result = await timeService.getTimeByBetween(sendData);
-    // console.log("result", result);
-    // if (result.status !== 200) {
-    //   return [];
-    // }
-    const data:any = [{  }] //result.data.data;
-    const updatedData = data.map((obj: any) => ({
-      value: obj.value,
-      label: `${obj.hour}:${obj.minute} ${obj.period}`,
-    }));
-    return updatedData;
+  });
+
+  const onChange = (e: any, state: string) => {
+    const { value } = e.target;
+    console.log("value", value);
+    let time = selectedTime;
+    let timeObj = selectedTime[index];
+    timeObj[state] = value;
+    time[index] = timeObj;
+    setSelectedTime([...time]);
   };
 
-  const getToValue = async (from: any) => {
-    const toData = await getTimeByBetween(15, from);
-    setTo([...toData]);
-  };
+  const getTimeList = (timeIndex: number, state: "from" | "to") => {
+    console.log("timeIndex", timeIndex, "index", index);
+    console.log("state", state);
 
-  const onHandleDropDown = (e: any, status: any) => {
-    console.log("dropDown", e.target.value, status);
-    const value = e.target.value;
-    if (status === "from") {
-      getToValue(value);
+    if (state === "from") {
+      if(index !== 0){
+      timeIndex = selectedTime[index - 1].to;
+      console.log('first timeIndex', timeIndex)
+      const lastSelectedTime = timeList_.filter(
+        (obj) => obj.value > timeIndex
+      );
+      return lastSelectedTime;
+      }
+      // if (!timeIndex || index === 0) {
+      //   console.log("timeList_", timeList_);
+        return timeList_;
+      // }
     }
-    const updatedSelectedTime = selectedTime;
-    updatedSelectedTime[index][status] = value;
-    setSelectedTime([...updatedSelectedTime]);
-  };
 
-  const onTimeChange = (options) => {
-    // you can get hour, minute and meridiem here
-    // const {
-    //   hour,
-    //   minute,
-    //   meridiem 
-    // } = options;
-    console.log('first', options);
-  }
+    if (state === "to") {
+      if (selectedTime[index].from === null) return [];
+      return timeList_.filter((obj) => {
+        return obj.value > timeIndex;
+      });
+    }
+  };
 
   return (
-    <div className="row mb-2">
+    <div className="row">
       <div className="col-md-6">
-      <TimePicker theme="classic"
-          timeMode="12" // use 24 or 12 hours mode, default 24
-          time="11:00"
-          onTimeChange={onTimeChange}
-          timeConfig={{
-            from: '08:00 AM',
-            to: '08:00 PM',
-            step: 30,
-            unit: 'minutes'
-          }}
-      />
-
-        {/* <DropDown
-          list={from}
-          heading="Time From"
-          onChange={(e: any) => onHandleDropDown(e, "from")}
-        /> */}
+        <DropDown
+          className="mt-2 mb-2"
+          list={getTimeList(selectedTime[index].to, "from")}
+          heading="Start Time"
+          id={`startTime${index}`}
+          onChange={(e: any) => onChange(e, "from")}
+        />
       </div>
       <div className="col-md-6">
-      <TimePicker theme="classic"
-          timeMode="12" // use 24 or 12 hours mode, default 24
-          time="11:00" // initial time, default current time
-      />
-        {/* <DropDown
-          list={to}
-          heading="Time To"
-          onChange={(e: any) => onHandleDropDown(e, "to")}
-        /> */}
+        <DropDown
+          className="mt-2 mb-3"
+          list={getTimeList(selectedTime[index].from, "to")}
+          heading="Start Time"
+          id={`startTime${index}`}
+          onChange={(e: any) => onChange(e, "to")}
+        />
       </div>
     </div>
   );

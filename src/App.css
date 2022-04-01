@@ -19,3 +19,7 @@
   font-size: medium !important;
   /* height: 300px !important; */
 }
+
+.zero-opacity{
+  opacity: 0;
+}

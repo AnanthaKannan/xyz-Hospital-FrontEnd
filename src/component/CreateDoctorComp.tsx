@@ -174,8 +174,8 @@ const CreateDoctorComp = () => {
                   </div>
                   {
                     selectedTime.map((obj, index )=> <TimePicker 
-                      setSelectedTime={setSelectedTime} 
-                      selectedTime={selectedTime}
+                    setSelectedTime={setSelectedTime} 
+                    selectedTime={selectedTime}
                       index={index} />)
                   }
                 </div>
