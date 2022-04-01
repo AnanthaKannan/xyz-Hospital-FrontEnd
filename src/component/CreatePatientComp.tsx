@@ -21,7 +21,7 @@ const CreatePatientComp = () => {
     age: '',
     email: "",
     phone: "",
-    dob: '',
+    dob: null,
     password: ""
   });
 
@@ -35,7 +35,7 @@ const CreatePatientComp = () => {
         age: state.age,
         email: state.email,
         phone: state.phone,
-        dob: state.dob,
+        dob: new Date(state.dob),
         password: state.password
       })
     }

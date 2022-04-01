@@ -91,6 +91,6 @@ export type patientDetailsType = {
   age: string,
   email: string,
   phone: string,
-  dob: string,
+  dob: Date | null,
   password: string
 }

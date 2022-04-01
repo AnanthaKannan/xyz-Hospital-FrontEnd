@@ -29,7 +29,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
         </div>
    
     <div className='app'>
-      <ProSidebar collapsed={false} >
+      <ProSidebar collapsed={false} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
           {/* <div className='d-flex align-items-center'>
           
@@ -37,13 +37,13 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
           </div> */}
          
         </SidebarHeader>
-        <Menu iconShape="square">
+        <Menu iconShape="circle" innerSubMenuArrows={false} >
           <MenuItem icon={<RiHospitalLine />}>Dashboard <Link to="/" /> </MenuItem>
-          <SubMenu title="Doctor" icon={<FaUsers />}>
-            <MenuItem > <Link to="/create-doctor" /> Create Doctor</MenuItem>
+          <SubMenu title="Doctor" icon={<FaUsers />} defaultOpen={true}>
+            <MenuItem icon={ <FaUsers />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
             <MenuItem> <Link to="/list-doctor" />List Doctor</MenuItem>
           </SubMenu>
-          <SubMenu title="Patient" icon={<FaUsers />}>
+          <SubMenu title="Patient" icon={<FaUsers />} defaultOpen={true}>
             <MenuItem> <Link to="/create-patient" /> New Patient</MenuItem>
             <MenuItem> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>

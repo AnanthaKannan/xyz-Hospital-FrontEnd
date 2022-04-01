@@ -5,19 +5,18 @@ import "react-datepicker/dist/react-datepicker.css";
 type DatePickerType = {
     onChange: (id:string, date: any) => void,
     heading: string,
-    errorMsg?: string | undefined | false,
+    errorMsg?: string | undefined | false | Date,
     value: any,
     id: string,
 }
 
-export default function DatePickerRe({onChange, heading, errorMsg, value, id}: DatePickerType) {
-
+export default function DatePickerRe({onChange, heading, errorMsg, value, id}: any) {
     return (
         <React.Fragment>
-             <span className="txt-sm">{heading}</span>
-
+              <label className='text-muted' htmlFor={id}>{heading}</label>
              <div>
-             <DatePicker selected={value}
+             <DatePicker 
+             selected={value}
              className='form-control'
               onChange={(date: any) => onChange(id, date)} />
               </div>

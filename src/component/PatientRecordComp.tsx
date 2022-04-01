@@ -1,6 +1,6 @@
 import Hb from "../reusable/Hb"
 import TextBox from "../reusable/TextBox"
-import { ClickButton, SubmitButton } from '../reusable/Button';
+import { ClickButton } from '../reusable/Button';
 import {useLocation, useNavigate} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { patientDetailsType } from '../type/type';
@@ -19,7 +19,7 @@ const PatientRecordComp = () => {
     age: '',
     email: "",
     phone: "",
-    dob: '',
+    dob: null,
     password: ""
   });
   const [patientDetailsList, setPatientDetailsList] = useState([]);
