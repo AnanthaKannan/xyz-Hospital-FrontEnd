@@ -10,6 +10,7 @@ import ConfirmationCodeComp from './ConfirmationCodeComp';
 import ForgotPasswordComp from './ForgotPasswordComp'
 import ChangePassword from './ChangePassword';
 import SignUpComp from './SignUpComp';
+import LoginBackground from '../reusable/LoginBackground';
 
 
 const LoginComp = () => {
@@ -66,7 +67,7 @@ const LoginComp = () => {
 
   return (
     <div>
-      
+       <LoginBackground />
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={validationSchema}
@@ -101,11 +102,12 @@ const LoginComp = () => {
       )}
     </Formik>
 
-    <ConfirmationCodeComp />
+    {/* <ConfirmationCodeComp />
     <ForgotPasswordComp />
-    <ChangePassword />
+    <ChangePassword /> */}
 
     <SignUpComp />
+   
 
     </div>
   )

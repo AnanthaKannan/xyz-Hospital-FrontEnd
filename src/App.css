@@ -19,9 +19,9 @@
   /* height: 300px !important; */
 }
 
-.login-height{
+/* .login-height{
   height: 100vh;
-}
+} */
 
 .link{
   color: #1c0583;
@@ -32,4 +32,12 @@
 .link:hover{
   text-decoration: underline;
   cursor: pointer;
+}
+
+.banner-image {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  width: 100%;
+  height: auto;
+  position: relative;
 }
