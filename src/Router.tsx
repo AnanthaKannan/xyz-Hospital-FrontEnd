@@ -6,6 +6,7 @@ import ListPatient from "./page/ListPatient";
 import ListDoctor from "./page/ListDoctor";
 import PatientRecord from "./page/PatientRecord";
 import FeedBack from "./page/FeedBack";
+import Login from "./page/Login";
 
 type routeType = {
     PATH: string,
@@ -13,6 +14,10 @@ type routeType = {
 }
 
 const routes: routeType[] = [
+  {
+    COMPONENT: <Login />,
+    PATH: '/login'
+  },
   {
     COMPONENT: <FeedBack />,
     PATH: '/feed-back'
@@ -42,7 +47,7 @@ const routes: routeType[] = [
     PATH: '/patient-record'
   },
   {
-    COMPONENT: <CreatePatient />,
+    COMPONENT: <Login />,
     PATH: '/'
   }
 ]

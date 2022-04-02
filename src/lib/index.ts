@@ -11,3 +11,9 @@ export const onHandleChange =  (e:any, handleChange:Function) => {
 export const convertToDigit = (e: any, sliceValue: number): number => {
   return e.target.value.replace(/[^0-9]/g, '').slice(0, sliceValue);
 }
+
+export const imgUploadPath = (code: string, _hospitalId: number): string => {
+  if(code === 'patientImg'){
+    return 'patientImg'
+  }
+}

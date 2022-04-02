@@ -24,10 +24,19 @@ export const updatePatient = (_id:any, data:object) => {
     return http.put(`${api}/${_id}`, data);
 }
 
+export const uploadFile = (data:{ file: any, path: string }) => {
+
+    const formData = new FormData();
+    formData.append('files', data.file);
+    formData.append('path', data.path);
+    return http.post(`/upload-image`, formData);
+}
+
 export default {
     addPatient,
     listPatient,
     deletePatient,
     getPatient,
+    uploadFile,
     updatePatient
 }

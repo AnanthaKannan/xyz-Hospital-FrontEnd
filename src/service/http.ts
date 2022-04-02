@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse} from 'axios';
 import { type } from 'os';
 import { config } from '../config';
 
-const url = config.apiURL;
+let url = config.apiURL;
 
 const unAuthorizeTest: Function = (statusCode: Number): void => {
   if(statusCode === 401){
@@ -63,7 +63,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
   ****************/
 
   export const post = (apiUrl:string, data:Object) => {
-
+    
     console.log("===>post")
     const options:AxiosRequestConfig = {
       method: 'POST',

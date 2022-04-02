@@ -14,12 +14,11 @@
   cursor: pointer;
 }
 
-
 .ql-editor > *{
   font-size: medium !important;
   /* height: 300px !important; */
 }
 
-.zero-opacity{
-  opacity: 0;
+.login-height{
+  height: 100vh;
 }

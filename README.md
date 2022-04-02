@@ -55,3 +55,8 @@ https://staging.hospitalrun.io/patients/new
 
 Account: honey-bee
 UserName: AnanthaKannan
+
+
+
+sree.kannan@gmail.com
+Kannan$7500

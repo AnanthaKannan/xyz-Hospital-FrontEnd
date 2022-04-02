@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
-import { onHandleChange, convertToDigit } from '../lib';
-import { addPatient, updatePatient } from '../service/patient.service';
+import { onHandleChange, convertToDigit, imgUploadPath } from '../lib';
+import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
 import {useLocation, useNavigate} from 'react-router-dom';
 import { patientDetailsType } from '../type/type';
 import DatePickerRe from '../reusable/DatePickerRe';
+import FileUpload from '../reusable/FileUpload';
 
 const CreatePatientComp = () => {
 
@@ -46,6 +47,10 @@ const CreatePatientComp = () => {
   
   const { setLoader } = useLoadContext();
 
+  const validation = (value) => {
+    return true
+  }
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .required()
@@ -55,7 +60,10 @@ const CreatePatientComp = () => {
     email: Yup.string().email('Invalid email address').required('Email is required'),
     phone: Yup.string().required('Phone is required'),
     dob: Yup.string().required('Date of birth is required'),
-    password: Yup.string()
+    password: Yup.string(),
+    // fileName: Yup.string()
+    // .required('File is required')
+    // .test('fileSize', 'File size must be less than 2MB', value => validation(value))
   });
 
   const onSubmit = (values:patientDetailsType, { setErrors, setFieldValue, resetForm}: any) => {
@@ -64,8 +72,6 @@ const CreatePatientComp = () => {
       updatePatient_(values, resetForm, setErrors);
     else
       createPatient(values, resetForm, setErrors);
-
-    
     // resetForm();
   }
 
@@ -86,6 +92,8 @@ const CreatePatientComp = () => {
 
       toast.success("Patient created successfully.");
       console.log('Patient added successfully');
+      if(values.fileName) 
+        await uploadImage(values);
       resetForm();
   }
 
@@ -107,12 +115,30 @@ const CreatePatientComp = () => {
     
     if(result.status === 200) {
       toast.success("Patient updated successfully.");
+      if(values.fileName) 
+        await uploadImage(values);
       navigate('/list-patient');
     }
   }
 
+  const uploadImage = async( values) => {
+    alert()
+    console.log('uploadImage', values);
+    const _hospitalId = 2
+    const path = imgUploadPath('patientImg', _hospitalId);
+    const file = values.file;
+    const result = await uploadFile({file, path});
+    console.log('result', result);
+  }
+
+
   const handleReset = (setFieldValue: Function, resetForm: Function): void => {
+
+    if(document.getElementById('fileName')){
+      (document.getElementById('fileName') as HTMLInputElement).value = "";
+    }
     resetForm();
+
     // setFieldValue('name', '');
     // setFieldValue('age', null);
     // setFieldValue('email', '');
@@ -122,7 +148,6 @@ const CreatePatientComp = () => {
   }
 
  
-
   return (
     <div className=''>
       <Hb text='New Patient' />
@@ -186,15 +211,24 @@ const CreatePatientComp = () => {
                     heading='DOB' 
                     />
                   </div>
-                  {/* <div className="col-md-3">
-                    <TextBox
-                      heading='Date of birth'
-                      id='dob'
-                      onChange={(e) => onHandleChange(e, handleChange)}
-                      value={values.dob}
-                      errorMsg={touched.dob && errors.dob}
-                    />
-                  </div> */}
+                  <div className="col-md-3">
+                    <FileUpload
+                      heading='Upload Image'
+                      value={values.fileName}
+                      id='fileName'
+                      onChange={(e) => {
+                        try{
+                        values.file = e.target.files[0];
+                        setFieldValue('fileName', e.target.files[0].name)
+                        }
+                        catch(e){
+                          console.log('e', e);
+                        }
+                      }
+                      }
+                      errorMsg={touched.fileName && errors.fileName}
+                      />
+                  </div>
 
                   <div className='mt-3 d-flex justify-content-end'>
                     {
