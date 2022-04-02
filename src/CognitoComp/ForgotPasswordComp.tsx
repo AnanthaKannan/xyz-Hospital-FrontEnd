@@ -26,18 +26,38 @@ const ForgotPasswordComp = () => {
     const cognitoUser = new CognitoUser({ Username: 'sreeananthakannan@gmail.com', Pool: UserPool });
     cognitoUser.forgotPassword({
       onSuccess: function (data:any) {
-        console.log('call result: ' + data);
+        console.log('CodeDeliveryData from forgotPassword:' + data);
       },
       onFailure: function (err:any) {
         console.log('error: ' + err);
       },
-      inputVerificationCode() {
-        const verificationCode = prompt('Please input verification code ' ,'');
-        const newPassword = prompt('Enter new password ' ,'');
-        cognitoUser.confirmPassword(verificationCode, newPassword, this);
-      }
+      // inputVerificationCode() {
+      //   const verificationCode = prompt('Please input verification code ' ,'');
+      //   const newPassword = prompt('Enter new password ' ,'');
+      //   cognitoUser.confirmPassword(verificationCode, newPassword, this);
+      // }
     });
   }
+
+  const confirmPassword = (username, verificationCode, newPassword) =>{
+    const cognitoUser = new CognitoUser({
+        Username: 'sreeananthakannan@gmail.com',
+        Pool: UserPool
+    });
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.confirmPassword(verificationCode, newPassword, {
+            onFailure(err) {
+                // reject(err);
+                console.log('failure', err);
+            },
+            onSuccess() {
+                console.log('success')
+            },
+        });
+    });
+}
+
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
