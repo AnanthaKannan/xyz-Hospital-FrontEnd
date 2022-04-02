@@ -22,3 +22,14 @@
 .login-height{
   height: 100vh;
 }
+
+.link{
+  color: #1c0583;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.link:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -7,6 +7,7 @@ import ListDoctor from "./page/ListDoctor";
 import PatientRecord from "./page/PatientRecord";
 import FeedBack from "./page/FeedBack";
 import Login from "./page/Login";
+import SignUp from "./page/SignUp";
 
 type routeType = {
     PATH: string,
@@ -14,6 +15,10 @@ type routeType = {
 }
 
 const routes: routeType[] = [
+  {
+    COMPONENT: <SignUp />,
+    PATH: '/sing-up'
+  },
   {
     COMPONENT: <Login />,
     PATH: '/login'

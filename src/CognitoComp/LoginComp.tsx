@@ -4,7 +4,12 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import{ SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
-import UserPool from '../lib/UserPool'
+import UserPool from '../lib/UserPool';
+import { Link } from 'react-router-dom';
+import ConfirmationCodeComp from './ConfirmationCodeComp';
+import ForgotPasswordComp from './ForgotPasswordComp'
+import ChangePassword from './ChangePassword';
+import SignUpComp from './SignUpComp';
 
 
 const LoginComp = () => {
@@ -19,6 +24,7 @@ const LoginComp = () => {
     const user = new CognitoUser({ Username: email, Pool: UserPool });
     const authenticationData = { Username: email, Password: password };
     const authenticationDetails = new AuthenticationDetails(authenticationData);
+    console.log('eeeeeeeeeeeeeee')
     user.authenticateUser(authenticationDetails, {
       onSuccess: (result:any) => {
         console.log('result', result);
@@ -31,7 +37,19 @@ const LoginComp = () => {
         console.log('err', err);
         console.log('err.message', err.message);
         setErrors({ password: 'Invalid email or password' });
-      }
+      },
+      newPasswordRequired: function(userAttributes, requiredAttributes) {
+        // User was signed up by an admin and must provide new
+        // password and required attributes, if any, to complete
+        // authentication.
+        console.log('userAttributes', userAttributes);
+        console.log('requiredAttributes', requiredAttributes);
+        // the api doesn't accept this field back
+        // delete userAttributes.email_verified;
+
+        // store userAttributes on global variable
+        // sessionUserAttributes = userAttributes;
+    }
     });
 
   }
@@ -47,6 +65,8 @@ const LoginComp = () => {
   });
 
   return (
+    <div>
+      
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={validationSchema}
@@ -71,9 +91,23 @@ const LoginComp = () => {
           />
       <br />
       <SubmitButton className='w-100' type="submit" color='primary' text='LOGIN'/>
+
+      <div className='d-flex justify-content-between mt-2'>
+        <label className='link'> <Link to="/sing-up" /> Not a user? sing up</label>
+        <label className='link'> <Link to="/forgot-password" /> Forgot password </label>
+       
+      </div>
       </form>
       )}
     </Formik>
+
+    <ConfirmationCodeComp />
+    <ForgotPasswordComp />
+    <ChangePassword />
+
+    <SignUpComp />
+
+    </div>
   )
 }
 

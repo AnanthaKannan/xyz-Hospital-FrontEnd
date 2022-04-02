@@ -14,11 +14,9 @@ export const config: configType = {
   imgURL: "",
   patientRecord: "/patientRecord",
   poolData: {
-    UserPoolId: "us-east-1_QZq2QZq2Q",
-    IdentityPoolId: "us-east-1:5347sl44pj:userpool/us-east-1_QZq2QZq2Q",
-    ClientId: "5347sl44pj",
-    region: "us-east-1",
-    poolReionKey: "us-east-1:5347sl44pj:userpool/us-east-1_QZq2QZq2Q"
+    UserPoolId: "us-east-1_ohC12gMu8",
+    ClientId: "5nt9me8vg52i7rescrmen17l69",
+    region: "us-east-1"
   }
 };
 

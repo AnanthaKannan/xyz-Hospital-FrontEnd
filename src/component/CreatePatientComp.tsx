@@ -211,7 +211,7 @@ const CreatePatientComp = () => {
                     heading='DOB' 
                     />
                   </div>
-                  <div className="col-md-3">
+                  {/* <div className="col-md-3">
                     <FileUpload
                       heading='Upload Image'
                       value={values.fileName}
@@ -228,7 +228,7 @@ const CreatePatientComp = () => {
                       }
                       errorMsg={touched.fileName && errors.fileName}
                       />
-                  </div>
+                  </div> */}
 
                   <div className='mt-3 d-flex justify-content-end'>
                     {

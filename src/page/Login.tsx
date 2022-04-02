@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginComp from '../component/LoginComp'
+import LoginComp from '../CognitoComp/LoginComp'
 
 const Login = () => {
   return (
