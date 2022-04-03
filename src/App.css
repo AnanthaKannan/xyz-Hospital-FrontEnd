@@ -1,6 +1,4 @@
 .app {
-  /* min-height: 100vh;
-  max-height: 500vh; */
   height: 100vh;
   display: flex;
   position: relative;
@@ -16,12 +14,11 @@
 
 .ql-editor > *{
   font-size: medium !important;
-  /* height: 300px !important; */
 }
 
-/* .login-height{
+.login-height{
   height: 100vh;
-} */
+}
 
 .link{
   color: #1c0583;
@@ -34,10 +31,18 @@
   cursor: pointer;
 }
 
-.banner-image {
+.bg-image {
+  background-image: url("assets/doctor.png");
+  background-color: #cccccc;
+  /* height: 100vh; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
-  width: 100%;
-  height: auto;
-  position: relative;
-}
+ }
+
+ .no-flip{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+ }

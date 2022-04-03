@@ -4,38 +4,24 @@ import { FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 
-
 import 'react-pro-sidebar/dist/css/styles.css';
-
+import TopNavBar from './TopNavBar';
 
 const SideNav = ({ children }: { children: React.ReactNode}) => {
   return (
     <div>
-        <div className='bg-primary px-2'>
-          <div className='d-flex align-items-center p-2'>
-          {/* <RiHospitalLine size={40} />  */}
-          {/* <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar> */}
-          <Avatar alt="Remy Sharp" 
-            sx={{ width: 50, height: 50 }}
-            src={require("../assets/hospitalLogo.jpg")} />
-
-
-           <h4 className='m-0 text-white p-2'>Hospital Name</h4>
-          </div>
-
-          <div>
-
-          </div>
-        </div>
-   
     <div className='app'>
       <ProSidebar collapsed={false} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
-          {/* <div className='d-flex align-items-center'>
+          <div className='d-flex align-items-center my-2'>
           
-          <h5 className='m-0 p-0'>Temporry Hospital of Inidia</h5>
-          </div> */}
-         
+           <Avatar alt="Remy Sharp"
+           className='ml-2' 
+            sx={{ width: 40, height: 40 }}
+            src={require("../assets/hospitalLogo.jpg")} />
+         <h6 className='mb-0 mx-3'>Hospital Manaement systmes</h6>
+
+         </div>
         </SidebarHeader>
         <Menu iconShape="circle" innerSubMenuArrows={false} >
           <MenuItem icon={<RiHospitalLine />}>Dashboard <Link to="/" /> </MenuItem>
@@ -50,8 +36,15 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
           <MenuItem icon={<RiHospitalLine />}>FeedBack <Link to="/feed-back" /> </MenuItem>
         </Menu>
       </ProSidebar>
-      <div className='container-fluid mt-3'>
-            {children}
+      {/* <div>
+        
+      </div> */}
+      <div className='container-fluid mx-0 px-0'>
+      <TopNavBar />
+        <div className='m-4'>
+        {children}
+
+        </div>
       </div>
     </div>
     </div>

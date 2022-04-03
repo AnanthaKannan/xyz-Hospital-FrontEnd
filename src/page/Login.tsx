@@ -1,7 +1,7 @@
 import React from 'react'
 import LoginComp from '../CognitoComp/LoginComp'
 
-const Login = () => {
+const Login = (props) => {
   return (
     // <div className="container">
     //   <div className="d-flex align-items-center login-height justify-content-center">

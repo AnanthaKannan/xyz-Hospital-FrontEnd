@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import{ SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ConfirmationCodeComp from './ConfirmationCodeComp';
 import ForgotPasswordComp from './ForgotPasswordComp'
 import ChangePassword from './ChangePassword';
@@ -13,7 +13,10 @@ import SignUpComp from './SignUpComp';
 import LoginBackground from '../reusable/LoginBackground';
 
 
+
 const LoginComp = () => {
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // singOut()
@@ -25,14 +28,13 @@ const LoginComp = () => {
     const user = new CognitoUser({ Username: email, Pool: UserPool });
     const authenticationData = { Username: email, Password: password };
     const authenticationDetails = new AuthenticationDetails(authenticationData);
-    console.log('eeeeeeeeeeeeeee')
     user.authenticateUser(authenticationDetails, {
       onSuccess: (result:any) => {
         console.log('result', result);
         const idToken = result.idToken.jwtToken;
         const refreshToken = result.refreshToken.token;
         localStorage.setItem('token', idToken);
-        // history.push('/')
+        navigate('/list-patient')
       },
       onFailure: (err:any) => {
         console.log('err', err);
@@ -40,16 +42,8 @@ const LoginComp = () => {
         setErrors({ password: 'Invalid email or password' });
       },
       newPasswordRequired: function(userAttributes, requiredAttributes) {
-        // User was signed up by an admin and must provide new
-        // password and required attributes, if any, to complete
-        // authentication.
         console.log('userAttributes', userAttributes);
         console.log('requiredAttributes', requiredAttributes);
-        // the api doesn't accept this field back
-        // delete userAttributes.email_verified;
-
-        // store userAttributes on global variable
-        // sessionUserAttributes = userAttributes;
     }
     });
 
@@ -67,7 +61,7 @@ const LoginComp = () => {
 
   return (
     <div>
-       <LoginBackground />
+       <LoginBackground title="Login"> 
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={validationSchema}
@@ -86,6 +80,7 @@ const LoginComp = () => {
           <TextBox
           heading="Password"
           id="password"
+          type='password'
           value={values.password}
           onChange={handleChange}
           errorMsg={touched.password && errors.password}
@@ -102,11 +97,11 @@ const LoginComp = () => {
       )}
     </Formik>
 
+    </LoginBackground>
     {/* <ConfirmationCodeComp />
     <ForgotPasswordComp />
     <ChangePassword /> */}
-
-    <SignUpComp />
+    {/* <SignUpComp /> */}
    
 
     </div>

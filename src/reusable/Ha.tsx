@@ -1,6 +1,6 @@
-const Ha = ({ text }: {text: string}) => {
+const Ha = ({ text, className='' }: {text: string, className?:string}) => {
   return (
-    <h3>{text}</h3>
+    <h3 className={className}>{text}</h3>
   )
 }
 
