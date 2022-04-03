@@ -13,7 +13,7 @@ const Container = ({ children, title}: containerType) => {
   },[title])
 
   return (
-    <div>
+    <div className='bg-light'>
       <LoaderContext.Provider value={{loader, setLoader}}>
       <LoadingOverlay
         active={loader}
