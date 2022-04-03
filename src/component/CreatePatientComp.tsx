@@ -181,6 +181,7 @@ const CreatePatientComp = () => {
                       errorMsg={touched.email && errors.email}
                     />
                   </div>
+                  <div className="col-md-6"></div>
                   <div className="col-md-3">
                     <TextBox
                       heading='Age'
@@ -202,6 +203,7 @@ const CreatePatientComp = () => {
                       errorMsg={touched.phone && errors.phone}
                     />
                   </div>
+                  <div className="col-md-6"></div>
                   <div className="col-md-3">
                   <DatePickerRe 
                     onChange={setFieldValue}
@@ -229,7 +231,8 @@ const CreatePatientComp = () => {
                       errorMsg={touched.fileName && errors.fileName}
                       />
                   </div> */}
-
+                  <div className="col-md-6"></div>
+ <div className="col-md-6">
                   <div className='mt-3 d-flex justify-content-end'>
                     {
                       formikInitialValue._id ?
@@ -244,6 +247,7 @@ const CreatePatientComp = () => {
                 </div>
                     }
                
+                </div>
                 </div>
                 </div>
 

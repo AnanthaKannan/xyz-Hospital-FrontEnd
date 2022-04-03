@@ -77,7 +77,7 @@ const ListPatientComp = () => {
         frameworkComponents={{
           DeleteCellRender,
           EditCellRender,
-          ViewCellRender
+          ViewCellRender,
         }}
       />
     </div>

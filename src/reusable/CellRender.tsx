@@ -1,5 +1,6 @@
 import { MdOutlineDeleteOutline, MdOutlineEditNote } from 'react-icons/md';
 import { BiMessageAltDetail } from 'react-icons/bi';
+const dateFn = require('date-fn')
 const size = 20
 
 // export const ImageCellRender = ({}) => {

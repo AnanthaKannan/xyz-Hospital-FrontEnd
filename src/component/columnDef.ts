@@ -1,4 +1,4 @@
-
+const dateFn = require('date-fn')
 export const listPatientColumnDef: any = [
   {
     headerName: "ID",
@@ -12,14 +12,8 @@ export const listPatientColumnDef: any = [
 
   },
   {
-    headerName: "createdAt",
-    field: "createdAt",
-    sortable: true,
-    filter: true,
-  },
-  {
-    headerName: "dob",
-    field: "dob",
+    headerName: "name",
+    field: "name",
     sortable: true,
     filter: true,
   },
@@ -30,16 +24,28 @@ export const listPatientColumnDef: any = [
     filter: true,
   },
   {
-    headerName: "name",
-    field: "name",
-    sortable: true,
-    filter: true,
-  },
-  {
     headerName: "phone",
     field: "phone",
     sortable: true,
     filter: true,
+  },
+  {
+    headerName: "dob",
+    field: "dob",
+    sortable: true,
+    filter: true,
+    cellRenderer: ({value}: any) => {
+      return dateFn.date(value, 104, '-')
+    }
+  },
+  {
+    headerName: "Age",
+    field: "age",
+    sortable: true,
+    filter: true,
+    cellRenderer:(params)=>{
+      return params.value+" years";
+    }
   },
   {
     headerName: "View",
