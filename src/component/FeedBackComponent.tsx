@@ -3,7 +3,7 @@ import TextEditor from "../reusable/TextEditor";
 import Hb from "../reusable/Hb";
 import { ClickButton } from "../reusable/Button";
 import { useLoadContext } from "../reusable/LoaderContext";
-import { post, get } from "../service/patientRecord.service";
+import { post, get } from "../service/feedback.service";
 import { toast } from "react-toastify";
 
 const FeedBackComponent = () => {
@@ -14,11 +14,12 @@ const FeedBackComponent = () => {
 
   const onHandleSubmit = async () => {
     console.log("submit");
+    if(!text) return
     setLoader(true);
     const result = await post({
-      description: text,
-      status: false,
-      disease: "feeling sick",
+      message: text,
+      subject: 'Feedback',
+      _hospitalId: sessionStorage.getItem("hospitalId"),
     });
     console.log("result", result.status);
     setLoader(false);

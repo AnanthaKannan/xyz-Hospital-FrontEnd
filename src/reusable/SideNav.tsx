@@ -21,7 +21,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
            className='ml-2' 
             sx={{ width: 40, height: 40 }}
             src={require("../assets/hospitalLogo.jpg")} />
-         <h6 className='mb-0 mx-3'>Hospital Manaement systmes</h6>
+         <h6 className='mb-0 mx-3'>{ localStorage.getItem('HospitalMailId')}</h6>
 
          </div>
         </SidebarHeader>

@@ -77,7 +77,7 @@ type availableTimeType = [{
 
 export type doctorValueType = {
   _id ?: number,
-  _hospitalId: number,
+  _hospitalId: string,
   name: string,
   availableTime: availableTimeType,
   availableDay: availableDayType,

@@ -34,6 +34,8 @@ const LoginComp = () => {
         const idToken = result.idToken.jwtToken;
         const refreshToken = result.refreshToken.token;
         localStorage.setItem('token', idToken);
+        localStorage.setItem('HospitalMailId', email);
+        localStorage.setItem('_hospitalId', result.idToken.payload.sub);
         navigate('/list-patient')
       },
       onFailure: (err:any) => {

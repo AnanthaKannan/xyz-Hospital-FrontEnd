@@ -11,7 +11,7 @@ const TopNavBar = () => {
           <div className='d-flex align-items-center p-2 justify-content-end'>
            <Tooltip title="Logout">
              <Link to='/' className='text-white'>
-          <h4 className='m-1 text-light pointer'> <ImExit />   </h4>  
+          <h4 className='m-1 text-light pointer d-flex align-content-center'> <ImExit />   </h4>  
           </Link>
           </Tooltip>
           </div>

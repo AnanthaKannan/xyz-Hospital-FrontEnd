@@ -30,7 +30,7 @@ const CreateDoctorComp = () => {
   const [formikInitialValue, setFormikInitialValue] = useState<doctorValueType>(
     {
       name: "",
-      _hospitalId: null,
+      _hospitalId: sessionStorage.getItem("hospitalId"),
       specialist: "",
       availableTime: [{ from: null, to: null }],
       timePerPatient: "",
@@ -50,7 +50,7 @@ const CreateDoctorComp = () => {
       setFormikInitialValue({
         _id: state._id,
         name: state.name,
-        _hospitalId: Number(state._hospitalId),
+        _hospitalId: sessionStorage.getItem("hospitalId"),
         specialist: state.specialist,
         availableTime: state.availableTime,
         timePerPatient: state.timePerPatient,
@@ -69,7 +69,7 @@ const CreateDoctorComp = () => {
   ) => {
     values.availableTime = selectedTime;
     // values.availableDay = availableDay;
-    values._hospitalId = 2;
+    values._hospitalId = sessionStorage.getItem("hospitalId");
     values.timePerPatient = "10";
     console.log(values);
 

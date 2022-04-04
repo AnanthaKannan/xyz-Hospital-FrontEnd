@@ -26,7 +26,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `${ sessionStorage.getItem('token')}`
+        'Authorization': `${ localStorage.getItem('token')}`
       },
       url: qryString
     };
@@ -62,14 +62,16 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
   ****************/
 
-  export const post = (apiUrl:string, data:Object) => {
+  export const post = (apiUrl:string, data:any) => {
+
+    data._hospitalId = localStorage.getItem('_hospitalId');
     
     console.log("===>post")
     const options:AxiosRequestConfig = {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `${ sessionStorage.getItem('token')}`
+        'Authorization': `${ localStorage.getItem('token')}`
       },
       data: data,
       url: `${url}${apiUrl}`,
@@ -115,7 +117,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
     let qryString = `${url}${apiUrl}`;
 
     console.log("data", data,'qryString', qryString)
-
+    data._hospitalId = localStorage.getItem('_hospitalId');
  
 
     const options:AxiosRequestConfig = {
@@ -126,7 +128,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
         'content-type': 'application/json',
 
-        'Authorization': `${ sessionStorage.getItem('token')}`
+        'Authorization': `${ localStorage.getItem('token')}`
 
       },
 
@@ -202,7 +204,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
         'content-type': 'application/json',
 
-        'Authorization': `${ sessionStorage.getItem('token')}`
+        'Authorization': `${ localStorage.getItem('token')}`
 
       },
 

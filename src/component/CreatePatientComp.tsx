@@ -124,7 +124,7 @@ const CreatePatientComp = () => {
   const uploadImage = async( values) => {
     alert()
     console.log('uploadImage', values);
-    const _hospitalId = 2
+    const _hospitalId = sessionStorage.getItem("hospitalId");
     const path = imgUploadPath('patientImg', _hospitalId);
     const file = values.file;
     const result = await uploadFile({file, path});
