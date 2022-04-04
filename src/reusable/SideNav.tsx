@@ -1,5 +1,7 @@
 import { SidebarHeader, ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { RiHospitalLine } from 'react-icons/ri';
+import { RiHospitalLine, RiDashboardFill, RiStethoscopeFill } from 'react-icons/ri';
+import { MdFeedback } from 'react-icons/md';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
@@ -24,16 +26,16 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
          </div>
         </SidebarHeader>
         <Menu iconShape="circle" innerSubMenuArrows={false} >
-          <MenuItem icon={<RiHospitalLine />}>Dashboard <Link to="/" /> </MenuItem>
-          <SubMenu title="Doctor" icon={<FaUsers />} defaultOpen={false}>
-            <MenuItem icon={ <FaUsers />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
-            <MenuItem> <Link to="/list-doctor" />List Doctor</MenuItem>
+          <MenuItem icon={<RiDashboardFill />}>Dashboard <Link to="/" /> </MenuItem>
+          <SubMenu title="Doctor" icon={<RiStethoscopeFill />} defaultOpen={true}>
+            <MenuItem icon={ <AiOutlineArrowRight />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
+            <MenuItem icon={ <AiOutlineArrowRight />}> <Link to="/list-doctor" />List Doctor</MenuItem>
           </SubMenu>
           <SubMenu title="Patient" icon={<FaUsers />} defaultOpen={true}>
-            <MenuItem> <Link to="/create-patient" /> New Patient</MenuItem>
-            <MenuItem> <Link to="/list-patient" /> List Patient</MenuItem>
+            <MenuItem icon={ <AiOutlineArrowRight />}> <Link to="/create-patient" /> New Patient</MenuItem>
+            <MenuItem icon={ <AiOutlineArrowRight />}> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>
-          <MenuItem icon={<RiHospitalLine />}>FeedBack <Link to="/feed-back" /> </MenuItem>
+          <MenuItem icon={<MdFeedback />}>FeedBack <Link to="/feed-back" /> </MenuItem>
         </Menu>
       </ProSidebar>
       {/* <div>

@@ -140,7 +140,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
 
   const availableTimeValidation = (value: any) => {
     let retValue = false;
-    value.forEach((item) => {
+    selectedTime.forEach((item) => {
       if (item.from && item.to) retValue = true;
     });
     return retValue;
@@ -163,7 +163,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
       .test( "availableTime", "Please select doctor available time", availableTimeValidation ),
   });
 
-  const addTimeSheet = () => {
+  const addTimeSheet = (setFieldValue: any, _availableTime) => {
     const lastSelectedTime = selectedTime.slice(
       selectedTime.length - 1,
       selectedTime.length
@@ -176,7 +176,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
     setSelectedTime([...selectedTime, { from: null, to: null }]);
   };
 
-  const removeTimeSheet = () => {
+  const removeTimeSheet = (setFieldValue: any, _availableTime) => {
     const updatedTime = selectedTime.slice(0, selectedTime.length - 1);
     setSelectedTime([...updatedTime]);
   };
@@ -255,12 +255,12 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                     <div className="d-flex justify-content-between align-items-center">
                       <h6>Select doctor available time</h6>
                       <div className="d-flex">
-                        <h6 className="pointer mr-2" onClick={addTimeSheet}>
+                        <h6 className="pointer mr-2" onClick={() => addTimeSheet(setFieldValue, selectedTime)}>
                           {" "}
                           <GrAddCircle size={20} />{" "}
                         </h6>
                         {selectedTime.length > 1 && (
-                          <h6 className="pointer" onClick={removeTimeSheet}>
+                          <h6 className="pointer" onClick={()=>removeTimeSheet(setFieldValue, selectedTime)}>
                             <GrSubtractCircle size={20} />{" "}
                           </h6>
                         )}

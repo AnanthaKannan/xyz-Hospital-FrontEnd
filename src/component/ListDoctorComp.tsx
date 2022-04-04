@@ -73,12 +73,7 @@ const ListDoctorComp = () => {
   return (
     <div>
        <Hb text='Doctors' />
-      {/* <AgGirdReact 
-        columnDefs={listPatientColumnDef}
-        rowData={rowData}
-        onCellClicked={(e: any) => console.log(e)}
-
-      /> */}
+     
        <div className='row'>
         {
             rowData.map((obj) => {
@@ -88,14 +83,6 @@ const ListDoctorComp = () => {
                     <div className='d-flex align-items-center justify-content-between'>
                         <div className='d-flex'>
                     <p className='font-weight-bold mr-3'> { obj.name } </p>
-                    {/* <StarRatings
-                  rating={obj.rating}
-                  starRatedColor="#FFA41C"
-                  numberOfStars={5}
-                  starDimension="20px"
-                  starSpacing="1px"
-                  name='rating'
-                /> */}
                 </div>
                     <h4> 
                     <MdDelete onClick={() => onHandleDelete(obj._id) } size={20} className='mx-3 pointer' /> 
