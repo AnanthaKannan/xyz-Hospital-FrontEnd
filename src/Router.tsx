@@ -6,8 +6,13 @@ import ListPatient from "./page/ListPatient";
 import ListDoctor from "./page/ListDoctor";
 import PatientRecord from "./page/PatientRecord";
 import FeedBack from "./page/FeedBack";
-import Login from "./page/Login";
-import SignUp from "./page/SignUp";
+
+import DummyPage from "./page/Dummy";
+import Dashboard from "./page/Dashboard";
+
+import LoginComp from "./CognitoComp/LoginComp";
+import SignUpComp from "./CognitoComp/SignUpComp";
+import ConfirmationCodeComp from "./CognitoComp/ConfirmationCodeComp";
 
 type routeType = {
     PATH: string,
@@ -16,11 +21,23 @@ type routeType = {
 
 const routes: routeType[] = [
   {
-    COMPONENT: <SignUp />,
+    COMPONENT: <Dashboard />,
+    PATH: '/dashboard'
+  },
+  {
+    COMPONENT: <DummyPage />,
+    PATH: '/dummy'
+  },
+  {
+    COMPONENT: <ConfirmationCodeComp />,
+    PATH: '/confirmation-code'
+  },
+  {
+    COMPONENT: <SignUpComp />,
     PATH: '/sing-up'
   },
   {
-    COMPONENT: <Login />,
+    COMPONENT: <LoginComp />,
     PATH: '/login'
   },
   {
@@ -52,7 +69,7 @@ const routes: routeType[] = [
     PATH: '/patient-record'
   },
   {
-    COMPONENT: <Login />,
+    COMPONENT: <LoginComp />,
     PATH: '/'
   }
 ]

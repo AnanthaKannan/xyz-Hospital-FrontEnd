@@ -26,7 +26,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
          </div>
         </SidebarHeader>
         <Menu iconShape="circle" innerSubMenuArrows={false} >
-          <MenuItem icon={<RiDashboardFill />}>Dashboard <Link to="/" /> </MenuItem>
+          <MenuItem icon={<RiDashboardFill />} >Dashboard <Link to="/dashboard" /> </MenuItem>
           <SubMenu title="Doctor" icon={<RiStethoscopeFill />} defaultOpen={true}>
             <MenuItem icon={ <AiOutlineArrowRight />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
             <MenuItem icon={ <AiOutlineArrowRight />}> <Link to="/list-doctor" />List Doctor</MenuItem>

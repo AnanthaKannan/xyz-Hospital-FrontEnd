@@ -2,15 +2,7 @@ import React from "react";
 import DropDown from "../reusable/DropDown";
 import { timeList } from "../lib/times";
 
-export default function TimePickerRe({
-  index,
-  setSelectedTime,
-  selectedTime, 
-}: {
-  index: number;
-  setSelectedTime: Function;
-  selectedTime: { from: number; to: number }[];
-}) {
+export default function TimePickerRe({ index, setSelectedTime, selectedTime, setFieldValue }: { index: number; setSelectedTime: Function; selectedTime: { from: number; to: number }[]; setFieldValue: Function; }) {
   const timeList_ = timeList.map((obj) => {
     return {
       value: obj.index,
@@ -26,6 +18,7 @@ export default function TimePickerRe({
     timeObj[state] = value;
     time[index] = timeObj;
     setSelectedTime([...time]);
+    setFieldValue('availableTime', [...time])
   };
 
   const getTimeList = (timeIndex: number, state: "from" | "to") => {
@@ -56,6 +49,7 @@ export default function TimePickerRe({
     <div className="row">
       <div className="col-md-6">
         <DropDown
+          key={`index-a${index}`}
           className="mt-2 mb-2"
           list={getTimeList(selectedTime[index].to, "from")}
           value={selectedTime[index].from}
@@ -66,6 +60,7 @@ export default function TimePickerRe({
       </div>
       <div className="col-md-6">
         <DropDown
+          key={`index-b${index}`}
           className="mt-2 mb-3"
           list={getTimeList(selectedTime[index].from, "to")}
           heading="Start Time"

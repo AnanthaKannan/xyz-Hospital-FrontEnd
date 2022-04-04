@@ -18,9 +18,9 @@ const LoginComp = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // singOut()
-  }, [])
+  // useEffect(() => {
+  //   navigate("/login", { replace: true });
+  // }, [])
 
   const onSubmit = (values:any, { setErrors }:any) => {
     
@@ -39,6 +39,12 @@ const LoginComp = () => {
       onFailure: (err:any) => {
         console.log('err', err);
         console.log('err.message', err.message);
+        try{
+            if(err.message.includes('User is not confirmed')){
+              navigate('/confirmation-code')
+            }
+        } 
+        catch(e){}
         setErrors({ password: 'Invalid email or password' });
       },
       newPasswordRequired: function(userAttributes, requiredAttributes) {
@@ -89,14 +95,17 @@ const LoginComp = () => {
       <SubmitButton className='w-100' type="submit" color='primary' text='LOGIN'/>
 
       <div className='d-flex justify-content-between mt-2'>
-        <label className='link'> <Link to="/sing-up" /> Not a user? sing up</label>
-        <label className='link'> <Link to="/forgot-password" /> Forgot password </label>
+      <Link to="/sing-up">
+        <label className='link'>  Not a user? sing up</label>
+        </Link>
+        <Link to="/forgot-password" > 
+        <label className='link'> Forgot password </label>
+        </Link>
        
       </div>
       </form>
       )}
     </Formik>
-
     </LoginBackground>
     {/* <ConfirmationCodeComp />
     <ForgotPasswordComp />

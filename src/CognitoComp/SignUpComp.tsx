@@ -5,59 +5,29 @@ import * as Yup from 'yup'
 import{ SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool'
+import LoginBackground from '../reusable/LoginBackground';
+import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const SignUpComp = () => {
 
-  useEffect(() => {
-    // singOut()
-  }, [])
+  const navigate = useNavigate();
 
   const onSubmit = (values:any, { setErrors }:any) => {
+    console.log('values', values);
     
     const { email, password } = values;
     UserPool.signUp(email, password, [], null, (err:any, result:any) => {
       if (err) {
         console.log('err', err);
-        // setErrors({ email: err.message });
+        setErrors({ email: err.message });
         }
         else
           console.log('result', result);
+          toast.success('Sign up successful');
+          navigate('/confirmation-code')
       });
-
-
-
-
-        // const user = new CognitoUser({ Username: email, Pool: UserPool });
-    // const authenticationData = { Username: email, Password: password };
-    // const authenticationDetails = new AuthenticationDetails(authenticationData);
-    // console.log('eeeeeeeeeeeeeee')
-    // user.authenticateUser(authenticationDetails, {
-    //   onSuccess: (result:any) => {
-    //     console.log('result', result);
-    //     const idToken = result.idToken.jwtToken;
-    //     const refreshToken = result.refreshToken.token;
-    //     localStorage.setItem('token', idToken);
-    //     // history.push('/')
-    //   },
-    //   onFailure: (err:any) => {
-    //     console.log('err', err);
-    //     console.log('err.message', err.message);
-    //     setErrors({ password: 'Invalid email or password' });
-    //   },
-    //   newPasswordRequired: function(userAttributes, requiredAttributes) {
-    //     // User was signed up by an admin and must provide new
-    //     // password and required attributes, if any, to complete
-    //     // authentication.
-    //     console.log('userAttributes', userAttributes);
-    //     console.log('requiredAttributes', requiredAttributes);
-    //     // the api doesn't accept this field back
-    //     // delete userAttributes.email_verified;
-
-    //     // store userAttributes on global variable
-    //     // sessionUserAttributes = userAttributes;
-    // }
-    // });
 
   }
 
@@ -68,12 +38,18 @@ const SignUpComp = () => {
     password: Yup.string()
       .required('Required')
       .min(6, 'Password must be at least 6 characters')
-      .max(20, 'Password must be less than 20 characters')
+      .max(20, 'Password must be less than 20 characters'),
+    confirmPassword: Yup.string()
+      .required('Required')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+
   });
 
   return (
+    <div>
+    <LoginBackground title={'Sign Up'}>
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: '', password: '', confirmPassword: '' }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
@@ -94,11 +70,32 @@ const SignUpComp = () => {
           onChange={handleChange}
           errorMsg={touched.password && errors.password}
           />
+          <TextBox
+          heading="Re-enter Password"
+          id="confirmPassword"
+          value={values.confirmPassword}
+          onChange={handleChange}
+          errorMsg={touched.confirmPassword && errors.confirmPassword}
+          />
       <br />
       <SubmitButton className='w-100' type="submit" color='primary' text='Sing up'/>
+
+      <div className='d-flex justify-content-between mt-2'>
+      <Link to="/login">
+        <label className='link'> Already Have a account? Login</label>
+        </Link>
+        <Link to="/forgot-password" > 
+        <label className='link'> Forgot password </label>
+        </Link>
+       
+      </div>
+
+
       </form>
       )}
     </Formik>
+    </LoginBackground >
+    </div>
   )
 }
 

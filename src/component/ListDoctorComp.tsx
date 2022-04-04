@@ -26,11 +26,19 @@ const ListDoctorComp = () => {
     console.log(result)
     setLoader(false);
     if (result.status === 200) {
-      setRowData(result.data);
+      setRowData(conversion(result.data));
     }
     else{
       toast.error("Oops! Something went wrong. Please try again later.");
     }
+  }
+
+  const conversion = (data: any) => {
+    return data.map((item: any) => {
+      return {
+        ...item
+      }
+    })
   }
 
   const deleteDoctor = async (_doctorId: number) => {

@@ -24,6 +24,8 @@ const availableDays = {
   sunday: false,
 };
 
+const selectedTimeInitialState = [ { from: null, to: null }]
+
 const CreateDoctorComp = () => {
   const [formikInitialValue, setFormikInitialValue] = useState<doctorValueType>(
     {
@@ -35,12 +37,7 @@ const CreateDoctorComp = () => {
       availableDay: availableDays,
     }
   );
-  const [selectedTime, setSelectedTime] = useState([
-    {
-      from: null,
-      to: null,
-    },
-  ]);
+  const [selectedTime, setSelectedTime] = useState(selectedTimeInitialState);
   // const [availableDay, setAvailableDay] = useState<any>(availableDays);
   const location = useLocation();
   const navigate = useNavigate();
@@ -80,11 +77,7 @@ const CreateDoctorComp = () => {
     else createDoctor(values, resetForm, setErrors);
   };
 
-  const updateDoctor = async (
-    values: doctorValueType,
-    resetForm: Function,
-    setErrors: Function
-  ) => {
+  const updateDoctor = async ( values: doctorValueType, resetForm: Function, setErrors: Function ) => {
     setLoader(true);
     const result = await put(values._id, values);
     console.log("result", result.status);
@@ -117,12 +110,14 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
     }
 
     toast.success("Doctor created successfully");
-    resetForm();
+    handleReset(resetForm);
   };
 
-  const handleReset = (setFieldValue: Function, resetForm: Function): void => {
+  const handleReset = (resetForm: Function): void => {
     if (formikInitialValue._id) navigate("/list-doctor");
+
     resetForm();
+    setSelectedTime(selectedTimeInitialState);
   };
 
   const onHandleCheckBox = (isChecked: boolean, name: any, setFieldValue: any, _availableDays) => {
@@ -191,16 +186,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({
-            handleSubmit,
-            handleChange,
-            values,
-            errors,
-            touched,
-            setFieldValue,
-            setErrors,
-            resetForm,
-          }) => (
+          {({ handleSubmit, handleChange, values, errors, touched, setFieldValue, setErrors, resetForm, }) => (
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-md-3">
@@ -235,15 +221,17 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                   <h6>Select doctor available Days</h6>
                   {[ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", ].map((day: string) => {
                     return (
+                      // <div key={day}>
                       <CheckBox
                         label={day}
                         name={day.toLowerCase()}
-                        key={day}
+                        keyValue={day}
                         checked={values.availableDay[day.toLowerCase()]}
                         onChange={(isChecked, name) =>
                           onHandleCheckBox(isChecked, name, setFieldValue, values.availableDay)
                         }
                       />
+                      // </div>
                     );
                   })}
 
@@ -267,11 +255,14 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                       </div>
                     </div>
                     {selectedTime.map((obj, index) => (
+                      <div key={`index-${index}`}>
                       <TimePicker
+                      setFieldValue={setFieldValue}
                         setSelectedTime={setSelectedTime}
                         selectedTime={selectedTime}
                         index={index}
                       />
+                      </div>
                     ))}
                   </div>
                   {touched.availableTime && ( <div className="text-danger">{errors.availableTime}</div> )}
@@ -283,7 +274,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                   <div className="mt-3 d-flex justify-content-end">
                     <ClickButton
                       className="mx-4"
-                      onClick={() => handleReset(setFieldValue, resetForm)}
+                      onClick={() => handleReset(resetForm)}
                       text="Cancel"
                       color="default"
                       id="patient-cancel"

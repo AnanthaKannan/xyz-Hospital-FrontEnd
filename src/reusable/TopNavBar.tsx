@@ -1,15 +1,19 @@
 import React from 'react'
 import Avatar from '@mui/material/Avatar';
+import { ImExit } from 'react-icons/im';
+import Tooltip from '@mui/material/Tooltip';
+import { Link } from 'react-router-dom';
+
 
 const TopNavBar = () => {
   return (
     <div className='bg-primary px-2'>
-          <div className='d-flex align-items-center p-2'>
-           <h4 className='m-0 text-white p-2'>Hospital Name</h4>
-          </div>
-
-          <div>
-
+          <div className='d-flex align-items-center p-2 justify-content-end'>
+           <Tooltip title="Logout">
+             <Link to='/' className='text-white'>
+          <h4 className='m-1 text-light pointer'> <ImExit />   </h4>  
+          </Link>
+          </Tooltip>
           </div>
         </div> 
   )
