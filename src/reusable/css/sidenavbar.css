@@ -1,0 +1,41 @@
+/* side nav bar */
+.active{
+  color: #25a0e2 !important;
+}
+
+/* background color for  side nav bar*/
+.pro-sidebar > .pro-sidebar-inner{
+  background-color: #f6f8fa !important;
+}
+
+/* back ground color for inner child nav bar */
+.pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item{
+  background-color: #f6f8fa !important;
+}
+
+/* background color for icon */
+.pro-sidebar .pro-menu.shaped .pro-menu-item > .pro-inner-item > .pro-icon-wrapper{
+  background-color: transparent !important;
+}
+
+/* font color */
+.pro-sidebar{
+  color: #616161 !important;
+}
+/* on text hover */
+.pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:hover{
+  color: #25a0e2 !important;
+}
+
+/* font  */
+.pro-sidebar .pro-menu .pro-menu-item {
+  font-size: 16px !important;
+}
+
+.pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header{
+  border: none !important;
+}
+
+/* .pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header */
+
+/* side nav bar end here */

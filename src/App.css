@@ -8,45 +8,6 @@
   border-right: 1px solid #dee2e6!important
 }
 
-/* side nav bar */
-.active{
-  color: #25a0e2 !important;
-}
-
-.active :hover{
-  color: #25a0e2 !important;
-}
-
-/* background color for  side nav bar*/
-.pro-sidebar > .pro-sidebar-inner{
-  background-color: #f6f8fa !important;
-}
-
-/* back ground color for inner child nav bar */
-.pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item{
-  background-color: #f6f8fa !important;
-}
-
-/* background color for icon */
-.pro-sidebar .pro-menu.shaped .pro-menu-item > .pro-inner-item > .pro-icon-wrapper{
-  background-color: transparent !important;
-}
-
-/* font color */
-.pro-sidebar{
-  color: #616161 !important;
-}
-/* font  */
-.pro-sidebar .pro-menu .pro-menu-item {
-  font-size: 16px;
-}
-
-.pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header{
-  border: none;
-}
-
-/* side nav bar end here */
-
 .pointer{
   cursor: pointer;
 }

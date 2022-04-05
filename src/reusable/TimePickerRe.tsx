@@ -63,7 +63,7 @@ export default function TimePickerRe({ index, setSelectedTime, selectedTime, set
           key={`index-b${index}`}
           className="mt-2 mb-3"
           list={getTimeList(selectedTime[index].from, "to")}
-          heading="Start Time"
+          heading="End Time"
           value={selectedTime[index].to}
           id={`startTime${index}`}
           onChange={(e: any) => onChange(e, "to")}

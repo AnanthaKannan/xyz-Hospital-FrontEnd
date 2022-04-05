@@ -6,6 +6,7 @@ import { FaUsers } from 'react-icons/fa';
 import { Link, Navigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import { useEffect, useState } from 'react';
+import './css/sidenavbar.css'
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import TopNavBar from './TopNavBar';
@@ -14,6 +15,7 @@ import Router from '../Router'
 const SideNav = ({ children }: { children: React.ReactNode}) => {
 
   const [path, setPath] = useState({...Router.reduce((acc, value) => ({ ...acc, [value.PATH.slice(1)]: false}), {})})
+  const [collapsed, setCollapsed] = useState(false)
 
   useEffect(() => {
     navigate();
@@ -31,20 +33,23 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
   return (
     <div>
     <div className='app'>
-      <ProSidebar className='border-right' collapsed={false} breakPoint={'md'} toggled={false}>
+      <ProSidebar className='border-right' collapsed={collapsed} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
-          <div className='d-flex align-items-center m-2'>
-          
+          <div className='d-flex align-items-center justify-content-between m-2'>
            <Avatar alt="Remy Sharp"
            className='ml-2' 
             sx={{ width: 40, height: 40 }}
             src={require("../assets/hospitalLogo.jpg")} />
+            {
+              collapsed === false &&
          <h6 className='mb-0 mx-3'>{ localStorage.getItem('HospitalMailId').slice(0, 18) }</h6>
+
+            }
 
          </div>
         </SidebarHeader>
         <Menu iconShape="circle" innerSubMenuArrows={true} >
-          <MenuItem active={path['dashboard']} icon={<RiDashboardFill size={18} />} >Dashboard <Link to="/dashboard" /> </MenuItem>
+          {/* <MenuItem active={path['dashboard']} icon={<RiDashboardFill size={18} />} >Dashboard <Link to="/dashboard" /> </MenuItem> */}
           <SubMenu title="Doctor" icon={<RiStethoscopeFill  size={18} />} defaultOpen={true}>
             <MenuItem active={path['create-doctor']} icon={ <AiOutlineArrowRight size={18} />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
             <MenuItem active={path['list-doctor']} icon={ <AiOutlineArrowRight size={18} />}> <Link to="/list-doctor" />List Doctor</MenuItem>
@@ -58,7 +63,10 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
       </ProSidebar>
 
       <div className='container-fluid mx-0 px-0'>
-      <TopNavBar />
+      <TopNavBar 
+      collapsed={collapsed}
+       setCollapsed={setCollapsed}
+      />
         <div className='m-4'>
         {children}
 
