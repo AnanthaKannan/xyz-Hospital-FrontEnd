@@ -42,7 +42,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
             src={require("../assets/hospitalLogo.jpg")} />
             {
               collapsed === false &&
-         <h6 className='mb-0 mx-3'>{ localStorage.getItem('HospitalMailId').slice(0, 18) }</h6>
+         <h6 className='mb-0 mx-3'>{ localStorage.getItem('HospitalMailId')?.slice(0, 18) }</h6>
 
             }
 

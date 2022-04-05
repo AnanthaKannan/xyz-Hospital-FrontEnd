@@ -18,9 +18,11 @@ const LoginComp = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   navigate("/login", { replace: true });
-  // }, [])
+  useEffect(() => {
+    localStorage.removeItem('HospitalName')
+    localStorage.removeItem('HospitalMailId')
+    localStorage.removeItem('_hospitalId')
+  }, [])
 
   const onSubmit = (values:any, { setErrors }:any) => {
     
