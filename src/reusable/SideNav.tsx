@@ -3,44 +3,60 @@ import { RiHospitalLine, RiDashboardFill, RiStethoscopeFill } from 'react-icons/
 import { MdFeedback } from 'react-icons/md';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
+import { useEffect, useState } from 'react';
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import TopNavBar from './TopNavBar';
+import Router from '../Router'
 
 const SideNav = ({ children }: { children: React.ReactNode}) => {
+
+  const [path, setPath] = useState({...Router.reduce((acc, value) => ({ ...acc, [value.PATH.slice(1)]: false}), {})})
+
+  useEffect(() => {
+    navigate();
+  }, [])
+  
+  const navigate = () => {
+    const url = window.location.href;
+    const splitUrl = url.split('/');
+    const endPath = splitUrl[splitUrl.length -1];
+    let pathObj = {...path, [endPath]:true};
+    console.log('pathObj', pathObj)
+    setPath(pathObj)
+  }
+
   return (
     <div>
     <div className='app'>
-      <ProSidebar collapsed={false} breakPoint={'md'} toggled={false}>
+      <ProSidebar className='border-right' collapsed={false} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
-          <div className='d-flex align-items-center my-2'>
+          <div className='d-flex align-items-center m-2'>
           
            <Avatar alt="Remy Sharp"
            className='ml-2' 
             sx={{ width: 40, height: 40 }}
             src={require("../assets/hospitalLogo.jpg")} />
-         <h6 className='mb-0 mx-3'>{ localStorage.getItem('HospitalMailId')}</h6>
+         <h6 className='mb-0 mx-3'>{ localStorage.getItem('HospitalMailId').slice(0, 18) }</h6>
 
          </div>
         </SidebarHeader>
-        <Menu iconShape="circle" innerSubMenuArrows={false} >
-          <MenuItem icon={<RiDashboardFill />} >Dashboard <Link to="/dashboard" /> </MenuItem>
-          <SubMenu title="Doctor" icon={<RiStethoscopeFill />} defaultOpen={true}>
-            <MenuItem icon={ <AiOutlineArrowRight />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
-            <MenuItem icon={ <AiOutlineArrowRight />}> <Link to="/list-doctor" />List Doctor</MenuItem>
+        <Menu iconShape="circle" innerSubMenuArrows={true} >
+          <MenuItem active={path['dashboard']} icon={<RiDashboardFill size={18} />} >Dashboard <Link to="/dashboard" /> </MenuItem>
+          <SubMenu title="Doctor" icon={<RiStethoscopeFill  size={18} />} defaultOpen={true}>
+            <MenuItem active={path['create-doctor']} icon={ <AiOutlineArrowRight size={18} />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
+            <MenuItem active={path['list-doctor']} icon={ <AiOutlineArrowRight size={18} />}> <Link to="/list-doctor" />List Doctor</MenuItem>
           </SubMenu>
-          <SubMenu title="Patient" icon={<FaUsers />} defaultOpen={true}>
-            <MenuItem icon={ <AiOutlineArrowRight />}> <Link to="/create-patient" /> New Patient</MenuItem>
-            <MenuItem icon={ <AiOutlineArrowRight />}> <Link to="/list-patient" /> List Patient</MenuItem>
+          <SubMenu title="Patient" icon={<FaUsers size={18} />} defaultOpen={true}>
+            <MenuItem active={path['create-patient']} icon={ <AiOutlineArrowRight size={18} />}> <Link to="/create-patient" /> New Patient</MenuItem>
+            <MenuItem active={path['list-patient']} icon={ <AiOutlineArrowRight  size={18} />}> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>
-          <MenuItem icon={<MdFeedback />}>FeedBack <Link to="/feed-back" /> </MenuItem>
+          <MenuItem active={path['feed-back']} icon={<MdFeedback size={18} />}>FeedBack <Link to="/feed-back" /> </MenuItem>
         </Menu>
       </ProSidebar>
-      {/* <div>
-        
-      </div> */}
+
       <div className='container-fluid mx-0 px-0'>
       <TopNavBar />
         <div className='m-4'>

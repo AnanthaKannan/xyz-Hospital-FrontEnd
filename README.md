@@ -71,3 +71,6 @@ https://prosurgic.surge.sh/#/
 HospitalName
 HospitalMailId
 _hospitalId
+
+
+https://themes.themesbrand.com/velzon/react/minimal/dashboard-analytics

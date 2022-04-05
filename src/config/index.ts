@@ -7,9 +7,9 @@ type configType = {
   uploadFileUrl: string;
   imgURL: string;
 }
-
+// "http://localhost:3000/dev",
 export const config: configType = {
-  apiURL: "http://localhost:3000/dev", //"https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev",
+  apiURL: "https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev",
   uploadFileUrl: "https://4kzj8450nb.execute-api.us-east-1.amazonaws.com/dev/upload-image",
   imgURL: "",
   patientRecord: "/patientRecord",
