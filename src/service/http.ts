@@ -21,7 +21,6 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
       const keys = Object.keys(data);
       keys.forEach((key: string, i:number) => qryString += `${i===0 ? '?' : '&'}${key}=${data[key]}`)
     }
-
     const options: AxiosRequestConfig = {
       method: 'GET',
       headers: {
@@ -71,7 +70,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'Authorization': `${ localStorage.getItem('token')}`
+        'Authorization': `${localStorage.getItem('token')}`
       },
       data: data,
       url: `${url}${apiUrl}`,

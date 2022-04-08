@@ -1,3 +1,5 @@
+/* eslint-disable testing-library/await-async-utils */
+/* eslint-disable no-undef */
 /// <reference types="cypress" /> 
 //  the above line used to auto suggestion for cypress
 
@@ -5,10 +7,6 @@
 describe('my test suite', () => {
 
   beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
     cy.visit('http://recordhospital.surge.sh/')
   })
 
@@ -38,10 +36,6 @@ describe('my test suite', () => {
     cy.get('.MuiButtonBase-root').click()
     cy.wait(500)
     cy.get('#create-patient').click()
-    // cy.get('[aria-colindex="8"] > div > .pointer').click()
-    // cy.get('.swal2-cancel').click()
-    // cy.get('[aria-colindex="8"] > div > .pointer').click()
-    // cy.get('.swal2-confirm').click()
   })
 
 

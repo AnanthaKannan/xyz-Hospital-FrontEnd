@@ -1,60 +1,44 @@
+/* eslint-disable no-undef */
+/* eslint-disable testing-library/await-async-utils */
 /// <reference types="cypress" /> 
 //  the above line used to auto suggestion for cypress
+import faker from 'faker';
 
-
-describe('Patient Crate', () => {
+describe('Patient Create', () => {
 
   // beforeEach(() => {
-  //   // Cypress starts out with a blank slate for each test
-  //   // so we must tell it to visit our website with the `cy.visit()` command.
-  //   // Since we want to visit the same URL at the start of all our tests,
-  //   // we include it in our beforeEach function so that it runs before each test
-  //   cy.visit('http://recordhospital.surge.sh/create-patient')
+  //   cy.visit('http://localhost:3000/create-patient');
   // })
 
+  
 
-  it('Verify title of the page', () => {
-    cy.title().should('eq', 'Create Patient')
-  })
+  it('With proper user name and password login the page', () => {
+    cy.visit('http://localhost:3000/create-patient');
+    cy.get('#email').type('sreeananthakannan@gmail.com')
+    cy.get('#password').type('Kannan$7500')
+    cy.get('.MuiButtonBase-root').click()
+    cy.wait(500)
+    cy.get('#create-patient').click()
 
-  it('Verify the required field' , () => {
-    cy.get('#patient-submit > .MuiButton-label').click();  // click the submit button
+    cy.get('#patient-submit').click();  // click the submit button
     cy.get(':nth-child(1) > .mb-3 > .text-danger').should('have.text', 'name is a required field');
     cy.get(':nth-child(2) > .mb-3 > .text-danger').should('have.text', 'Email is required');
     cy.get(':nth-child(4) > .mb-3 > .text-danger').should('have.text', 'Age is required');
     cy.get(':nth-child(5) > .mb-3 > .text-danger').should('have.text', 'Phone is required');
-    cy.get('#patient-cancel > .MuiButton-label').click()
+    cy.get('#patient-cancel').click()
     cy.get(':nth-child(1) > .mb-3 > .text-danger').should('not.exist');
     cy.get(':nth-child(2) > .mb-3 > .text-danger').should('not.exist');
     cy.get(':nth-child(4) > .mb-3 > .text-danger').should('not.exist');
     cy.get(':nth-child(5) > .mb-3 > .text-danger').should('not.exist');
+      
+      cy.get('#name').type(faker.name.firstName())
+      cy.get('#email').type(faker.internet.email())
+      cy.get('#age').type(faker.random.number())
+      cy.get('#phone').type(faker.phone.phoneNumber())
+      cy.get('.react-datepicker__input-container > .form-control').focus();
+      cy.get('.react-datepicker__day--015').click();
+      cy.get('#patient-submit').click()
+      cy.wait(200)
   })
-
-  it('create a patient with proper data', () => {
-    cy.get('#name').type('ananthakannan@gmail.com')
-    cy.get('#email').type('Kannan$7500')
-    cy.get('#age').type('7500')
-    cy.get('#phone').type('Kannan$7500')
-    cy.get('.react-datepicker__input-container > .form-control').type('01/01/2020')
-    cy.get('#patient-cancel > .MuiButton-label').click()
-    // cy.wait(200)
-  })
-
-
-  // it('With proper user name and password login the page', () => {
-  //   cy.get('#email').type('sreeananthakannan@gmail.com')
-  //   cy.get('#password').type('Kannan$7500')
-  //   cy.get('.MuiButtonBase-root').click()
-  // })
-
-  // it('type the password in the login page', () => {
-    
-  //   // .should('have.value', 'Kannan$7500');
-  // })
-
-  // it('.submit() - submit a form', () => {
-  //   cy.get('[type="submit"]').submit()
-  //     .next().should('contain', 'Your form has been submitted!')
-  // })
 
 })

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik'
+import faker from 'faker';
 import * as Yup from 'yup'
 import{ SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
@@ -19,9 +20,9 @@ const LoginComp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem('HospitalName')
-    localStorage.removeItem('HospitalMailId')
-    localStorage.removeItem('_hospitalId')
+    // localStorage.removeItem('HospitalName')
+    // localStorage.removeItem('HospitalMailId')
+    // localStorage.removeItem('_hospitalId')
   }, [])
 
   const onSubmit = (values:any, { setErrors }:any) => {
@@ -73,7 +74,7 @@ const LoginComp = () => {
     <div>
        <LoginBackground title="Login"> 
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: 'sreeananthakannan@gmail.com', password: 'Kannan$7500' }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
