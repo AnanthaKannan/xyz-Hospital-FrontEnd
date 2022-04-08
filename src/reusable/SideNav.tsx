@@ -51,12 +51,12 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
         <Menu iconShape="circle" innerSubMenuArrows={true} >
           {/* <MenuItem active={path['dashboard']} icon={<RiDashboardFill size={18} />} >Dashboard <Link to="/dashboard" /> </MenuItem> */}
           <SubMenu title="Doctor" icon={<RiStethoscopeFill  size={18} />} defaultOpen={true}>
-            <MenuItem active={path['create-doctor']} icon={ <AiOutlineArrowRight size={18} />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
-            <MenuItem active={path['list-doctor']} icon={ <AiOutlineArrowRight size={18} />}> <Link to="/list-doctor" />List Doctor</MenuItem>
+            <MenuItem id='create-doctor' active={path['create-doctor']} icon={ <AiOutlineArrowRight size={18} />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
+            <MenuItem id='list-doctor' active={path['list-doctor']} icon={ <AiOutlineArrowRight size={18} />}> <Link to="/list-doctor" />List Doctor</MenuItem>
           </SubMenu>
           <SubMenu title="Patient" icon={<FaUsers size={18} />} defaultOpen={true}>
-            <MenuItem active={path['create-patient']} icon={ <AiOutlineArrowRight size={18} />}> <Link to="/create-patient" /> New Patient</MenuItem>
-            <MenuItem active={path['list-patient']} icon={ <AiOutlineArrowRight  size={18} />}> <Link to="/list-patient" /> List Patient</MenuItem>
+            <MenuItem id='create-patient' active={path['create-patient']} icon={ <AiOutlineArrowRight size={18} />}> <Link to="/create-patient" /> New Patient</MenuItem>
+            <MenuItem  id='list-patient' active={path['list-patient']} icon={ <AiOutlineArrowRight  size={18} />}> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>
           <MenuItem active={path['feed-back']} icon={<MdFeedback size={18} />}>FeedBack <Link to="/feed-back" /> </MenuItem>
         </Menu>
