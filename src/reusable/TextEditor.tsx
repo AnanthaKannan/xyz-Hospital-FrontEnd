@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ReactQuill from 'react-quill'; 
 import 'react-quill/dist/quill.snow.css'; // ES6
 
-const TextEditor = ({text, setText}: any) => {
+const TextEditor = ({text, setText, placeholder = ""}: any) => {
 
   
 
@@ -13,11 +13,11 @@ const TextEditor = ({text, setText}: any) => {
 
 
   return (
-    <div>
+    <div className='bg-white'>
       <ReactQuill value={text}
       theme="snow" 
-      placeholder='Write your description here'
-    
+      placeholder={placeholder}
+
       onChange={handleChange} />
     </div>
   )

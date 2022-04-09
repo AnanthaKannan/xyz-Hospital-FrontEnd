@@ -63,7 +63,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
   export const post = (apiUrl:string, data:any) => {
 
-    data._hospitalId = localStorage.getItem('_hospitalId');
+    // data._hospitalId = localStorage.getItem('_hospitalId');
     
     console.log("===>post")
     const options:AxiosRequestConfig = {
@@ -116,7 +116,7 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
     let qryString = `${url}${apiUrl}`;
 
     console.log("data", data,'qryString', qryString)
-    data._hospitalId = localStorage.getItem('_hospitalId');
+    // data._hospitalId = localStorage.getItem('_hospitalId');
  
 
     const options:AxiosRequestConfig = {

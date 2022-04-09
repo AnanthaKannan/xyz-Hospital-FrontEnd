@@ -2,7 +2,7 @@ const dateFn = require('date-fn')
 export const listPatientColumnDef: any = [
   {
     headerName: "ID",
-    field: "_id",
+    field: "id",
     sortable: true,
     filter: true,
     width: 100,

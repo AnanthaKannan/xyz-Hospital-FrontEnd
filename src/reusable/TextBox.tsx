@@ -14,7 +14,7 @@ const TextBox = ({onChange, value, className='', readOnly=false, type='text', er
         autoComplete='off'
         id={id}
       />
-      {errorMsg && <div className='text-danger'>{errorMsg}</div>}
+      {errorMsg && <div id={`error-${id}`} className='text-danger'>{errorMsg}</div>}
     </div>
   )
 }

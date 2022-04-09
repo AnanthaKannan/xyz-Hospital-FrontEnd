@@ -223,21 +223,20 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                   <h6>Select doctor available Days</h6>
                   {[ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", ].map((day: string) => {
                     return (
-                      // <div key={day}>
                       <CheckBox
                         label={day}
                         name={day.toLowerCase()}
                         keyValue={day}
+                        id={day.toLowerCase()}
                         checked={values.availableDay[day.toLowerCase()]}
                         onChange={(isChecked, name) =>
                           onHandleCheckBox(isChecked, name, setFieldValue, values.availableDay)
                         }
                       />
-                      // </div>
                     );
                   })}
 
-                  {touched.availableDay && ( <div className="text-danger">{errors.availableDay}</div> )}
+                  {touched.availableDay && ( <div id='error-days' className="text-danger">{errors.availableDay}</div> )}
                 </div>
 
                 <div className="col-md-6 ">
@@ -245,12 +244,12 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                     <div className="d-flex justify-content-between align-items-center">
                       <h6>Select doctor available time</h6>
                       <div className="d-flex">
-                        <h6 className="pointer mr-2" onClick={() => addTimeSheet(setFieldValue, selectedTime)}>
+                        <h6 className="pointer mr-2" id="time-add" onClick={() => addTimeSheet(setFieldValue, selectedTime)}>
                           {" "}
                           <GrAddCircle size={20} />{" "}
                         </h6>
                         {selectedTime.length > 1 && (
-                          <h6 className="pointer" onClick={()=>removeTimeSheet(setFieldValue, selectedTime)}>
+                          <h6 className="pointer" id="time-sub" onClick={()=>removeTimeSheet(setFieldValue, selectedTime)}>
                             <GrSubtractCircle size={20} />{" "}
                           </h6>
                         )}
@@ -267,7 +266,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                       </div>
                     ))}
                   </div>
-                  {touched.availableTime && ( <div className="text-danger">{errors.availableTime}</div> )}
+                  {touched.availableTime && ( <div id="error-time-piker" className="text-danger">{errors.availableTime}</div> )}
                 </div>
 
                 <div className="col-md-6"></div>
@@ -279,12 +278,12 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                       onClick={() => handleReset(resetForm)}
                       text="Cancel"
                       color="default"
-                      id="patient-cancel"
+                      id="doctor-cancel"
                     />
                     <SubmitButton
                       onSubmit={handleSubmit}
                       text="Submit"
-                      id="patient-submit"
+                      id="doctor-submit"
                     />
                   </div>
                 </div>

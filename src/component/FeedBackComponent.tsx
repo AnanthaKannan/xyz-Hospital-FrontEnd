@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { MdOutlineDeleteOutline, MdOutlineEditNote } from 'react-icons/md';
 import TextEditor from "../reusable/TextEditor";
 import Hb from "../reusable/Hb";
 import { ClickButton } from "../reusable/Button";
 import { useLoadContext } from "../reusable/LoaderContext";
-import { post, get } from "../service/feedback.service";
+import { post, get, put } from "../service/feedback.service";
 import { toast } from "react-toastify";
+import parse from 'html-react-parser';
+import Hc from "../reusable/Hc";
 
 const FeedBackComponent = () => {
   const [text, setText] = useState("");
   const [rowData, setRowData] = useState([]);
 
   const { setLoader } = useLoadContext();
+
+  useEffect(() => {
+    feedBackList();
+  },[])
 
   const onHandleSubmit = async () => {
     console.log("submit");
@@ -36,8 +43,9 @@ const FeedBackComponent = () => {
 
   const feedBackList = async () => {
     setLoader(true);
-    // const query =  `?query={"_id" : ${patientDetails._id} }`
-    const result = await get(null);
+
+    const query = `?query={"isDeleted" : false }&project=[message, createdAt]`;
+    const result = await get(query);
     console.log("result", result.status);
     setLoader(false);
     if (result.status !== 200) {
@@ -47,10 +55,27 @@ const FeedBackComponent = () => {
     setRowData(result.data);
   };
 
+  const onUpdateStatus = async(_id) => {
+    console.log("update", _id);
+    setLoader(true);
+    const result = await put(_id, {isDeleted: true});
+    console.log("result", result.status);
+    setLoader(false);
+    if (result.status !== 200) {
+      toast.error("Oops! Something went wrong. Please try again later.");
+      return;
+    }
+    toast.success("successfully deleted");
+    feedBackList();
+  };
+
   return (
     <div>
       <Hb text="Share your feedback" />
-      <TextEditor text={text} setText={setText} />
+      <TextEditor 
+      placeholder="Enter your feedback here"
+      text={text} 
+      setText={setText} />
 
       <br />
       <div className="d-flex justify-content-end">
@@ -69,6 +94,27 @@ const FeedBackComponent = () => {
           id="submit"
         />
       </div>
+
+      <br/>
+      <br/>
+      <div className='patient-description'>
+      { rowData.length > 0 && <Hc text="Share your feedback" /> }
+      { 
+      rowData.map((item: any, index: number) => {
+        return (
+          <div key={item._id} className='card mt-2 shadow-sm'>
+            <div className="">
+              <div className="d-flex justify-content-between bg-info rounded-top p-2">
+              <div>{item.createdAt}</div>
+              <MdOutlineDeleteOutline onClick={() =>onUpdateStatus(item._id)} size={25} className='pointer' />
+              </div>
+              <div className="p-2">{ parse(item.message) }</div>   
+            </div>
+          </div>
+        )
+      }
+      )}
+    </div>
     </div>
   );
 };

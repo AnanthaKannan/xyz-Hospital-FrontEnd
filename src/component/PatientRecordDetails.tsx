@@ -1,7 +1,7 @@
 import React from 'react'
 import parse from 'html-react-parser';
 
-const ListQuilData = ({ list }: any) => {
+const PatientRecordDetails = ({ list }: any) => {
   return (
     <div className='patient-description'>
       { 
@@ -21,4 +21,5 @@ const ListQuilData = ({ list }: any) => {
   )
 }
 
-export default ListQuilData
+export default PatientRecordDetails
+

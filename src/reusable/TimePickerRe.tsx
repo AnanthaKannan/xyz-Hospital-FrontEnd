@@ -65,7 +65,7 @@ export default function TimePickerRe({ index, setSelectedTime, selectedTime, set
           list={getTimeList(selectedTime[index].from, "to")}
           heading="End Time"
           value={selectedTime[index].to}
-          id={`startTime${index}`}
+          id={`endTime${index}`}
           onChange={(e: any) => onChange(e, "to")}
         />
       </div>

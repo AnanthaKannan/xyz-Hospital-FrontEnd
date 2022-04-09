@@ -8,6 +8,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress": "npx cypress open",
+    "cypress-record": "npx cypress run --record --key 6bc38aff-d016-4396-a610-dd1260b2f652",
     "eject": "react-scripts eject"
   },
   "dependencies": {

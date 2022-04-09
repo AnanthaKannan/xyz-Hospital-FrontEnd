@@ -3,11 +3,12 @@ import React from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-export default function CheckBox({name, color='primary', label, onChange, checked, keyValue=''}: any) {
+export default function CheckBox({name, id="", color='primary', label, onChange, checked, keyValue=''}: any) {
     return (
     <FormControlLabel
     control={
         <Checkbox
+        id={id}
         key={keyValue}
         checked={checked}
         onChange={() => onChange(!checked, name)}

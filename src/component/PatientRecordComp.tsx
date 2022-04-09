@@ -8,7 +8,7 @@ import TextEditor from "../reusable/TextEditor";
 import { useLoadContext } from '../reusable/LoaderContext';
 import { toast } from 'react-toastify';
 import { post, get } from '../service/patientRecord.service';
-import ListQuilData from "../reusable/ListQuilData";
+import ListQuilData from "./PatientRecordDetails";
 import Pagination from '@mui/material/Pagination';
 
 
