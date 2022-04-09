@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.font-sm {
+  font-size: 0.8rem;
+}
+
 .border-right{
   border-right: 1px solid #dee2e6!important
 }

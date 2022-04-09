@@ -8,7 +8,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 
 const TopNavBar = ({ collapsed, setCollapsed}) => {
   return (
-    <div className='border-bottom border-left shadow-sm px-2'>
+    <div className='border-bottom border-left shadow-sm px-2 '>
           <div className='d-flex align-items-center p-2 justify-content-between'>
             <div>
               <GiHamburgerMenu onClick={() => setCollapsed(!collapsed)} className='pointer' size={24} />

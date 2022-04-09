@@ -8,7 +8,7 @@ import msg from '.../../../src/lib/msg'
 describe('Patient Create', () => {
 
   beforeEach(() => {
-    cy.visit('http://localhost:3001');
+    cy.visit('http://localhost:3000');
   })
 
   
@@ -35,7 +35,7 @@ describe('Patient Create', () => {
     for (let index = 0; index < 10; index++) {
 
       cy.get('#name').type(faker.name.firstName())
-      cy.get('#specialist').type(faker.name.jobTitle())
+      cy.get('#specialist').type(faker.name.lastName())
       cy.get('#tuesday').click()
       cy.get('#startTime0').focus().select("5") // 5 is the value of the time
       cy.wait(500)

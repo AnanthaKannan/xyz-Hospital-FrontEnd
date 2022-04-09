@@ -32,7 +32,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
 
   return (
     <div>
-    <div className='app'>
+    <div className='app '>
       <ProSidebar className='border-right shadow' collapsed={collapsed} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
           <div className='d-flex align-items-center justify-content-between m-2'>

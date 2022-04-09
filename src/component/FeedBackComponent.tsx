@@ -8,10 +8,13 @@ import { post, get, put } from "../service/feedback.service";
 import { toast } from "react-toastify";
 import parse from 'html-react-parser';
 import Hc from "../reusable/Hc";
+import Pagination from '@mui/material/Pagination';
+import { pageChange } from "../lib"
 
 const FeedBackComponent = () => {
   const [text, setText] = useState("");
   const [rowData, setRowData] = useState([]);
+  const [totalCount, setTotalCount] = useState(7);
 
   const { setLoader } = useLoadContext();
 
@@ -41,11 +44,10 @@ const FeedBackComponent = () => {
     setText("");
   };
 
-  const feedBackList = async () => {
+  const feedBackList = async (skip=0) => {
     setLoader(true);
-
-    const result = await get('project=message,createdAt&filter=isDeleted:eq:false');
-    console.log("result", result.status);
+    const result = await get(`project=message,createdAt&filter=isDeleted:eq:false&limit=2&skip=${skip}&sort=_id:desc`);
+    console.log("result", result.headers['x-total-count']);
     setLoader(false);
     if (result.status !== 200) {
       toast.error("Oops! Something went wrong. Please try again later.");
@@ -67,6 +69,10 @@ const FeedBackComponent = () => {
     toast.success("successfully deleted");
     feedBackList();
   };
+
+  const onPageChange = (e, page) => {
+    feedBackList(pageChange(page));
+  }
 
   return (
     <div>
@@ -114,6 +120,11 @@ const FeedBackComponent = () => {
       }
       )}
     </div>
+    <br />
+    <div className="d-flex align-items-end">
+        <Pagination onChange={onPageChange} count={Math.ceil(totalCount/2)} color="primary" />
+      </div>
+      <br />
     </div>
   );
 };

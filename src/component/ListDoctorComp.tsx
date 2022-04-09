@@ -79,7 +79,7 @@ const ListDoctorComp = () => {
       <Hb text="Doctors" />
 
       <div className="row">
-        <table className="table table-bordered">
+        <table className="table table-bordered font-sm">
           <thead>
             <tr>
               <th scope="col">Doctor Id</th>

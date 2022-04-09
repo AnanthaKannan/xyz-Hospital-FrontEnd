@@ -7,10 +7,10 @@ import { patientDetailsType } from '../type/type';
 import TextEditor from "../reusable/TextEditor";
 import { useLoadContext } from '../reusable/LoaderContext';
 import { toast } from 'react-toastify';
-import { post, get, delete_ } from '../service/patientRecord.service';
+import { post, get, remove } from '../service/curd.service';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import parse from 'html-react-parser';
-// import ListQuilData from "./PatientRecordDetails";
+import config from "../config";
 import Pagination from '@mui/material/Pagination';
 
 
@@ -24,6 +24,7 @@ const PatientRecordComp = () => {
     dob: null,
     password: ""
   });
+  const { patientRecord } = config;
   const [patientDetailsList, setPatientDetailsList] = useState([]);
   const [text, setText] = useState('')
   const location = useLocation();
@@ -35,7 +36,7 @@ const PatientRecordComp = () => {
     const state: any = location.state;
     console.log(state)
     if (state._id) {
-      patientRecordList();
+      patientRecordList(state._id);
       setPatientDetails({
         _id: state._id,
         name: state.name,
@@ -55,7 +56,7 @@ const PatientRecordComp = () => {
   const onHandleSubmit = async() => {
       console.log('submit')
       setLoader(true);
-      const result = await post({
+      const result = await post(patientRecord,{
         description: text,
         _patientId: patientDetails._id,
         status: false,
@@ -70,14 +71,14 @@ const PatientRecordComp = () => {
   
         toast.success("successfully added");
         console.log('Patient added successfully');
-        patientRecordList();
+        patientRecordList(patientDetails._id);
         setText('');
   }
 
-  const patientRecordList = async() => {
+  const patientRecordList = async(patient_id) => {
     setLoader(true);
-    // const query =  `?query={"_id" : ${patientDetails._id} }`
-    const result = await get('limit=3');
+    const result = await get(patientRecord, `filter=_patientId:eq:${patient_id}&limit=10`);
+    console.log('result', result);
     console.log('result', result.status);
     setLoader(false);
     if(result.status !== 200) {
@@ -88,24 +89,25 @@ const PatientRecordComp = () => {
     
   }
 
-  const onDeleteRecord = (_id) => {
-    console.log('delete', _id)
-    // setLoader(true);
-    // const result = delete_(_id);
-    // console.log('result', result.status);
-    // setLoader(false);
-    // if(result.status !== 200) {
-    //   toast.error("Oops! Something went wrong. Please try again later.");
-    //   return;
-    // }
-    // toast.success("successfully deleted");
-    // patientRecordList();
+  const onDeleteRecord = async(item) => {
+    const { _patientId, _id:_patientRecordId } = item;
+    console.log('delete', _patientRecordId)
+    setLoader(true);
+    const result = await remove(patientRecord, _patientRecordId);
+    console.log('result', result.status);
+    setLoader(false);
+    if(result.status !== 200) {
+      toast.error("Oops! Something went wrong. Please try again later.");
+      return;
+    }
+    toast.success("successfully deleted");
+    patientRecordList(_patientId);
   }
 
   return (
     <div>
       <Hb text="Patient Record" />
-      <div className="row">
+      <div className=" d-flex">
         <p>Name: {patientDetails.name}</p>
         <p>ID: {patientDetails._id}</p>
         <p>Age: {patientDetails.age}</p>
@@ -132,7 +134,7 @@ const PatientRecordComp = () => {
             <div className="">
               <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
               <div>{item.createdAt}</div>
-              <MdOutlineDeleteOutline onClick={() =>onDeleteRecord(item._id)} size={25} className='pointer' />
+              <MdOutlineDeleteOutline onClick={() =>onDeleteRecord(item)} size={25} className='pointer' />
               </div>
             
               <div className="p-3">
