@@ -27,6 +27,7 @@ const availableDays = {
 const selectedTimeInitialState = [ { from: null, to: null }]
 
 const CreateDoctorComp = () => {
+  const navigate = useNavigate();
   const [formikInitialValue, setFormikInitialValue] = useState<doctorValueType>(
     {
       name: "",
@@ -40,7 +41,6 @@ const CreateDoctorComp = () => {
   const [selectedTime, setSelectedTime] = useState(selectedTimeInitialState);
   // const [availableDay, setAvailableDay] = useState<any>(availableDays);
   const location = useLocation();
-  const navigate = useNavigate();
   const { setLoader } = useLoadContext();
 
   useEffect(() => {
@@ -117,7 +117,9 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
     if (formikInitialValue._id) navigate("/list-doctor");
 
     resetForm();
-    setSelectedTime(selectedTimeInitialState);
+    console.log('selectedTime', selectedTime);
+    setSelectedTime([{ from: null, to: null }]);
+    // navigate("/dummy", { state: { backToNavigate: '/create-doctor'} });
   };
 
   const onHandleCheckBox = (isChecked: boolean, name: any, setFieldValue: any, _availableDays) => {
@@ -255,9 +257,9 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                       </div>
                     </div>
                     {selectedTime.map((obj, index) => (
-                      <div key={`index-${index}`}>
+                      <div>
                       <TimePicker
-                      setFieldValue={setFieldValue}
+                        setFieldValue={setFieldValue}
                         setSelectedTime={setSelectedTime}
                         selectedTime={selectedTime}
                         index={index}

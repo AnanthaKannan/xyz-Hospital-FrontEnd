@@ -26,7 +26,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
     const splitUrl = url.split('/');
     const endPath = splitUrl[splitUrl.length -1];
     let pathObj = {...path, [endPath]:true};
-    console.log('pathObj', pathObj)
+    // console.log('pathObj', pathObj)  
     setPath(pathObj)
   }
 

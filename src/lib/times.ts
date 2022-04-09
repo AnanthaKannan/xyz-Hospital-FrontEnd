@@ -295,5 +295,11 @@ export const timeList: timeType = [
     minute: '30',
     ampm: 'PM',
     index: 46
+  },
+  {
+    hour: null,
+    minute: null,
+    ampm: null,
+    index: null
   }
 ]

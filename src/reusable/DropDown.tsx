@@ -1,12 +1,13 @@
 
 import React from "react";
+import faker from "faker";
 
 export default function DropDown({ className, heading, errorMsg, list = [], onChange, id='', placeholder='', value }: any) {
   return (
     <React.Fragment>
       
       <span className="txt-sm">{heading}</span>
-      <select id={id} className={`form-control ${className}`} onChange={onChange} value={value}>
+      <select key={faker.datatype.uuid()} defaultValue={""} id={id} className={`form-control ${className}`} onChange={onChange} value={value}>
         <option value="" disabled selected hidden>
           { placeholder }
         </option>
