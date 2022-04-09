@@ -7,8 +7,10 @@ import { patientDetailsType } from '../type/type';
 import TextEditor from "../reusable/TextEditor";
 import { useLoadContext } from '../reusable/LoaderContext';
 import { toast } from 'react-toastify';
-import { post, get } from '../service/patientRecord.service';
-import ListQuilData from "./PatientRecordDetails";
+import { post, get, delete_ } from '../service/patientRecord.service';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
+import parse from 'html-react-parser';
+// import ListQuilData from "./PatientRecordDetails";
 import Pagination from '@mui/material/Pagination';
 
 
@@ -75,7 +77,7 @@ const PatientRecordComp = () => {
   const patientRecordList = async() => {
     setLoader(true);
     // const query =  `?query={"_id" : ${patientDetails._id} }`
-    const result = await get(null);
+    const result = await get('limit=3');
     console.log('result', result.status);
     setLoader(false);
     if(result.status !== 200) {
@@ -84,6 +86,20 @@ const PatientRecordComp = () => {
     }
     setPatientDetailsList(result.data)
     
+  }
+
+  const onDeleteRecord = (_id) => {
+    console.log('delete', _id)
+    // setLoader(true);
+    // const result = delete_(_id);
+    // console.log('result', result.status);
+    // setLoader(false);
+    // if(result.status !== 200) {
+    //   toast.error("Oops! Something went wrong. Please try again later.");
+    //   return;
+    // }
+    // toast.success("successfully deleted");
+    // patientRecordList();
   }
 
   return (
@@ -108,7 +124,28 @@ const PatientRecordComp = () => {
                     <ClickButton className='' onClick={onHandleSubmit} text="Submit" color='secondary' id='submit' />
                 </div>
                 <br />
-      <ListQuilData list={patientDetailsList}/>
+      
+      {
+        patientDetailsList.map((item: any, index: number) => {
+          return (
+            <div key={item._id} className='card mt-2 shadow-sm'>
+            <div className="">
+              <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
+              <div>{item.createdAt}</div>
+              <MdOutlineDeleteOutline onClick={() =>onDeleteRecord(item._id)} size={25} className='pointer' />
+              </div>
+            
+              <div className="p-3">
+              <div>{item.disease}</div>
+              <div>{item.status}</div>
+              { parse(item.description) }
+              </div>   
+            </div>
+          </div>
+          )
+        })
+      }
+
       <br />
       <div className="d-flex align-items-end">
         <Pagination count={10} color="primary" />

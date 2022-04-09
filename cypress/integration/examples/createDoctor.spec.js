@@ -8,7 +8,7 @@ import msg from '.../../../src/lib/msg'
 describe('Patient Create', () => {
 
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3001');
   })
 
   
@@ -32,7 +32,8 @@ describe('Patient Create', () => {
     cy.get('#error-days').should('not.exist');
     cy.get('#error-time-piker').should('not.exist');
       
-      
+    for (let index = 0; index < 10; index++) {
+
       cy.get('#name').type(faker.name.firstName())
       cy.get('#specialist').type(faker.name.jobTitle())
       cy.get('#tuesday').click()
@@ -45,8 +46,9 @@ describe('Patient Create', () => {
       cy.get('#endTime1').focus().select("25") 
 
       cy.get('#doctor-submit').click()
-      cy.wait(200)
-    
+      cy.wait(1200)
+          
+    }
   })
 
 })

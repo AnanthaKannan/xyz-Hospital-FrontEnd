@@ -183,60 +183,31 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
   ****************/
 
-  export const delete_ = (apiUrl: string, data: any = null) => {
+  export const delete_ = (apiUrl: string) => {
 
     let qryString = `${url}${apiUrl}`;
 
-    if (data !== null) {
-
-      const keys = Object.keys(data);
-
-      keys.forEach((key, i) => qryString += `${i===0 ? '?' : '&'}${key}=${data[key]}`)
-
-    }
-
     const options:AxiosRequestConfig = {
-
       method: 'DELETE',
-
       headers: {
-
         'content-type': 'application/json',
-
         'Authorization': `${ localStorage.getItem('token')}`
-
       },
-
       url: qryString
-
     };
-
     console.log(options.url)
-
     return axios(options)
-
       .then(function (response) {
-
         console.log('postResponse', response)
-
         return response;
-
       })
-
       .catch(function (err) {
-
         console.log("err", err.response);
-
         if(!err.response)
-
           return { status: 500 }
-
         err && err.response && unAuthorizeTest(err.response.status);
-
         return err.response;
-
       });
-
   }
 
   

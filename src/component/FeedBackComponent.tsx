@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineDeleteOutline, MdOutlineEditNote } from 'react-icons/md';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 import TextEditor from "../reusable/TextEditor";
 import Hb from "../reusable/Hb";
 import { ClickButton } from "../reusable/Button";
@@ -44,8 +44,7 @@ const FeedBackComponent = () => {
   const feedBackList = async () => {
     setLoader(true);
 
-    const query = `?query={"isDeleted" : false }&project=[message, createdAt]`;
-    const result = await get(query);
+    const result = await get('project=message,createdAt&filter=isDeleted:eq:false');
     console.log("result", result.status);
     setLoader(false);
     if (result.status !== 200) {
@@ -98,17 +97,17 @@ const FeedBackComponent = () => {
       <br/>
       <br/>
       <div className='patient-description'>
-      { rowData.length > 0 && <Hc text="Share your feedback" /> }
+      { rowData.length > 0 && <Hc text="Feedback's" /> }
       { 
       rowData.map((item: any, index: number) => {
         return (
           <div key={item._id} className='card mt-2 shadow-sm'>
             <div className="">
-              <div className="d-flex justify-content-between bg-info rounded-top p-2">
+              <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
               <div>{item.createdAt}</div>
               <MdOutlineDeleteOutline onClick={() =>onUpdateStatus(item._id)} size={25} className='pointer' />
               </div>
-              <div className="p-2">{ parse(item.message) }</div>   
+              <div className="p-3">{ parse(item.message) }</div>   
             </div>
           </div>
         )

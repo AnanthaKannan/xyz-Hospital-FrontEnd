@@ -9,7 +9,7 @@ export const post = (data: object) => {
 
 export const get = (query: string|null) => {
     if(query)
-        return http.get(`${api}${query}`);
+        return http.get(`${api}?${query}`);
     else
         return http.get(`${api}`);
 }
