@@ -11,7 +11,7 @@ import { post, get, remove } from '../service/curd.service';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import parse from 'html-react-parser';
 import config from "../config";
-import Pagination from '@mui/material/Pagination';
+import PaginationReuse from "../reusable/PaginationReuse";
 
 
 const PatientRecordComp = () => {
@@ -30,13 +30,16 @@ const PatientRecordComp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setLoader } = useLoadContext();
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(3);
 
 
   useEffect(() => {
     const state: any = location.state;
     console.log(state)
     if (state._id) {
-      patientRecordList(state._id);
+      patientRecordList(state._id, page);
       setPatientDetails({
         _id: state._id,
         name: state.name,
@@ -50,7 +53,7 @@ const PatientRecordComp = () => {
     else{
       navigate('/list-patient')
     }
-  },[])
+  },[page])
   
 
   const onHandleSubmit = async() => {
@@ -75,9 +78,9 @@ const PatientRecordComp = () => {
         setText('');
   }
 
-  const patientRecordList = async(patient_id) => {
+  const patientRecordList = async(patient_id, skip=0) => {
     setLoader(true);
-    const result = await get(patientRecord, `filter=_patientId:eq:${patient_id}&limit=10`);
+    const result = await get(patientRecord, `filter=_patientId:eq:${patient_id}&limit=${perPage}&skip=${skip}`);
     console.log('result', result);
     console.log('result', result.status);
     setLoader(false);
@@ -85,6 +88,7 @@ const PatientRecordComp = () => {
       toast.error("Oops! Something went wrong. Please try again later.");
       return;
     }
+    setTotalCount(result.headers['x-total-count']);
     setPatientDetailsList(result.data)
     
   }
@@ -118,6 +122,7 @@ const PatientRecordComp = () => {
        <TextEditor 
         text={text}
         setText={setText}
+        placeholder="Enter your Description"
        />
        <br />
       <div>
@@ -148,10 +153,12 @@ const PatientRecordComp = () => {
         })
       }
 
-      <br />
-      <div className="d-flex align-items-end">
-        <Pagination count={10} color="primary" />
-      </div>
+<br />
+    <PaginationReuse
+    perPage={perPage}
+    totalCount={totalCount}
+    setPage={setPage}
+    />
       <br />
       </div>
     </div>
