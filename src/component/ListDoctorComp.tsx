@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AgGirdReact from "../reusable/AgGird";
-import { list, delete_ } from "../service/doctor.service";
+import { get, remove } from "../service/curd.service";
 import { listPatientColumnDef } from "./columnDef";
 import { toast } from "react-toastify";
 import Hb from "../reusable/Hb";
@@ -9,23 +9,31 @@ import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { sweetConfirmation } from "../lib/sweetAlart";
 import { useNavigate } from "react-router-dom";
+import PaginationReuse from "../reusable/PaginationReuse";
+import config from "../config";
 
 const ListDoctorComp = () => {
-  const [rowData, setRowData] = useState<any[]>([]);
+  const { doctor } = config;
   const navigate = useNavigate();
+
+  const [rowData, setRowData] = useState<any[]>([]);
   const { setLoader } = useLoadContext();
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(10);
 
   useEffect(() => {
-    listPatient();
-  }, []);
+    listPatient(page);
+  }, [page]);
 
-  const listPatient = async () => {
+  const listPatient = async (skip=0) => {
     setLoader(true);
-    const result = await list(null);
+    const result = await get(doctor, `limit=${perPage}&skip=${skip}`);
     console.log(result);
     setLoader(false);
     if (result.status === 200) {
       setRowData(conversion(result.data));
+      setTotalCount(result.headers['x-total-count']);
     } else {
       toast.error("Oops! Something went wrong. Please try again later.");
     }
@@ -41,7 +49,7 @@ const ListDoctorComp = () => {
 
   const deleteDoctor = async (_doctorId: number) => {
     setLoader(true);
-    const result = await delete_(_doctorId);
+    const result = await remove(doctor, _doctorId);
     setLoader(false);
     if (result.status !== 204) {
       toast.error("Oops! Something went wrong. Please try again later.");
@@ -95,7 +103,7 @@ const ListDoctorComp = () => {
             {rowData.map((obj) => {
               return (
                 <tr>
-                  <th>{obj._id}</th>
+                  <th>{obj.id}</th>
                   <td>{obj.name}</td>
                   <td>{obj.specialist}</td>
                   <td>{availableDay(obj.availableDay)}</td>
@@ -126,6 +134,13 @@ const ListDoctorComp = () => {
           </tbody>
         </table>
       </div>
+      <br />
+    <PaginationReuse
+    perPage={perPage}
+    totalCount={totalCount}
+    setPage={setPage}
+    />
+      <br />
     </div>
   );
 };

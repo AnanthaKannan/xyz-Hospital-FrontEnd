@@ -8,8 +8,6 @@ import { post, get, put } from "../service/feedback.service";
 import { toast } from "react-toastify";
 import parse from 'html-react-parser';
 import Hc from "../reusable/Hc";
-import Pagination from '@mui/material/Pagination';
-import { pageChange } from "../lib"
 import PaginationReuse from "../reusable/PaginationReuse";
 
 const FeedBackComponent = () => {
@@ -17,6 +15,7 @@ const FeedBackComponent = () => {
   const [rowData, setRowData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(2)
 
   const { setLoader } = useLoadContext();
 
@@ -48,7 +47,7 @@ const FeedBackComponent = () => {
 
   const feedBackList = async (skip=0) => {
     setLoader(true);
-    const result = await get(`project=message,createdAt&filter=isDeleted:eq:false,_hospitalId:eq:100&limit=2&skip=${skip}&sort=_id:desc`);
+    const result = await get(`project=message,createdAt&filter=isDeleted:eq:false&limit=${perPage}&skip=${skip}`);
     console.log("result", result);
     setLoader(false);
     if (result.status !== 200) {
@@ -73,10 +72,7 @@ const FeedBackComponent = () => {
     feedBackList();
   };
 
-  const onPageChange = (e, page) => {
-    feedBackList(pageChange(page));
-  }
-
+  
   return (
     <div>
       <Hb text="Share your feedback" />
@@ -125,13 +121,10 @@ const FeedBackComponent = () => {
     </div>
     <br />
     <PaginationReuse
-    perPage={2}
+    perPage={perPage}
     totalCount={totalCount}
     setPage={setPage}
     />
-    {/* <div className="d-flex align-items-end">
-        <Pagination onChange={onPageChange} count={Math.ceil(totalCount/2)} color="primary" />
-      </div> */}
       <br />
     </div>
   );

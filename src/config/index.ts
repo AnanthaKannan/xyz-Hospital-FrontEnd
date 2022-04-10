@@ -6,6 +6,7 @@ type configType = {
   poolData: Object;
   uploadFileUrl: string;
   imgURL: string;
+  doctor: string;
 }
 
 export const config: configType = {
@@ -14,6 +15,7 @@ export const config: configType = {
   uploadFileUrl: "https://4kzj8450nb.execute-api.us-east-1.amazonaws.com/dev/upload-image",
   imgURL: "",
   patientRecord: "/patientRecord",
+  doctor: "doctor",
   poolData: {
     UserPoolId: "us-east-1_ohC12gMu8",
     ClientId: "5nt9me8vg52i7rescrmen17l69",

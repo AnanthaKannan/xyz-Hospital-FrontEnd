@@ -5,13 +5,19 @@ import Pagination from '@mui/material/Pagination';
 const PaginationReuse = ({setPage, totalCount, perPage}) => {
 
   const onPageChange = (e, page) => {
-    setPage(pageChange(page));
+    setPage(pageChange(page, perPage));
   }
 
   return (
-    <div className="d-flex justify-content-end">
-       <Pagination onChange={onPageChange} count={Math.ceil(totalCount/perPage)} color="primary" />
-  </div>
+   <>
+      {
+        (totalCount > perPage) &&
+         <div className="d-flex justify-content-between">
+            <p className='my-0 ml-3'>Total Records <strong>{ totalCount }</strong></p>
+          <Pagination onChange={onPageChange} count={Math.ceil(totalCount/perPage)} color="primary" />
+         </div>
+      }
+        </>
   )
 }
 

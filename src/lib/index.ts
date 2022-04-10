@@ -18,13 +18,13 @@ export const imgUploadPath = (code: string, _hospitalId: string): string => {
   }
 }
 
-export const pageChange = (page) => {
+export const pageChange = (page, perPage) => {
   console.log('page change', page)
   if(page === 1) {
     page = 0
   }
   else {
-    page = (page - 1) * 2
+    page = (page - 1) * perPage
   }
   return page
 }
