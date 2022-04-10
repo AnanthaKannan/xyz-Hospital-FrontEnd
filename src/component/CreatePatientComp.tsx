@@ -22,7 +22,7 @@ const CreatePatientComp = () => {
     age: '',
     email: "",
     phone: "",
-    dob: null,
+    dob: "",
     password: ""
   });
 

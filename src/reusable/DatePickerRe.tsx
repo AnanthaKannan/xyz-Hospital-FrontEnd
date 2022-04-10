@@ -21,7 +21,7 @@ export default function DatePickerRe({onChange, heading, errorMsg, value, id}: a
               onChange={(date: any) => onChange(id, date)} />
               </div>
              
-             <span className="error-txt">{errorMsg}</span>
+             <span className="text-danger">{errorMsg}</span>
         </React.Fragment>
     )
 }

@@ -91,7 +91,7 @@ export type patientDetailsType = {
   age: string,
   email: string,
   phone: string,
-  dob: Date | null,
+  dob: Date | string,
   password: string,
   fileName?: string,
   file?: File | null,
