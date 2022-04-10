@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AgGirdReact from "../reusable/AgGird";
 import { get, remove } from "../service/curd.service";
-import { listPatientColumnDef } from "./columnDef";
 import { toast } from "react-toastify";
 import Hb from "../reusable/Hb";
 import { useLoadContext } from "../reusable/LoaderContext";
@@ -11,6 +9,8 @@ import { sweetConfirmation } from "../lib/sweetAlart";
 import { useNavigate } from "react-router-dom";
 import PaginationReuse from "../reusable/PaginationReuse";
 import config from "../config";
+import {timeList} from '../lib/times';
+import { convertDate } from "../lib";
 
 const ListDoctorComp = () => {
   const { doctor } = config;
@@ -39,12 +39,41 @@ const ListDoctorComp = () => {
     }
   };
 
+  const availableDay = (avDay) => {
+    let days = "";
+    for (let day in avDay) {
+      if (avDay[day]) {
+        days += `${day}, `;
+      }
+    }
+    return days.substring(0, days.length - 2);
+  };
+
   const conversion = (data: any) => {
     return data.map((item: any) => {
       return {
         ...item,
+        availableDayConvert: availableDay(item.availableDay),
+        availableTimeConvert: availableTime(item.availableTime)
       };
     });
+  };
+
+  const availableTime = (availableTimeList: any) => {
+    try{
+    let time = "";
+    availableTimeList.forEach((item) => {
+      const { from, to } = item;
+      const fromObj = timeList[Number(from)];
+      const toObj = timeList[Number(to)];
+      time += `${fromObj.hour}:${fromObj.minute} ${fromObj.ampm} - ${toObj.hour}:${toObj.minute} ${fromObj.ampm}, `;
+    });
+    return time.substring(0, time.length - 2);
+  }
+    catch(e){
+      console.log(e)
+      return "";
+    }
   };
 
   const deleteDoctor = async (_doctorId: number) => {
@@ -65,15 +94,7 @@ const ListDoctorComp = () => {
     }, "Yes, delete it!");
   };
 
-  const availableDay = (avDay) => {
-    let days = "";
-    for (let day in avDay) {
-      if (avDay[day]) {
-        days += `${day}, `;
-      }
-    }
-    return days.substr(0, days.length - 1);
-  };
+ 
 
   const onHandleUpdate = (doctorDetails) => {
     console.log("udaate", doctorDetails);
@@ -95,6 +116,7 @@ const ListDoctorComp = () => {
               <th scope="col">Specialist</th>
               <th scope="col">Available Days</th>
               <th scope="col">Available Time</th>
+              <th scope="col">Record created</th>
               <th scope="col">Update</th>
               <th scope="col">Delete</th>
             </tr>
@@ -106,14 +128,9 @@ const ListDoctorComp = () => {
                   <th>{obj.id}</th>
                   <td>{obj.name}</td>
                   <td>{obj.specialist}</td>
-                  <td>{availableDay(obj.availableDay)}</td>
-                  <td>
-                    {obj.availableTime.map((obj) => (
-                      <p key={obj.from} className="m-0">
-                        10:30AM - 10:40PM
-                      </p>
-                    ))}
-                  </td>
+                  <td>{obj.availableDayConvert}</td>
+                  <td>{obj.availableTimeConvert}</td>
+                  <td>{convertDate(obj.createdAt)}</td>
                   <td>
                     <FiEdit
                       onClick={() => onHandleUpdate(obj)}

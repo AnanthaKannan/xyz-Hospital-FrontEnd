@@ -1,3 +1,5 @@
+import dateFn from 'date-fn';
+
 export const onHandleChange =  (e:any, handleChange:Function) => {
   const element = {
     target:{
@@ -27,4 +29,13 @@ export const pageChange = (page, perPage) => {
     page = (page - 1) * perPage
   }
   return page
+}
+
+export const convertDate = (date: string): Date => {
+  return dateFn.date(date, 102, '-') 
+  // const dateObj = new Date(date)
+  // const month = dateObj.getMonth() + 1
+  // const day = dateObj.getDate()
+  // const year = dateObj.getFullYear()
+  // return `${month}/${day}/${year}`
 }
