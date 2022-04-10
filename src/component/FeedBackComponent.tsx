@@ -10,17 +10,19 @@ import parse from 'html-react-parser';
 import Hc from "../reusable/Hc";
 import Pagination from '@mui/material/Pagination';
 import { pageChange } from "../lib"
+import PaginationReuse from "../reusable/PaginationReuse";
 
 const FeedBackComponent = () => {
   const [text, setText] = useState("");
   const [rowData, setRowData] = useState([]);
-  const [totalCount, setTotalCount] = useState(7);
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(0);
 
   const { setLoader } = useLoadContext();
 
   useEffect(() => {
-    feedBackList();
-  },[])
+    feedBackList(page);
+  }, [page])
 
   const onHandleSubmit = async () => {
     console.log("submit");
@@ -46,13 +48,14 @@ const FeedBackComponent = () => {
 
   const feedBackList = async (skip=0) => {
     setLoader(true);
-    const result = await get(`project=message,createdAt&filter=isDeleted:eq:false&limit=2&skip=${skip}&sort=_id:desc`);
-    console.log("result", result.headers['x-total-count']);
+    const result = await get(`project=message,createdAt&filter=isDeleted:eq:false,_hospitalId:eq:100&limit=2&skip=${skip}&sort=_id:desc`);
+    console.log("result", result);
     setLoader(false);
     if (result.status !== 200) {
       toast.error("Oops! Something went wrong. Please try again later.");
       return;
     }
+    setTotalCount(result.headers['x-total-count']);
     setRowData(result.data);
   };
 
@@ -121,9 +124,14 @@ const FeedBackComponent = () => {
       )}
     </div>
     <br />
-    <div className="d-flex align-items-end">
+    <PaginationReuse
+    perPage={2}
+    totalCount={totalCount}
+    setPage={setPage}
+    />
+    {/* <div className="d-flex align-items-end">
         <Pagination onChange={onPageChange} count={Math.ceil(totalCount/2)} color="primary" />
-      </div>
+      </div> */}
       <br />
     </div>
   );
