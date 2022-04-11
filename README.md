@@ -21,8 +21,8 @@ https://prosurgic.surge.sh/#/
 
 
 <!-- storage local -->
-HospitalName
-HospitalMailId
+hospitalName
+hospitalMailId
 _hospitalId
 
 

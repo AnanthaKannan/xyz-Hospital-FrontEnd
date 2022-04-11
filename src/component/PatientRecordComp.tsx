@@ -16,7 +16,7 @@ import DropDown from "../reusable/DropDown";
 import { Formik } from 'formik'
 import { onHandleChange, imgUploadPath, handleReset } from '../lib';
 import {patientRecordValidation } from '../lib/validationSchema'
-import * as Yup from 'yup';
+import CheckBox from "../reusable/CheckBox";
 
 const PatientRecordComp = () => {
   const [patientDetails, setPatientDetails] = useState<patientDetailsType>({
@@ -137,12 +137,12 @@ const PatientRecordComp = () => {
       <div>
       <Hb text="Patient Record" />
   
-        <div className="d-flex">
-          <p>Name: {patientDetails.name}</p>
-          <p>ID: {patientDetails._id}</p>
-          <p>Age: {patientDetails.age}</p>
-          <p>Email: {patientDetails.email}</p>
-          <p>Phone: {patientDetails.phone}</p>
+        <div className="d-flex justify-content-between">
+          <p> <strong>Name:</strong> {patientDetails.name}</p>
+          <p> <strong>ID: </strong>{patientDetails._id}</p>
+          <p><strong>Age:</strong>  {patientDetails.age}</p>
+          <p><strong>Email: </strong> {patientDetails.email}</p>
+          <p> <strong>Phone:</strong>  {patientDetails.phone}</p>
         </div>
 
 
@@ -177,6 +177,18 @@ const PatientRecordComp = () => {
                     errorMsg={touched.disease && errors.disease}
                   />
                 </div>
+          <div className="col-md-3"></div>
+          <div className="col-md-3"></div>
+          <div className="col-md-3">
+            {/* <CheckBox
+              heading="Is He/She Admitted?"
+              id="isAdmitted"
+              onChange={(e) => onHandleChange(e, handleChange)}
+
+            /> */}
+          </div>
+          <div className="col-md-3"></div>
+
         </div>
         <br />
 

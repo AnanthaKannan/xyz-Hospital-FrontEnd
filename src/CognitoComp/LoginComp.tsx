@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik'
-import faker from 'faker';
 import * as Yup from 'yup'
 import{ SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
 import { Link, useNavigate } from 'react-router-dom';
-import ConfirmationCodeComp from './ConfirmationCodeComp';
-import ForgotPasswordComp from './ForgotPasswordComp'
-import ChangePassword from './ChangePassword';
-import SignUpComp from './SignUpComp';
 import LoginBackground from '../reusable/LoginBackground';
-
+import { loginValidation } from '../lib/validationSchema';
+import { toast } from 'react-toastify';
 
 
 const LoginComp = () => {
@@ -20,9 +16,9 @@ const LoginComp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // localStorage.removeItem('HospitalName')
-    // localStorage.removeItem('HospitalMailId')
-    // localStorage.removeItem('_hospitalId')
+    localStorage.removeItem('hospitalName')
+    localStorage.removeItem('hospitalMailId')
+    localStorage.removeItem('_hospitalId')
   }, [])
 
   const onSubmit = (values:any, { setErrors }:any) => {
@@ -37,7 +33,7 @@ const LoginComp = () => {
         const idToken = result.idToken.jwtToken;
         const refreshToken = result.refreshToken.token;
         localStorage.setItem('token', idToken);
-        localStorage.setItem('HospitalMailId', email);
+        localStorage.setItem('hospitalMailId', email);
         localStorage.setItem('_hospitalId', result.idToken.payload.sub);
         navigate('/list-patient')
       },
@@ -60,25 +56,41 @@ const LoginComp = () => {
 
   }
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email')
-      .required('Required'),
-    password: Yup.string()
-      .required('Required')
-      .min(6, 'Password must be at least 6 characters')
-      .max(20, 'Password must be less than 20 characters')
-  });
+  const forgotPassword = (email) => {
+    const cognitoUser = new CognitoUser({ Username: email, Pool: UserPool });
+    cognitoUser.forgotPassword({
+      onSuccess: function (data:any) {
+        console.log('CodeDeliveryData from forgotPassword:' + data);
+        toast.success('Verification Code has been sent to your email')
+      },
+      onFailure: function (err:any) {
+        console.log('error: ' + err);
+        toast.error(err.message);
+      }
+    });
+  }
+
+  const onHandleForgotPassword = (values, setErrors) => {
+    console.log('values', values);
+    if(!values.email){
+      toast.error('Please enter email');
+      setErrors({ email: 'Email is required' });
+    }
+    else{
+      forgotPassword(values.email);
+      navigate('/forgot-password', { state: { email: values.email } });
+    }
+  }
 
   return (
     <div>
        <LoginBackground title="Login"> 
     <Formik
       initialValues={{ email: 'sreeananthakannan@gmail.com', password: 'Kannan$7500' }}
-      validationSchema={validationSchema}
+      validationSchema={loginValidation}
       onSubmit={onSubmit}
     >
-      {({ values, errors, touched, handleChange, handleSubmit, }) => (
+      {({ values, errors, touched, handleChange, handleSubmit, setErrors }) => (
         <form onSubmit={handleSubmit}>
           <TextBox
           heading="Email"
@@ -103,9 +115,9 @@ const LoginComp = () => {
       <Link to="/sing-up">
         <label className='link'>  Not a user? sing up</label>
         </Link>
-        <Link to="/forgot-password" > 
-        <label className='link'> Forgot password </label>
-        </Link>
+        {/* <Link onClick={() =>onHandleForgotPassword(values, setErrors)} to="/" >  */}
+          <label className='link' onClick={() =>onHandleForgotPassword(values, setErrors)}> Forgot password </label>
+        {/* </Link> */}
        
       </div>
       </form>

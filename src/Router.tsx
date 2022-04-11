@@ -13,6 +13,8 @@ import Dashboard from "./page/Dashboard";
 import LoginComp from "./CognitoComp/LoginComp";
 import SignUpComp from "./CognitoComp/SignUpComp";
 import ConfirmationCodeComp from "./CognitoComp/ConfirmationCodeComp";
+import ForgotPasswordComp from "./CognitoComp/ForgotPasswordComp";
+import ChangePassword from "./page/ChangePassword";
 
 type routeType = {
     PATH: string,
@@ -23,6 +25,10 @@ const routes: routeType[] = [
   {
     COMPONENT: <Dashboard />,
     PATH: '/dashboard'
+  },
+  {
+    COMPONENT: <ChangePassword />,
+    PATH: '/change-password'
   },
   {
     COMPONENT: <DummyPage />,
@@ -39,6 +45,10 @@ const routes: routeType[] = [
   {
     COMPONENT: <LoginComp />,
     PATH: '/login'
+  },
+  {
+    COMPONENT: <ForgotPasswordComp />,
+    PATH: '/forgot-password'
   },
   {
     COMPONENT: <FeedBack />,

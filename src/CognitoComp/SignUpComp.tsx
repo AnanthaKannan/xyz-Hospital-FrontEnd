@@ -8,7 +8,7 @@ import UserPool from '../lib/UserPool'
 import LoginBackground from '../reusable/LoginBackground';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { signUpValidation } from '../lib/validationSchema';
 
 const SignUpComp = () => {
 
@@ -31,26 +31,12 @@ const SignUpComp = () => {
 
   }
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email')
-      .required('Required'),
-    password: Yup.string()
-      .required('Required')
-      .min(6, 'Password must be at least 6 characters')
-      .max(20, 'Password must be less than 20 characters'),
-    confirmPassword: Yup.string()
-      .required('Required')
-      .oneOf([Yup.ref('password'), null], 'Passwords must match')
-
-  });
-
   return (
     <div>
     <LoginBackground title={'Sign Up'}>
     <Formik
       initialValues={{ email: '', password: '', confirmPassword: '' }}
-      validationSchema={validationSchema}
+      validationSchema={signUpValidation}
       onSubmit={onSubmit}
     >
       {({ values, errors, touched, handleChange, handleSubmit, }) => (
