@@ -147,6 +147,17 @@ const CreatePatientComp = () => {
     // setFieldValue('password', '');
   }
 
+  const fromDateToAgeConverter = (date: Date) => {
+    const today = new Date();
+    const birthDate = new Date(date);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
  
   return (
     <div className=''>
@@ -166,6 +177,7 @@ const CreatePatientComp = () => {
                   
                     <TextBox
                       heading='Name'
+                      required={true}
                       id='name'
                       onChange={(e) => onHandleChange(e, handleChange)}
                       value={values.name}
@@ -186,10 +198,10 @@ const CreatePatientComp = () => {
                     <TextBox
                       heading='Age'
                       id='age'
-                      onChange={(e) => {
-                        setFieldValue('age', convertToDigit(e, 2))
-                      }}
-                      // onChange={(e) => onHandleChange(e, handleChange)}
+                      readOnly={true}
+                      // onChange={(e) => {
+                      //   setFieldValue('age', convertToDigit(e, 2))
+                      // }}
                       value={values.age}
                       errorMsg={touched.age && errors.age}
                     />
@@ -198,6 +210,7 @@ const CreatePatientComp = () => {
                     <TextBox
                       heading='Phone'
                       id='phone'
+                      required={true}
                       onChange={(e) => onHandleChange(e, handleChange)}
                       value={values.phone}
                       errorMsg={touched.phone && errors.phone}
@@ -206,7 +219,11 @@ const CreatePatientComp = () => {
                   <div className="col-md-6"></div>
                   <div className="col-md-3">
                   <DatePickerRe 
-                    onChange={setFieldValue}
+                    required={true}
+                    onChange={(id, date) => {
+                      setFieldValue('dob', date);
+                      setFieldValue('age', fromDateToAgeConverter(date));
+                    }}
                     id='dob'
                     value={values.dob}
                     errorMsg={touched.dob && errors.dob}
@@ -232,7 +249,7 @@ const CreatePatientComp = () => {
                       />
                   </div> */}
                   <div className="col-md-6"></div>
- <div className="col-md-6">
+      <div className="col-md-6">
                   <div className='mt-3 d-flex justify-content-end'>
                     {
                       formikInitialValue._id ?

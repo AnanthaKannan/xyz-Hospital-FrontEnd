@@ -1,10 +1,10 @@
 
 import { TextBoxType } from '@type/type';
 
-const TextBox = ({onChange, value, className='', readOnly=false, type='text', errorMsg='', heading='', id}: any) => {
+const TextBox = ({onChange, value, className='', readOnly=false, type='text', errorMsg='', heading='', id, required=false}: any) => {
   return (
     <div className='mb-3'>
-      <label className='text-muted' htmlFor={id}>{heading}</label>
+      <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       <input
         className={`form-control mt-2 mb-1${className}`}
         type={type}

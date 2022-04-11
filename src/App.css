@@ -8,6 +8,13 @@
   font-size: 0.8rem;
 }
 
+.required::after {
+  content: "*" !important;
+  color: red !important;
+  margin-left: 4px;
+}
+
+
 .border-right{
   border-right: 1px solid #dee2e6!important
 }
