@@ -32,10 +32,9 @@ export const pageChange = (page, perPage) => {
 }
 
 export const convertDate = (date: string): Date => {
-  return dateFn.date(date, 102, '-') 
-  // const dateObj = new Date(date)
-  // const month = dateObj.getMonth() + 1
-  // const day = dateObj.getDate()
-  // const year = dateObj.getFullYear()
-  // return `${month}/${day}/${year}`
+  return dateFn.date(date, 102, '-');
+}
+
+export const handleReset = (setFieldValue: Function, resetForm: Function): void => {
+  resetForm();
 }

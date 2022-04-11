@@ -72,14 +72,20 @@ const FeedBackComponent = () => {
     feedBackList();
   };
 
+  const handleChange = (text) => {
+    setText(text);
+  };
+
   
   return (
     <div>
       <Hb text="Share your feedback" />
       <TextEditor 
+      id='feedback'
+      handleChange={handleChange}
       placeholder="Enter your feedback here"
-      text={text} 
-      setText={setText} />
+      value={text} 
+      />
 
       <br />
       <div className="d-flex justify-content-end">

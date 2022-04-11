@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
-import { onHandleChange, convertToDigit, imgUploadPath } from '../lib';
+import { onHandleChange, imgUploadPath } from '../lib';
 import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
@@ -57,7 +57,8 @@ const CreatePatientComp = () => {
       .min(3, 'Name must be at least 3 characters')
       .max(30, 'Name must be less than 30 characters'),
     age: Yup.string().required('Age is required').min(1, 'Age must be at least 1 characters').max(3, 'Age must be less than 3 characters'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
+    email: Yup.string()
+    .email('Invalid email address'),
     phone: Yup.string().required('Phone is required'),
     dob: Yup.string().required('Date of birth is required'),
     password: Yup.string(),
@@ -203,7 +204,7 @@ const CreatePatientComp = () => {
                       //   setFieldValue('age', convertToDigit(e, 2))
                       // }}
                       value={values.age}
-                      errorMsg={touched.age && errors.age}
+                      // errorMsg={touched.age && errors.age}
                     />
                   </div>
                   <div className="col-md-3">
@@ -221,8 +222,8 @@ const CreatePatientComp = () => {
                   <DatePickerRe 
                     required={true}
                     onChange={(id, date) => {
-                      setFieldValue('dob', date);
                       setFieldValue('age', fromDateToAgeConverter(date));
+                      setFieldValue('dob', date);
                     }}
                     id='dob'
                     value={values.dob}
