@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import  Button  from '@mui/material/Button'
 import { ButtonType, SubmitButtonType } from '../type/type'
 
-export const ClickButton = ({ onClick, className='', id='', isDisable=false, text="click", color='primary'}: ButtonType) => {
+export const ClickButton = ({ onClick, className='', id='', isDisable=false, text="click", color="info"}: ButtonType) => {
   return (
     <Button
       className={className}
@@ -20,7 +20,7 @@ export const ClickButton = ({ onClick, className='', id='', isDisable=false, tex
 }
 
 
-export function SubmitButton({ onSubmit, className='', id='', isDisable=false, text="click", color='primary'}: any){
+export function SubmitButton({ onSubmit, className='', id='', isDisable=false, text="SUBMIT", color='primary'}: SubmitButtonType){
   return (
     <Button
       className={className}

@@ -93,7 +93,6 @@ const FeedBackComponent = () => {
           className="mx-4"
           onClick={() => setText("")}
           text="Cancel"
-          color="default"
           id="patient-cancel"
         />
         <ClickButton

@@ -12,6 +12,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import { patientDetailsType } from '../type/type';
 import DatePickerRe from '../reusable/DatePickerRe';
 import FileUpload from '../reusable/FileUpload';
+import {createPatientValidation } from '../lib/validationSchema'
 
 const CreatePatientComp = () => {
 
@@ -51,21 +52,7 @@ const CreatePatientComp = () => {
     return true
   }
 
-  const validationSchema = Yup.object({
-    name: Yup.string()
-      .required()
-      .min(3, 'Name must be at least 3 characters')
-      .max(30, 'Name must be less than 30 characters'),
-    age: Yup.string().required('Age is required').min(1, 'Age must be at least 1 characters').max(3, 'Age must be less than 3 characters'),
-    email: Yup.string()
-    .email('Invalid email address'),
-    phone: Yup.string().required('Phone is required'),
-    dob: Yup.string().required('Date of birth is required'),
-    password: Yup.string(),
-    // fileName: Yup.string()
-    // .required('File is required')
-    // .test('fileSize', 'File size must be less than 2MB', value => validation(value))
-  });
+  
 
   const onSubmit = (values:patientDetailsType, { setErrors, setFieldValue, resetForm}: any) => {
     console.log(values);
@@ -168,7 +155,7 @@ const CreatePatientComp = () => {
         <Formik 
           initialValues={formikInitialValue}
           enableReinitialize={true}
-          validationSchema={validationSchema}
+          validationSchema={createPatientValidation}
           onSubmit={onSubmit}>
             {({handleSubmit, handleChange, values, errors, touched, setFieldValue, setErrors, resetForm}) => (
               <form onSubmit={handleSubmit}>
@@ -255,13 +242,17 @@ const CreatePatientComp = () => {
                     {
                       formikInitialValue._id ?
                 <div>
-                    <ClickButton className='mx-4' onClick={() => navigate('/list-patient')} text="Cancel" color='default' id='patient-cancel' />
-                    <SubmitButton onSubmit={handleSubmit} text="Update" id='patient-submit' />
+                    <ClickButton className='mx-4' onClick={() => navigate('/list-patient')} text="Cancel" id='patient-cancel' />
+                    <SubmitButton 
+                    // onSubmit={handleSubmit} 
+                    text="Update" id='patient-submit' />
                 </div>
                 :
                 <div>
-                  <ClickButton className='mx-4' onClick={() =>handleReset(setFieldValue, resetForm)} text="Cancel" color='default' id='patient-cancel' />
-                  <SubmitButton onSubmit={handleSubmit} text="Submit" id='patient-submit' />
+                  <ClickButton className='mx-4' onClick={() =>handleReset(setFieldValue, resetForm)} text="Cancel" id='patient-cancel' />
+                  <SubmitButton 
+                  // onSubmit={handleSubmit} 
+                  id='patient-submit' />
                 </div>
                     }
                

@@ -14,7 +14,7 @@ export const config: configType = {
   // apiURL: "http://localhost:3000/dev",
   uploadFileUrl: "https://4kzj8450nb.execute-api.us-east-1.amazonaws.com/dev/upload-image",
   imgURL: "",
-  patientRecord: "/patientRecord",
+  patientRecord: "patientRecord",
   doctor: "doctor",
   poolData: {
     UserPoolId: "us-east-1_ohC12gMu8",

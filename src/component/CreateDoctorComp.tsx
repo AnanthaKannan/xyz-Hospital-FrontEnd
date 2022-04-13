@@ -277,12 +277,10 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                       className="mx-4"
                       onClick={() => handleReset(resetForm)}
                       text="Cancel"
-                      color="default"
                       id="doctor-cancel"
                     />
                     <SubmitButton
-                      onSubmit={handleSubmit}
-                      text="Submit"
+                      // onSubmit={handleSubmit}
                       id="doctor-submit"
                     />
                   </div>

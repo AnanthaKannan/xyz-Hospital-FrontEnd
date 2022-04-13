@@ -8,7 +8,7 @@ export type TextBoxType = {
   className?: string | "",
   readOnly?: boolean,
   type?: string,
-  errorMsg ?: string | undefined | false,
+  errorMsg?: string | undefined | false,
   heading: string,
   id: string
 }
@@ -25,25 +25,24 @@ export type TextAreaType = {
   rows: number
 }
 
+type color = "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
 export type ButtonType = {
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
-  className ?: string,
-  isDisable ?: boolean,
+  className?: string,
+  isDisable?: boolean,
   id: string,
   text?: string,
-  color?: 'inherit' | 'primary' | 'secondary' | 'default';
+  color?: color
 }
 
 
 export type SubmitButtonType = {
-  onSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
-  className: string,
-  type: string,
-  value: string,
-  isDisable: boolean,
+  onSubmit?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  className?: string,
+  isDisable?: boolean,
   id: string,
-  text: string,
-  color: 'inherit' | 'primary' | 'secondary' | 'default';
+  text?: string,
+  color?: color
 }
 
 export type containerType = {
@@ -76,7 +75,7 @@ type availableTimeType = [{
 }]
 
 export type doctorValueType = {
-  _id ?: number,
+  _id?: number,
   _hospitalId: string,
   name: string,
   availableTime: availableTimeType,
@@ -86,7 +85,7 @@ export type doctorValueType = {
 }
 
 export type patientDetailsType = {
-  _id ?: number,
+  _id?: number,
   name: string,
   age: string,
   email: string,
@@ -95,4 +94,14 @@ export type patientDetailsType = {
   password: string,
   fileName?: string,
   file?: File | null,
+}
+
+export type patientRecordType = {
+  diagnosis: String,
+  description: String,
+  admittedOn: Date,
+  roomNo: String,
+  isAdmitted: Boolean,
+  _doctorId: string,
+  status: Boolean
 }

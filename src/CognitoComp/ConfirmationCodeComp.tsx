@@ -86,7 +86,7 @@ const ConfirmationCodeComp = () => {
       <div className='d-flex justify-content-between'>
         {/* <SubmitButton className='w-100' type="submit" color='primary' text='Resend'/>
         <div className="mx-2"></div> */}
-        <SubmitButton className='w-100' type="submit" color='primary' text='Confirm'/>
+        <SubmitButton id='confirmation-code-submit' className='w-100' color='primary' text='Confirm'/>
       </div>
 
       <div className='d-flex justify-content-between mt-2'>

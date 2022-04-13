@@ -109,7 +109,7 @@ const LoginComp = () => {
           errorMsg={touched.password && errors.password}
           />
       <br />
-      <SubmitButton className='w-100' type="submit" color='primary' text='LOGIN'/>
+      <SubmitButton id='login-submit' className='w-100' color='primary' text='LOGIN'/>
 
       <div className='d-flex justify-content-between mt-2'>
       <Link to="/sing-up">

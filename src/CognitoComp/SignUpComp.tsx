@@ -64,7 +64,7 @@ const SignUpComp = () => {
           errorMsg={touched.confirmPassword && errors.confirmPassword}
           />
       <br />
-      <SubmitButton className='w-100' type="submit" color='primary' text='Sing up'/>
+      <SubmitButton id='signup-submit' className='w-100' color='primary' text='Sing up'/>
 
       <div className='d-flex justify-content-between mt-2'>
       <Link to="/login">

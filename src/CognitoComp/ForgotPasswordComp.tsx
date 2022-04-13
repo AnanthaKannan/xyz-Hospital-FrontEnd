@@ -85,7 +85,7 @@ const ForgotPasswordComp = () => {
             />
             <br />
             <div className='d-flex justify-content-between'>
-              <SubmitButton className='w-100' type="submit" color='primary' text='Submit' />
+              <SubmitButton id='forgot-password-submit' className='w-100' color='primary' text='Submit' />
             </div>
           </form>
         )}

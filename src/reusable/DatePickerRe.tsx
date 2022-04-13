@@ -40,7 +40,7 @@ export default function DatePickerRe({onChange, heading, errorMsg, value, id, cl
             <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       <DatePicker
         maxDate={new Date()}
-        className={`form-control ${className}`}
+        className={`form-control mt-2 mb-1 ${className}`}
         renderCustomHeader={({
           date,
           changeYear,
