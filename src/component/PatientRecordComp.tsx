@@ -8,7 +8,7 @@ import TextEditor from "../reusable/TextEditor";
 import { useLoadContext } from "../reusable/LoaderContext";
 import { toast } from "react-toastify";
 import { post, get, remove } from "../service/curd.service";
-import { MdOutlineDeleteOutline } from "react-icons/md";
+import { DeleteIcon } from "../reusable/Icons";
 import parse from "html-react-parser";
 import config from "../config";
 import PaginationReuse from "../reusable/PaginationReuse";
@@ -29,7 +29,7 @@ const PatientRecordComp = () => {
     age: "",
     email: "",
     phone: "",
-    dob: null,
+    dob: "",
     password: "",
   });
   const { patientRecord } = config;
@@ -277,9 +277,8 @@ const PatientRecordComp = () => {
               <div className="">
                 <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
                   <div>{convertDate(item.createdAt)}</div>
-                  <MdOutlineDeleteOutline
+                  <DeleteIcon
                     onClick={() => onDeleteRecord(item)}
-                    size={25}
                     className="pointer"
                   />
                 </div>
