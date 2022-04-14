@@ -15,6 +15,7 @@ import SignUpComp from "./CognitoComp/SignUpComp";
 import ConfirmationCodeComp from "./CognitoComp/ConfirmationCodeComp";
 import ForgotPasswordComp from "./CognitoComp/ForgotPasswordComp";
 import ChangePassword from "./page/ChangePassword";
+import ProfileDetails from "./page/ProfileDetails";
 
 type routeType = {
     PATH: string,
@@ -22,6 +23,10 @@ type routeType = {
 }
 
 const routes: routeType[] = [
+  {
+    COMPONENT: <ProfileDetails />,
+    PATH: '/profile'
+  },
   {
     COMPONENT: <Dashboard />,
     PATH: '/dashboard'

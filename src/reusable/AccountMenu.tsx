@@ -72,9 +72,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+         <Link to='/profile'>
         <MenuItem>
           <Avatar /> Profile
         </MenuItem>
+        </Link>
         <Divider />
         <Link to='/change-password'>
         <MenuItem>

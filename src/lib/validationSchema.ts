@@ -88,3 +88,17 @@ export const createPatientValidation = Yup.object({
   // .required('File is required')
   // .test('fileSize', 'File size must be less than 2MB', value => validation(value))
 });
+
+export const profileDetailsValidation = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Required'),
+  name: Yup.string()
+    .required('Required')
+    .min(6, 'Password must be at least 6 characters')
+    .max(20, 'Password must be less than 20 characters'),
+  imgUrl: Yup.string()
+    .required('Required')
+    .min(6, 'Password must be at least 6 characters')
+    .max(20, 'Password must be less than 20 characters'),
+});
