@@ -65,22 +65,18 @@ const ConfirmationCodeComp = () => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ values, errors, touched, handleChange, handleSubmit, }) => (
+      {({ handleSubmit, ...parameter}) => (
         <form onSubmit={handleSubmit}>
            <TextBox
           heading="Email"
           id="email"
-          value={values.email}
-          onChange={handleChange}
-          errorMsg={touched.email && errors.email}
+          parameter={parameter}
           />
           <br />
           <TextBox
           heading="Confirmation code"
           id="code"
-          value={values.code}
-          onChange={handleChange}
-          errorMsg={touched.code && errors.code}
+          parameter={parameter}
           />
       <br />
       <div className='d-flex justify-content-between'>

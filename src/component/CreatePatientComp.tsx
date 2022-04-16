@@ -157,7 +157,7 @@ const CreatePatientComp = () => {
           enableReinitialize={true}
           validationSchema={createPatientValidation}
           onSubmit={onSubmit}>
-            {({handleSubmit, handleChange, values, errors, touched, setFieldValue, setErrors, resetForm}) => (
+            {({handleSubmit, setFieldValue, setErrors, resetForm, ...parameter}) => (
               <form onSubmit={handleSubmit}>
 
                 <div className="row">
@@ -167,18 +167,17 @@ const CreatePatientComp = () => {
                       heading='Name'
                       required={true}
                       id='name'
-                      onChange={(e) => onHandleChange(e, handleChange)}
-                      value={values.name}
-                      errorMsg={touched.name && errors.name}
+                      parameter={parameter}
+                      // onChange={(e) => onHandleChange(e, handleChange)}
+                      // value={values.name}
+                      // errorMsg={touched.name && errors.name}
                     />
                   </div>
                   <div className="col-md-3">
                     <TextBox
                       heading='Email'
                       id='email'
-                      onChange={(e) => onHandleChange(e, handleChange)}
-                      value={values.email}
-                      errorMsg={touched.email && errors.email}
+                      parameter={parameter}
                     />
                   </div>
                   <div className="col-md-6"></div>
@@ -187,11 +186,7 @@ const CreatePatientComp = () => {
                       heading='Age'
                       id='age'
                       readOnly={true}
-                      // onChange={(e) => {
-                      //   setFieldValue('age', convertToDigit(e, 2))
-                      // }}
-                      value={values.age}
-                      // errorMsg={touched.age && errors.age}
+                      parameter={parameter}
                     />
                   </div>
                   <div className="col-md-3">
@@ -199,9 +194,7 @@ const CreatePatientComp = () => {
                       heading='Phone'
                       id='phone'
                       required={true}
-                      onChange={(e) => onHandleChange(e, handleChange)}
-                      value={values.phone}
-                      errorMsg={touched.phone && errors.phone}
+                      parameter={parameter}
                     />
                   </div>
                   <div className="col-md-6"></div>
@@ -212,9 +205,8 @@ const CreatePatientComp = () => {
                       setFieldValue('age', fromDateToAgeConverter(date));
                       setFieldValue('dob', date);
                     }}
+                    parameter={parameter}
                     id='dob'
-                    value={values.dob}
-                    errorMsg={touched.dob && errors.dob}
                     heading='DOB' 
                     />
                   </div>

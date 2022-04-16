@@ -120,8 +120,10 @@ const PatientRecordComp = () => {
       toast.error("Oops! Something went wrong. Please try again later.");
       return;
     }
-    setTotalCount(result.headers["x-total-count"]);
+    const totalCount_ = result.headers["x-total-count"]
+    setTotalCount(totalCount_);
     setPatientDetailsList(result.data);
+    totalCount_ < 1 && setIsShowAddRecord(true)
   };
 
   const onDeleteRecord = async (item) => {
@@ -168,19 +170,19 @@ const PatientRecordComp = () => {
           enableReinitialize={true}
           validationSchema={patientRecordValidation}
           onSubmit={onSubmit}>
-          {({ handleSubmit, handleChange, values, errors, touched, setFieldValue, setErrors, resetForm }) => (
+          {({ handleSubmit, setFieldValue, setErrors, resetForm, ...parameter }) => (
             <form onSubmit={handleSubmit}>
 
               <div className="row">
                 <div className="col-md-3">
-                  <DropDown
+                <DropDown
                     list={doctorList}
                     required={true}
-                    value={values._doctorId}
+                    value={parameter.values._doctorId}
                     heading="Doctors"
                     id="_doctorId"
-                    errorMsg={touched._doctorId && errors._doctorId}
-                    onChange={handleChange}
+                    errorMsg={parameter.touched._doctorId && parameter.errors._doctorId}
+                    onChange={parameter.handleChange}
                   />
                 </div>
 
@@ -189,9 +191,8 @@ const PatientRecordComp = () => {
                     heading='Diagnosis'
                     required={true}
                     id='diagnosis'
-                    onChange={(e) => onHandleChange(e, handleChange)}
-                    value={values.diagnosis}
-                    errorMsg={touched.diagnosis && errors.diagnosis}
+                    parameter={parameter}
+                    
                   />
                 </div>
                 <div className="col-md-3"></div>
@@ -203,20 +204,18 @@ const PatientRecordComp = () => {
                     onChange={(checked, name) => {
                       setFieldValue("isAdmitted", checked);
                     }}
-                    checked={values.isAdmitted}
+                    checked={parameter.values.isAdmitted}
 
                   />
                 </div>
-                {values.isAdmitted && (
+                {parameter.values.isAdmitted && (
                   <>
                     <div className="col-md-3">
                       <TextBox
                         heading='Room No'
                         required={true}
                         id='roomNo'
-                        onChange={(e) => onHandleChange(e, handleChange)}
-                        value={values.roomNo}
-                        errorMsg={touched.roomNo && errors.roomNo}
+                        parameter={parameter}
                       />
                     </div>
                     <div className="col-md-3">
@@ -226,8 +225,7 @@ const PatientRecordComp = () => {
                           setFieldValue('admittedOn', date);
                         }}
                         id='admittedOn'
-                        value={values.admittedOn}
-                        errorMsg={touched.admittedOn && errors.admittedOn}
+                        parameter={parameter}
                         heading='Admitted On'
                       />
                     </div>
@@ -240,12 +238,12 @@ const PatientRecordComp = () => {
 
               <TextEditor
                 id="description"
-                value={values.description}
+                value={parameter.values.description}
                 handleChange={(value) => {
                   setFieldValue("description", value);
                 }}
                 placeholder="Enter your Description"
-                errorMsg={touched.description && errors.description}
+                errorMsg={parameter.touched.description && parameter.errors.description}
               />
 
               <br />

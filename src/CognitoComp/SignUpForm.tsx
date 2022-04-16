@@ -133,7 +133,7 @@ const SignUpForm = ({isSignUp}) => {
         enableReinitialize={true}
         onSubmit={onSubmit}
       >
-        {({ values, errors, touched, handleChange, handleSubmit }) => (
+        {({ handleSubmit, ...parameter }) => (
           <form onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-md-12">
@@ -141,9 +141,7 @@ const SignUpForm = ({isSignUp}) => {
                   heading="Hospital Email"
                   id="email"
                   readOnly={!isSignUp}
-                  value={values.email}
-                  onChange={handleChange}
-                  errorMsg={touched.email && errors.email}
+                  parameter={parameter}
                 />
               </div>
               <br />
@@ -151,9 +149,7 @@ const SignUpForm = ({isSignUp}) => {
                 <TextBox
                   heading="Hospital Name"
                   id="name"
-                  value={values.name}
-                  onChange={handleChange}
-                  errorMsg={touched.name && errors.name}
+                  parameter={parameter}
                 />
               </div>
               <br />
@@ -164,18 +160,14 @@ const SignUpForm = ({isSignUp}) => {
                 <TextBox
                   heading="Hospital Logo"
                   id="picture"
-                  value={values.picture}
-                  onChange={handleChange}
-                  errorMsg={touched.picture && errors.picture}
+                  parameter={parameter}
                 />
               </div>
               <div className="col-md-12">
                 <TextBox
                   heading="Address"
                   id="address"
-                  value={values.address}
-                  onChange={handleChange}
-                  errorMsg={touched.address && errors.address}
+                  parameter={parameter}
                 />
               </div>
               <div className="col-md-3"></div>
@@ -186,18 +178,14 @@ const SignUpForm = ({isSignUp}) => {
                 <TextBox
                   heading="Phone Number"
                   id="phone"
-                  value={values.phone}
-                  onChange={handleChange}
-                  errorMsg={touched.phone && errors.phone}
+                  parameter={parameter}
                 />
               </div>
               <div className="col-md-12">
                 <TextBox
                   heading="Passwrod"
                   id="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  errorMsg={touched.password && errors.password}
+                  parameter={parameter}
                 />
               </div>
               <br />

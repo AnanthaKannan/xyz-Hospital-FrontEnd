@@ -97,23 +97,19 @@ const LoginComp = () => {
       validationSchema={loginValidation}
       onSubmit={onSubmit}
     >
-      {({ values, errors, touched, handleChange, handleSubmit, setErrors }) => (
+      {({  handleSubmit, setErrors, ...parameter }) => (
         <form onSubmit={handleSubmit}>
           <TextBox
           heading="Email"
           id="email"
-          value={values.email}
-          onChange={handleChange}
-          errorMsg={touched.email && errors.email}
+          parameter={parameter}
           />
           <br />
           <TextBox
           heading="Password"
           id="password"
           type='password'
-          value={values.password}
-          onChange={handleChange}
-          errorMsg={touched.password && errors.password}
+          parameter={parameter}
           />
       <br />
       <SubmitButton id='login-submit' className='w-100' color='primary' text='LOGIN'/>
@@ -123,7 +119,7 @@ const LoginComp = () => {
         <label className='link'>  Not a user? sing up</label>
         </Link>
         {/* <Link onClick={() =>onHandleForgotPassword(values, setErrors)} to="/" >  */}
-          <label className='link' onClick={() =>onHandleForgotPassword(values, setErrors)}> Forgot password </label>
+          <label className='link' onClick={() =>onHandleForgotPassword(parameter.values, setErrors)}> Forgot password </label>
         {/* </Link> */}
        
       </div>

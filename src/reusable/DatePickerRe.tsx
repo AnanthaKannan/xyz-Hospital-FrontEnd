@@ -3,8 +3,10 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
 
-export default function DatePickerRe({onChange, heading, errorMsg, value, id, className='', required=false}: any) {
+export default function DatePickerRe({onChange, heading, errorMsg, id, className='', required=false, parameter}: any) {
     
+    const { values, touched, errors } = parameter;
+
     const getYear = (date: Date) => {
         return date.getFullYear();
     }
@@ -90,10 +92,10 @@ export default function DatePickerRe({onChange, heading, errorMsg, value, id, cl
             </button> */}
           </div>
         )}
-        selected={value}
+        selected={values[id]}
         onChange={(date: any) => onChange(id, date)}
       />
-       <span className="text-danger">{errorMsg}</span>
+       {touched[id] && errors[id] && <div id={`error-${id}`} className='text-danger'>{errors[id]}</div>}
       </React.Fragment>
     );
   };

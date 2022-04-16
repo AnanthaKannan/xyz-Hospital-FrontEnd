@@ -188,16 +188,14 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ handleSubmit, handleChange, values, errors, touched, setFieldValue, setErrors, resetForm, }) => (
+          {({ handleSubmit, setFieldValue, setErrors, resetForm, ...parameter}) => (
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-md-3">
                   <TextBox
                     heading="Name"
                     id="name"
-                    onChange={(e) => onHandleChange(e, handleChange)}
-                    value={values.name}
-                    errorMsg={touched.name && errors.name}
+                    parameter={parameter}
                   />
                 </div>
                 {/* <div className="col-md-3">
@@ -213,9 +211,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                   <TextBox
                     heading="Specialist"
                     id="specialist"
-                    onChange={(e) => onHandleChange(e, handleChange)}
-                    value={values.specialist}
-                    errorMsg={touched.specialist && errors.specialist}
+                    parameter={parameter}
                   />
                 </div>
 
@@ -228,15 +224,15 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                         name={day.toLowerCase()}
                         keyValue={day}
                         id={day.toLowerCase()}
-                        checked={values.availableDay[day.toLowerCase()]}
+                        checked={parameter.values.availableDay[day.toLowerCase()]}
                         onChange={(isChecked, name) =>
-                          onHandleCheckBox(isChecked, name, setFieldValue, values.availableDay)
+                          onHandleCheckBox(isChecked, name, setFieldValue, parameter.values.availableDay)
                         }
                       />
                     );
                   })}
 
-                  {touched.availableDay && ( <div id='error-days' className="text-danger">{errors.availableDay}</div> )}
+                  {parameter.touched.availableDay && ( <div id='error-days' className="text-danger">{parameter.errors.availableDay}</div> )}
                 </div>
 
                 <div className="col-md-6 ">
@@ -266,7 +262,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                       </div>
                     ))}
                   </div>
-                  {touched.availableTime && ( <div id="error-time-piker" className="text-danger">{errors.availableTime}</div> )}
+                  {parameter.touched.availableTime && ( <div id="error-time-piker" className="text-danger">{parameter.errors.availableTime}</div> )}
                 </div>
 
                 <div className="col-md-6"></div>

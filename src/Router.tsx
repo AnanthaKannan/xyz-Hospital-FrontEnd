@@ -27,10 +27,10 @@ const routes: routeType[] = [
     COMPONENT: <ProfileDetails />,
     PATH: '/profile'
   },
-  {
-    COMPONENT: <Dashboard />,
-    PATH: '/dashboard'
-  },
+  // {
+  //   COMPONENT: <Dashboard />,
+  //   PATH: '/dashboard'
+  // },
   {
     COMPONENT: <ChangePassword />,
     PATH: '/change-password'
@@ -70,10 +70,6 @@ const routes: routeType[] = [
   {
     COMPONENT: <ListDoctor />,
     PATH: '/list-doctor'
-  },
-  {
-    COMPONENT: <CreateHospital />,
-    PATH: '/create-hospital'
   },
   {
     COMPONENT: <ListPatient />,

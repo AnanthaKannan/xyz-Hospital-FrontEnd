@@ -56,7 +56,7 @@ const ChangePasswordComp = () => {
         validationSchema={changePasswordValidation}
         onSubmit={onSubmit}
       >
-        {({ values, errors, touched, handleChange, handleSubmit, }) => (
+        {({ handleChange, handleSubmit, ...parameter}) => (
           <form onSubmit={handleSubmit}>
             <div className="row">
               {/* <div className="col-md-4"></div> */}
@@ -64,10 +64,8 @@ const ChangePasswordComp = () => {
                 <TextBox
                   heading="oldPassword"
                   id="oldPassword"
-                  value={values.oldPassword}
+                  parameter={parameter}
                   type="password"
-                  onChange={handleChange}
-                  errorMsg={touched.oldPassword && errors.oldPassword}
                 />
                 <br />
               </div>
@@ -82,9 +80,7 @@ const ChangePasswordComp = () => {
                 heading="New Password"
                 id="newPassword"
                 type="password"
-                value={values.newPassword}
-                onChange={handleChange}
-                errorMsg={touched.newPassword && errors.newPassword}
+                parameter={parameter}
               />
               </div>
             </div>
@@ -96,9 +92,7 @@ const ChangePasswordComp = () => {
                 heading="Confirm Password"
                 id="confirmPassword"
                 type="password"
-                value={values.confirmPassword}
-                onChange={handleChange}
-                errorMsg={touched.confirmPassword && errors.confirmPassword}
+                parameter={parameter}
               />
               </div>
             </div>

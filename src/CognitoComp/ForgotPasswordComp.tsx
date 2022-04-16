@@ -58,30 +58,24 @@ const ForgotPasswordComp = () => {
         validationSchema={forgotPasswordValidation}
         onSubmit={onSubmit}
       >
-        {({ values, errors, touched, handleChange, handleSubmit, }) => (
+        {({ handleSubmit, ...parameter}) => (
           <form onSubmit={handleSubmit}>
             <TextBox
               heading="Confirmation code"
               id="code"
-              value={values.code}
-              onChange={handleChange}
-              errorMsg={touched.code && errors.code}
+              parameter={parameter}
             />
             <TextBox
               heading="New Password"
               id="password"
               type='password'
-              value={values.password}
-              onChange={handleChange}
-              errorMsg={touched.password && errors.password}
+              parameter={parameter}
             />
             <TextBox
               heading="Re-enter Password"
               id="confirmPassword"
               type='password'
-              value={values.confirmPassword}
-              onChange={handleChange}
-              errorMsg={touched.confirmPassword && errors.confirmPassword}
+              parameter={parameter}
             />
             <br />
             <div className='d-flex justify-content-between'>
