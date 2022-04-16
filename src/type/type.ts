@@ -105,3 +105,22 @@ export type patientRecordType = {
   _doctorId: string,
   status: Boolean
 }
+
+export type profileDetailsType = {
+  email: string,
+  name: string,
+  phone: string,
+  picture: string,
+  address: string,
+  password: string,
+}
+
+export type localStorageType = {
+  token?: string,
+  hospitalMailId?: string,
+  _hospitalId?: string,
+  hospitalName?: string,
+  hospitalPhone?: string,
+  hospitalAddress?: string,
+  hospitalPicture?: string
+}

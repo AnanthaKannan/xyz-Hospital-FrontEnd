@@ -10,7 +10,7 @@ const msg = {
 
   "ERR01": "name is a required field",
   "ERR02": "specialist is a required field",
-  "ERR03": "Please select atleast one day",
+  "ERR03": "Please select at least one day",
   "ERR04": "Please select doctor available time",
 }
 

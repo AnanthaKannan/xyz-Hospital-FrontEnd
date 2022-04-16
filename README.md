@@ -54,3 +54,4 @@ http://localhost:3000/doctor?sort=name:desc
 'eq', 'ne', 'lt', 'gt', 'le', 'ge'
 http://localhost:3000/dev/feedback?filter=id:eq:2,name:eq:AnanthaKannan
 ```
+

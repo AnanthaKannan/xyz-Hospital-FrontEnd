@@ -1,8 +1,8 @@
 import dateFn from 'date-fn';
 
-export const onHandleChange =  (e:any, handleChange:Function) => {
+export const onHandleChange = (e: any, handleChange: Function) => {
   const element = {
-    target:{
+    target: {
       id: e.target.id,
       value: e.target.value.trimStart()
     }
@@ -15,14 +15,14 @@ export const convertToDigit = (e: any, sliceValue: number): number => {
 }
 
 export const imgUploadPath = (code: string, _hospitalId: string): string => {
-  if(code === 'patientImg'){
+  if (code === 'patientImg') {
     return 'patientImg'
   }
 }
 
 export const pageChange = (page, perPage) => {
   console.log('page change', page)
-  if(page === 1) {
+  if (page === 1) {
     page = 0
   }
   else {
@@ -37,4 +37,17 @@ export const convertDate = (date: string): Date => {
 
 export const handleReset = (setFieldValue: Function, resetForm: Function): void => {
   resetForm();
+}
+
+export const getStorageDetails = (): any => {
+  const items = { ...localStorage };
+  return items;
+}
+
+export const setStorageDetails = (data: any): void => {
+  console.log('storage data', data)
+  const storage = window.localStorage;
+  for(let key in data){
+    storage.setItem(key, data[key]);
+  }
 }

@@ -9,6 +9,7 @@ import LoginBackground from '../reusable/LoginBackground';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { signUpValidation } from '../lib/validationSchema';
+import SignUpForm  from './SignUpForm'
 
 const SignUpComp = () => {
 
@@ -34,7 +35,8 @@ const SignUpComp = () => {
   return (
     <div>
     <LoginBackground title={'Sign Up'}>
-    <Formik
+      <SignUpForm isSignUp={true} />
+    {/* <Formik
       initialValues={{ email: '', password: '', confirmPassword: '' }}
       validationSchema={signUpValidation}
       onSubmit={onSubmit}
@@ -66,7 +68,13 @@ const SignUpComp = () => {
       <br />
       <SubmitButton id='signup-submit' className='w-100' color='primary' text='Sing up'/>
 
-      <div className='d-flex justify-content-between mt-2'>
+      
+
+
+      </form>
+      )}
+    </Formik> */}
+    <div className='d-flex justify-content-between mt-2'>
       <Link to="/login">
         <label className='link'> Already Have a account? Login</label>
         </Link>
@@ -75,11 +83,6 @@ const SignUpComp = () => {
         </Link>
        
       </div>
-
-
-      </form>
-      )}
-    </Formik>
     </LoginBackground >
     </div>
   )

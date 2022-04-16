@@ -14,33 +14,38 @@
   margin-left: 4px;
 }
 
-a{
+a {
   text-decoration: none;
+  color: inherit;
 }
 
-.border-right{
-  border-right: 1px solid #dee2e6!important
+a:hover{
+  color: inherit;
 }
 
-.pointer{
+.border-right {
+  border-right: 1px solid #dee2e6 !important;
+}
+
+.pointer {
   cursor: pointer;
 }
 
-.ql-editor > *{
+.ql-editor > * {
   font-size: medium !important;
 }
 
-.login-height{
+.login-height {
   height: 100vh;
 }
 
-.link{
+.link {
   color: #1c0583;
   text-decoration: none;
   font-size: 12px;
 }
 
-.link:hover{
+.link:hover {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -53,30 +58,13 @@ a{
   background-size: cover;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
- }
+}
 
- .no-flip{
+.no-flip {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
- }
+}
 
-
-
- .remove-btn {
+.remove-btn {
   margin-right: 0.5rem;
-}
-
-.item-enter {
-  opacity: 0;
-}
-.item-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-.item-exit {
-  opacity: 1;
-}
-.item-exit-active {
-  opacity: 0;
-  transition: opacity 500ms ease-in;
 }

@@ -95,9 +95,15 @@ export const profileDetailsValidation = Yup.object().shape({
     .required('Required'),
   name: Yup.string()
     .required('Required')
+    .min(3, 'Password must be at least 6 characters')
+    .max(20, 'Password must be less than 20 characters'),
+  picture: Yup.string(),
+  address: Yup.string()
+    .required('Required')
     .min(6, 'Password must be at least 6 characters')
     .max(20, 'Password must be less than 20 characters'),
-  imgUrl: Yup.string()
+  phone: Yup.string().required('Phone is required'),
+  password: Yup.string()
     .required('Required')
     .min(6, 'Password must be at least 6 characters')
     .max(20, 'Password must be less than 20 characters'),

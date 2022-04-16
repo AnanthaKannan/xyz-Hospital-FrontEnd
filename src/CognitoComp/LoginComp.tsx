@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import LoginBackground from '../reusable/LoginBackground';
 import { loginValidation } from '../lib/validationSchema';
 import { toast } from 'react-toastify';
+import { setStorageDetails } from '../lib'
 
 
 const LoginComp = () => {
@@ -16,9 +17,7 @@ const LoginComp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem('hospitalName')
-    localStorage.removeItem('hospitalMailId')
-    localStorage.removeItem('_hospitalId')
+    localStorage.clear();
   }, [])
 
   const onSubmit = (values:any, { setErrors }:any) => {
@@ -32,9 +31,17 @@ const LoginComp = () => {
         console.log('result', result);
         const idToken = result.idToken.jwtToken;
         const refreshToken = result.refreshToken.token;
-        localStorage.setItem('token', idToken);
-        localStorage.setItem('hospitalMailId', email);
-        localStorage.setItem('_hospitalId', result.idToken.payload.sub);
+        const payload = result.idToken.payload;
+        const storageData = {
+          token: idToken,
+          hospitalMailId: email,
+          _hospitalId: payload.sub,
+          hospitalName: payload.name,
+          hospitalPhone: payload['custom:phone'],
+          hospitalAddress: payload['custom:address'],
+          hospitalPicture: payload.picture,
+        }
+        setStorageDetails(storageData);
         navigate('/list-patient')
       },
       onFailure: (err:any) => {

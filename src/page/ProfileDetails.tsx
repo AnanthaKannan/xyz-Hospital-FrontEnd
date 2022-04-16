@@ -1,11 +1,11 @@
 import React from 'react'
-import ProfileDetailsComp from '../CognitoComp/ProfileDetailsComp'
+import SignUpComp from '../CognitoComp/SignUpForm'
 import Container from '../reusable/Container';
 
 const ProfileDetails = () => {
   return (
     <Container title='Profile'>
-      <ProfileDetailsComp />
+      <SignUpComp isSignUp={false} />
   </Container>
   )
 }
