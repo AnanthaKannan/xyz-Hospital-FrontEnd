@@ -48,6 +48,7 @@ const CreatePatientComp = () => {
     if (state?._id) {
       setFormikInitialValue({
         ...state,
+        age: fromDateToAgeConverter(state.dob),
         dob: new Date(state.dob)
       })
     }
