@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { genderEnum, martialStatusEnum } from './enum'
 
 export const patientRecordValidation = Yup.object({
   diagnosis: Yup.string()
@@ -74,16 +75,49 @@ export const changePasswordValidation = Yup.object().shape({
 });
 
 export const createPatientValidation = Yup.object({
-  name: Yup.string()
+  firstName: Yup.string()
     .required()
     .min(3, 'Name must be at least 3 characters')
     .max(30, 'Name must be less than 30 characters'),
+  lastName: Yup.string()
+  .min(3, 'Name must be at least 3 characters')
+  .max(30, 'Name must be less than 30 characters'),
+  middleName: Yup.string()
+  .min(3, 'Name must be at least 3 characters')
+  .max(30, 'Name must be less than 30 characters'),
+  gender: Yup.string()
+  .required()
+  .oneOf(Object.keys(genderEnum)),    // ["1", "2", "3"]
+  martialStatus: Yup.string()
+  .oneOf(Object.keys(martialStatusEnum)),  // ["1", "2", "3"]
   age: Yup.string().required('Age is required').min(1, 'Age must be at least 1 characters').max(3, 'Age must be less than 3 characters'),
   email: Yup.string()
     .email('Invalid email address'),
   phone: Yup.string().required('Phone is required'),
   dob: Yup.string().required('Date of birth is required'),
-  password: Yup.string(),
+  aadhaarNumber: Yup.string()
+  .min(12, 'Aadhaar number must be at least 12 characters')
+  .max(12, 'Aadhaar number must be less than 12 characters'),
+  idenityNo: Yup.string()
+  .min(3, 'Idenity No must be at least 3 characters')
+  .max(12, 'Idenity No must be less than 12 characters'),
+  occupation: Yup.string()
+  .min(3, 'Occupation must be at least 3 characters')
+  .max(30, 'Occupation must be less than 30 characters'),
+  address: Yup.string()
+  .required()
+  .min(3, 'Address must be at least 3 characters')
+  .max(30, 'Address must be less than 30 characters'),
+  city: Yup.string()
+  .required(),
+  state: Yup.string()
+  .required(),
+  country: Yup.string()
+  .required(),
+  zipCode: Yup.string()
+  .min(3, 'Zip code must be at least 3 characters')
+  .max(30, 'Zip code must be less than 30 characters'),
+
   // fileName: Yup.string()
   // .required('File is required')
   // .test('fileSize', 'File size must be less than 2MB', value => validation(value))

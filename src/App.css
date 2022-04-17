@@ -19,7 +19,7 @@ a {
   color: inherit;
 }
 
-a:hover{
+a:hover {
   color: inherit;
 }
 
@@ -67,4 +67,9 @@ a:hover{
 
 .remove-btn {
   margin-right: 0.5rem;
+}
+
+/* used to remove the horizontal ine from the react-select drop down */
+.css-1okebmr-indicatorSeparator {
+  background-color: transparent !important;
 }

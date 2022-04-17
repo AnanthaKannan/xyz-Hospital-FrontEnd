@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
-import { onHandleChange, imgUploadPath } from '../lib';
+import { onHandleChange, imgUploadPath, convertEnumToArray } from '../lib';
 import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
@@ -13,18 +13,33 @@ import { patientDetailsType } from '../type/type';
 import DatePickerRe from '../reusable/DatePickerRe';
 import FileUpload from '../reusable/FileUpload';
 import {createPatientValidation } from '../lib/validationSchema'
+import SearchSelect from '../reusable/SearchSelect';
+import { genderEnum, martialStatusEnum } from '../lib/enum'
+import AddressForm from '../reusable/AddressForm';
 
 const CreatePatientComp = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
   const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>({
-    name: "",
+    firstName: "",
     age: '',
     email: "",
     phone: "",
     dob: "",
-    password: ""
+    address: "",
+    city: "",
+    country: "",
+    gender: "",
+    state: "",
+    aadhaarNumber: "",
+    idenityNo: "",
+    fileName: "",
+    lastName: "",
+    martialStatus: "",
+    middleName: "",
+    occupation: "",
+    zipCode: ""
   });
 
   useEffect(() => {
@@ -32,13 +47,8 @@ const CreatePatientComp = () => {
     console.log(state)
     if (state?._id) {
       setFormikInitialValue({
-        _id: state._id,
-        name: state.name,
-        age: state.age,
-        email: state.email,
-        phone: state.phone,
-        dob: new Date(state.dob),
-        password: state.password
+        ...state,
+        dob: new Date(state.dob)
       })
     }
     else{
@@ -48,11 +58,6 @@ const CreatePatientComp = () => {
   
   const { setLoader } = useLoadContext();
 
-  const validation = (value) => {
-    return true
-  }
-
-  
 
   const onSubmit = (values:patientDetailsType, { setErrors, setFieldValue, resetForm}: any) => {
     console.log(values);
@@ -149,8 +154,8 @@ const CreatePatientComp = () => {
  
   return (
     <div className=''>
-      <Hb text='New Patient' />
-
+      <Hb text='Patient Registration' />
+      <hr />
       <div>
         <Formik 
           initialValues={formikInitialValue}
@@ -164,41 +169,30 @@ const CreatePatientComp = () => {
                   <div className="col-md-3">
                   
                     <TextBox
-                      heading='Name'
+                      heading='First Name'
                       required={true}
-                      id='name'
-                      parameter={parameter}
-                      // onChange={(e) => onHandleChange(e, handleChange)}
-                      // value={values.name}
-                      // errorMsg={touched.name && errors.name}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <TextBox
-                      heading='Email'
-                      id='email'
-                      parameter={parameter}
-                    />
-                  </div>
-                  <div className="col-md-6"></div>
-                  <div className="col-md-3">
-                    <TextBox
-                      heading='Age'
-                      id='age'
-                      readOnly={true}
+                      id='firstName'
                       parameter={parameter}
                     />
                   </div>
                   <div className="col-md-3">
-                    <TextBox
-                      heading='Phone'
-                      id='phone'
-                      required={true}
-                      parameter={parameter}
-                    />
-                  </div>
-                  <div className="col-md-6"></div>
-                  <div className="col-md-3">
+                  
+                  <TextBox
+                    heading='Middle Name'
+                    id='middleName'
+                    parameter={parameter}
+                  />
+                </div>
+                <div className="col-md-3">
+                  
+                  <TextBox
+                    heading='Last Name'
+                    id='lastName'
+                    parameter={parameter}
+                  />
+                </div>
+                <div className="col-md-3"></div>
+                <div className="col-md-3">
                   <DatePickerRe 
                     required={true}
                     onChange={(id, date) => {
@@ -210,6 +204,58 @@ const CreatePatientComp = () => {
                     heading='DOB' 
                     />
                   </div>
+
+                  <div className="col-md-3">
+                    <TextBox
+                      heading='Age'
+                      id='age'
+                      readOnly={true}
+                      parameter={parameter}
+                    />
+                  </div>
+
+                  <div className="col-md-3">
+                    <SearchSelect 
+                      options={convertEnumToArray(genderEnum)}
+                      setFieldValue={setFieldValue}
+                       heading='Gender'
+                       id='gender'
+                       required={true}
+                       parameter={parameter}
+                    />
+                  </div>
+                  <div className="col-md-3"></div>
+                  <div className="col-md-3">
+                    <TextBox
+                      heading='Phone'
+                      id='phone'
+                      required={true}
+                      parameter={parameter}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <TextBox
+                      heading='Email Id'
+                      id='email'
+                      parameter={parameter}
+                    />
+                  </div>
+
+                <div className="col-md-3">
+                  
+                  <TextBox
+                    heading='Aadhaar Number'
+                    id='aadhaarNumber'
+                    parameter={parameter}
+                  />
+                </div>
+                  
+                 
+                  <div className="col-md-3"></div>
+                 
+                 
+
+        
                   {/* <div className="col-md-3">
                     <FileUpload
                       heading='Upload Image'
@@ -228,22 +274,58 @@ const CreatePatientComp = () => {
                       errorMsg={touched.fileName && errors.fileName}
                       />
                   </div> */}
-                  <div className="col-md-6"></div>
-      <div className="col-md-6">
+
+
+                
+                  <div className="col-md-3">
+                  <SearchSelect 
+                      options={convertEnumToArray(martialStatusEnum)}
+                      setFieldValue={setFieldValue}
+                       heading='Martial status'
+                       id='martialStatus'
+                       required={true}
+                       parameter={parameter}
+                    />
+                  </div>
+                 
+                  <div className="col-md-3">
+                    <TextBox
+                      heading='Occupation'
+                      id='occupation'
+                      parameter={parameter}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <TextBox
+                      heading='Idenity No'
+                      id='idenityNo'
+                      parameter={parameter}
+                    />
+                  </div>
+                  
+                  <hr />
+                  <AddressForm 
+                   setFieldValue={setFieldValue}
+                parameter={parameter} 
+                />
+
+                </div>
+
+                <div className="row">
+
+             <div className="col-md-9">
                   <div className='mt-3 d-flex justify-content-end'>
                     {
                       formikInitialValue._id ?
                 <div>
                     <ClickButton className='mx-4' onClick={() => navigate('/list-patient')} text="Cancel" id='patient-cancel' />
                     <SubmitButton 
-                    // onSubmit={handleSubmit} 
                     text="Update" id='patient-submit' />
                 </div>
                 :
                 <div>
                   <ClickButton className='mx-4' onClick={() =>handleReset(setFieldValue, resetForm)} text="Cancel" id='patient-cancel' />
                   <SubmitButton 
-                  // onSubmit={handleSubmit} 
                   id='patient-submit' />
                 </div>
                     }

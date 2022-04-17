@@ -25,12 +25,24 @@ import {TransitionGroup } from 'react-transition-group'; // ES6
 
 const PatientRecordComp = () => {
   const [patientDetails, setPatientDetails] = useState<patientDetailsType>({
-    name: "",
-    age: "",
+    firstName: "",
+    age: '',
     email: "",
     phone: "",
     dob: "",
-    password: "",
+    address: "",
+    city: "",
+    country: "",
+    gender: "",
+    state: "",
+    aadhaarNumber: "",
+    idenityNo: "",
+    fileName: "",
+    lastName: "",
+    martialStatus: "",
+    middleName: "",
+    occupation: "",
+    zipCode: ""
   });
   const { patientRecord } = config;
   const [patientDetailsList, setPatientDetailsList] = useState([]);
@@ -58,15 +70,7 @@ const PatientRecordComp = () => {
     if (state._id) {
       patientRecordList(state._id, page);
       getDoctorList();
-      setPatientDetails({
-        _id: state._id,
-        name: state.name,
-        age: state.age,
-        email: state.email,
-        phone: state.phone,
-        dob: state.dob,
-        password: state.password,
-      });
+      setPatientDetails({ ...state });
     } else {
       navigate("/list-patient");
     }
@@ -155,11 +159,11 @@ const PatientRecordComp = () => {
 </div>
 <br />
         <div className="d-flex justify-content-between">
-          <p> <strong>Name:</strong> {patientDetails.name}</p>
-          <p> <strong>ID: </strong>{patientDetails._id}</p>
-          <p><strong>Age:</strong>  {patientDetails.age}</p>
-          <p><strong>Email: </strong> {patientDetails.email}</p>
-          <p> <strong>Phone:</strong>  {patientDetails.phone}</p>
+          <p> <strong>Name:</strong> {patientDetails?.firstName}</p>
+          <p> <strong>ID: </strong>{patientDetails?._id}</p>
+          <p><strong>Age:</strong>  {patientDetails?.age}</p>
+          <p><strong>Email: </strong> {patientDetails?.email}</p>
+          <p> <strong>Phone:</strong>  {patientDetails?.phone}</p>
         </div>
       
 

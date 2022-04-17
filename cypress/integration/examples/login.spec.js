@@ -12,7 +12,7 @@ describe('my test suite', () => {
 
 
   it('Verify title of the page', () => {
-    cy.title().should('eq', 'XYZ HOSPITAL')
+    cy.title().should('eq', 'Digital HOSPITAL')
   })
 
   it('Verify the required field' , () => {

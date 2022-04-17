@@ -86,12 +86,24 @@ export type doctorValueType = {
 
 export type patientDetailsType = {
   _id?: number,
-  name: string,
+  firstName: string,
+  lastName?: string,
+  middleName?: string,
+  gender: string,
+  martialStatus?: string,
+
   age: string,
   email: string,
   phone: string,
   dob: Date | string,
-  password: string,
+  aadhaarNumber?: string,
+  idenityNo?: string,
+  occupation?: string,
+  address: string,
+  city: string,
+  state: string,
+  country: string,
+  zipCode? : string,
   fileName?: string,
   file?: File | null,
 }

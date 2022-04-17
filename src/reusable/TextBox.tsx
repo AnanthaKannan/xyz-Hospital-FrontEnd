@@ -1,5 +1,7 @@
 
 import { TextBoxType } from '@type/type';
+import Tooltip from '@mui/material/Tooltip';
+import { InfoIcon } from './Icons';
 
 const TextBox = ({onChange, className='', readOnly=false, type='text', heading='', id, required=false, parameter}: any) => {
 
@@ -7,7 +9,11 @@ const TextBox = ({onChange, className='', readOnly=false, type='text', heading='
 
   return (
     <div className='mb-3'>
-      <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
+     
+        <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
+      {/* <Tooltip title="">
+        <InfoIcon size={20} />
+      </Tooltip> */}
       <input
         className={`form-control mt-2 mb-1${className}`}
         type={type}

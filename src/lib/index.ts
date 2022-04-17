@@ -51,3 +51,11 @@ export const setStorageDetails = (data: any): void => {
     storage.setItem(key, data[key]);
   }
 }
+
+export const convertEnumToArray = (obj) => {
+  let arr = []
+  for(let key in obj){
+    arr.push({ label: obj[key], value: key })
+  }
+  return arr;
+}

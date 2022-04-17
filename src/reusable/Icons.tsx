@@ -3,6 +3,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { CgLogOut } from 'react-icons/cg'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { BsInfo } from "react-icons/bs";
 const size_ = 25;
 
 export const GiHamburgerMenuIcon = ({onClick, size=size_, className='pointer'}) => {
@@ -29,3 +30,8 @@ export const DeleteIcon = ({size=size_, onClick, className='pointer'}) => {
   )
 }
 
+export const InfoIcon = ({size=size_, className='pointer'}) => {
+  return (
+    <BsInfo className={className} size={size} />
+  )
+}
