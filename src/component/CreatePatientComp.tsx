@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
-import { onHandleChange, imgUploadPath, convertEnumToArray } from '../lib';
+import { onHandleChange, imgUploadPath, convertEnumToArray, fromDateToAgeConverter } from '../lib';
 import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
@@ -138,17 +138,6 @@ const CreatePatientComp = () => {
     // setFieldValue('phone', '');
     // setFieldValue('dob', null);
     // setFieldValue('password', '');
-  }
-
-  const fromDateToAgeConverter = (date: Date) => {
-    const today = new Date();
-    const birthDate = new Date(date);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
   }
 
  

@@ -1,7 +1,7 @@
 export const genderEnum = {
-  1 : 'Male',
-  2 : 'Female',
-  3 : 'Others',
+  '1' : 'Male',
+  '2' : 'Female',
+  '3' : 'Others',
 }
 
 export const martialStatusEnum = {

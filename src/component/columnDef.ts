@@ -1,4 +1,6 @@
-const dateFn = require('date-fn')
+const dateFn = require('date-fn');
+const { fromDateToAgeConverter, getGenderByValue } = require('../lib/index');
+
 export const listPatientColumnDef: any = [
   {
     headerName: "ID",
@@ -6,31 +8,55 @@ export const listPatientColumnDef: any = [
     sortable: true,
     filter: true,
     width: 100,
-    // cellStyle: {
-    //   textAlign: "center"
-    // }
-
   },
   {
-    headerName: "name",
+    headerName: "IdenityNo",
+    field: "idenityNo",
+    sortable: true,
+    filter: true,
+    width: 100,
+  },
+  {
+    headerName: "Name",
     field: "name",
     sortable: true,
     filter: true,
+    cellRenderer: (params) => {
+      const { data } = params;
+      const fullName = {
+        firstName: data.firstName ? data.firstName : "",
+        lastName: data.lastName ? data.lastName : "",
+        middleName: data.middleName ? data.middleName : "",
+        name: data.name ? data.name : ""  // remove the name once name converted into first, middle last name
+      }
+      const { firstName, lastName, middleName, name } = fullName;
+      return `${name} ${firstName} ${middleName} ${lastName}`;
+    }
   },
   {
-    headerName: "email",
+    headerName: "Gender",
+    field: "gender",
+    width: 100,
+    sortable: true,
+    filter: true,
+    cellRenderer: ({value}: any) => {
+      return getGenderByValue(value)
+    }
+  },
+  {
+    headerName: "Email",
     field: "email",
     sortable: true,
     filter: true,
   },
   {
-    headerName: "phone",
+    headerName: "Phone",
     field: "phone",
     sortable: true,
     filter: true,
   },
   {
-    headerName: "dob",
+    headerName: "Date Of Birth",
     field: "dob",
     sortable: true,
     filter: true,
@@ -42,9 +68,10 @@ export const listPatientColumnDef: any = [
     headerName: "Age",
     field: "age",
     sortable: true,
+    width: 100,
     filter: true,
     cellRenderer:(params)=>{
-      return params.value+" years";
+      return fromDateToAgeConverter(params.data?.dob)
     }
   },
   {
