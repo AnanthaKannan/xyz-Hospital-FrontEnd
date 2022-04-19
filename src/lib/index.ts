@@ -48,24 +48,27 @@ export const getStorageDetails = (): any => {
 export const setStorageDetails = (data: any): void => {
   console.log('storage data', data)
   const storage = window.localStorage;
-  for(let key in data){
+  for (let key in data) {
     storage.setItem(key, data[key]);
   }
 }
 
 export const convertEnumToArray = (obj) => {
   let arr = []
-  for(let key in obj){
+  for (let key in obj) {
     arr.push({ label: obj[key], value: key })
   }
   return arr;
 }
 
-export const getGenderByValue = (value): string => {
+// get the gender name using pass the value
+// if you passing the "1" as a value then you can get "Male" as response
+export const getGenderByValue = (value: string): string => {
   return value ? genderEnum[value] : '';
 }
 
-export const fromDateToAgeConverter = (date: Date) => {
+// used to convert the date to age
+export const fromDateToAgeConverter = (date: Date): string => {
   const today = new Date();
   const birthDate = new Date(date);
   let age = today.getFullYear() - birthDate.getFullYear();
@@ -73,9 +76,26 @@ export const fromDateToAgeConverter = (date: Date) => {
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
     age--;
   }
-  if(age < 1)
+  if (age < 1)
     return `${m} month`
-  
+
   return `${age} year`
 }
 
+// used to get the initial formik values from the yup schema
+export const getInitialValuesFromYup = (yupSchema): any => {
+  const fields = yupSchema.fields;
+  let initialValues = {};
+  for (let key in fields) {
+    // console.log(fields[key])
+    let value: any = "";
+    const type = fields[key].type;
+    if (type === 'boolean')
+      value = true;
+    else if (type === 'number')
+      value = 0;
+    initialValues[key] = value;
+  }
+  console.log(initialValues);
+  return initialValues;
+}

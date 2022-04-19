@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
-import { onHandleChange, imgUploadPath, convertEnumToArray, fromDateToAgeConverter } from '../lib';
+import { onHandleChange, imgUploadPath, convertEnumToArray, fromDateToAgeConverter, getInitialValuesFromYup } from '../lib';
 import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
@@ -21,26 +21,27 @@ const CreatePatientComp = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>({
-    firstName: "",
-    age: '',
-    email: "",
-    phone: "",
-    dob: "",
-    address: "",
-    city: "",
-    country: "",
-    gender: "",
-    state: "",
-    aadhaarNumber: "",
-    idenityNo: "",
-    fileName: "",
-    lastName: "",
-    martialStatus: "",
-    middleName: "",
-    occupation: "",
-    zipCode: ""
-  });
+  const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>(getInitialValuesFromYup(createPatientValidation));
+  //   {
+  //   firstName: "",
+  //   age: '',
+  //   email: "",
+  //   phone: "",
+  //   dob: "",
+  //   address: "",
+  //   city: "",
+  //   country: "",
+  //   gender: "",
+  //   state: "",
+  //   aadhaarNumber: "",
+  //   idenityNo: "",
+  //   fileName: "",
+  //   lastName: "",
+  //   martialStatus: "",
+  //   middleName: "",
+  //   occupation: "",
+  //   zipCode: ""
+  // }
 
   useEffect(() => {
     const state: any = location.state;
