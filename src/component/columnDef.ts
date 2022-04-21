@@ -81,6 +81,12 @@ export const listPatientColumnDef: any = [
     width: 100
   },
   {
+    headerName: "Record",
+    field: "record",
+    cellRenderer: "ViewCellRender",
+    width: 100
+  },
+  {
     headerName: "Delete",
     field: "delete",
     cellRenderer: "DeleteCellRender",

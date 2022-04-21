@@ -13,6 +13,8 @@ import CheckBox from "../reusable/CheckBox";
 import { GrAddCircle, GrSubtractCircle } from "react-icons/gr";
 import TimePicker from "../reusable/TimePickerRe";
 import { useLocation, useNavigate } from "react-router-dom";
+import DatePickerRe from '../reusable/DatePickerRe';
+import AddressForm from "../reusable/AddressForm";
 
 const availableDays = {
   monday: false,
@@ -181,6 +183,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
   return (
     <div className="">
       <Hb text="Create Doctor" />
+      <hr/>
       <div>
         <Formik
           initialValues={formikInitialValue}
@@ -198,15 +201,6 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                     parameter={parameter}
                   />
                 </div>
-                {/* <div className="col-md-3">
-                    <TextBox
-                      heading='Time Per Patient'
-                      id='timePerPatient'
-                      onChange={(e) => onHandleChange(e, handleChange)}
-                      value={values.timePerPatient}
-                      errorMsg={touched.timePerPatient && errors.timePerPatient}
-                    />
-                  </div> */}
                 <div className="col-md-3">
                   <TextBox
                     heading="Specialist"
@@ -215,6 +209,30 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                   />
                 </div>
 
+                {/* <div className="col-md-3">
+                  <TextBox
+                    heading="License No"
+                    id="licenseNo"
+                    parameter={parameter}
+                  />
+                </div>
+
+                <div className="col-md-3">
+                  <DatePickerRe 
+                    heading='License Expiry Date' 
+                    // required={true}
+                    id='licenseExpiryDate'
+                    onChange={(id, date) => {
+                      setFieldValue(id, date);
+                    }}
+                    parameter={parameter}
+                    />
+                  </div>
+  
+                  <AddressForm 
+                  parameter={parameter}
+                  setFieldValue={setFieldValue}
+                   /> */}
                 <div className="mt-3">
                   <h6>Select doctor available Days</h6>
                   {[ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", ].map((day: string) => {

@@ -93,8 +93,8 @@ const LoginComp = () => {
     <div>
        <LoginBackground title="Login"> 
     <Formik
-      // initialValues={{ email: 'sreeananthakannan@gmail.com', password: 'Kannan$7500' }}
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: 'sreeananthakannan@gmail.com', password: 'Kannan$7500' }}
+      // initialValues={{ email: '', password: '' }}
       validationSchema={loginValidation}
       onSubmit={onSubmit}
     >

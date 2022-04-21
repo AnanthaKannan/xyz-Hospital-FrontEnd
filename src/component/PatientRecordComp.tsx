@@ -14,8 +14,8 @@ import config from "../config";
 import PaginationReuse from "../reusable/PaginationReuse";
 import DropDown from "../reusable/DropDown";
 import { Formik } from 'formik'
-import { onHandleChange, imgUploadPath, handleReset } from '../lib';
-import { patientRecordValidation } from '../lib/validationSchema'
+import { onHandleChange, imgUploadPath, handleReset, getInitialValuesFromYup } from '../lib';
+import { patientRecordValidation, createPatientValidation } from '../lib/validationSchema'
 import CheckBox from "../reusable/CheckBox";
 import DatePickerRe from '../reusable/DatePickerRe';
 import { convertDate } from '../lib'
@@ -24,26 +24,7 @@ import {TransitionGroup } from 'react-transition-group'; // ES6
 
 
 const PatientRecordComp = () => {
-  const [patientDetails, setPatientDetails] = useState<patientDetailsType>({
-    firstName: "",
-    age: '',
-    email: "",
-    phone: "",
-    dob: "",
-    address: "",
-    city: "",
-    country: "",
-    gender: "",
-    state: "",
-    aadhaarNumber: "",
-    idenityNo: "",
-    fileName: "",
-    lastName: "",
-    martialStatus: "",
-    middleName: "",
-    occupation: "",
-    zipCode: ""
-  });
+  const [patientDetails, setPatientDetails] = useState<patientDetailsType>(getInitialValuesFromYup(createPatientValidation));
   const { patientRecord } = config;
   const [patientDetailsList, setPatientDetailsList] = useState([]);
   const location = useLocation();
@@ -199,8 +180,6 @@ const PatientRecordComp = () => {
                     
                   />
                 </div>
-                <div className="col-md-3"></div>
-                <div className="col-md-3"></div>
                 <div className="col-md-3 d-flex">
                   <CheckBox
                     label="Is He/She Admitted?"
@@ -212,6 +191,9 @@ const PatientRecordComp = () => {
 
                   />
                 </div>
+                <div className="col-md-3"></div>
+                {/* <div className="col-md-3"></div> */}
+           
                 {parameter.values.isAdmitted && (
                   <>
                     <div className="col-md-3">

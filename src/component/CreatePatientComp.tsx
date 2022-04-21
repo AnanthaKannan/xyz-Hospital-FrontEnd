@@ -22,26 +22,6 @@ const CreatePatientComp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>(getInitialValuesFromYup(createPatientValidation));
-  //   {
-  //   firstName: "",
-  //   age: '',
-  //   email: "",
-  //   phone: "",
-  //   dob: "",
-  //   address: "",
-  //   city: "",
-  //   country: "",
-  //   gender: "",
-  //   state: "",
-  //   aadhaarNumber: "",
-  //   idenityNo: "",
-  //   fileName: "",
-  //   lastName: "",
-  //   martialStatus: "",
-  //   middleName: "",
-  //   occupation: "",
-  //   zipCode: ""
-  // }
 
   useEffect(() => {
     const state: any = location.state;

@@ -9,11 +9,14 @@ import { DeleteCellRender, EditCellRender, ViewCellRender } from "../reusable/Ce
 import { sweetConfirmation } from "../lib/sweetAlart";
 import { useNavigate } from 'react-router-dom';
 import PopUpModel from "../reusable/PopUpModel";
+import PatientDetailsView from "./PatientDetailsView";
 
 
 const ListPatientComp = () => {
   const [rowData, setRowData] = useState<object[]>([]);
   const navigate = useNavigate();
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+  const [patientDetails, setPatientDetails] = useState({});
 
   const { setLoader } = useLoadContext();
 
@@ -57,7 +60,11 @@ const ListPatientComp = () => {
       }, 'Yes, Update it!');
     }
     else if(colDef.field === 'view'){
-      console.log('view', data._id);
+      setPatientDetails(data);
+      setIsPopUpOpen(true);
+    }
+    else if(colDef.field === 'record'){
+      console.log('record', data._id);
       navigate('/patient-record',{state:data})
     }
     else if(colDef.field === 'delete'){
@@ -71,7 +78,14 @@ const ListPatientComp = () => {
   return (
     <div>
       <Hb text="Patients" />
-      <PopUpModel />
+      <PopUpModel
+        isOpen={isPopUpOpen}
+        setIsOpen={setIsPopUpOpen}
+        tittle="Patient Details"
+      >
+          <PatientDetailsView data={patientDetails} />
+        </PopUpModel>
+        
       <AgGirdReact
         columnDefs={listPatientColumnDef}
         rowData={rowData}
