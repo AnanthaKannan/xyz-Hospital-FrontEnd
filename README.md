@@ -55,3 +55,10 @@ http://localhost:3000/doctor?sort=name:desc
 http://localhost:3000/dev/feedback?filter=id:eq:2,name:eq:AnanthaKannan
 ```
 
+<!-- const res = await axios.get('https://httpbin.org/get', { params: { answer: 42 } }); -->
+
+## Heap Memory
+If the heap memory excess error comes then you have use below command
+```
+export NODE_OPTIONS="--max-old-space-size=8192"
+```
