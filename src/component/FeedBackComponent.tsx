@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineDeleteOutline } from 'react-icons/md';
+import Icons from "../reusable/Icons";
 import TextEditor from "../reusable/TextEditor";
 import Hb from "../reusable/Hb";
 import { ClickButton } from "../reusable/Button";
@@ -99,7 +99,7 @@ const FeedBackComponent = () => {
           className=""
           onClick={onHandleSubmit}
           text="Submit"
-          color="secondary"
+          color="primary"
           id="submit"
         />
       </div>
@@ -115,7 +115,7 @@ const FeedBackComponent = () => {
             <div className="">
               <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
               <div>{item.createdAt}</div>
-              <MdOutlineDeleteOutline onClick={() =>onUpdateStatus(item._id)} size={25} className='pointer' />
+              <Icons icon="delete" onClick={() =>onUpdateStatus(item._id)} size={25} className='pointer' />
               </div>
               <div className="p-3">{ parse(item.message) }</div>   
             </div>

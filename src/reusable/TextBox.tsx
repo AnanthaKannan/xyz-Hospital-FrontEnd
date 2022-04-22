@@ -1,8 +1,3 @@
-
-import { TextBoxType } from '@type/type';
-import Tooltip from '@mui/material/Tooltip';
-import { InfoIcon } from './Icons';
-
 const TextBox = ({onChange, className='', readOnly=false, type='text', heading='', id, required=false, parameter}: any) => {
 
   const { values, touched, errors, handleChange } = parameter;

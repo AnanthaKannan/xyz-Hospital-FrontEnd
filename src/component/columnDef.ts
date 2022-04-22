@@ -83,7 +83,7 @@ export const listPatientColumnDef: any = [
   {
     headerName: "Record",
     field: "record",
-    cellRenderer: "ViewCellRender",
+    cellRenderer: "RecordCellRender",
     width: 100
   },
   {

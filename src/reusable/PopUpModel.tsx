@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import { InfoIcon } from './Icons';
+import Icons from './Icons';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -42,7 +42,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <InfoIcon />
+          <Icons icon='info' />
         </IconButton>
       ) : null}
     </DialogTitle>

@@ -1,7 +1,6 @@
 import React from 'react'
 import  Button  from '@mui/material/Button'
 import { ButtonType, SubmitButtonType } from '../type/type'
-import { LogoutIcon } from './Icons'
 export const ClickButton = ({ onClick, className='', id='', isDisable=false, text="click", color="info"}: ButtonType) => {
   return (
     <Button

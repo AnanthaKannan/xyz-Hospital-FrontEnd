@@ -5,7 +5,7 @@ import { listPatientColumnDef } from "./columnDef";
 import { toast } from "react-toastify";
 import Hb from "../reusable/Hb";
 import { useLoadContext } from "../reusable/LoaderContext";
-import { DeleteCellRender, EditCellRender, ViewCellRender } from "../reusable/CellRender";
+import { DeleteCellRender, EditCellRender, ViewCellRender, RecordCellRender } from "../reusable/CellRender";
 import { sweetConfirmation } from "../lib/sweetAlart";
 import { useNavigate } from 'react-router-dom';
 import PopUpModel from "../reusable/PopUpModel";
@@ -94,6 +94,7 @@ const ListPatientComp = () => {
           DeleteCellRender,
           EditCellRender,
           ViewCellRender,
+          RecordCellRender
         }}
       />
     </div>

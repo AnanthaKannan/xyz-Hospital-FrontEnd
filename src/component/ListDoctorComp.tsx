@@ -3,8 +3,7 @@ import { get, remove } from "../service/curd.service";
 import { toast } from "react-toastify";
 import Hb from "../reusable/Hb";
 import { useLoadContext } from "../reusable/LoaderContext";
-import { FiEdit } from "react-icons/fi";
-import { MdDelete } from "react-icons/md";
+import Icons from "../reusable/Icons";
 import { sweetConfirmation } from "../lib/sweetAlart";
 import { useNavigate } from "react-router-dom";
 import PaginationReuse from "../reusable/PaginationReuse";
@@ -132,14 +131,15 @@ const ListDoctorComp = () => {
                   <td>{obj.availableTimeConvert}</td>
                   <td>{convertDate(obj.createdAt)}</td>
                   <td>
-                    <FiEdit
+                    <Icons
+                      icon='edit'
                       onClick={() => onHandleUpdate(obj)}
                       size={20}
-                      className="pointer"
                     />
                   </td>
                   <td>
-                    <MdDelete
+                    <Icons
+                      icon="delete"
                       onClick={() => onHandleDelete(obj._id)}
                       size={20}
                       className="mx-3 pointer"

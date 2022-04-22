@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useLoadContext } from "../reusable/LoaderContext";
 import { doctorValueType, availableDayType } from "../type/type";
 import CheckBox from "../reusable/CheckBox";
-import { GrAddCircle, GrSubtractCircle } from "react-icons/gr";
+import Icons from "../reusable/Icons";
 import TimePicker from "../reusable/TimePickerRe";
 import { useLocation, useNavigate } from "react-router-dom";
 import DatePickerRe from '../reusable/DatePickerRe';
@@ -260,11 +260,11 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                       <div className="d-flex">
                         <h6 className="pointer mr-2" id="time-add" onClick={() => addTimeSheet(setFieldValue, selectedTime)}>
                           {" "}
-                          <GrAddCircle size={20} />{" "}
+                          <Icons icon="addCircle" size={20} />{" "}
                         </h6>
                         {selectedTime.length > 1 && (
                           <h6 className="pointer" id="time-sub" onClick={()=>removeTimeSheet(setFieldValue, selectedTime)}>
-                            <GrSubtractCircle size={20} />{" "}
+                            <Icons icon="subCircle" size={20} />{" "}
                           </h6>
                         )}
                       </div>

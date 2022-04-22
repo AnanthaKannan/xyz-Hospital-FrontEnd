@@ -7,7 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {ChangePasswordIcon, LogoutIcon } from './Icons'
+import Icons from './Icons'
 import { Link } from 'react-router-dom';
 
 export default function AccountMenu() {
@@ -81,7 +81,7 @@ export default function AccountMenu() {
         <Link to='/change-password'>
         <MenuItem>
           <ListItemIcon>
-            <ChangePasswordIcon  />
+            <Icons icon='changePassword'  />
           </ListItemIcon>
           Change Password
         </MenuItem>
@@ -89,7 +89,7 @@ export default function AccountMenu() {
         <Link to='/'>
         <MenuItem>
           <ListItemIcon>
-            <LogoutIcon  />
+            <Icons icon='logout'  />
           </ListItemIcon>
           Logout
         </MenuItem>

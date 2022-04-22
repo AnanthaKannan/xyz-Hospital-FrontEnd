@@ -136,3 +136,10 @@ export type localStorageType = {
   hospitalAddress?: string,
   hospitalPicture?: string
 }
+
+export type iconType = {
+  icon: "edit" | "delete" | "info" | "hamburger" | "view" | "view" | "logout" | "changePassword" | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle',
+  className?: string,
+  size?: number,
+  onClick?: any,
+}

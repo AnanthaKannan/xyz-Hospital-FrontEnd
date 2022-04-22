@@ -8,7 +8,7 @@ import TextEditor from "../reusable/TextEditor";
 import { useLoadContext } from "../reusable/LoaderContext";
 import { toast } from "react-toastify";
 import { post, get, remove } from "../service/curd.service";
-import { DeleteIcon } from "../reusable/Icons";
+import Icons from "../reusable/Icons";
 import parse from "html-react-parser";
 import config from "../config";
 import PaginationReuse from "../reusable/PaginationReuse";
@@ -266,7 +266,8 @@ const PatientRecordComp = () => {
               <div className="">
                 <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
                   <div>{convertDate(item.createdAt)}</div>
-                  <DeleteIcon
+                  <Icons
+                    icon="delete"
                     onClick={() => onDeleteRecord(item)}
                     className="pointer"
                   />
