@@ -84,7 +84,9 @@ const CreateDoctorComp = () => {
     console.log("result", result.status);
     setLoader(false);
     if (result.status === 200) {
-      toast.success("Doctor updated successfully");
+      if (values.fileName)
+        await uploadImage(values);
+        toast.success("Doctor updated successfully");
       navigate("/list-doctor");
     } else if (result.status === 409) {
       const data = result.data;

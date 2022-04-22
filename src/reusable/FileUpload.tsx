@@ -36,19 +36,29 @@ const AvatarUpload = ({ id, parameter, setFieldValue, className='', code }: avat
   const { values } = parameter;
   const [fileState, setFileState] = useState<any>(initialState)
 
-  useEffect(() => {
-      if(values.fileName){
-        const imagePreviewUrl = imagePath(code, values.fileName).getUrl;
-        setFileState({
-          file: null,
-          imagePreviewUrl
-        })
-      }
-  }, [])
+  // useEffect(() => {
+  //   console.log('valiues', values)
+  //     if(values.fileName){
+  //       const imagePreviewUrl = imagePath(code, values.fileName).getUrl;
+  //       console.log('imagePreviewUrl', imagePreviewUrl)
+  //       setFileState({
+  //         file: null,
+  //         imagePreviewUrl
+  //       })
+  //     }
+  // }, [])
 
   useEffect(() => {
     if(!values.fileName){
       setFileState(initialState)
+    }
+    else if(values.fileName && !fileState.fileName){
+      const imagePreviewUrl = imagePath(code, values.fileName).getUrl;
+      console.log('imagePreviewUrl', imagePreviewUrl)
+      setFileState({
+        file: null,
+        imagePreviewUrl
+      })
     }
   }, [values.fileName])
 
