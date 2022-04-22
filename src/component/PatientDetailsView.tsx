@@ -12,7 +12,7 @@ const PatientDetailsView = ({ data }) => {
           <div className='d-flex justify-content-center mt-5 mb-1'>
             {
               data.fileName ? 
-            <img className='patient-img' src={imagePath('patientImg', data.fileName).getUrl} alt="patient Img" />
+            <img className='patient-img' src={imagePath('patient', data.fileName).getUrl} alt="patient Img" />
               :
             <img className='patient-img' src={ data?.gender === '1' ? maleAvatar : femaleAvatar} alt="patient Img" />
             }

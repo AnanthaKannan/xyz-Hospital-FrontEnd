@@ -1,6 +1,7 @@
 import dateFn from 'date-fn';
 import { genderEnum } from './enum';
-import  config  from '../config'
+import config from '../config'
+import { imageUploadCodeType } from '../type/type'
 
 export const onHandleChange = (e: any, handleChange: Function) => {
   const element = {
@@ -16,13 +17,19 @@ export const convertToDigit = (e: any, sliceValue: number): number => {
   return e.target.value.replace(/[^0-9]/g, '').slice(0, sliceValue);
 }
 
-export const imagePath = (code: string, fileName): {setUrl: string, getUrl: string} => {
+export const imagePath = (code: "patient" | "doctor", fileName): { setUrl: string, getUrl: string } => {
 
   const _hospitalId = localStorage.getItem('_hospitalId');
-  if (code === 'patientImg') {
+  if (code === 'patient') {
     return {
-      setUrl: `patientImg/${_hospitalId}/${fileName}`,
-      getUrl: `${config.imgURL}/patientImg/${_hospitalId}/${fileName}`
+      setUrl: `patient/${_hospitalId}/${fileName}`,
+      getUrl: `${config.imgURL}/patient/${_hospitalId}/${fileName}`
+    }
+  }
+  if (code === 'doctor') {
+    return {
+      setUrl: `doctor/${_hospitalId}/${fileName}`,
+      getUrl: `${config.imgURL}/doctor/${_hospitalId}/${fileName}`
     }
   }
 }
@@ -109,5 +116,5 @@ export const getInitialValuesFromYup = (yupSchema): any => {
 
 // used to remove the key if the keys are don't have any value
 export const valueRefinement = (sendData) => {
-  
+
 }

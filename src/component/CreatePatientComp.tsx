@@ -67,10 +67,9 @@ const CreatePatientComp = () => {
 
     toast.success("Patient created successfully.");
     console.log('Patient added successfully');
-    if (values.fileName) {
-      values._id = result.data._id;
+    if (values.fileName) 
       await uploadImage(values);
-    }
+    
     resetForm();
   }
 
@@ -100,7 +99,7 @@ const CreatePatientComp = () => {
 
   const uploadImage = async (values) => {
     console.log('uploadImage', values);
-    const path = imagePath('patientImg', values.fileName).setUrl;
+    const path = imagePath('patient', values.fileName).setUrl;
     const file = values.file;
     const result = await uploadFile({ file, path });
     console.log('result', result);
@@ -252,6 +251,7 @@ const CreatePatientComp = () => {
                 </div>
                 <div className="col-md-3">
                   <AvatarUpload
+                    code='patient'
                     id='fileName'
                     className='mt-3'
                     parameter={parameter}

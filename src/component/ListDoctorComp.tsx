@@ -96,7 +96,7 @@ const ListDoctorComp = () => {
  
 
   const onHandleUpdate = (doctorDetails) => {
-    console.log("udaate", doctorDetails);
+    console.log("doctorDetails", doctorDetails);
     sweetConfirmation(() => {
       return navigate("/create-doctor", { state: doctorDetails });
     }, "Yes, Update it!");

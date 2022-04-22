@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './css/fileUpload.css'
 import maleAvatar from '../assets/male_avatar.png'
 import { imagePath } from '../lib'
+import { avatarUploadType } from '../type/type'
 
 const FileUpload = ({ onChange, value, readOnly = false, errorMsg = '', heading = '', id }) => {
   return (
@@ -30,14 +31,14 @@ const initialState = {
   imagePreviewUrl: maleAvatar
 }
 
-const AvatarUpload = ({ id, parameter, setFieldValue, className='' }) => {
+const AvatarUpload = ({ id, parameter, setFieldValue, className='', code }: avatarUploadType ) => {
 
   const { values } = parameter;
   const [fileState, setFileState] = useState<any>(initialState)
 
   useEffect(() => {
       if(values.fileName){
-        const imagePreviewUrl = imagePath('patientImg', values.fileName).getUrl;
+        const imagePreviewUrl = imagePath(code, values.fileName).getUrl;
         setFileState({
           file: null,
           imagePreviewUrl

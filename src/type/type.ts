@@ -83,6 +83,11 @@ export type doctorValueType = {
   specialist: string,
   licenseExpiryDate?: Date | string,
   licenseNo?: string,
+  email?: string,
+  gender: string,
+  phone: string,
+  alternatePhone?: string,
+  fileName?: string
 }
 
 export type patientDetailsType = {
@@ -143,4 +148,23 @@ export type iconType = {
   className?: string,
   size?: number,
   onClick?: any,
+}
+
+export type imageUploadCodeType = "patient" | "doctor"
+
+export type imagePathType = {
+  code : imageUploadCodeType,
+  fileName: string
+}
+
+export type parameter = any;
+export type setFieldValue = any;
+export type className = string;
+
+export type avatarUploadType = {
+  id: string,
+  parameter: parameter,
+  setFieldValue: setFieldValue,
+  className: className,
+  code: imageUploadCodeType
 }
