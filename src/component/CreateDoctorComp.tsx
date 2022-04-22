@@ -61,12 +61,7 @@ const CreateDoctorComp = () => {
     if (state?._id) {
       setFormikInitialValue({
         ...state,
-        _id: state._id,
-        name: state.name,
-        specialist: state.specialist,
-        availableTime: state.availableTime,
-        timePerPatient: state.timePerPatient,
-        availableDay: state.availableDay
+        licenseExpiryDate: new Date(state.licenseExpiryDate)
       });
       setSelectedTime(state.availableTime);
     } else {
@@ -299,10 +294,6 @@ const CreateDoctorComp = () => {
                 </div>
 
 
-                {/* <AddressForm 
-                  parameter={parameter}
-                  setFieldValue={setFieldValue}
-                   /> */}
                 <div className="mt-3">
                   <h6>Select doctor available Days</h6>
                   {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",].map((day: string) => {
