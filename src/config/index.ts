@@ -4,7 +4,6 @@ type configType = {
   apiURL: string;
   patientRecord: string;
   poolData: Object;
-  uploadFileUrl: string;
   imgURL: string;
   doctor: string;
 }
@@ -12,8 +11,7 @@ type configType = {
 export const config: configType = {
   apiURL: "https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev",
   // apiURL: "http://localhost:3000/dev",
-  uploadFileUrl: "https://4kzj8450nb.execute-api.us-east-1.amazonaws.com/dev/upload-image",
-  imgURL: "",
+  imgURL: "https://learning-2025.s3.amazonaws.com",
   patientRecord: "patientRecord",
   doctor: "doctor",
   poolData: {
@@ -24,3 +22,4 @@ export const config: configType = {
 };
 
 export default config
+

@@ -1,5 +1,6 @@
 import dateFn from 'date-fn';
 import { genderEnum } from './enum';
+import  config  from '../config'
 
 export const onHandleChange = (e: any, handleChange: Function) => {
   const element = {
@@ -15,11 +16,17 @@ export const convertToDigit = (e: any, sliceValue: number): number => {
   return e.target.value.replace(/[^0-9]/g, '').slice(0, sliceValue);
 }
 
-export const imgUploadPath = (code: string, _hospitalId: string): string => {
+export const imagePath = (code: string, fileName): {setUrl: string, getUrl: string} => {
+
+  const _hospitalId = localStorage.getItem('_hospitalId');
   if (code === 'patientImg') {
-    return 'patientImg'
+    return {
+      setUrl: `patientImg/${_hospitalId}/${fileName}`,
+      getUrl: `${config.imgURL}/patientImg/${_hospitalId}/${fileName}`
+    }
   }
 }
+
 
 export const pageChange = (page, perPage) => {
   console.log('page change', page)
@@ -98,4 +105,9 @@ export const getInitialValuesFromYup = (yupSchema): any => {
   }
   console.log(initialValues);
   return initialValues;
+}
+
+// used to remove the key if the keys are don't have any value
+export const valueRefinement = (sendData) => {
+  
 }

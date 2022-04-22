@@ -90,7 +90,7 @@ export const createPatientValidation = Yup.object({
     .oneOf(Object.keys(genderEnum)),    // ["1", "2", "3"]
   martialStatus: Yup.string()
     .oneOf(Object.keys(martialStatusEnum)),  // ["1", "2", "3"]
-  age: Yup.string().required('Age is required'),
+  age: Yup.string(),
   email: Yup.string()
     .email('Invalid email address'),
   phone: Yup.string().required('Phone is required'),
@@ -118,7 +118,7 @@ export const createPatientValidation = Yup.object({
     .min(3, 'Zip code must be at least 3 characters')
     .max(30, 'Zip code must be less than 30 characters'),
 
-  // fileName: Yup.string()
+  fileName: Yup.string()
   // .required('File is required')
   // .test('fileSize', 'File size must be less than 2MB', value => validation(value))
 });

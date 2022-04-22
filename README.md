@@ -60,5 +60,6 @@ http://localhost:3000/dev/feedback?filter=id:eq:2,name:eq:AnanthaKannan
 ## Heap Memory
 If the heap memory excess error comes then you have use below command
 ```
+export NODE_OPTIONS=--max_old_space_size=4096 
 export NODE_OPTIONS="--max-old-space-size=8192"
 ```

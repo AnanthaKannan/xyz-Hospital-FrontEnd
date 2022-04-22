@@ -73,14 +73,7 @@ export default function PopUpModel({ tittle, children, setIsOpen, isOpen }: any)
           { tittle }
         </BootstrapDialogTitle>
         <DialogContent dividers>
-         
-          <Typography gutterBottom>
           { children }
-          
-            {/* Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros. */}
-          </Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

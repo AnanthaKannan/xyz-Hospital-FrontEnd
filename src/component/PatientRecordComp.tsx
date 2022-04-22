@@ -14,13 +14,14 @@ import config from "../config";
 import PaginationReuse from "../reusable/PaginationReuse";
 import DropDown from "../reusable/DropDown";
 import { Formik } from 'formik'
-import { onHandleChange, imgUploadPath, handleReset, getInitialValuesFromYup } from '../lib';
+import { onHandleChange, handleReset, getInitialValuesFromYup } from '../lib';
 import { patientRecordValidation, createPatientValidation } from '../lib/validationSchema'
 import CheckBox from "../reusable/CheckBox";
 import DatePickerRe from '../reusable/DatePickerRe';
 import { convertDate } from '../lib'
 import ToggleSwitch from '../reusable/ToggleSwitch';
-import {TransitionGroup } from 'react-transition-group'; // ES6
+import Transitions from '../reusable/Transitions';
+
 
 
 const PatientRecordComp = () => {
@@ -131,14 +132,14 @@ const PatientRecordComp = () => {
     <div>
       <div>
         <div className="d-flex justify-content-between">
-        <Hb text="Patient Record" />
-        <ToggleSwitch 
-        onClick={() => setIsShowAddRecord(!isShowAddRecord)}
-          label="click to enable add record"
-          checked={isShowAddRecord}
-        />
-</div>
-<br />
+          <Hb text="Patient Record" />
+          <ToggleSwitch
+            onClick={() => setIsShowAddRecord(!isShowAddRecord)}
+            label="click to enable add record"
+            checked={isShowAddRecord}
+          />
+        </div>
+        <br />
         <div className="d-flex justify-content-between">
           <p> <strong>Name:</strong> {patientDetails?.firstName}</p>
           <p> <strong>ID: </strong>{patientDetails?._id}</p>
@@ -146,115 +147,119 @@ const PatientRecordComp = () => {
           <p><strong>Email: </strong> {patientDetails?.email}</p>
           <p> <strong>Phone:</strong>  {patientDetails?.phone}</p>
         </div>
-      
 
-      <div>
-        { isShowAddRecord &&
-        <Formik
-          initialValues={formikInitialValue}
-          enableReinitialize={true}
-          validationSchema={patientRecordValidation}
-          onSubmit={onSubmit}>
-          {({ handleSubmit, setFieldValue, setErrors, resetForm, ...parameter }) => (
-            <form onSubmit={handleSubmit}>
 
-              <div className="row">
-                <div className="col-md-3">
-                <DropDown
-                    list={doctorList}
-                    required={true}
-                    value={parameter.values._doctorId}
-                    heading="Doctors"
-                    id="_doctorId"
-                    errorMsg={parameter.touched._doctorId && parameter.errors._doctorId}
-                    onChange={parameter.handleChange}
-                  />
-                </div>
+       
+        <Transitions isChecked={isShowAddRecord}>
+        <div>
+            <Formik
+              initialValues={formikInitialValue}
+              enableReinitialize={true}
+              validationSchema={patientRecordValidation}
+              onSubmit={onSubmit}>
+              {({ handleSubmit, setFieldValue, setErrors, resetForm, ...parameter }) => (
+                <form onSubmit={handleSubmit}>
 
-                <div className="col-md-3">
-                  <TextBox
-                    heading='Diagnosis'
-                    required={true}
-                    id='diagnosis'
-                    parameter={parameter}
-                    
-                  />
-                </div>
-                <div className="col-md-3 d-flex">
-                  <CheckBox
-                    label="Is He/She Admitted?"
-                    id="isAdmitted"
-                    onChange={(checked, name) => {
-                      setFieldValue("isAdmitted", checked);
-                    }}
-                    checked={parameter.values.isAdmitted}
-
-                  />
-                </div>
-                <div className="col-md-3"></div>
-                {/* <div className="col-md-3"></div> */}
-           
-                {parameter.values.isAdmitted && (
-                  <>
+                  <div className="row">
                     <div className="col-md-3">
-                      <TextBox
-                        heading='Room No'
+                      <DropDown
+                        list={doctorList}
                         required={true}
-                        id='roomNo'
-                        parameter={parameter}
+                        value={parameter.values._doctorId}
+                        heading="Doctors"
+                        id="_doctorId"
+                        errorMsg={parameter.touched._doctorId && parameter.errors._doctorId}
+                        onChange={parameter.handleChange}
                       />
                     </div>
+
                     <div className="col-md-3">
-                      <DatePickerRe
+                      <TextBox
+                        heading='Diagnosis'
                         required={true}
-                        onChange={(id, date) => {
-                          setFieldValue('admittedOn', date);
-                        }}
-                        id='admittedOn'
+                        id='diagnosis'
                         parameter={parameter}
-                        heading='Admitted On'
+
+                      />
+                    </div>
+                    <div className="col-md-3 d-flex">
+                      <CheckBox
+                        label="Is He/She Admitted?"
+                        id="isAdmitted"
+                        onChange={(checked, name) => {
+                          setFieldValue("isAdmitted", checked);
+                        }}
+                        checked={parameter.values.isAdmitted}
+
                       />
                     </div>
                     <div className="col-md-3"></div>
-                  </>
-                )}
-              </div>
-              <br />
+                    {/* <div className="col-md-3"></div> */}
+
+                    {/* {parameter.values.isAdmitted && ( */}
+                      <Transitions isChecked={parameter.values.isAdmitted}>
+                      <div className="row">
+                        <div className="col-md-3">
+                          <TextBox
+                            heading='Room No'
+                            required={true}
+                            id='roomNo'
+                            parameter={parameter}
+                          />
+                        </div>
+                        <div className="col-md-3">
+                          <DatePickerRe
+                            required={true}
+                            onChange={(id, date) => {
+                              setFieldValue('admittedOn', date);
+                            }}
+                            id='admittedOn'
+                            parameter={parameter}
+                            heading='Admitted On'
+                          />
+                        </div>
+                        <div className="col-md-3"></div>
+                      </div>
+                      </Transitions>
+                    {/* )} */}
+                  </div>
+                  <br />
 
 
-              <TextEditor
-                id="description"
-                value={parameter.values.description}
-                handleChange={(value) => {
-                  setFieldValue("description", value);
-                }}
-                placeholder="Enter your Description"
-                errorMsg={parameter.touched.description && parameter.errors.description}
-              />
-
-              <br />
-              <div>
-                <div className="d-flex justify-content-end">
-                  <ClickButton
-                    className=""
-                    onClick={() => navigate("/list-patient")}
-                    text="Back"
-                    id="patient-record-cancel"
+                  <TextEditor
+                    id="description"
+                    value={parameter.values.description}
+                    handleChange={(value) => {
+                      setFieldValue("description", value);
+                    }}
+                    placeholder="Enter your Description"
+                    errorMsg={parameter.touched.description && parameter.errors.description}
                   />
-                  <ClickButton className='mx-4' onClick={() => handleReset(setFieldValue, resetForm)} text="Clear" id='patient-record-clear' />
 
-                  <SubmitButton
-                    //  onSubmit={handleSubmit}
-                    id='patient-record-submit' />
-                </div>
-                <br />
-              </div>
+                  <br />
+                  <div>
+                    <div className="d-flex justify-content-end">
+                      <ClickButton
+                        className=""
+                        onClick={() => navigate("/list-patient")}
+                        text="Back"
+                        id="patient-record-cancel"
+                      />
+                      <ClickButton className='mx-4' onClick={() => handleReset(setFieldValue, resetForm)} text="Clear" id='patient-record-clear' />
 
-            </form>
-          )}
-        </Formik>
-      }
-      </div>
+                      <SubmitButton
+                        //  onSubmit={handleSubmit}
+                        id='patient-record-submit' />
+                    </div>
+                    <br />
+                  </div>
+
+                </form>
+              )}
+            </Formik>
+          </div>
+          </Transitions>
+      
         {patientDetailsList.map((item: any, index: number) => {
           return (
             <div key={item._id} className="card mt-2 shadow-sm">
@@ -269,24 +274,24 @@ const PatientRecordComp = () => {
 
                 <div className="p-3">
                   <div className="border rounded px-1 pt-1">
-                  <table className="table table-borderless font-sm">
-                    <thead>
-                      <tr>
-                        <th scope="col">Doctor</th>
-                        <th scope="col">Diagnosis</th>
-                        <th scope="col">roomNo</th>
-                        <th scope="col">Admitted-on</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{ getDocotorName(item._doctorId) }</td>
-                        <td>{item.diagnosis}</td>
-                        <td>{item.roomNo}</td>
-                        <td>{convertDate(item.admittedOn)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <table className="table table-borderless font-sm">
+                      <thead>
+                        <tr>
+                          <th scope="col">Doctor</th>
+                          <th scope="col">Diagnosis</th>
+                          <th scope="col">roomNo</th>
+                          <th scope="col">Admitted-on</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{getDocotorName(item._doctorId)}</td>
+                          <td>{item.diagnosis}</td>
+                          <td>{item.roomNo}</td>
+                          <td>{convertDate(item.admittedOn)}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                   {parse(item.description)}
                 </div>

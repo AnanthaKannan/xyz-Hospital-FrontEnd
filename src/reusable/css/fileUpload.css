@@ -1,0 +1,40 @@
+.custom-file-upload {
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  padding: 6px;
+  cursor: pointer;
+  background: linear-gradient(270deg, #1976d2, #87c8eb);
+  margin-bottom: 25px;
+}
+
+.img-wrap{
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.img-upload:before{
+  content: url("../../assets/upload-icon.jpg");
+  width: auto;
+  position: absolute;
+  padding-top: 80px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #fff;
+}
+
+.img-upload:hover:before{
+ opacity: 1;
+}
+
+.profile-img {
+  width: auto;
+  height: 100%;
+}
+
