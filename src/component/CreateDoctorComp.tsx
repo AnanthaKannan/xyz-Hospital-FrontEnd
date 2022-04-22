@@ -33,11 +33,12 @@ const CreateDoctorComp = () => {
   const [formikInitialValue, setFormikInitialValue] = useState<doctorValueType>(
     {
       name: "",
-      _hospitalId: sessionStorage.getItem("hospitalId"),
       specialist: "",
       availableTime: [{ from: null, to: null }],
       timePerPatient: "",
       availableDay: availableDays,
+      licenseNo: "",
+      licenseExpiryDate: ""
     }
   );
   const [selectedTime, setSelectedTime] = useState(selectedTimeInitialState);
@@ -50,16 +51,15 @@ const CreateDoctorComp = () => {
     console.log("mystateishere", state);
     if (state?._id) {
       setFormikInitialValue({
-        _id: state._id,
-        name: state.name,
-        _hospitalId: sessionStorage.getItem("hospitalId"),
-        specialist: state.specialist,
-        availableTime: state.availableTime,
-        timePerPatient: state.timePerPatient,
-        availableDay: state.availableDay,
+        ...state
+        // _id: state._id,
+        // name: state.name,
+        // specialist: state.specialist,
+        // availableTime: state.availableTime,
+        // timePerPatient: state.timePerPatient,
+        // availableDay: state.availableDay,
       });
       setSelectedTime(state.availableTime);
-      // setAvailableDay(state.availableDay);
     } else {
       console.log("else state is here");
     }
@@ -70,8 +70,6 @@ const CreateDoctorComp = () => {
     { setErrors, setFieldValue, resetForm }: any
   ) => {
     values.availableTime = selectedTime;
-    // values.availableDay = availableDay;
-    values._hospitalId = sessionStorage.getItem("hospitalId");
     values.timePerPatient = "10";
     console.log(values);
 
@@ -208,8 +206,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                     parameter={parameter}
                   />
                 </div>
-
-                {/* <div className="col-md-3">
+                <div className="col-md-3">
                   <TextBox
                     heading="License No"
                     id="licenseNo"
@@ -229,7 +226,7 @@ const createDoctor = async ( values: doctorValueType, resetForm: Function, setEr
                     />
                   </div>
   
-                  <AddressForm 
+                  {/* <AddressForm 
                   parameter={parameter}
                   setFieldValue={setFieldValue}
                    /> */}

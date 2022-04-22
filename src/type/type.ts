@@ -76,12 +76,13 @@ type availableTimeType = [{
 
 export type doctorValueType = {
   _id?: number,
-  _hospitalId: string,
   name: string,
   availableTime: availableTimeType,
   availableDay: availableDayType,
   timePerPatient: string,
-  specialist: string
+  specialist: string,
+  licenseExpiryDate?: Date | string,
+  licenseNo?: string,
 }
 
 export type patientDetailsType = {
