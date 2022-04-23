@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Icons from './Icons'
 import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
+import { getStorageDetails } from '../lib';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -22,8 +24,8 @@ export default function AccountMenu() {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
+        <Typography sx={{ minWidth: 100 }}> {getStorageDetails()?.hospitalName}</Typography>
+        {/* <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}

@@ -16,7 +16,7 @@ const TopNavBar = ({ collapsed, setCollapsed}) => {
               <Icons icon='hamburger' onClick={() => setCollapsed(!collapsed)} size={25} />
             </div>
           <div className='d-flex align-items-center'>
-          <h5 className='mb-0'>{ getStorageDetails()?.hospitalName }</h5>
+          {/* <h6 className='mb-0'>{ getStorageDetails()?.hospitalName }</h6> */}
           <AccountMenu />
           </div>
          
