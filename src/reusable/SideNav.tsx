@@ -32,21 +32,21 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
     <div className='app '>
       <ProSidebar className='border-right shadow' collapsed={collapsed} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
-          <div className='d-flex align-items-center justify-content-between m-2'>
+          <div className='d-flex align-items-center justify-content-center m-2'>
            <Avatar alt="Remy Sharp"
            className='ml-2' 
             sx={{ width: 40, height: 40 }}
             src={require("../assets/hospitalLogo.jpg")} />
             {
               collapsed === false &&
-         <h6 className='mb-0 mx-3'>{ localStorage.getItem('hospitalMailId')?.slice(0, 18) }</h6>
+         <h6 className='mb-0 mx-3'> Digital Hospital </h6>
 
             }
 
          </div>
         </SidebarHeader>
         <Menu iconShape="circle" innerSubMenuArrows={true} >
-          {/* <MenuItem active={path['dashboard']} icon={<RiDashboardFill size={18} />} >Dashboard <Link to="/dashboard" /> </MenuItem> */}
+          <MenuItem active={path['dashboard']} icon={<Icons icon='dashboard' size={18} />} >Dashboard <Link to="/dashboard" /> </MenuItem>
           <SubMenu title="Doctor" icon={<Icons icon='stethoscope'  size={18} />} defaultOpen={true}>
             <MenuItem id='create-doctor' active={path['create-doctor']} icon={ <Icons icon='arrowRight' size={18} />} > <Link to="/create-doctor" /> Create Doctor</MenuItem>
             <MenuItem id='list-doctor' active={path['list-doctor']} icon={ <Icons icon='arrowRight' size={18} />}> <Link to="/list-doctor" />List Doctor</MenuItem>

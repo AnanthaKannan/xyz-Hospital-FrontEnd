@@ -1,7 +1,7 @@
 import React from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { CgLogOut } from 'react-icons/cg'
-import { RiLockPasswordLine, RiStethoscopeFill } from 'react-icons/ri'
+import { RiDashboardFill, RiLockPasswordLine, RiStethoscopeFill } from 'react-icons/ri'
 import { MdFeedback, MdOutlineDeleteOutline } from "react-icons/md";
 import { BiMessageAltDetail } from 'react-icons/bi';
 import { BsInfo } from "react-icons/bs";
@@ -49,6 +49,8 @@ export const Icons = ({ size = size_, onClick = null, className = '', icon }: ic
     return <GrAddCircle onClick={onClick_} className={`pointer ${className}`} size={size} />
   if (icon === 'subCircle')
     return <GrSubtractCircle onClick={onClick_} className={`pointer ${className}`} size={size} />
+    if (icon === 'dashboard')
+    return <RiDashboardFill onClick={onClick_} className={`pointer ${className}`} size={size} />
 
 
 

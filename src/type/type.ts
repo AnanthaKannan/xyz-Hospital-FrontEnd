@@ -143,8 +143,9 @@ export type localStorageType = {
   hospitalPicture?: string
 }
 
+type icon = "edit" | "delete" | "info" | "hamburger" | "view" | "logout" | 'dashboard' | "changePassword" | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
 export type iconType = {
-  icon: "edit" | "delete" | "info" | "hamburger" | "view" | "view" | "logout" | "changePassword" | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle',
+  icon: icon,
   className?: string,
   size?: number,
   onClick?: any,
@@ -167,4 +168,13 @@ export type avatarUploadType = {
   setFieldValue: setFieldValue,
   className: className,
   code: imageUploadCodeType
+}
+
+export type imagePathResponseType = { setUrl: string, getUrl: string }
+
+export type widgetType = {
+  icon: icon,
+  color?: string,
+  total: string,
+  title: string
 }

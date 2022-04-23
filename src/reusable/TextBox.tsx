@@ -1,7 +1,6 @@
+
 const TextBox = ({onChange, className='', readOnly=false, type='text', heading='', id, required=false, parameter}: any) => {
-
   const { values, touched, errors, handleChange } = parameter;
-
   return (
     <div className='mb-3'>
      

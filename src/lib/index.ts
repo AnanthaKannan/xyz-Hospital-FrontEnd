@@ -1,7 +1,7 @@
 import dateFn from 'date-fn';
 import { genderEnum } from './enum';
 import config from '../config'
-import { imageUploadCodeType } from '../type/type'
+import { imageUploadCodeType, imagePathResponseType } from '../type/type'
 
 export const onHandleChange = (e: any, handleChange: Function) => {
   const element = {
@@ -17,7 +17,7 @@ export const convertToDigit = (e: any, sliceValue: number): number => {
   return e.target.value.replace(/[^0-9]/g, '').slice(0, sliceValue);
 }
 
-export const imagePath = (code: "patient" | "doctor", fileName): { setUrl: string, getUrl: string } => {
+export const imagePath = (code: imageUploadCodeType, fileName: string):imagePathResponseType  => {
 
   const _hospitalId = localStorage.getItem('_hospitalId');
   if (code === 'patient') {
@@ -35,7 +35,7 @@ export const imagePath = (code: "patient" | "doctor", fileName): { setUrl: strin
 }
 
 
-export const pageChange = (page, perPage) => {
+export const pageChange = (page: number, perPage: number) => {
   console.log('page change', page)
   if (page === 1) {
     page = 0

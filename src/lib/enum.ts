@@ -9,3 +9,9 @@ export const martialStatusEnum = {
   2 : 'Married',
   3 : 'Widow',
 }
+
+const enums = {
+  genderEnum,
+  martialStatusEnum
+}
+export default enums

@@ -1,6 +1,6 @@
 import { type } from "os";
-import  CreateDoctor from "./page/CreateDoctor";
-import  CreatePatient from "./page/CreatePatient";
+import CreateDoctor from "./page/CreateDoctor";
+import CreatePatient from "./page/CreatePatient";
 import CreateHospital from "./page/CreateHospital";
 import ListPatient from "./page/ListPatient";
 import ListDoctor from "./page/ListDoctor";
@@ -16,10 +16,12 @@ import ConfirmationCodeComp from "./CognitoComp/ConfirmationCodeComp";
 import ForgotPasswordComp from "./CognitoComp/ForgotPasswordComp";
 import ChangePassword from "./page/ChangePassword";
 import ProfileDetails from "./page/ProfileDetails";
+import VitalSigns from "./page/VitalSigns";
+import Page404 from "./page/Page404";
 
 type routeType = {
-    PATH: string,
-    COMPONENT: any
+  PATH: string,
+  COMPONENT: any
 }
 
 const routes: routeType[] = [
@@ -27,10 +29,14 @@ const routes: routeType[] = [
     COMPONENT: <ProfileDetails />,
     PATH: '/profile'
   },
-  // {
-  //   COMPONENT: <Dashboard />,
-  //   PATH: '/dashboard'
-  // },
+  {
+    COMPONENT: <VitalSigns />,
+    PATH: '/vital-signs'
+  },
+  {
+    COMPONENT: <Dashboard />,
+    PATH: '/dashboard'
+  },
   {
     COMPONENT: <ChangePassword />,
     PATH: '/change-password'
@@ -82,6 +88,10 @@ const routes: routeType[] = [
   {
     COMPONENT: <LoginComp />,
     PATH: '/'
+  },
+  {
+    PATH: '*',
+    COMPONENT: <Page404 />
   }
 ]
 

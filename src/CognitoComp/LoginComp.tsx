@@ -42,7 +42,7 @@ const LoginComp = () => {
           hospitalPicture: payload.picture,
         }
         setStorageDetails(storageData);
-        navigate('/list-patient')
+        navigate('/dashboard')
       },
       onFailure: (err:any) => {
         console.log('err', err);
@@ -53,7 +53,7 @@ const LoginComp = () => {
             }
         } 
         catch(e){}
-        setErrors({ password: 'Invalid email or password' });
+        setErrors({ password: err.message });
       },
       newPasswordRequired: function(userAttributes, requiredAttributes) {
         console.log('userAttributes', userAttributes);

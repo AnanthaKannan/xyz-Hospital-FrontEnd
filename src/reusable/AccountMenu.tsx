@@ -33,7 +33,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>{localStorage.getItem('hospitalMailId').slice(0,1)}</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{localStorage.getItem('hospitalMailId')?.slice(0,1)}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
