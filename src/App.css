@@ -1,7 +1,10 @@
 .app {
-  height: 100vh;
   display: flex;
   position: relative;
+}
+
+.side-nav-fix{
+  height: 100vh;
 }
 
 .font-sm {
@@ -82,6 +85,12 @@ a:hover {
   margin-top: -50px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.bg-hos{
+  background-color: #d1e9fc;  
+  /* #d8d8d8
+ */
 }
 
 .dashboard-card {

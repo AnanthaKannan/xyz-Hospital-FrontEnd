@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "node_version": "14.19.0",
+  "author": "Sree Anantha Kannan <sreeananthakannan@gmail.com>",
+  "repository": "https://github.com/AnanthaKannan/digitalHospital-FrontEnd",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

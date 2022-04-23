@@ -47,7 +47,12 @@ export const pageChange = (page: number, perPage: number) => {
 }
 
 export const convertDate = (date: string): Date => {
+  try{
   return dateFn.date(date, 102, '-');
+  }
+  catch(e){
+    return new Date()
+  }
 }
 
 export const handleReset = (setFieldValue: Function, resetForm: Function): void => {

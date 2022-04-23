@@ -29,8 +29,8 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
 
   return (
     <div>
-    <div className='app '>
-      <ProSidebar className='border-right shadow' collapsed={collapsed} breakPoint={'md'} toggled={false}>
+    <div className='app'>
+      <ProSidebar className='side-nav-fix border-right shadow' collapsed={collapsed} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
           <div className='d-flex align-items-center justify-content-center m-2'>
            <Avatar alt="Remy Sharp"

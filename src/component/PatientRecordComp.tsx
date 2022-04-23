@@ -79,7 +79,7 @@ const PatientRecordComp = () => {
   const onSubmit = async (values: any, { setErrors, setFieldValue, resetForm }: any) => {
     console.log("submit", values);
     setLoader(true);
-    const result = await post(patientRecord, { ...values, _patientId: patientDetails._id });
+    const result = await post(patientRecord, { ...values, _patientId: patientDetails._id, status: false });
     console.log("result", result.status);
     setLoader(false);
     if (result.status !== 201) {

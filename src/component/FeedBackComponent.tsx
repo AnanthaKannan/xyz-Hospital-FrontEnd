@@ -8,6 +8,7 @@ import { post, get, put } from "../service/feedback.service";
 import { toast } from "react-toastify";
 import parse from 'html-react-parser';
 import Hc from "../reusable/Hc";
+import { convertDate } from '../lib'
 import PaginationReuse from "../reusable/PaginationReuse";
 
 const FeedBackComponent = () => {
@@ -113,8 +114,8 @@ const FeedBackComponent = () => {
         return (
           <div key={item._id} className='card mt-2 shadow-sm'>
             <div className="">
-              <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
-              <div>{item.createdAt}</div>
+              <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
+              <div>{ convertDate(item.createdAt) }</div>
               <Icons icon="delete" onClick={() =>onUpdateStatus(item._id)} size={25} className='pointer' />
               </div>
               <div className="p-3">{ parse(item.message) }</div>   
