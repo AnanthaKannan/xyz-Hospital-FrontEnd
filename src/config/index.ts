@@ -6,6 +6,7 @@ type configType = {
   poolData: Object;
   imgURL: string;
   doctor: string;
+  patient: string;
 }
 
 export const config: configType = {
@@ -13,6 +14,7 @@ export const config: configType = {
   // apiURL: "http://localhost:3000/dev",
   imgURL: "https://learning-2025.s3.amazonaws.com",
   patientRecord: "patientRecord",
+  patient: "patient",
   doctor: "doctor",
   poolData: {
     UserPoolId: "us-east-1_ohC12gMu8",

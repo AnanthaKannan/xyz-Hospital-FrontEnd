@@ -16,11 +16,8 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 
 
   export const get = (apiUrl: string, data:any = null) => {
+    
     let qryString:string = `${url}${apiUrl}`;
-    if (data !== null) {
-      const keys = Object.keys(data);
-      keys.forEach((key: string, i:number) => qryString += `${i===0 ? '?' : '&'}${key}=${data[key]}`)
-    }
     const options: AxiosRequestConfig = {
       method: 'GET',
       headers: {

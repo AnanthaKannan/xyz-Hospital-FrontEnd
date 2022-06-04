@@ -71,7 +71,7 @@ const PatientRecordComp = () => {
     }
   };
 
-  const getDocotorName = (id: string) => {
+  const getDoctorName = (id: string) => {
     const doc = doctorList.find((obj: any) => obj.value === id);
     return doc ? doc.label : "";
   };
@@ -264,7 +264,7 @@ const PatientRecordComp = () => {
           return (
             <div key={item._id} className="card mt-2 shadow-sm">
               <div className="">
-                <div className="d-flex justify-content-between bg-info rounded-top py-2 px-3">
+                <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
                   <div>{convertDate(item.createdAt)}</div>
                   <Icons
                     icon="delete"
@@ -274,8 +274,8 @@ const PatientRecordComp = () => {
                 </div>
 
                 <div className="p-3">
-                  <div className="border rounded px-1 pt-1">
-                    <table className="table table-borderless font-sm">
+                  <div className="border rounded p-1 mb-3">
+                    <table className="table mb-0 table-borderless font-sm">
                       <thead>
                         <tr>
                           <th scope="col">Doctor</th>
@@ -286,7 +286,7 @@ const PatientRecordComp = () => {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{getDocotorName(item._doctorId)}</td>
+                          <td>{getDoctorName(item._doctorId)}</td>
                           <td>{item.diagnosis}</td>
                           <td>{item.roomNo}</td>
                           <td>{convertDate(item.admittedOn)}</td>

@@ -24,10 +24,10 @@ const AgGirdReact = ({ columnDefs, onCellClicked, frameworkComponents = {}, rowD
     console.log('again-state', event.api.paginationGetCurrentPage())
   },[])
 
-  const onPaginationChanged = useCallback((event: any) => { 
-    console.log('event------------', event);
-      console.log('pageNow', event.api.paginationGetCurrentPage())
-  }, [])
+  // const onPaginationChanged = useCallback((event: any) => { 
+  //   console.log('event------------', event);
+  //     console.log('pageNow', event.api.paginationGetCurrentPage())
+  // }, [])
 
   const onFilterChanged = useCallback((event: any) => {
     console.log('onFilterChanged', event.api.getFilterModel())
@@ -55,7 +55,7 @@ const AgGirdReact = ({ columnDefs, onCellClicked, frameworkComponents = {}, rowD
         pagination={true}
         paginationPageSize={10}
         // onPaginationChanged={(e: any) => console.log('onPaginationChanged', e)}
-        onPaginationChanged={(e) => onPaginationChanged(e)}
+        // onPaginationChanged={(e) => onPaginationChanged(e)}
         frameworkComponents={frameworkComponents}
         sortingOrder={['asc', 'desc']}
       ></AgGridReact>

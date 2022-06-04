@@ -1,12 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import WightCard from '../reusable/WightCard';
 import Hb from "../reusable/Hb";
 import AppWidgetSummary from '../reusable/AppWidgetSummary';
 import AppWebsiteVisits from './AppWebsiteVisits';
 import AppCurrentVisits from './AppCurrentVisits';
+import { get } from '../service/curd.service'
 import { useTheme } from '@mui/material/styles';
+import config from "../config";
 
 const DashboardComp = () => {
+
+  const { doctor, patient } = config; 
+
+  useEffect(() => {
+    onInit();
+  }, [])
+
+  const onInit = async() => {
+    // get last 30 days details
+    console.log('first-data', new Date(new Date().setDate(new Date().getDate() - 3)).toISOString())
+    const visited = await get(patient, `createdAt:lt:${new Date(new Date().setDate(new Date().getDate() - 3)).toISOString()}`);
+    console.log('visited', visited);
+  }
+
 
   const theme = useTheme();
   return (

@@ -17,7 +17,7 @@ export const convertToDigit = (e: any, sliceValue: number): number => {
   return e.target.value.replace(/[^0-9]/g, '').slice(0, sliceValue);
 }
 
-export const imagePath = (code: imageUploadCodeType, fileName: string):imagePathResponseType  => {
+export const imagePath = (code: imageUploadCodeType, fileName: string): imagePathResponseType => {
 
   const _hospitalId = localStorage.getItem('_hospitalId');
   if (code === 'patient') {
@@ -47,10 +47,10 @@ export const pageChange = (page: number, perPage: number) => {
 }
 
 export const convertDate = (date: string): Date => {
-  try{
-  return dateFn.date(date, 102, '-');
+  try {
+    return dateFn.date(date, 102, '-');
   }
-  catch(e){
+  catch (e) {
     return new Date()
   }
 }
@@ -83,7 +83,8 @@ export const convertEnumToArray = (obj) => {
 // get the gender name using pass the value
 // if you passing the "1" as a value then you can get "Male" as response
 export const getGenderByValue = (value: string): string => {
-  return value ? genderEnum[value] : '';
+  if (!genderEnum[value]) return ''
+  return genderEnum[value]
 }
 
 // used to convert the date to age
