@@ -24,6 +24,7 @@ npx cypress run --spec cypress/integration/filename.spec.js
   * cypress is a tool for testing web applications.
   * *spec* key is not mandatory one
   * we can use *ChroPath* chrome extension to find the selector
+  * cypress.config.js used to set the configuration of cypress
 
 
 ## Call the element using below

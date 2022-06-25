@@ -78,8 +78,7 @@
   },
   "devDependencies": {
     "@types/react-datepicker": "^4.3.4",
-    "cypress": "^9.5.3",
-    "cypress-localstorage-commands": "^1.7.0",
+    "cypress": "^10.2.0",
     "faker": "^5.5.3"
   }
 }
