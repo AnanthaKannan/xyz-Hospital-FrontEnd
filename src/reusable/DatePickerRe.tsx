@@ -41,6 +41,7 @@ export default function DatePickerRe({onChange, heading, errorMsg, id, className
         <React.Fragment>
             <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       <DatePicker
+        id={id}
         maxDate={new Date()}
         className={`form-control mt-2 mb-1 ${className}`}
         renderCustomHeader={({

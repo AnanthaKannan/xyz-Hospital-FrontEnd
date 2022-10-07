@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import Select from 'react-select';
 
-const SearchSelect = ({ heading='', className='', id, options=[], required=false, parameter, setFieldValue, placeholder=''}) => {
+const SearchSelect = ({ heading='', className='', id, options=[], 
+required=false, parameter, setFieldValue, placeholder=''}) => {
 
   const { values, touched, errors } = parameter;
   // const options = [
@@ -12,15 +13,12 @@ const SearchSelect = ({ heading='', className='', id, options=[], required=false
   const handleChange = (selectedOption) => {
     setFieldValue(id, selectedOption.value)
   };
-
-  // useEffect(() => {
-  //   options.push({ value: '', label: '' })
-  // }, [])
   
   return (
     <div className='mb-3'>
          <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       <Select
+        id={id}
         placeholder={placeholder}
         className={`mt-2 mb-1 ${className}`}
         value={options.find(obj => obj.value === values[id]) || ""}

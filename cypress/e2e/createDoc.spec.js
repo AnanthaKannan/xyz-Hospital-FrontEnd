@@ -5,23 +5,20 @@
 import faker from 'faker';
 import msg from '.../../../src/lib/msg'
 
-describe('Patient Create', () => {
+describe('Doctor Create', () => {
 
-  beforeEach(() => {
+  before(() => {
     cy.visit('http://localhost:3000');
-  })
-
-  
-
-  it('Doctor validation', () => {
 
     cy.get('#email').clear().type('sreeananthakannan@gmail.com')
     cy.get('#password').clear().type('Kannan$7500')
     cy.get('.MuiButtonBase-root').click()
-    
-    cy.wait(500)
-    cy.get('#create-doctor').click()
 
+    cy.wait(1500)
+    cy.get('#create-doctor').click()
+  })
+
+  it('Doctor validation', () => {
     cy.get('#doctor-submit').click();  // click the submit button
     cy.get('#error-name').should('have.text', msg.ERR01);
     cy.get('#error-specialist').should('have.text', msg.ERR02);
@@ -31,24 +28,28 @@ describe('Patient Create', () => {
     cy.get('#error-name').should('not.exist');
     cy.get('#error-days').should('not.exist');
     cy.get('#error-time-piker').should('not.exist');
-      
-    for (let index = 0; index < 1; index++) {
+
+  })
+
+  it('Create Doctor', () => {
 
       cy.get('#name').type(faker.name.firstName())
       cy.get('#specialist').type(faker.name.lastName())
+      cy.get('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+      .click().type("male{enter}")
+      cy.get('#phone').type(faker.phone.phoneNumber())
       cy.get('#tuesday').click()
       cy.get('#startTime0').focus().select("5") // 5 is the value of the time
       cy.wait(500)
-      cy.get('#endTime0').focus().select("10") 
+      cy.get('#endTime0').focus().select("10")
       cy.get('#time-add').click()
-      cy.get('#startTime1').focus().select("15") 
+      cy.get('#startTime1').focus().select("15")
       cy.wait(500)
-      cy.get('#endTime1').focus().select("25") 
+      cy.get('#endTime1').focus().select("25")
 
       cy.get('#doctor-submit').click()
       cy.wait(1200)
-          
-    }
+    
   })
 
 })
