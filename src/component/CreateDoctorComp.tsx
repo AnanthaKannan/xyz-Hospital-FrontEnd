@@ -18,6 +18,7 @@ import SearchSelect from '../reusable/SearchSelect';
 import { genderEnum } from '../lib/enum'
 import { convertEnumToArray, imagePath } from '../lib';
 import AddressForm from "../reusable/AddressForm";
+import msg from "../lib/msg"
 import AvatarUpload from "../reusable/FileUpload";
 
 const availableDays = {
@@ -178,7 +179,7 @@ const CreateDoctorComp = () => {
     fileName: Yup.string(),
     availableDay: Yup.object()
       .required("Please select at least one day")
-      .test("availableDays", "Please select atleast one day", availableDaysValidation),
+      .test("availableDays", msg.ERR03, availableDaysValidation),
     availableTime: Yup.array()
       .required("Please select doctor available time")
       .test("availableTime", "Please select doctor available time", availableTimeValidation),
@@ -285,17 +286,22 @@ const CreateDoctorComp = () => {
                     </div>
                   </div>
                   <div className="col-md-3">
-                    <AvatarUpload
+                    {/* <AvatarUpload
                       code='doctor'
                       id='fileName'
                       className='mt-3'
                       parameter={parameter}
                       setFieldValue={setFieldValue}
-                    />
+                    /> */}
                   </div>
                 </div>
-
-
+                
+                <hr />
+                <AddressForm
+                  setFieldValue={setFieldValue}
+                  parameter={parameter}
+                />
+                <hr />
                 <div className="mt-3">
                   <h6>Select doctor available Days</h6>
                   {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",].map((day: string) => {

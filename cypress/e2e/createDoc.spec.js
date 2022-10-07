@@ -32,7 +32,7 @@ describe('Patient Create', () => {
     cy.get('#error-days').should('not.exist');
     cy.get('#error-time-piker').should('not.exist');
       
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 1; index++) {
 
       cy.get('#name').type(faker.name.firstName())
       cy.get('#specialist').type(faker.name.lastName())

@@ -107,6 +107,7 @@ const PatientRecordComp = () => {
       return;
     }
     const totalCount_ = result.headers["x-total-count"]
+    console.log('totalCount_', result.headers)
     setTotalCount(totalCount_);
     setPatientDetailsList(result.data);
     totalCount_ < 1 && setIsShowAddRecord(true)

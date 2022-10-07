@@ -3,21 +3,7 @@
 [TS Reference](https://github.com/AnanthaKannan/JAVASCRIPT-BASIC/blob/master/typescript.js)
 
 
-https://staging.hospitalrun.io/patients/new
 
-
-Account: honey-bee
-UserName: AnanthaKannan
-
-
-
-sree.kannan@gmail.com
-Kannan$7500
-
-
-https://github.com/AnanthaKannan/serverless-framework/blob/main/fountaion.yaml
-
-https://prosurgic.surge.sh/#/
 
 
 <!-- storage local -->
@@ -25,12 +11,14 @@ hospitalName
 hospitalMailId
 _hospitalId
 
+## Reference
+### Theme reference
 
 https://themes.themesbrand.com/velzon/react/minimal/dashboard-analytics
 
-## Demo url
-recordhospital.surge.sh
-
+## API
+## Dev
+https://d3hqswl3knbb85.cloudfront.net/
 https://4kzj8450nb.execute-api.us-east-1.amazonaws.com/dev/patient
 
 ### Used to project the value
@@ -56,14 +44,3 @@ http://localhost:3000/dev/feedback?filter=id:eq:2,name:eq:AnanthaKannan
 ```
 
 <!-- const res = await axios.get('https://httpbin.org/get', { params: { answer: 42 } }); -->
-
-## Heap Memory
-If the heap memory excess error comes then you have use below command
-```
-export NODE_OPTIONS=--max_old_space_size=4096 
-export NODE_OPTIONS="--max-old-space-size=8192"
-```
-
-
-### Reference website
-https://github.com/minimal-ui-kit/material-kit-react

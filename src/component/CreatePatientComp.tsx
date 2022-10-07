@@ -112,13 +112,6 @@ const CreatePatientComp = () => {
       (document.getElementById('fileName') as HTMLInputElement).value = "";
     }
     resetForm();
-
-    // setFieldValue('name', '');
-    // setFieldValue('age', null);
-    // setFieldValue('email', '');
-    // setFieldValue('phone', '');
-    // setFieldValue('dob', null);
-    // setFieldValue('password', '');
   }
 
 
@@ -250,13 +243,13 @@ const CreatePatientComp = () => {
                   </div>
                 </div>
                 <div className="col-md-3">
-                  <AvatarUpload
+                  {/* <AvatarUpload
                     code='patient'
                     id='fileName'
                     className='mt-3'
                     parameter={parameter}
                     setFieldValue={setFieldValue}
-                  />
+                  /> */}
                 </div>
                 <hr />
                 <AddressForm

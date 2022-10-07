@@ -4,12 +4,13 @@ import TextEditor from "../reusable/TextEditor";
 import Hb from "../reusable/Hb";
 import { ClickButton } from "../reusable/Button";
 import { useLoadContext } from "../reusable/LoaderContext";
-import { post, get, put } from "../service/feedback.service";
+// import { put } from "../service/feedback.service";
 import { toast } from "react-toastify";
 import parse from 'html-react-parser';
 import Hc from "../reusable/Hc";
 import { convertDate } from '../lib'
 import PaginationReuse from "../reusable/PaginationReuse";
+import { post, get, put, api } from '../service/api.service'
 
 const FeedBackComponent = () => {
   const [text, setText] = useState("");
@@ -28,17 +29,13 @@ const FeedBackComponent = () => {
     console.log("submit");
     if(!text) return
     setLoader(true);
-    const result = await post({
+    const { isSuccess } = await post(api.feedback, {
       message: text,
       subject: 'Feedback',
       _hospitalId: sessionStorage.getItem("hospitalId"),
     });
-    console.log("result", result.status);
     setLoader(false);
-    if (result.status !== 201) {
-      toast.error("Oops! Something went wrong. Please try again later.");
-      return;
-    }
+    if (!isSuccess) return
 
     toast.success("successfully added");
     console.log("Patient added successfully");
@@ -48,27 +45,25 @@ const FeedBackComponent = () => {
 
   const feedBackList = async (skip=0) => {
     setLoader(true);
-    const result = await get(`project=message,createdAt&filter=isDeleted:eq:false&limit=${perPage}&skip=${skip}`);
-    console.log("result", result);
-    setLoader(false);
-    if (result.status !== 200) {
-      toast.error("Oops! Something went wrong. Please try again later.");
-      return;
+    const params = {
+      project: 'message,createdAt',
+      filter: 'isDeleted:eq:false',
+      limit: perPage,
+      skip: skip
     }
-    setTotalCount(result.headers['x-total-count']);
-    setRowData(result.data);
+    const { isSuccess, data } = await get(api.feedback, params);
+    setLoader(false);
+    if (!isSuccess) return
+    setTotalCount(totalCount);
+    setRowData(data);
   };
 
   const onUpdateStatus = async(_id) => {
     console.log("update", _id);
     setLoader(true);
-    const result = await put(_id, {isDeleted: true});
-    console.log("result", result.status);
+    const { isSuccess }  = await put(api.feedback, _id, {isDeleted: true});
     setLoader(false);
-    if (result.status !== 200) {
-      toast.error("Oops! Something went wrong. Please try again later.");
-      return;
-    }
+    if (!isSuccess) return
     toast.success("successfully deleted");
     feedBackList();
   };
@@ -118,7 +113,7 @@ const FeedBackComponent = () => {
               <div>{ convertDate(item.createdAt) }</div>
               <Icons icon="delete" onClick={() =>onUpdateStatus(item._id)} size={25} className='pointer' />
               </div>
-              <div className="p-3">{ parse(item.message) }</div>   
+              <div className="p-3">{ item.message ? parse(item.message) : ""}</div>   
             </div>
           </div>
         )
