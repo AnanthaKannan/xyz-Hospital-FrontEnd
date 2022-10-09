@@ -59,35 +59,11 @@ const AddressForm = ({ parameter, setFieldValue }) => {
     setCityList(countryList);
   }
 
-  // return <></>
-
-  
-
-  
-
-  // const [countryList, setCountryList] = useState(searchSelectOptionsConverter(Country.getAllCountries(), 'isoCode', 'name'));
-  // const [stateList, setStateList] = useState([]);
-  // const [cityList, setCityList] = useState([]);
-
-  // useEffect(() => {
-  //   const stateList_ = State.getStatesOfCountry(parameter.values.country);
-  //   setStateList(searchSelectOptionsConverter(stateList_, 'isoCode', 'name'));
-  // }, [parameter.values.country]);
-
-  // useEffect(() => {
-  //   const cityList_ = City.getCitiesOfState(parameter.values.country, parameter.values.state);
-  //   setCityList(searchSelectOptionsConverter(cityList_, 'name', 'name'));
-  // }, [parameter.values.state]);
-
   return (
     <>
         <div className="col-md-3">
-                    <TextBox
-                      heading='Address (House No.)'
-                      id='address'
-                      required={true}
-                      parameter={parameter}
-                    />
+                    <TextBox heading='Address (House No.)' id='address' required={true} parameter={parameter} />
+                    <TextBox heading="Name" id="namssssse" parameter={parameter} />
                   </div>
 
                   <div className="col-md-3">

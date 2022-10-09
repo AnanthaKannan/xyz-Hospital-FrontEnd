@@ -39,6 +39,7 @@ const CreateDoctorComp = () => {
     {
       name: "",
       specialist: "",
+      address: "",
       availableTime: [{ from: null, to: null }],
       timePerPatient: "",
       availableDay: availableDays,
@@ -87,7 +88,7 @@ const CreateDoctorComp = () => {
     if (result.status === 200) {
       if (values.fileName)
         await uploadImage(values);
-        toast.success("Doctor updated successfully");
+      toast.success("Doctor updated successfully");
       navigate("/list-doctor");
     } else if (result.status === 409) {
       const data = result.data;
@@ -221,25 +222,13 @@ const CreateDoctorComp = () => {
                   <div className="col md-9">
                     <div className="row">
                       <div className="col-md-3">
-                        <TextBox
-                          heading="Name"
-                          id="name"
-                          parameter={parameter}
-                        />
+                        <TextBox heading="Name" id="name" parameter={parameter} />
                       </div>
                       <div className="col-md-3">
-                        <TextBox
-                          heading="Specialist"
-                          id="specialist"
-                          parameter={parameter}
-                        />
+                        <TextBox heading="Specialist" id="specialist" parameter={parameter} />
                       </div>
                       <div className="col-md-3">
-                        <TextBox
-                          heading="License No"
-                          id="licenseNo"
-                          parameter={parameter}
-                        />
+                        <TextBox heading="License No" id="licenseNo" parameter={parameter} />
                       </div>
                       <div className="col-md-3">
                         <DatePickerRe
@@ -262,26 +251,13 @@ const CreateDoctorComp = () => {
                         />
                       </div>
                       <div className="col-md-3">
-                        <TextBox
-                          heading='Phone'
-                          id='phone'
-                          required={true}
-                          parameter={parameter}
-                        />
+                        <TextBox heading='Phone' id='phone' required={true} parameter={parameter} />
                       </div>
                       <div className="col-md-3">
-                        <TextBox
-                          heading='Email Id'
-                          id='email'
-                          parameter={parameter}
-                        />
+                        <TextBox heading='Email Id' id='email' parameter={parameter} />
                       </div>
                       <div className="col-md-3">
-                        <TextBox
-                          heading='Alternate Phone'
-                          id='alternatePhone'
-                          parameter={parameter}
-                        />
+                        <TextBox heading='Alternate Phone' id='alternatePhone' parameter={parameter} />
                       </div>
                     </div>
                   </div>
@@ -295,7 +271,7 @@ const CreateDoctorComp = () => {
                     /> */}
                   </div>
                 </div>
-                
+
                 <hr />
                 <AddressForm
                   setFieldValue={setFieldValue}

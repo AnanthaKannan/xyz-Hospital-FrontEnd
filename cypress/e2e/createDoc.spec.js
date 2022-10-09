@@ -21,6 +21,7 @@ describe('Doctor Create', () => {
 
 
   it('Doctor validation', () => {
+    checkAllFieldsEmpty();
     cy.get('#doctor-submit').click();  // click the submit button
     cy.get('#error-name').should('have.text', msg.ERR01);
     cy.get('#error-specialist').should('have.text', msg.ERR02);
@@ -77,6 +78,15 @@ describe('Doctor Create', () => {
     cy.wait(1200)
     cy.contains('Doctor created successfully')
 
+    checkAllFieldsEmpty()
+  });
+
+  it('Create the doctor with mandatory fields', () => {
+
+  });
+
+
+  function checkAllFieldsEmpty() {
     // check all the field are cleared
     cy.get('#name').should('have.value', '');
     cy.get('#specialist').should('have.value', '');
@@ -94,7 +104,7 @@ describe('Doctor Create', () => {
     }
 
     // address field
-    // cy.get('#address').should('have.value', '');
+    cy.get('#address').should('not.have.value');
     cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
     cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
     cy.get('#city > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
@@ -103,10 +113,6 @@ describe('Doctor Create', () => {
     // start time and end time
     cy.get('#endTime0').find('option:selected').should('have.text', '')
     cy.get('#startTime0').find('option:selected').should('have.text', '')
-  });
-
-  it('Create the doctor with mandatory fields', () => {
-
-  })
+  }
 
 })

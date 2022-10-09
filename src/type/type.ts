@@ -81,6 +81,7 @@ export type doctorValueType = {
   availableDay: availableDayType,
   timePerPatient: string,
   specialist: string,
+  address: string,
   licenseExpiryDate?: Date | string,
   licenseNo?: string,
   email?: string,
