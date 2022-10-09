@@ -176,6 +176,12 @@ const CreatePatientComp = () => {
                         parameter={parameter}
                         id='dob'
                         heading='Date Of Birth'
+                        minDate={new Date('20-20-1970')}
+                        maxDate={new Date()}
+                          yearsRange={{
+                            start: 1970,
+                            end: new Date().getFullYear() + 1
+                          }}
                       />
                     </div>
 

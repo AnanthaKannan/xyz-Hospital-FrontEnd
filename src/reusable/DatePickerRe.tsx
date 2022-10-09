@@ -3,7 +3,8 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
 
-export default function DatePickerRe({onChange, heading, errorMsg, id, className='', required=false, parameter}: any) {
+export default function DatePickerRe({onChange, heading, errorMsg, id, yearsRange,
+  className='', required=false, parameter, minDate, maxDate}: any) {
     
     const { values, touched, errors } = parameter;
 
@@ -16,7 +17,8 @@ export default function DatePickerRe({onChange, heading, errorMsg, id, className
         return Array.from({ length }, (_, i) => start + (i * step));
     }
       
-    const years = range(1970, getYear(new Date()) + 1, 1);
+    const years = range(yearsRange.start, yearsRange.end, 1);
+
 
     const getMonth = (date: Date) => {
         return date.getMonth();
@@ -42,7 +44,8 @@ export default function DatePickerRe({onChange, heading, errorMsg, id, className
             <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       <DatePicker
         id={id}
-        maxDate={new Date()}
+        minDate={minDate}
+        maxDate={maxDate}
         className={`form-control mt-2 mb-1 ${className}`}
         renderCustomHeader={({
           date,

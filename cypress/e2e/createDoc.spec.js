@@ -9,6 +9,7 @@ describe('Doctor Create', () => {
 
   before(() => {
     cy.login();
+    cy.get('#create-doctor').click()
   })
 
   beforeEach(() => {
@@ -19,9 +20,18 @@ describe('Doctor Create', () => {
     cy.saveLocalStorage();
   });
 
+  it('All field should be empty', () => {
+    checkAllFieldsEmpty();
+  });
+
+  it('total input fields count', () => {
+    // get the count of text boxes
+    cy.get('input:visible').should('have.length', 13);
+    cy.get('select:visible').should('have.length', 2);
+    cy.get('input[type=checkbox]').should('have.length', 7);
+  });
 
   it('Doctor validation', () => {
-    checkAllFieldsEmpty();
     cy.get('#doctor-submit').click();  // click the submit button
     cy.get('#error-name').should('have.text', msg.ERR01);
     cy.get('#error-specialist').should('have.text', msg.ERR02);
@@ -32,10 +42,15 @@ describe('Doctor Create', () => {
     cy.get('#error-name').should('not.exist');
     cy.get('#error-days').should('not.exist');
     cy.get('#error-time-piker').should('not.exist');
-
   })
 
-  it.only('Create Doctor with all the fields', () => {
+  it('License Expiry Date should not be select past dates', () => {
+    const todayDate = `00${new Date().getDate()}`
+    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${todayDate.slice(todayDate.length-3)}`).click()
+    cy.get('#licenseExpiryDate').should('have.value', '');
+  })
+
+  it('Create Doctor with all the fields', () => {
     cy.get('#name').type(faker.name.firstName())
     cy.get('#specialist').type(faker.name.lastName())
     const gender = ['male', 'female', 'others']
@@ -43,7 +58,8 @@ describe('Doctor Create', () => {
       .type(`${gender[faker.random.number(2)]}{enter}{enter}`);
     cy.get('#phone').type(faker.phone.phoneNumber())
     cy.get('#licenseNo').type(faker.finance.account())
-    cy.get('#licenseExpiryDate').click().get('.react-datepicker__day--008').click()
+    const tomorrow = `00${new Date(new Date().getTime() + (24 * 60 * 60 * 1000)).getDate()}`;
+    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${tomorrow.slice(tomorrow.length-3)}`).click()
     cy.get('#email').type(faker.internet.email())
     cy.get('#alternatePhone').type(faker.phone.phoneNumber())
 

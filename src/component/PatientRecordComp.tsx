@@ -217,6 +217,12 @@ const PatientRecordComp = () => {
                             id='admittedOn'
                             parameter={parameter}
                             heading='Admitted On'
+                            minDate={new Date('20-20-1970')}
+                            maxDate={new Date()}
+                            yearsRange={{
+                            start: 1970,
+                            end: new Date().getFullYear() + 1
+                          }}
                           />
                         </div>
                         <div className="col-md-3"></div>

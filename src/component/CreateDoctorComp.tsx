@@ -238,6 +238,12 @@ const CreateDoctorComp = () => {
                             setFieldValue(id, date);
                           }}
                           parameter={parameter}
+                          minDate={new Date(new Date().getTime() + (24 * 60 * 60 * 1000))}
+                          maxDate={new Date('20-20-2120')}
+                          yearsRange={{
+                            start: new Date().getFullYear(),
+                            end: new Date().getFullYear() + 10
+                          }}
                         />
                       </div>
                       <div className="col-md-3">
