@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable testing-library/await-async-utils */
+
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -35,3 +38,27 @@
 //     }
 //   }
 // }
+
+let LOCAL_STORAGE_MEMORY = {};
+
+Cypress.Commands.add("saveLocalStorage", () => {
+  Object.keys(localStorage).forEach(key => {
+    LOCAL_STORAGE_MEMORY[key] = localStorage[key];
+  });
+});
+
+Cypress.Commands.add("restoreLocalStorage", () => {
+  Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
+    localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
+  });
+});
+
+Cypress.Commands.add("login", () => {
+  cy.visit('http://localhost:3000');
+    cy.get('#email').clear().type('sreeananthakannan@gmail.com')
+    cy.get('#password').clear().type('Kannan$7500')
+    cy.get('.MuiButtonBase-root').click()
+
+    cy.wait(1500)
+    cy.get('#create-doctor').click()
+});

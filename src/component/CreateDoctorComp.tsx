@@ -304,7 +304,7 @@ const CreateDoctorComp = () => {
                 <hr />
                 <div className="mt-3">
                   <h6>Select doctor available Days</h6>
-                  {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",].map((day: string) => {
+                  {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((day: string) => {
                     return (
                       <CheckBox
                         label={day}

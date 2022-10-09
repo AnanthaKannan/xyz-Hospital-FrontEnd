@@ -6,53 +6,41 @@ import faker from 'faker';
 
 describe('Patient Create', () => {
 
+  before(() => {
+    // cy.login();
+    cy.visit('http://localhost:3000/create-doctor');
+  })
+
+
+  it('testcasetest', () => {
+    const gender = ['male', 'female']
+    cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+      .type(`India{enter}{enter}`);
+    cy.wait(500)
+
+    cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+      .type(`Tamil Nadu{enter}{enter}`);
+    cy.wait(500)
+
+    cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+      .type(`Chennai{enter}{enter}`);
 
 
 
-  before(function(){
-    cy.fixture('example').then(function(data){
-      this.data = data;
-      this.localStoagedata = {}
-    });
-    cy.visit(Cypress.env('url'));
-  });
-
-  function setCookies(localStoagedata){
-    // console.log('before', this.localStoagedata);
-    
-    // if(!this.localStoagedata.token){
-    //   this.localStoagedata = { ...localStorage };
-    // }
-
-    const data = localStoagedata;
-    console.log('storage data', data)
-    const storage = window.localStorage;
-    for (let key in data) {
-      storage.setItem(key, data[key]);
-    }
-  }
+    // it('works when type on the input element', function () {
+    //   cy
+    //     .visit('http://jedwatson.github.io/react-select/')
+    //     // comparing to OLD VERSION that doesn't work as below comment line
+    //     // .get('div.Select-control:first').click()
+    //     // the key of the trick is to type on the input element
+    //     .get(`div.Select-control input`).first().type('V')
+    //     .get('.Select-option:contains(Victoria)')
+    //     .click();
+    // });
 
 
-  // beforeEach(() => {
-  //   setCookies();
-  // })
-
-  // afterEach(() => {
-  //   cy.saveLocalStorage();
-  // });
-
-  it('With proper user name and password login the page', function(){
-    cy.log(this.localStoagedata)
-    cy.get('#email').type(this.data.email);
-    cy.get('#password').type(this.data.password);
-    cy.get('#login-submit').click();
-    // setCookies({ ...localStorage });
-    cy.wait(5000)
-    cy.log({...localStorage})
-    this.localStoagedata = { ...localStorage };
-    cy.log(this.localStoagedata)
-  });
-
+    // cy.get('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+  })
   // it('Verify title of the page', function(){
   //   console.log('ourLocalStorage', this.localStoagedata)
   //   // setCookies(this.localStoagedata);
@@ -81,9 +69,9 @@ describe('Patient Create', () => {
   //   cy.get(':nth-child(2) > .mb-3 > .text-danger').should('not.exist');
   //   cy.get(':nth-child(4) > .mb-3 > .text-danger').should('not.exist');
   //   cy.get(':nth-child(5) > .mb-3 > .text-danger').should('not.exist');
-    
+
   //   for (let index = 0; index < 20; index++) {
-   
+
   //     cy.get('#name').type(faker.name.firstName())
   //     cy.get('#email').type(faker.internet.email())
   //     cy.get('#age').type(faker.random.number())
@@ -92,7 +80,7 @@ describe('Patient Create', () => {
   //     cy.get('.react-datepicker__day--015').click();
   //     cy.get('#patient-submit').click()
   //     cy.wait(200)
-    
+
   //   }
   // })
 
