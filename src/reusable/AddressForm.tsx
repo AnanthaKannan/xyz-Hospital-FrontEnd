@@ -63,7 +63,6 @@ const AddressForm = ({ parameter, setFieldValue }) => {
     <>
         <div className="col-md-3">
                     <TextBox heading='Address (House No.)' id='address' required={true} parameter={parameter} />
-                    <TextBox heading="Name" id="namssssse" parameter={parameter} />
                   </div>
 
                   <div className="col-md-3">

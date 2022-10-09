@@ -60,5 +60,4 @@ Cypress.Commands.add("login", () => {
     cy.get('.MuiButtonBase-root').click()
 
     cy.wait(1500)
-    cy.get('#create-doctor').click()
 });
