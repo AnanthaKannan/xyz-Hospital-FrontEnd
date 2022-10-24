@@ -46,7 +46,7 @@ describe('Doctor Create', () => {
 
   it('License Expiry Date should not be select past dates', () => {
     const todayDate = `00${new Date().getDate()}`
-    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${todayDate.slice(todayDate.length-3)}`).click()
+    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${todayDate.slice(todayDate.length-3)}`).click({ multiple: true })
     cy.get('#licenseExpiryDate').should('have.value', '');
   })
 
@@ -59,7 +59,7 @@ describe('Doctor Create', () => {
     cy.get('#phone').type(faker.phone.phoneNumber())
     cy.get('#licenseNo').type(faker.finance.account())
     const tomorrow = `00${new Date(new Date().getTime() + (24 * 60 * 60 * 1000)).getDate()}`;
-    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${tomorrow.slice(tomorrow.length-3)}`).click()
+    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${tomorrow.slice(tomorrow.length-3)}`).click({ multiple: true })
     cy.get('#email').type(faker.internet.email())
     cy.get('#alternatePhone').type(faker.phone.phoneNumber())
 

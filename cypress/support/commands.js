@@ -54,10 +54,11 @@ Cypress.Commands.add("restoreLocalStorage", () => {
 });
 
 Cypress.Commands.add("login", () => {
-  cy.visit('http://localhost:3000');
-    cy.get('#email').clear().type('sreeananthakannan@gmail.com')
-    cy.get('#password').clear().type('Kannan$7500')
-    cy.get('.MuiButtonBase-root').click()
+  cy.visit(Cypress.config('baseUrl'));
+  cy.intercept('POST', '').as('postLogin')
+  cy.get('#email').clear().type(Cypress.env('email'))
+  cy.get('#password').clear().type(Cypress.env('password'))
+  cy.get('.MuiButtonBase-root').click()
 
-    cy.wait(1500)
+  cy.wait('@postLogin')
 });
