@@ -2,15 +2,6 @@ import React, { useEffect, useState } from 'react'
 import SearchSelect from './SearchSelect';
 import TextBox from './TextBox'
 import { get, api } from '../service/api.service';
-import { toast } from "react-toastify";
-import msg from '../lib/msg'
-
-// const { Country, State, City }  = require ('country-state-city');
-
-// // console.log(Country.getAllCountries())
-// // console.log(State.getStatesOfCountry('IN'))
-// console.log(City.getCitiesOfState('IN', 'TN'))
-
 const AddressForm = ({ parameter, setFieldValue }) => {
 
   const [countryList, setCountryList] = useState([]);

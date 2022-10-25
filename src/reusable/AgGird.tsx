@@ -1,12 +1,8 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { agGirdReactType } from '../type/type'
 import { AgGridReact } from 'ag-grid-react';
 
 const AgGirdReact = ({ columnDefs, onCellClicked, frameworkComponents = {}, rowData }: agGirdReactType) => {
-
-  const [gridApi, setGridApi] = useState(null);
-  const [girdColumnApi, setGirdColumnApi] = useState(null);
-
 
   const onCellClicked_ = (event: any) => {
     try {

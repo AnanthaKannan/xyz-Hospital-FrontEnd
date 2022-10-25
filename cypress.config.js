@@ -9,7 +9,6 @@ module.exports = defineConfig({
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
     // used to test different environment
     setupNodeEvents(on, config) {
-      console.log(config) // see everything in here!
       const file = config.env.configFile || 'dev'
       const pathToConfigFile = path.resolve('', 'cypress/config', `${file}.json`)
       return fs.readJson(pathToConfigFile)

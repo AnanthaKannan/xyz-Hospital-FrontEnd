@@ -1,7 +1,4 @@
 import http from './http';
-import { dataType } from '@type/type';
-
-// const api = '/patientRecord';
 
 export const post = (api, data: object) => {
     return http.post(`/${api}`, data);
@@ -29,7 +26,7 @@ export const uploadFile = (data:{ file: any, path: string }) => {
     return http.post(`/upload-image`, formData);
 }
 
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     post,
     get,

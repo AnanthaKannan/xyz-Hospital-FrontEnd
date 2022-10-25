@@ -1,4 +1,4 @@
-import React, {  useContext, createContext, Dispatch } from 'react'
+import {  useContext, createContext } from 'react'
 
 
 const LoaderContext = createContext({} as any);

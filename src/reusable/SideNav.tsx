@@ -1,6 +1,6 @@
 import { SidebarHeader, ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Icons from './Icons';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import { useEffect, useState } from 'react';
 import './css/sidenavbar.css'
@@ -28,7 +28,6 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
   }
 
   return (
-    <div>
     <div className='app'>
       <ProSidebar className='side-nav-fix border-right shadow' collapsed={collapsed} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
@@ -69,7 +68,6 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
 
         </div>
       </div>
-    </div>
     </div>
   )
 }

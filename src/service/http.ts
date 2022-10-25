@@ -1,5 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { type } from 'os';
+import axios, { AxiosRequestConfig } from 'axios';
 import { config } from '../config';
 
 let url = config.apiURL;
@@ -168,7 +167,7 @@ export const delete_ = (apiUrl: string) => {
 }
 
 
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   get,
   post,

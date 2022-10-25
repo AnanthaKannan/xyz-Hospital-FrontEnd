@@ -1,10 +1,6 @@
 import React from 'react'
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import { Link } from 'react-router-dom';
 import Icons from './Icons'
 import AccountMenu from './AccountMenu';
-import { getStorageDetails } from '../lib';
 
 
 const TopNavBar = ({ collapsed, setCollapsed}) => {

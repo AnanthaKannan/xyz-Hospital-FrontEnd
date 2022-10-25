@@ -19,7 +19,8 @@ const ListDoctorComp = () => {
   const { setLoader } = useLoadContext();
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  // const [perPage, setPerPage] = useState(10);
+  const perPage = 10;
 
   useEffect(() => {
     listPatient(page);

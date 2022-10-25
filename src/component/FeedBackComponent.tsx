@@ -17,7 +17,8 @@ const FeedBackComponent = () => {
   const [rowData, setRowData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(2)
+  // const [perPage, setPerPage] = useState(2)
+  const perPage = 2;
 
   const { setLoader } = useLoadContext();
 
