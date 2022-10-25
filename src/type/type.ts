@@ -88,7 +88,8 @@ export type doctorValueType = {
   gender: string,
   phone: string,
   alternatePhone?: string,
-  fileName?: string
+  fileName?: string,
+  zipCode?: string
 }
 
 export type patientDetailsType = {

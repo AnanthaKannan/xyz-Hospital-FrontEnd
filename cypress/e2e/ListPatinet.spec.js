@@ -3,7 +3,7 @@
 /// <reference types="cypress" /> 
 //  the above line used to auto suggestion for cypress
 
-describe('List Patient', () => { 
+describe('List Patient', () => {
   before(() => {
     cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientList')
     cy.login();
@@ -27,7 +27,6 @@ describe('List Patient', () => {
 
     for (let i = 1; i <= 9; i++) {
       for (let j = 1; j <= 4; j++) {
-        // cy.log(`cy.get('tbody > :nth-child(${i}) > :nth-child(${j})')`)
         cy.get(`tbody > :nth-child(${i}) > :nth-child(${j})`).should('exist')
       }
     }
@@ -35,8 +34,5 @@ describe('List Patient', () => {
     // click the close button
     cy.get('.MuiButtonBase-root > .pointer > path').click()
     cy.get('#popupModel').should('not.exist')
-    
-
-
   });
- })
+})

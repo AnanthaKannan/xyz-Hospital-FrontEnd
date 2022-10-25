@@ -48,7 +48,8 @@ const CreateDoctorComp = () => {
       gender: "",
       phone: "",
       alternatePhone: "",
-      fileName: ""
+      fileName: "",
+      zipCode: "",
     }
   );
   const [selectedTime, setSelectedTime] = useState(selectedTimeInitialState);
@@ -58,7 +59,6 @@ const CreateDoctorComp = () => {
 
   useEffect(() => {
     const state: any = location.state;
-    console.log("mystateishere", state);
     if (state?._id) {
       setFormikInitialValue({
         ...state,
