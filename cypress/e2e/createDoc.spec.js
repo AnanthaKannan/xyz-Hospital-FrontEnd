@@ -9,7 +9,9 @@ describe('Doctor Create', () => {
 
   before(() => {
     cy.login();
+    cy.intercept('GET', 'https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev/address').as('getAddress')
     cy.get('#create-doctor').click()
+    cy.wait('@getAddress')
   })
 
   beforeEach(() => {
@@ -46,11 +48,12 @@ describe('Doctor Create', () => {
 
   it('License Expiry Date should not be select past dates', () => {
     const todayDate = `00${new Date().getDate()}`
-    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${todayDate.slice(todayDate.length-3)}`).click({ multiple: true })
+    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${todayDate.slice(todayDate.length - 3)}`).click({ multiple: true })
     cy.get('#licenseExpiryDate').should('have.value', '');
   })
 
   it('Create Doctor with all the fields', () => {
+    cy.intercept('POST', 'https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev/doctor').as('postCreateDoctor')
     cy.get('#name').type(faker.name.firstName())
     cy.get('#specialist').type(faker.name.lastName())
     const gender = ['male', 'female', 'others']
@@ -59,7 +62,7 @@ describe('Doctor Create', () => {
     cy.get('#phone').type(faker.phone.phoneNumber())
     cy.get('#licenseNo').type(faker.finance.account())
     const tomorrow = `00${new Date(new Date().getTime() + (24 * 60 * 60 * 1000)).getDate()}`;
-    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${tomorrow.slice(tomorrow.length-3)}`).click({ multiple: true })
+    cy.get('#licenseExpiryDate').click().get(`.react-datepicker__day--${tomorrow.slice(tomorrow.length - 3)}`).click({ multiple: true })
     cy.get('#email').type(faker.internet.email())
     cy.get('#alternatePhone').type(faker.phone.phoneNumber())
 
@@ -91,7 +94,7 @@ describe('Doctor Create', () => {
 
     // submit button
     cy.get('#doctor-submit').click()
-    cy.wait(1200)
+    cy.wait('@postCreateDoctor')
     cy.contains('Doctor created successfully')
 
     checkAllFieldsEmpty()

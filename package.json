@@ -9,7 +9,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "cypress": "npx cypress open",
+    "cypress": "npx cypress open --env configFile=dev",
     "cypress-record": "npx cypress run --record --key 6bc38aff-d016-4396-a610-dd1260b2f652",
     "eject": "react-scripts eject"
   },
@@ -34,6 +34,7 @@
     "country-state-city": "^3.0.1",
     "date-fn": "0.0.2",
     "formik": "^2.2.9",
+    "fs-extra": "^10.1.0",
     "fuse.js": "^6.5.3",
     "html-react-parser": "^1.4.10",
     "intl-tel-input": "^17.0.16",
