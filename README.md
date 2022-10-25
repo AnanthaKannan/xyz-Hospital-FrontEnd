@@ -6,7 +6,10 @@
 
 ## [Cypress](./CYPRESS.md)
 
-
+## Lint
+```
+npm run lint
+```
 
 <!-- storage local -->
 hospitalName
