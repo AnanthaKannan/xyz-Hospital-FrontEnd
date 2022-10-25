@@ -7,10 +7,11 @@ import { BiMessageAltDetail } from 'react-icons/bi';
 import { BsInfo } from "react-icons/bs";
 import { ImEnter } from "react-icons/im";
 import { iconType } from '../type/type';
-import {  FaUsers } from 'react-icons/fa';
+import { FaUsers } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { GrAddCircle, GrSubtractCircle } from 'react-icons/gr';
+import { IoClose } from 'react-icons/io5'
 
 const size_ = 25;
 
@@ -49,8 +50,11 @@ export const Icons = ({ size = size_, onClick = null, className = '', icon }: ic
     return <GrAddCircle onClick={onClick_} className={`pointer ${className}`} size={size} />
   if (icon === 'subCircle')
     return <GrSubtractCircle onClick={onClick_} className={`pointer ${className}`} size={size} />
-    if (icon === 'dashboard')
+  if (icon === 'dashboard')
     return <RiDashboardFill onClick={onClick_} className={`pointer ${className}`} size={size} />
+  if (icon === 'close')
+    return <IoClose onClick={onClick_} className={`pointer ${className}`} size={size} />
+    
 
 
 

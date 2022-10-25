@@ -47,27 +47,27 @@ const ListPatientComp = () => {
       toast.error("Oops! Something went wrong. Please try again later.");
     }
   };
-  
 
-  const onCellClicked = async(event: any) => {
+
+  const onCellClicked = async (event: any) => {
     console.log(event);
     const { column, data, colDef } = event;
-    
-    if(colDef.field === 'edit'){
+
+    if (colDef.field === 'edit') {
       console.log('edit', data._id);
       sweetConfirmation(() => {
-        return navigate('/create-patient',{state:data})
+        return navigate('/create-patient', { state: data })
       }, 'Yes, Update it!');
     }
-    else if(colDef.field === 'view'){
+    else if (colDef.field === 'view') {
       setPatientDetails(data);
       setIsPopUpOpen(true);
     }
-    else if(colDef.field === 'record'){
+    else if (colDef.field === 'record') {
       console.log('record', data._id);
-      navigate('/patient-record',{state:data})
+      navigate('/patient-record', { state: data })
     }
-    else if(colDef.field === 'delete'){
+    else if (colDef.field === 'delete') {
       console.log('delete', data._id);
       sweetConfirmation(() => {
         return deletePatient_(data._id);
@@ -83,9 +83,9 @@ const ListPatientComp = () => {
         setIsOpen={setIsPopUpOpen}
         tittle="Patient Details"
       >
-          <PatientDetailsView data={patientDetails} />
-        </PopUpModel>
-        
+        <PatientDetailsView data={patientDetails} />
+      </PopUpModel>
+
       <AgGirdReact
         columnDefs={listPatientColumnDef}
         rowData={rowData}
