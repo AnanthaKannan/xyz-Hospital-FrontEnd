@@ -3,7 +3,7 @@ import SideNav from './SideNav';
 import { containerType } from '@type/type'
 import LoadingOverlay from 'react-loading-overlay-ts';
 import LoaderContext from './LoaderContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Container = ({ children, title}: containerType) => {
 

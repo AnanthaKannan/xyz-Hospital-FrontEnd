@@ -19,7 +19,6 @@ import { genderEnum } from '../lib/enum'
 import { convertEnumToArray, imagePath } from '../lib';
 import AddressForm from "../reusable/AddressForm";
 import msg from "../lib/msg"
-import AvatarUpload from "../reusable/FileUpload";
 
 const availableDays = {
   monday: false,
@@ -69,7 +68,7 @@ const CreateDoctorComp = () => {
     } else {
       console.log("else state is here");
     }
-  }, []);
+  }, [location.state]);
 
   const onSubmit = (values: any, { setErrors, setFieldValue, resetForm }: any) => {
     values.availableTime = selectedTime;
@@ -105,7 +104,6 @@ const CreateDoctorComp = () => {
     console.log("result", result.status);
     setLoader(false);
     if (result.status === 409) {
-      const data = result.data;
       toast.error("Doctor already exists");
       return;
     }

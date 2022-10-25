@@ -1,7 +1,7 @@
 import React from 'react'
 import { imagePath, fromDateToAgeConverter, getGenderByValue } from '../lib'
-import maleAvatar from '../assets/male_avatar.png'
-import femaleAvatar from '../assets/female_avatar.png'
+// import maleAvatar from '../assets/male_avatar.png'
+// import femaleAvatar from '../assets/female_avatar.png'
 
 
 const PatientDetailsView = ({ data }) => {

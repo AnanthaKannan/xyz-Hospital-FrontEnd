@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik'
-import * as Yup from 'yup'
 import{ SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
@@ -30,7 +29,7 @@ const LoginComp = () => {
       onSuccess: (result:any) => {
         console.log('result', result);
         const idToken = result.idToken.jwtToken;
-        const refreshToken = result.refreshToken.token;
+        // const refreshToken = result.refreshToken.token;
         const payload = result.idToken.payload;
         const storageData = {
           token: idToken,

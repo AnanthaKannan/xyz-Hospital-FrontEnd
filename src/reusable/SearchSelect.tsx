@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Select from 'react-select';
 
 const SearchSelect = ({ heading='', className='', id, options=[], 

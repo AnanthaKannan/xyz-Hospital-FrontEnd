@@ -1,5 +1,4 @@
 import http from './http';
-import { dataType } from '@type/type';
 
 const api = '/patientRecord';
 
@@ -22,6 +21,7 @@ export const put = (_id:any, data:object) => {
     return http.put(`${api}/${_id}`, data);
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     post,
     get,

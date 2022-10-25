@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import WightCard from '../reusable/WightCard';
 import Hb from "../reusable/Hb";
 import AppWidgetSummary from '../reusable/AppWidgetSummary';
 import AppWebsiteVisits from './AppWebsiteVisits';
@@ -10,7 +9,7 @@ import config from "../config";
 
 const DashboardComp = () => {
 
-  const { doctor, patient } = config; 
+  const { patient } = config; 
 
   useEffect(() => {
     onInit();

@@ -1,15 +1,7 @@
-// @mui
-import PropTypes from 'prop-types';
 import { alpha, styled } from '@mui/material/styles';
-import { Card, Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Icons from './Icons';
 import { widgetType } from '../type/type'
-// utils
-// import { fShortenNumber } from '../../../utils/formatNumber';
-// components
-// import Iconify from '../../../components/Iconify';
-
-// ----------------------------------------------------------------------
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
   margin: 'auto',

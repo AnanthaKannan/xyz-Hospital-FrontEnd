@@ -51,7 +51,7 @@ const ListPatientComp = () => {
 
   const onCellClicked = async (event: any) => {
     console.log(event);
-    const { column, data, colDef } = event;
+    const { data, colDef } = event;
 
     if (colDef.field === 'edit') {
       console.log('edit', data._id);
