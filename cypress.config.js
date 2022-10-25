@@ -1,11 +1,18 @@
 const { defineConfig } = require('cypress')
+const fs = require('fs-extra')
+const path = require('path')
 
 module.exports = defineConfig({
   viewportHeight: 600,
   viewportWidth: 1000,
   e2e: {
-    baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
-    // excludeSpecPattern: ["**//*", "**//*"]
+    // used to test different environment
+    setupNodeEvents(on, config) {
+      console.log(config) // see everything in here!
+      const file = config.env.configFile || 'dev'
+      const pathToConfigFile = path.resolve('', 'cypress/config', `${file}.json`)
+      return fs.readJson(pathToConfigFile)
+    },
   }
 })
