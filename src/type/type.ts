@@ -144,7 +144,7 @@ export type localStorageType = {
   hospitalPicture?: string
 }
 
-type icon = "edit" | "delete" | "info" | "hamburger" | "view" | "logout" | 'dashboard' | "changePassword" | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
+type icon = "edit" | "delete" | "info" | "close" | "hamburger" | "view" | "logout" | 'dashboard' | "changePassword" | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
 export type iconType = {
   icon: icon,
   className?: string,

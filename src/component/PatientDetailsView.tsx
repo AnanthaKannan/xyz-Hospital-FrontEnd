@@ -8,21 +8,21 @@ const PatientDetailsView = ({ data }) => {
   return (
     <div>
 
-      <div className='d-flex justify-content-center mt-5 mb-2'>
+      {/* <div className='d-flex justify-content-center mt-5 mb-2'>
         {
           data.fileName ?
             <img className='patient-img' src={imagePath('patient', data.fileName).getUrl} alt="patient Img" />
             :
             <img className='patient-img' src={data?.gender === 'male' ? maleAvatar : femaleAvatar} alt="patient Img" />
         }
-      </div>
+      </div> */}
 
       <table className="table table-bordered font-sm">
         <tbody>
           <tr>
             <th>ID</th>
             <td>{data?._id}</td>
-            <th>ID</th>
+            <th>Hospital ID</th>
             <td>{data?.id}</td>
           </tr>
           <tr>
@@ -31,8 +31,6 @@ const PatientDetailsView = ({ data }) => {
             <th>Gender</th>
             <td>{getGenderByValue(data?.gender)}</td>
 
-          </tr>
-          <tr>
           </tr>
           <tr>
             <th>Date Of Birth</th>
@@ -46,9 +44,6 @@ const PatientDetailsView = ({ data }) => {
             <td>{data?.phone}</td>
             <th>aadhaarNumber</th>
             <td>{data?.aadhaarNumber}</td>
-          </tr>
-          <tr>
-
           </tr>
           <tr>
             <th>Created At</th>
