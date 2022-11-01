@@ -43,6 +43,7 @@ export default function DatePickerRe({onChange, heading, errorMsg, id, yearsRang
         <React.Fragment>
             <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       <DatePicker
+        autoComplete="off"
         id={id}
         minDate={minDate}
         maxDate={maxDate}
