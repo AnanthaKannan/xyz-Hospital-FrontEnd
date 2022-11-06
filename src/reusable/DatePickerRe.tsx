@@ -69,6 +69,7 @@ export default function DatePickerRe({onChange, heading, errorMsg, id, yearsRang
             </button> */}
             <select
             className='form-control-sm mx-2'
+            id={`${id}-year`}
               value={getYear(date)}
               onChange={({ target: { value } }) => changeYear(Number(value))}
             >
@@ -81,6 +82,7 @@ export default function DatePickerRe({onChange, heading, errorMsg, id, yearsRang
   
             <select
             className='form-control-sm mx-2'
+              id={`${id}-month`}
               value={months[getMonth(date)]}
               onChange={({ target: { value } }) =>
                 changeMonth(months.indexOf(value))

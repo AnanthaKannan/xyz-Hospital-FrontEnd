@@ -21,7 +21,8 @@ describe('List Patient', () => {
   it('Patient Detail view popup model should open', () => {
     cy.wait('@getPatientList')
     cy.get('.ag-body-horizontal-scroll-viewport').scrollTo('right')
-    cy.get('[aria-colindex="9"]').click({ multiple: true });
+    cy.wait(200)
+    cy.get('.ag-row-hover > [aria-colindex="9"]').click({ multiple: true });
     cy.get('#popupModel').should('exist')
     cy.get('#mui-3').contains('Patient Details');
 
