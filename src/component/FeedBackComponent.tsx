@@ -4,20 +4,19 @@ import TextEditor from "../reusable/TextEditor";
 import Hb from "../reusable/Hb";
 import { ClickButton } from "../reusable/Button";
 import { useLoadContext } from "../reusable/LoaderContext";
-// import { put } from "../service/feedback.service";
 import { toast } from "react-toastify";
 import parse from 'html-react-parser';
 import Hc from "../reusable/Hc";
 import { convertDate } from '../lib'
 import PaginationReuse from "../reusable/PaginationReuse";
 import { post, get, put, api } from '../service/api.service'
+import { sweetConfirmation } from "../lib/sweetAlart";
 
 const FeedBackComponent = () => {
   const [text, setText] = useState("");
   const [rowData, setRowData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
-  // const [perPage, setPerPage] = useState(2)
   const perPage = 2;
 
   const { setLoader } = useLoadContext();
@@ -59,14 +58,19 @@ const FeedBackComponent = () => {
     setRowData(data);
   };
 
+  // In the frontend we can see this as a delete, but in the backend itself it is consider as a delete
+  // we just change the status from delete to false
   const onUpdateStatus = async(_id) => {
     console.log("update", _id);
     setLoader(true);
-    const { isSuccess }  = await put(api.feedback, _id, {isDeleted: true});
+    sweetConfirmation(async() => {
+      const { isSuccess }  = await put(api.feedback, _id, {isDeleted: true});
+      setLoader(false);
+      if (!isSuccess) return
+      toast.success("successfully deleted");
+      feedBackList();
+    }, "Yes, delete it!");
     setLoader(false);
-    if (!isSuccess) return
-    toast.success("successfully deleted");
-    feedBackList();
   };
 
   const handleChange = (text) => {
@@ -101,8 +105,6 @@ const FeedBackComponent = () => {
         />
       </div>
 
-      <br/>
-      <br/>
       <div className='patient-description'>
       { rowData.length > 0 && <Hc text="Feedback's" /> }
       { 
