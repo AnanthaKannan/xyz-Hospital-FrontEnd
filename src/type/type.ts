@@ -151,6 +151,7 @@ export type iconType = {
   className?: string,
   size?: number,
   onClick?: any,
+  id?: string,
 }
 
 export type imageUploadCodeType = "patient" | "doctor"

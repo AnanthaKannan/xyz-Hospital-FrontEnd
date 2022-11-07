@@ -11,6 +11,7 @@ module.exports = defineConfig({
       "cypress/e2e/listDoc.spec.js",
       "cypress/e2e/createPatient.spec.js",
       "cypress/e2e/listPatient.spec.js",
+      "cypress/e2e/feedback.spec.js"
     ],
     // used to test different environment
     setupNodeEvents(on, config) {
