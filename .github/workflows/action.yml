@@ -14,8 +14,8 @@ jobs:
           echo $GITHUB_REPOSITORY # get the repository
           echo $GITHUB_WORKSPACE  # get the path of the github file
           echo "${{ github.token }}"  # token to authenticate the github repository
-          git clone git@github:$GITHUB_REPOSITORY
-          git checkout $GITHUB_WORKSPACE
+          # git clone git@github:$GITHUB_REPOSITORY
+          # git checkout $GITHUB_WORKSPACE
       - name: Simple JS Action
         id: greet
         uses: actions/hello-world-javascript-action@master
