@@ -6,6 +6,16 @@ jobs:
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
+      - name: List Files
+        run: |
+          pwd #path
+          ls -a # list all the Files
+          echo $GITHUB_SHA  # get the commit id
+          echo $GITHUB_REPOSITORY # get the repository
+          echo $GITHUB_WORKSPACE  # get the path of the github file
+          echo "${{ github.token }}"  # token to authenticate the github repository
+          git clone git@github:$GITHUB_REPOSITORY
+          git checkout $GITHUB_WORKSPACE
       - name: Simple JS Action
         id: greet
         uses: actions/hello-world-javascript-action@master
