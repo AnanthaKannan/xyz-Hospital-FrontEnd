@@ -2,7 +2,7 @@ name: Shell Commands Dispatch
 
 on:
   repository_dispatch:
-    types: [build]
+    types: [buildreposit]
 
 jobs:
   run-shell-command-throw-api:
