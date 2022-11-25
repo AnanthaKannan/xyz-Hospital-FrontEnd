@@ -40,3 +40,17 @@ We can create environment variable in two ways, one by mention in the yml file a
 
 ## Create auto issue while push the code in git and create auto file while push the code
 [reference file](./createIssue.yml)
+
+## Encryption & Decrypting file
+If the file size is big, then we can encrypt the file from local and decrypt in the jobs.
+
+Normally if you want to encrypt, you have to provide some key that is called as PASSPHRASE. you have to add this PASSPHRASE in the secret on the github. it is used to decrypt the file.
+
+[reference file](./decrypt.yml)
+
+used to decrypt the file
+
+     gpg --symmetric --cipher-algo AES256 my_secret.json
+    
+
+
