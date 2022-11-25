@@ -1,0 +1,14 @@
+name: Shell Commands Dispatch
+
+on:
+  repository_dispatch:
+    types: [build]
+
+jobs:
+  run-shell-command-throw-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a string
+        run: echo "Hello World"
+      - name: payload
+        run: echo ${{ github.event.client_payload.env }}
