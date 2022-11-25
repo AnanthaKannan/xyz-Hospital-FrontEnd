@@ -1,13 +1,15 @@
 name: Action Workflow
 
 on: 
-  push:
-  pull_request:
-    types:  # on this type you can mention like on which action it should call
-      - assigned
-      - closed
-      - reopened
-      - opened
+  repository_dispatch:
+    types: [build]
+  # push:
+  # pull_request:
+  #   types:  # on this type you can mention like on which action it should call
+  #     - assigned
+  #     - closed
+  #     - reopened
+  #     - opened
 
 jobs:
   run-github-actions:
