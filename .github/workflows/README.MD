@@ -32,4 +32,8 @@ Note: **event_type : build** build is you have to mention the type in the dispat
 ## Environment Variable
 [Default and custom environment variable](https://docs.github.com/en/actions/learn-github-actions/environment-variables)
 
+We can create environment variable in two ways, one by mention in the yml file another one is yo can mention in the github
+
 [reference file](./env.yml)
+
+[reference for github secret](../Screenshot_20221125_103053.png)
