@@ -8,10 +8,12 @@ we can run the job, while create the pull request. But pull request have some ty
 [Cron job reference](https://crontab.guru/)
 we can run the jobs by using cron. we have can the job like hourly, minutes depends on the cron setting
 
-## Dispatch Event
+## Trigger workflow manually
 [Dispatch Event in git-hub](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event) we can run the job, by calling the api. Basically git-hub provided related to this api.
 
-you can call this to master branch
+[reference file](./dispatch.yml)
+
+you can use this to master branch only
 ```curl
 curl \
   -X POST \
@@ -21,3 +23,13 @@ curl \
   -d '{"event_type":"build","client_payload":{"unit":false,"env":"dev"}}'
 ```
 Note: **event_type : build** build is you have to mention the type in the dispatch.yml file
+
+## Filter Branch and Tag
+[Filter workflow by Branch, tag and path](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet)
+
+[reference file](./branch.yml)
+
+## Environment Variable
+[Default and custom environment variable](https://docs.github.com/en/actions/learn-github-actions/environment-variables)
+
+[reference file](./env.yml)

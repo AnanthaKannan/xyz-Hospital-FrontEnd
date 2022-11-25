@@ -1,0 +1,36 @@
+name: Shell Commands
+
+on:
+  push:
+  # branches or branches-ignore any one can use in the yml file at a time
+    # branches-ignore:  # used to ignore the branch for workflow
+    #   - "branchName"
+    branches:
+      - master
+      - 'feature/*'  #example matches feature/feata, feature/featb  # which all are branch start with feature, the the job getting execute
+      - 'feature/**' # feature/feata/a
+      - '!feature/feata' # ! symbol used to ignore the brach
+    tags:
+      - v1.*
+    paths:
+      - '**.js'
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a string
+        run: echo "Hello World"
+      - name: multi script
+        run: |
+          node -v
+          npm -v
+          ls -al
+  run-window-command:
+    runs-on: windows-latest
+    steps:
+      - name: Directory Powershell
+        run: Get-Location
+      - name: Directory Bash
+        run: pwd
+        shell: bash
