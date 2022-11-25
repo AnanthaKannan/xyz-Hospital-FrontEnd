@@ -32,7 +32,7 @@ jobs:
           git config --global user.name "my-bot"
           git fetch
           git checkout github-action
-          git brach --set-upstream-to=origin/github-action
+          git branch --set-upstream-to=origin/github-action
           git pull
           ls -a
 
