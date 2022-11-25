@@ -37,3 +37,6 @@ We can create environment variable in two ways, one by mention in the yml file a
 [reference file](./env.yml)
 
 [reference for github secret](../Screenshot_20221125_103053.png)
+
+## Create auto issue while push the code in git and create auto file while push the code
+[reference file](./createIssue.yml)
