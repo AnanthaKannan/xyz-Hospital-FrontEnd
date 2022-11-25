@@ -1,11 +1,11 @@
-name: Shell Commands
+name: Shell Commands Dispatch
 
 on:
   repository_dispatch:
     types: [build]
 
 jobs:
-  run-shell-command:
+  run-shell-command-throw-api:
     runs-on: ubuntu-latest
     steps:
       - name: echo a string
