@@ -1,0 +1,34 @@
+# name: Action Workflow
+
+# on: 
+#   schedule: # you can schedule the job, like every hour or minutes
+#     - cron: "* * * * *"
+#   pull_request:
+#     types:  # on this type you can mention like on which action it should call
+#       - assigned
+#       - closed
+#       - reopened
+#       - opened
+
+
+# jobs:
+#   run-github-actions-on-schedule:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: List Files
+#         run: |
+#           pwd #path
+#           ls -a # list all the Files
+#           echo $GITHUB_SHA  # get the commit id
+#           echo $GITHUB_REPOSITORY # get the repository
+#           echo $GITHUB_WORKSPACE  # get the path of the github file
+#           echo "${{ github.token }}"  # token to authenticate the github repository
+#           # git clone git@github:$GITHUB_REPOSITORY
+#           # git checkout $GITHUB_WORKSPACE
+#       - name: Simple JS Action
+#         id: greet
+#         uses: actions/hello-world-javascript-action@master
+#         with:
+#           who-to-greet: John
+#       - name: Log Greeting Time
+#         run: echo "${{ steps.greet.outputs.time }}"
