@@ -1,6 +1,6 @@
 name: Action Workflow
 
-on: 
+on:
   repository_dispatch:
     types: [build]
   # push:
