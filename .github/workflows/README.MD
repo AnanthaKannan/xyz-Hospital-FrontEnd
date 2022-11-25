@@ -11,12 +11,13 @@ we can run the jobs by using cron. we have can the job like hourly, minutes depe
 ## Dispatch Event
 [Dispatch Event in git-hub](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event) we can run the job, by calling the api. Basically git-hub provided related to this api.
 
+you can call this to master branch
 ```curl
 curl \
   -X POST \
   -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer <YOUR-TOKEN>" \
-  https://api.github.com/repos/OWNER/REPO/dispatches \
+  -H "Authorization: Bearer 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" \
+  https://api.github.com/repos/AnanthaKannan/digitalHospital-FrontEnd/dispatches \
   -d '{"event_type":"build","client_payload":{"unit":false,"env":"dev"}}'
 ```
 Note: **event_type : build** build is you have to mention the type in the dispatch.yml file
