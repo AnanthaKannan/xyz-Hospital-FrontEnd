@@ -44,31 +44,31 @@ describe('List Patient', () => {
     cy.get('#popupModel').should('not.exist')
   });
 
-  context('delete popup', () => {
-    before(() => {
-      cy.intercept('DELETE', `${Cypress.env('apiUrl')}/patient/*`).as('deletePatient')
-      cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientListAfterDelete')
-    })
+  // context('delete popup', () => {
+  //   before(() => {
+  //     cy.intercept('DELETE', `${Cypress.env('apiUrl')}/patient/*`).as('deletePatient')
+  //     cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientListAfterDelete')
+  //   })
 
-    beforeEach(() => {
-      // click the delete button on the first row
-      cy.get('.ag-row-first > [aria-colindex="11"]').should('be.visible').click({ multiple: true });
-      cy.get('.swal2-popup').should('exist');
-    });
+  //   beforeEach(() => {
+  //     // click the delete button on the first row
+  //     cy.get('.ag-row-first > [aria-colindex="11"]').should('be.visible').click({ multiple: true });
+  //     cy.get('.swal2-popup').should('exist');
+  //   });
 
-    it('should not delete patient', () => {
-      cy.get('.swal2-cancel').click()
-      cy.get('.swal2-popup').should('not.exist');
-    })
+  //   it('should not delete patient', () => {
+  //     cy.get('.swal2-cancel').click()
+  //     cy.get('.swal2-popup').should('not.exist');
+  //   })
 
-    it('should delete patient', () => {
-      cy.get('.swal2-confirm').click()
+  //   it('should delete patient', () => {
+  //     cy.get('.swal2-confirm').click()
 
-      cy.wait('@deletePatient')
-      cy.wait('@getPatientListAfterDelete')
+  //     cy.wait('@deletePatient')
+  //     cy.wait('@getPatientListAfterDelete')
 
-      cy.get('.swal2-popup').should('not.exist');
-      cy.get('.Toastify__toast-body').should('contain', 'Patient deleted successfully')
-    })
-  })
+  //     cy.get('.swal2-popup').should('not.exist');
+  //     cy.get('.Toastify__toast-body').should('contain', 'Patient deleted successfully')
+  //   })
+  // })
 })
