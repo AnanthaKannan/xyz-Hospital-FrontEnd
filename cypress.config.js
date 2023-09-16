@@ -19,5 +19,6 @@ module.exports = defineConfig({
       const pathToConfigFile = path.resolve('', 'cypress/config', `${file}.json`)
       return fs.readJson(pathToConfigFile)
     },
+    testIsolation: false,
   }
 })
