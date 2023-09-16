@@ -9,7 +9,7 @@ describe('Doctor Create', () => {
 
   before(() => {
     cy.login();
-    cy.intercept('GET', 'https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev/address').as('getAddress')
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress')
     cy.get('#create-doctor').click()
     cy.wait('@getAddress')
   })
@@ -53,7 +53,7 @@ describe('Doctor Create', () => {
   })
 
   it('Create Doctor with all the fields', () => {
-    cy.intercept('POST', 'https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev/doctor').as('postCreateDoctor')
+    cy.intercept('POST', `${Cypress.env('apiUrl')}/doctor`).as('postCreateDoctor');
     cy.get('#name').type(faker.name.firstName())
     cy.get('#specialist').type(faker.name.lastName())
     const gender = ['male', 'female', 'others']
@@ -66,6 +66,8 @@ describe('Doctor Create', () => {
     cy.get('#email').type(faker.internet.email())
     cy.get('#alternatePhone').type(faker.phone.phoneNumber())
 
+    // address
+    cy.address()
     // doctor available time
     cy.get('#startTime0').focus().select("5") // 5 is the value of the time
     cy.wait(500)
@@ -74,17 +76,6 @@ describe('Doctor Create', () => {
     cy.get('#startTime1').focus().select("15")
     cy.wait(500)
     cy.get('#endTime1').focus().select("25")
-
-    // address
-    // cy.get('#address').type(faker.address.streetName())
-    // cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
-    //   .type(`ndia{enter}{enter}`);
-    // cy.wait(500)
-    // cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
-    //   .type(`Tamil Nadu{enter}{enter}`);
-    // cy.wait(500)
-    // cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
-    //   .type(`Chennai{enter}{enter}`);
 
     // select the days
     for (let index = 0; index < 6; index++) {
@@ -103,7 +94,6 @@ describe('Doctor Create', () => {
   it('Create the doctor with mandatory fields', () => {
 
   });
-
 
   function checkAllFieldsEmpty() {
     // check all the field are cleared

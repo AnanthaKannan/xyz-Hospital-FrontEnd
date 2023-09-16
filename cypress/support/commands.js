@@ -40,6 +40,8 @@
 // }
 
 let LOCAL_STORAGE_MEMORY = {};
+const apiUrl = Cypress.env('apiUrl');
+const faker = require('faker');
 
 Cypress.Commands.add("saveLocalStorage", () => {
   Object.keys(localStorage).forEach(key => {
@@ -61,4 +63,26 @@ Cypress.Commands.add("login", () => {
   cy.get('.MuiButtonBase-root').click()
 
   cy.wait('@postLogin')
+});
+
+Cypress.Commands.add("address", () => {
+  // address
+  cy.intercept('GET', `${apiUrl}/address?country_code=IN`).as('getState')
+  cy.intercept('GET', `${apiUrl}/address?country_code=IN&state_code=TN`).as('getCity')
+
+  cy.get('#zipCode').type(faker.phone.phoneNumber());
+  cy.get('#address').type(faker.address.streetName())
+  cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    .type(`India{downArrow}{enter}`);
+  cy.wait('@getState');
+  cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    .type(`Tamil Nadu{enter}{enter}`);
+  cy.wait('@getCity')
+  cy.get('#city > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    .type(`Chennai{enter}{enter}`);
+});
+
+Cypress.Commands.add("gender", (id) => {
+  const gender = ['male', 'female', 'others']
+    cy.get(id).type(`${gender[faker.random.number(2)]}{enter}{enter}`);
 });

@@ -1,0 +1,17 @@
+name: With server
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          # Linux and MacOS
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          # wait for 2 minutes for the server to respond
+          wait-on-timeout: 120  
+          command: npx cypress run

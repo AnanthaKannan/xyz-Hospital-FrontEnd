@@ -104,3 +104,7 @@ a:hover {
   color: #061b64;
   background-color: #d1e9fc;
 }
+
+.swal2-cancel{
+  margin-right: 25px;
+}

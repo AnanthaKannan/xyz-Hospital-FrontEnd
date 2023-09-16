@@ -53,7 +53,7 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
             <MenuItem id='create-patient' active={path['create-patient']} icon={<Icons icon='arrowRight' size={18} />}> <Link to="/create-patient" /> New Patient</MenuItem>
             <MenuItem id='list-patient' active={path['list-patient']} icon={<Icons icon='arrowRight' size={18} />}> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>
-          <MenuItem active={path['feed-back']} icon={<Icons icon='feedback' size={18} />}>FeedBack <Link to="/feed-back" /> </MenuItem>
+          <MenuItem id='feed-back' active={path['feed-back']} icon={<Icons icon='feedback' size={18} />}>FeedBack <Link to="/feed-back" /> </MenuItem>
         </Menu>
       </ProSidebar>
 
