@@ -1,9 +1,3 @@
-import { type } from "node:os";
-
-type msg = {
-  [key: string]: string;
-}
-
 const msg = {
   "SC01": "success to get data",
   "SUCCESS02": "",

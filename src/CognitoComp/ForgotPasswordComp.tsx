@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik'
-import * as Yup from 'yup'
-import { SubmitButton, ClickButton } from '../reusable/Button'
+import { SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
 import { Link } from 'react-router-dom';
@@ -26,7 +25,7 @@ const ForgotPasswordComp = () => {
     else{
       navigate('/login');
     }
-  }, [])
+  }, [location.state, navigate])
 
   const onSubmit = (values: any, { setErrors }: any) => {
 

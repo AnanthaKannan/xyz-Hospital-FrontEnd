@@ -1,36 +1,9 @@
-import React, { useEffect } from 'react'
-import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
-import { Formik } from 'formik'
-import * as Yup from 'yup'
-import{ SubmitButton } from '../reusable/Button'
-import TextBox from '../reusable/TextBox';
-import UserPool from '../lib/UserPool'
+import React from 'react'
 import LoginBackground from '../reusable/LoginBackground';
-import { toast } from 'react-toastify';
-import { Link, useNavigate } from 'react-router-dom';
-import { signUpValidation } from '../lib/validationSchema';
+import { Link } from 'react-router-dom';
 import SignUpForm  from './SignUpForm'
 
 const SignUpComp = () => {
-
-  const navigate = useNavigate();
-
-  const onSubmit = (values:any, { setErrors }:any) => {
-    console.log('values', values);
-    
-    const { email, password } = values;
-    UserPool.signUp(email, password, [], null, (err:any, result:any) => {
-      if (err) {
-        console.log('err', err);
-        setErrors({ email: err.message });
-        }
-        else
-          console.log('result', result);
-          toast.success('Sign up successful');
-          navigate('/confirmation-code')
-      });
-
-  }
 
   return (
     <div>

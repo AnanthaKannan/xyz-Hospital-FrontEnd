@@ -88,7 +88,8 @@ export type doctorValueType = {
   gender: string,
   phone: string,
   alternatePhone?: string,
-  fileName?: string
+  fileName?: string,
+  zipCode?: string
 }
 
 export type patientDetailsType = {
@@ -150,6 +151,7 @@ export type iconType = {
   className?: string,
   size?: number,
   onClick?: any,
+  id?: string,
 }
 
 export type imageUploadCodeType = "patient" | "doctor"

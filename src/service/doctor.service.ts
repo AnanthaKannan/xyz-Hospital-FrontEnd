@@ -26,6 +26,7 @@ export const put = (_id:number, data:object) => {
     return http.put(`${api}/${_id}`, data);
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     list,
     post,

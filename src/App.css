@@ -1,10 +1,10 @@
 .app {
   display: flex;
-  position: relative;
 }
 
-.side-nav-fix{
-  height: 100vh;
+.side-nav-fix {
+  min-height: 100vh;
+  height: auto;
 }
 
 .font-sm {
@@ -87,8 +87,8 @@ a:hover {
   margin-right: auto;
 }
 
-.bg-hos{
-  background-color: #d1e9fc;  
+.bg-hos {
+  background-color: #d1e9fc;
   /* #d8d8d8
  */
 }
@@ -103,4 +103,8 @@ a:hover {
   text-align: center;
   color: #061b64;
   background-color: #d1e9fc;
+}
+
+.swal2-cancel{
+  margin-right: 25px;
 }

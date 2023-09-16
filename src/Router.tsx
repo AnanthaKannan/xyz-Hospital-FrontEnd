@@ -1,7 +1,5 @@
-import { type } from "os";
 import CreateDoctor from "./page/CreateDoctor";
 import CreatePatient from "./page/CreatePatient";
-import CreateHospital from "./page/CreateHospital";
 import ListPatient from "./page/ListPatient";
 import ListDoctor from "./page/ListDoctor";
 import PatientRecord from "./page/PatientRecord";

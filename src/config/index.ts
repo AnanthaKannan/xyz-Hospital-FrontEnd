@@ -1,5 +1,3 @@
-import { type } from "os";
-
 type configType = {
   apiURL: string;
   patientRecord: string;

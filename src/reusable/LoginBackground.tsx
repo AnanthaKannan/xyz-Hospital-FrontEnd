@@ -1,6 +1,5 @@
 import React from 'react'
 import Ha from './Ha'
-import Hl from './Hl'
 
 const LoginBackground = ({ children, title }) => {
   return (

@@ -1,6 +1,6 @@
 import { SidebarHeader, ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Icons from './Icons';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import { useEffect, useState } from 'react';
 import './css/sidenavbar.css'
@@ -28,7 +28,6 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
   }
 
   return (
-    <div>
     <div className='app'>
       <ProSidebar className='side-nav-fix border-right shadow' collapsed={collapsed} breakPoint={'md'} toggled={false}>
         <SidebarHeader>
@@ -55,7 +54,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
             <MenuItem id='create-patient' active={path['create-patient']} icon={ <Icons icon='arrowRight' size={18} />}> <Link to="/create-patient" /> New Patient</MenuItem>
             <MenuItem  id='list-patient' active={path['list-patient']} icon={ <Icons icon='arrowRight'  size={18} />}> <Link to="/list-patient" /> List Patient</MenuItem>
           </SubMenu>
-          <MenuItem active={path['feed-back']} icon={<Icons icon='feedback' size={18} />}>FeedBack <Link to="/feed-back" /> </MenuItem>
+          <MenuItem id='feed-back' active={path['feed-back']} icon={<Icons icon='feedback' size={18} />}>FeedBack <Link to="/feed-back" /> </MenuItem>
         </Menu>
       </ProSidebar>
 
@@ -69,7 +68,6 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
 
         </div>
       </div>
-    </div>
     </div>
   )
 }

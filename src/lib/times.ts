@@ -1,5 +1,3 @@
-import { type } from "os"
-
 type timeType = {
   hour: string;
   minute: string;

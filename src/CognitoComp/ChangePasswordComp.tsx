@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik'
-import * as Yup from 'yup'
 import { SubmitButton } from '../reusable/Button'
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
-import { Link } from 'react-router-dom';
 import { changePasswordValidation } from '../lib/validationSchema';
 import { toast } from 'react-toastify';
 import Hb from "../reusable/Hb";

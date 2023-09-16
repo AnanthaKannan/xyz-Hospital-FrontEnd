@@ -2,16 +2,14 @@ import Hb from '../reusable/Hb'
 import TextBox from '../reusable/TextBox'
 import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
-import * as Yup from 'yup';
 import { ClickButton, SubmitButton } from '../reusable/Button';
-import { onHandleChange, imagePath, convertEnumToArray, fromDateToAgeConverter, getInitialValuesFromYup } from '../lib';
+import { imagePath, convertEnumToArray, fromDateToAgeConverter, getInitialValuesFromYup } from '../lib';
 import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
 import { toast } from 'react-toastify';
 import { useLoadContext } from '../reusable/LoaderContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { patientDetailsType } from '../type/type';
 import DatePickerRe from '../reusable/DatePickerRe';
-import AvatarUpload from '../reusable/FileUpload';
 import { createPatientValidation } from '../lib/validationSchema'
 import SearchSelect from '../reusable/SearchSelect';
 import { genderEnum, martialStatusEnum } from '../lib/enum'
@@ -36,7 +34,7 @@ const CreatePatientComp = () => {
     else {
       console.log('else state is here')
     }
-  }, [])
+  }, [location.state])
 
   const { setLoader } = useLoadContext();
 

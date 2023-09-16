@@ -38,6 +38,7 @@ export const put = async (api, pathParam, data, queryParams={}) => {
   return { isSuccess: true, statusCode: result.status, data: result.data };
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default  {
   post,
   get,

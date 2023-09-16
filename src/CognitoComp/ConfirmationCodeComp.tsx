@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import React from 'react'
+import { CognitoUser } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import{ SubmitButton, ClickButton } from '../reusable/Button';
+import{ SubmitButton } from '../reusable/Button';
 import LoginBackground from '../reusable/LoginBackground';
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
@@ -46,17 +46,6 @@ const ConfirmationCodeComp = () => {
       .required('Required')
       .min(3, 'Invalid code')
   });
-
-  const resendCode = () => {
-    const cognitoUser = new CognitoUser({ Username: 'sreeananthakannan@gmail.com', Pool: UserPool });
-    cognitoUser.resendConfirmationCode(function(err:any, result:any) {
-      if (err) {
-        console.log('err', err);
-        // err InvalidParameterException: User is already confirmed.
-      }
-      console.log('result', result);
-    });
-  }
 
   return (
     <LoginBackground title={'Confirmation'}>
