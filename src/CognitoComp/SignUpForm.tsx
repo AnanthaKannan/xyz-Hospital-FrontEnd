@@ -117,11 +117,12 @@ const SignUpForm = ({isSignUp}) => {
       if (err) {
         console.log('err', err);
         setErrors({ email: err.message });
-        }
-        else
-          console.log('result', result);
-          toast.success('Sign up successful');
-          navigate('/confirmation-code')
+        return toast.error(err.message);
+      }
+
+        console.log('result', result);
+        toast.success('Sign up successful');
+        navigate('/confirmation-code')
       });
     }
 

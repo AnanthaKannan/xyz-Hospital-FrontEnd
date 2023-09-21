@@ -65,6 +65,10 @@ Cypress.Commands.add("login", () => {
   cy.wait('@postLogin')
 });
 
+Cypress.Commands.add("launchPortal", () => {
+  cy.visit(Cypress.config('baseUrl'));
+})
+
 Cypress.Commands.add("address", () => {
   // address
   cy.intercept('GET', `${apiUrl}/address?country_code=IN`).as('getState')

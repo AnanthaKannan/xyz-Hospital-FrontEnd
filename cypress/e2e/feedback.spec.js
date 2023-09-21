@@ -3,9 +3,8 @@
 /// <reference types="cypress" /> 
 //  the above line used to auto suggestion for cypress
 import faker from 'faker';
-import msg from '.../../../src/lib/msg'
 
-describe('Doctor Create', () => {
+describe('Feedback', () => {
   let feedbackId = null
   before(() => {
     cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?project=message,createdAt&filter=isDeleted:eq:false&limit=2&skip=0`).as('feedback')
