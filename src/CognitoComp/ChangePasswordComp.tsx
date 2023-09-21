@@ -24,12 +24,12 @@ const ChangePasswordComp = () => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result: any) => {
         console.log('result', result);
-        cognitoUser.changePassword(oldPassword, newPassword, (err: any, result: any) => {
+        cognitoUser.changePassword(oldPassword, newPassword, (err: any, data: any) => {
           if (err) {
             console.log('err', err);
             setErrors({ newPassword: err.message });
           } else {
-            console.log('result', result);
+            console.log('result', data);
             toast.success('Password changed successfully');
           }
         });

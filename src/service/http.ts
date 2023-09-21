@@ -14,14 +14,13 @@ const unAuthorizeTest: Function = (statusCode: Number): void => {
 *************** */
 
 export const get = (apiUrl: string, params: any = {}) => {
-  const url_: string = `${url}${apiUrl}`;
   const options: AxiosRequestConfig = {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
       Authorization: `${localStorage.getItem('token')}`,
     },
-    url: url_,
+    url: `${url}${apiUrl}`,
     params,
   };
   // console.log(options)
@@ -146,7 +145,6 @@ export const delete_ = (apiUrl: string) => {
     });
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   get,
   post,

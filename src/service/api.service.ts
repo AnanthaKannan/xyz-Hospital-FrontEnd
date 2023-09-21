@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import services from './curd.service';
 import http from './http';
 
-export const api = {
+export const apiRoute = {
   feedback: '/feedback',
   address: '/address',
 };
@@ -33,7 +33,7 @@ export const get = async (api, queryParams = {}) => {
 };
 
 export const put = async (api, pathParam, data, queryParams = {}) => {
-  const result = await http.put(`${api}/${pathParam}`, data, queryParams = {});
+  const result = await http.put(`${api}/${pathParam}`, data, queryParams);
   console.log('result', result);
   if (result.status !== 200) {
     toast.error('Oops! Something went wrong. Please try again later.');

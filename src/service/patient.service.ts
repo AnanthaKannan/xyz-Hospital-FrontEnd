@@ -3,10 +3,7 @@ import http from './http';
 
 const api = '/patient';
 
-export const addPatient = (data: object) => {
-  console.log('dataObj', data);
-  return http.post(`${api}`, data);
-};
+export const addPatient = (data: object) => http.post(`${api}`, data);
 
 export const listPatient = (data:dataType) => http.get(`${api}`, data);
 

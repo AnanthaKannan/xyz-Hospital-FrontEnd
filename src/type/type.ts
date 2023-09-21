@@ -1,9 +1,7 @@
-import { type } from 'os';
-
 export type dataType = object | null;
 
 export type TextBoxType = {
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void,
+  onChange: () => void,
   value: string,
   className?: string | '',
   readOnly?: boolean,
@@ -14,7 +12,7 @@ export type TextBoxType = {
 }
 
 export type TextAreaType = {
-  onChange: (e: React.FormEvent<HTMLTextAreaElement>) => void,
+  onChange: () => void,
   value: string,
   className: string,
   readOnly: boolean,
@@ -27,7 +25,7 @@ export type TextAreaType = {
 
 type color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 export type ButtonType = {
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  onClick: () => void,
   className?: string,
   isDisable?: boolean,
   id: string,
@@ -36,7 +34,7 @@ export type ButtonType = {
 }
 
 export type SubmitButtonType = {
-  onSubmit?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  onSubmit?: () => void,
   className?: string,
   isDisable?: boolean,
   id: string,
@@ -45,7 +43,7 @@ export type SubmitButtonType = {
 }
 
 export type containerType = {
-  children: React.ReactNode,
+  children: any,
   title: string
 }
 

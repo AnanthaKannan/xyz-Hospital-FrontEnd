@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { CognitoUser, CognitoUserAttribute, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { profileDetailsType, localStorageType } from '@type/type';
+
 import { SubmitButton } from '../reusable/Button';
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
 import { profileDetailsValidation } from '../lib/validationSchema';
 import { getStorageDetails, setStorageDetails } from '../lib';
 
-const initialValues_: profileDetailsType = {
+const initValues: profileDetailsType = {
   email: '',
   name: '',
   picture: '',
@@ -21,7 +23,7 @@ const initialValues_: profileDetailsType = {
 
 const SignUpForm = ({ isSignUp }) => {
   const navigate = useNavigate();
-  const [initialValues, setInitialValues] = useState(initialValues_);
+  const [initialValues, setInitialValues] = useState(initValues);
 
   useEffect(() => {
     const storageObj:localStorageType = getStorageDetails();
@@ -42,31 +44,22 @@ const SignUpForm = ({ isSignUp }) => {
     // rest of the key are user attribute it all are predefined in cognito
     // password should not send in the request
     const attributeList: any[] = [];
-    for (let key in obj) {
-      if (key !== 'password') {
-        if (key === 'phone' || key === 'address' || key === 'phone') key = `custom:${key}`;
+    Object.keys(obj).forEach((key) => {
+      let newKey = key;
 
-        console.log('myKeys', key.replace('custom', ''));
+      if (key !== 'password') {
+        if (key === 'phone' || key === 'address' || key === 'phone') newKey = `custom:${key}`;
+
+        console.log('myKeys', newKey.replace('custom', ''));
         const attributeObj = {
-          Name: key,
-          Value: obj[key.replace('custom:', '')],
+          Name: newKey,
+          Value: obj[newKey.replace('custom:', '')],
         };
         const attribute = new CognitoUserAttribute(attributeObj);
         attributeList.push(attribute);
       }
-    }
+    });
     return attributeList;
-  };
-
-  const onSubmit = (values: any, { setErrors }: any) => {
-    console.log('values', values);
-    const attributeList: any = covertFromObjToArray(values);
-    console.log('attributeList', attributeList);
-    if (isSignUp) {
-      signUp(values, attributeList, setErrors);
-    } else {
-      updateUserAttribute(values, attributeList);
-    }
   };
 
   const updateUserAttribute = (values: profileDetailsType, attributeList: any) => {
@@ -118,8 +111,19 @@ const SignUpForm = ({ isSignUp }) => {
 
       console.log('result', result);
       toast.success('Sign up successful');
-      navigate('/confirmation-code');
+      return navigate('/confirmation-code');
     });
+  };
+
+  const onSubmit = (values: any, { setErrors }: any) => {
+    console.log('values', values);
+    const attributeList: any = covertFromObjToArray(values);
+    console.log('attributeList', attributeList);
+    if (isSignUp) {
+      signUp(values, attributeList, setErrors);
+    } else {
+      updateUserAttribute(values, attributeList);
+    }
   };
 
   return (
@@ -199,6 +203,10 @@ const SignUpForm = ({ isSignUp }) => {
       </Formik>
     </div>
   );
+};
+
+SignUpForm.propTypes = {
+  isSignUp: PropTypes.bool.isRequired,
 };
 
 export default SignUpForm;

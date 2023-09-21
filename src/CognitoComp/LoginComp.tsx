@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect } from 'react';
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik';
@@ -47,7 +50,9 @@ const LoginComp = () => {
           if (err.message.includes('User is not confirmed')) {
             navigate('/confirmation-code');
           }
-        } catch (e) {}
+        } catch (e) {
+          console.log(e);
+        }
         setErrors({ password: err.message });
       },
       newPasswordRequired(userAttributes, requiredAttributes) {

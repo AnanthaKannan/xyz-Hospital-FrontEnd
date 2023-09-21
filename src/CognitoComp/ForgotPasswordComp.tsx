@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik';
@@ -24,7 +25,7 @@ const ForgotPasswordComp = () => {
     }
   }, [location.state, navigate]);
 
-  const onSubmit = (values: any, { setErrors }: any) => {
+  const onSubmit = (values: any) => {
     console.log(values);
     const cognitoUser = new CognitoUser({
       Username: hospitalEmail,
