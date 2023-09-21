@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
-export const PatientAdmitted = () => {
-  return (
-    <div>PatientAdmitted</div>
-  )
-}
+export const PatientAdmitted = () => (
+  <div>PatientAdmitted</div>
+);

@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-import AgGirdReact from "../reusable/AgGird";
-import { deletePatient, listPatient } from "../service/patient.service";
-import { listPatientColumnDef } from "./columnDef";
-import { toast } from "react-toastify";
-import Hb from "../reusable/Hb";
-import { useLoadContext } from "../reusable/LoaderContext";
-import { DeleteCellRender, EditCellRender, ViewCellRender, RecordCellRender } from "../reusable/CellRender";
-import { sweetConfirmation } from "../lib/sweetAlart";
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import PopUpModel from "../reusable/PopUpModel";
-import PatientDetailsView from "./PatientDetailsView";
-
+import AgGirdReact from '../reusable/AgGird';
+import { deletePatient, listPatient } from '../service/patient.service';
+import { listPatientColumnDef } from './columnDef';
+import Hb from '../reusable/Hb';
+import { useLoadContext } from '../reusable/LoaderContext';
+import {
+  DeleteCellRender, EditCellRender, ViewCellRender, RecordCellRender,
+} from '../reusable/CellRender';
+import { sweetConfirmation } from '../lib/sweetAlart';
+import PopUpModel from '../reusable/PopUpModel';
+import PatientDetailsView from './PatientDetailsView';
 
 const ListPatientComp = () => {
   const [rowData, setRowData] = useState<object[]>([]);
   const navigate = useNavigate();
-  const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [patientDetails, setPatientDetails] = useState({});
 
   const { setLoader } = useLoadContext();
@@ -32,7 +33,7 @@ const ListPatientComp = () => {
     if (result.status === 200) {
       setRowData(result.data);
     } else {
-      toast.error("Oops! Something went wrong. Please try again later.");
+      toast.error('Oops! Something went wrong. Please try again later.');
     }
   };
 
@@ -41,13 +42,12 @@ const ListPatientComp = () => {
     const result = await deletePatient(id);
     setLoader(false);
     if (result.status === 204) {
-      toast.success("Patient deleted successfully.");
+      toast.success('Patient deleted successfully.');
       listPatient_();
     } else {
-      toast.error("Oops! Something went wrong. Please try again later.");
+      toast.error('Oops! Something went wrong. Please try again later.');
     }
   };
-
 
   const onCellClicked = async (event: any) => {
     console.log(event);
@@ -55,23 +55,16 @@ const ListPatientComp = () => {
 
     if (colDef.field === 'edit') {
       console.log('edit', data._id);
-      sweetConfirmation(() => {
-        return navigate('/create-patient', { state: data })
-      }, 'Yes, Update it!');
-    }
-    else if (colDef.field === 'view') {
+      sweetConfirmation(() => navigate('/create-patient', { state: data }), 'Yes, Update it!');
+    } else if (colDef.field === 'view') {
       setPatientDetails(data);
       setIsPopUpOpen(true);
-    }
-    else if (colDef.field === 'record') {
+    } else if (colDef.field === 'record') {
       console.log('record', data._id);
-      navigate('/patient-record', { state: data })
-    }
-    else if (colDef.field === 'delete') {
+      navigate('/patient-record', { state: data });
+    } else if (colDef.field === 'delete') {
       console.log('delete', data._id);
-      sweetConfirmation(() => {
-        return deletePatient_(data._id);
-      }, 'Yes, delete it!')
+      sweetConfirmation(() => deletePatient_(data._id), 'Yes, delete it!');
     }
   };
 
@@ -94,7 +87,7 @@ const ListPatientComp = () => {
           DeleteCellRender,
           EditCellRender,
           ViewCellRender,
-          RecordCellRender
+          RecordCellRender,
         }}
       />
     </div>

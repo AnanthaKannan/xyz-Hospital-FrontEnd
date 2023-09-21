@@ -1,15 +1,13 @@
-import React from 'react'
-import LoginBackground from '../reusable/LoginBackground';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import SignUpForm  from './SignUpForm'
+import LoginBackground from '../reusable/LoginBackground';
+import SignUpForm from './SignUpForm';
 
-const SignUpComp = () => {
-
-  return (
-    <div>
-    <LoginBackground title={'Sign Up'}>
-      <SignUpForm isSignUp={true} />
-    {/* <Formik
+const SignUpComp = () => (
+  <div>
+    <LoginBackground title="Sign Up">
+      <SignUpForm isSignUp />
+      {/* <Formik
       initialValues={{ email: '', password: '', confirmPassword: '' }}
       validationSchema={signUpValidation}
       onSubmit={onSubmit}
@@ -41,24 +39,20 @@ const SignUpComp = () => {
       <br />
       <SubmitButton id='signup-submit' className='w-100' color='primary' text='Sing up'/>
 
-      
-
-
       </form>
       )}
     </Formik> */}
-    <div className='d-flex justify-content-between mt-2'>
-      <Link to="/login">
-        <label className='link'> Already Have a account? Login</label>
+      <div className="d-flex justify-content-between mt-2">
+        <Link to="/login">
+          <label className="link"> Already Have a account? Login</label>
         </Link>
-        <Link to="/forgot-password" > 
-        <label className='link'> Forgot password </label>
+        <Link to="/forgot-password">
+          <label className="link"> Forgot password </label>
         </Link>
-       
-      </div>
-    </LoginBackground >
-    </div>
-  )
-}
 
-export default SignUpComp
+      </div>
+    </LoginBackground>
+  </div>
+);
+
+export default SignUpComp;

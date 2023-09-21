@@ -8,18 +8,17 @@ type configType = {
 }
 
 export const config: configType = {
-  apiURL: "https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev",
+  apiURL: 'https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev',
   // apiURL: "http://localhost:3000/dev",
-  imgURL: "https://learning-2025.s3.amazonaws.com",
-  patientRecord: "patientRecord",
-  patient: "patient",
-  doctor: "doctor",
+  imgURL: 'https://learning-2025.s3.amazonaws.com',
+  patientRecord: 'patientRecord',
+  patient: 'patient',
+  doctor: 'doctor',
   poolData: {
-    UserPoolId: "us-east-1_ohC12gMu8",
-    ClientId: "5nt9me8vg52i7rescrmen17l69",
-    region: "us-east-1"
-  }
+    UserPoolId: 'us-east-1_ohC12gMu8',
+    ClientId: '5nt9me8vg52i7rescrmen17l69',
+    region: 'us-east-1',
+  },
 };
 
-export default config
-
+export default config;

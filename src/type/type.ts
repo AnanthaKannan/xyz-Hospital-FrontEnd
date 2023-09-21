@@ -1,11 +1,11 @@
-import { type } from "os";
+import { type } from 'os';
 
 export type dataType = object | null;
 
 export type TextBoxType = {
   onChange: (e: React.FormEvent<HTMLInputElement>) => void,
   value: string,
-  className?: string | "",
+  className?: string | '',
   readOnly?: boolean,
   type?: string,
   errorMsg?: string | undefined | false,
@@ -25,7 +25,7 @@ export type TextAreaType = {
   rows: number
 }
 
-type color = "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
+type color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 export type ButtonType = {
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
   className?: string,
@@ -34,7 +34,6 @@ export type ButtonType = {
   text?: string,
   color?: color
 }
-
 
 export type SubmitButtonType = {
   onSubmit?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
@@ -145,7 +144,7 @@ export type localStorageType = {
   hospitalPicture?: string
 }
 
-type icon = "edit" | "delete" | "info" | "close" | "hamburger" | "view" | "logout" | 'dashboard' | "changePassword" | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
+type icon = 'edit' | 'delete' | 'info' | 'close' | 'hamburger' | 'view' | 'logout' | 'dashboard' | 'changePassword' | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
 export type iconType = {
   icon: icon,
   className?: string,
@@ -154,7 +153,7 @@ export type iconType = {
   id?: string,
 }
 
-export type imageUploadCodeType = "patient" | "doctor"
+export type imageUploadCodeType = 'patient' | 'doctor'
 
 export type imagePathType = {
   code : imageUploadCodeType,

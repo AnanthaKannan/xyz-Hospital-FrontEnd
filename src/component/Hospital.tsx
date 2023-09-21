@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const Hospital = () => {
-  return (
-    <div>Hospital</div>
-  )
-}
+const Hospital = () => (
+  <div>Hospital</div>
+);
 
-export default Hospital
+export default Hospital;
