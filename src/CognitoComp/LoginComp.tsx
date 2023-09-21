@@ -116,7 +116,7 @@ const LoginComp = () => {
 
       <div className='d-flex justify-content-between mt-2'>
       <Link to="/sing-up">
-        <label className='link'>  Not a user? sing up</label>
+        <label className='link' id='signup'>  Not a user? sing up</label>
         </Link>
         {/* <Link onClick={() =>onHandleForgotPassword(values, setErrors)} to="/" >  */}
           <label className='link' onClick={() =>onHandleForgotPassword(parameter.values, setErrors)}> Forgot password </label>
