@@ -15,7 +15,8 @@ const ForgotPasswordComp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { state } = location;
+    // eslint-disable-next-line prefer-destructuring
+    const state: any = location.state;
     if (state && state.email) {
       setHospitalEmail(state.email);
     } else {

@@ -58,7 +58,8 @@ const CreateDoctorComp = () => {
   const { setLoader } = useLoadContext();
 
   useEffect(() => {
-    const { state } = location;
+    // eslint-disable-next-line prefer-destructuring
+    const state: any = location.state;
     if (state?._id) {
       setFormikInitialValue({
         ...state,

@@ -46,7 +46,8 @@ const PatientRecordComp = () => {
   });
 
   useEffect(() => {
-    const { state } = location;
+    // eslint-disable-next-line prefer-destructuring
+    const state: any = location.state;
     console.log(state);
     if (state._id) {
       patientRecordList(state._id, page);

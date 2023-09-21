@@ -48,7 +48,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
           </div>
         </SidebarHeader>
         <Menu iconShape="circle" innerSubMenuArrows>
-          <MenuItem active={path.dashboard} icon={<Icons icon="dashboard" size={18} />}>
+          <MenuItem active={path['dashboard']} icon={<Icons icon="dashboard" size={18} />}>
             Dashboard
             <Link to="/dashboard" />
           </MenuItem>

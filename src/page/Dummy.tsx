@@ -6,7 +6,8 @@ const DummyPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const { state } = location;
+    // eslint-disable-next-line prefer-destructuring
+    const state: any = location.state;
     if (state && state.backToNavigate) navigate(state.backToNavigate);
     else navigate('/');
   }, []);

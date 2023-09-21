@@ -23,7 +23,8 @@ const CreatePatientComp = () => {
   const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>(getInitialValuesFromYup({ ...createPatientValidation, file: null }));
 
   useEffect(() => {
-    const { state } = location;
+    // eslint-disable-next-line prefer-destructuring
+    const state: any = location.state;
     console.log(state);
     if (state?._id) {
       setFormikInitialValue({
