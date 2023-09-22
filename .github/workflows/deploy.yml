@@ -8,8 +8,8 @@ jobs:
   surge:
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout code
-      # - uses: actions/checkout@v2
+      - name: Checkout code
+      - uses: actions/checkout@v2
       # - name: installing node 
       #   uses: actions/setup-node@v2
       #   with: 
