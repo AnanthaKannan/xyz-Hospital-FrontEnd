@@ -27,6 +27,7 @@
     ],
     "rules": {
         "no-shadow": "off",
+        "no-console": "off",
         "@typescript-eslint/no-shadow": ["error"],
         "no-use-before-define": "off",
         "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],

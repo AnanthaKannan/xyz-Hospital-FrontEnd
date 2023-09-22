@@ -1,4 +1,6 @@
+/* eslint-disable react/forbid-prop-types */
 import Select from 'react-select';
+import PropTypes from 'prop-types';
 
 const SearchSelect = ({
   heading = '', className = '', id, options = [],
@@ -28,6 +30,34 @@ const SearchSelect = ({
       {touched[id] && errors[id] && <div id={`error-${id}`} className="text-danger">{errors[id]}</div>}
     </div>
   );
+};
+
+const optionShape = PropTypes.shape({
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+});
+
+SearchSelect.propTypes = {
+  heading: PropTypes.string, // Add this line to define the PropTypes for 'heading'
+  className: PropTypes.string,
+  id: PropTypes.string.isRequired, // You can specify required props using .isRequired
+  options: PropTypes.arrayOf(optionShape), // Use the custom PropTypes shape here
+  required: PropTypes.bool,
+  parameter: PropTypes.shape({
+    values: PropTypes.object, // Specify the shape of the 'values' property
+    touched: PropTypes.object, // Specify the shape of the 'touched' property
+    errors: PropTypes.object, // Specify the shape of the 'errors' property
+  }).isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
+
+SearchSelect.defaultProps = {
+  heading: '',
+  className: '',
+  options: [],
+  required: false,
+  placeholder: '',
 };
 
 export default SearchSelect;

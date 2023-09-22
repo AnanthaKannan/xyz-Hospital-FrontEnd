@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function DatePickerRe({
-  onChange, heading, errorMsg, id, yearsRange,
+  onChange, heading, id, yearsRange,
   className = '', required = false, parameter, minDate, maxDate,
 }: any) {
   const { values, touched, errors } = parameter;
@@ -46,10 +46,6 @@ export default function DatePickerRe({
           date,
           changeYear,
           changeMonth,
-          decreaseMonth,
-          increaseMonth,
-          prevMonthButtonDisabled,
-          nextMonthButtonDisabled,
         }) => (
           <div
             style={{
@@ -69,8 +65,8 @@ export default function DatePickerRe({
             >
               {years.map((option) => (
                 <option key={option} value={option}>
-                    {option}
-                  </option>
+                  {option}
+                </option>
               ))}
             </select>
 
@@ -82,8 +78,8 @@ export default function DatePickerRe({
             >
               {months.map((option) => (
                 <option key={option} value={option}>
-                    {option}
-                  </option>
+                  {option}
+                </option>
               ))}
             </select>
             {/* <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>

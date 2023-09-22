@@ -29,7 +29,9 @@ export const get = (apiUrl: string, params: any = {}) => {
     .catch((err) => {
       console.log('err', err.response);
       if (!err.response) return { status: 500 };
-      err && err.response && unAuthorizeTest(err.response.status);
+      if (err && err.response) {
+        unAuthorizeTest(err.response.status);
+      }
       return err.response;
     });
 };
@@ -68,7 +70,9 @@ export const post = (apiUrl: string, data: any) => {
     .catch((err) => {
       console.log('err', err.response);
       if (!err.response) return { status: 500 };
-      err && err.response && unAuthorizeTest(err.response.status);
+      if (err && err.response) {
+        unAuthorizeTest(err.response.status);
+      }
       return err.response;
     });
 };
@@ -85,14 +89,14 @@ Return: Object
 *************** */
 
 export const put = (apiUrl: string, data: any, params = {}) => {
-  const url_ = `${url}${apiUrl}`;
+  const urlReq = `${url}${apiUrl}`;
   const options: AxiosRequestConfig = {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',
       Authorization: `${localStorage.getItem('token')}`,
     },
-    url: url_,
+    url: urlReq,
     data,
     params,
   };
@@ -105,7 +109,9 @@ export const put = (apiUrl: string, data: any, params = {}) => {
     .catch((err) => {
       console.log('err', err.response);
       if (!err.response) return { status: 500 };
-      err && err.response && unAuthorizeTest(err.response.status);
+      if (err && err.response) {
+        unAuthorizeTest(err.response.status);
+      }
       return err.response;
     });
 };
@@ -120,7 +126,7 @@ Parameter: {
 Return: Object
 *************** */
 
-export const delete_ = (apiUrl: string) => {
+export const deleteMethod = (apiUrl: string) => {
   const qryString = `${url}${apiUrl}`;
 
   const options: AxiosRequestConfig = {
@@ -140,7 +146,9 @@ export const delete_ = (apiUrl: string) => {
     .catch((err) => {
       console.log('err', err.response);
       if (!err.response) return { status: 500 };
-      err && err.response && unAuthorizeTest(err.response.status);
+      if (err && err.response) {
+        unAuthorizeTest(err.response.status);
+      }
       return err.response;
     });
 };
@@ -149,5 +157,5 @@ export default {
   get,
   post,
   put,
-  delete: delete_,
+  delete: deleteMethod,
 };

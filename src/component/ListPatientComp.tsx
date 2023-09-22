@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -20,10 +21,6 @@ const ListPatientComp = () => {
   const [patientDetails, setPatientDetails] = useState({});
 
   const { setLoader } = useLoadContext();
-
-  useEffect(() => {
-    listPatient_();
-  }, []);
 
   const listPatient_ = async () => {
     setLoader(true);
@@ -67,6 +64,10 @@ const ListPatientComp = () => {
       sweetConfirmation(() => deletePatient_(data._id), 'Yes, delete it!');
     }
   };
+
+  useEffect(() => {
+    listPatient_();
+  }, []);
 
   return (
     <div>

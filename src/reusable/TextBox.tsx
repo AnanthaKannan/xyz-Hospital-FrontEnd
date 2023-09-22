@@ -1,5 +1,5 @@
 const TextBox = ({
-  onChange, className = '', readOnly = false, type = 'text', heading = '', id, required = false, parameter,
+  className = '', readOnly = false, type = 'text', heading = '', id, required = false, parameter,
 }: any) => {
   const {
     values, touched, errors, handleChange,

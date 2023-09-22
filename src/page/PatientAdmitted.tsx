@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const PatientAdmitted = () => (
+const PatientAdmitted = () => (
   <div>PatientAdmitted</div>
 );
+
+export default PatientAdmitted;

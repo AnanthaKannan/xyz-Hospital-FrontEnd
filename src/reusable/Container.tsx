@@ -23,7 +23,9 @@ const Container = ({ children, title }: containerType) => {
           spinner
           text="Loading..."
         >
-          <SideNav children={children} />
+          <SideNav>
+            {children}
+          </SideNav>
         </LoadingOverlay>
       </LoaderContext.Provider>
     </div>

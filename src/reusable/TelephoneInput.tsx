@@ -1,5 +1,4 @@
-import React from 'react';
-import intlTelInput from 'intl-tel-input';
+// import intlTelInput from 'intl-tel-input';
 
 const TelephoneInput = () => (
   <div>TelephoneInput</div>

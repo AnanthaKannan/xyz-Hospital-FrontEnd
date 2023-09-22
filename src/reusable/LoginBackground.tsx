@@ -1,4 +1,5 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+
 import Ha from './Ha';
 
 const LoginBackground = ({ children, title }) => (
@@ -18,5 +19,10 @@ const LoginBackground = ({ children, title }) => (
     </div>
   </div>
 );
+
+LoginBackground.propTypes = {
+  children: PropTypes.node.isRequired, // Ensure children is a required node (any valid JSX
+  title: PropTypes.string.isRequired, // Ensure title is a required string prop
+};
 
 export default LoginBackground;

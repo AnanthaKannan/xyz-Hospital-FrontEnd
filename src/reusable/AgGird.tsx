@@ -5,7 +5,7 @@ import { agGirdReactType } from '../type/type';
 const AgGirdReact = ({
   columnDefs, onCellClicked, frameworkComponents = {}, rowData,
 }: agGirdReactType) => {
-  const onCellClicked_ = (event: any) => {
+  const onCellClickedEvent = (event: any) => {
     try {
       onCellClicked(event);
     } catch (err) {
@@ -15,7 +15,9 @@ const AgGirdReact = ({
 
   const onSortChanged = useCallback((event: any) => {
     // console.log('event', event)
-    const sortState = event.columnApi.getColumnState().find((column:any) => (column.sort !== undefined && column.sort !== null));
+    const sortState = event.columnApi
+      .getColumnState()
+      .find((column:any) => (column.sort !== undefined && column.sort !== null));
     console.log('sortState', sortState);
     console.log('again-state', event.api.paginationGetCurrentPage());
   }, []);
@@ -30,7 +32,7 @@ const AgGirdReact = ({
   }, []);
 
   const onFirstDataRendered = useCallback((params) => {
-    console.log('------------------------------');
+    console.log('------------------------------', params);
     // params.api.paginationGoToPage(1);
     // params.api.paginationSetPageSize(1);
   }, []);
@@ -41,7 +43,7 @@ const AgGirdReact = ({
         onSortChanged={onSortChanged}
         onFilterChanged={onFilterChanged}
         domLayout="autoHeight"
-        onCellClicked={(e: any) => onCellClicked_(e)}
+        onCellClicked={(e: any) => onCellClickedEvent(e)}
         rowData={rowData}
         rowSelection="multiple"
         columnDefs={columnDefs}

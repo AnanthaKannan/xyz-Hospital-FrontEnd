@@ -1,23 +1,26 @@
+/* eslint-disable dot-notation */
+import { useEffect, useState, ReactNode } from 'react';
 import {
   SidebarHeader, ProSidebar, Menu, MenuItem, SubMenu,
 } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-import { useEffect, useState } from 'react';
+import 'react-pro-sidebar/dist/css/styles.css';
+
 import Icons from './Icons';
 import './css/sidenavbar.css';
-
-import 'react-pro-sidebar/dist/css/styles.css';
 import TopNavBar from './TopNavBar';
 import Router from '../Router';
+import hospitalLogo from '../assets/hospitalLogo.jpg'; // Import the image using import
 
-const SideNav = ({ children }: { children: React.ReactNode}) => {
-  const [path, setPath] = useState({ ...Router.reduce((acc, value) => ({ ...acc, [value.PATH.slice(1)]: false }), {}) });
+const SideNav = ({ children }: { children: ReactNode}) => {
+  const [path, setPath] = useState({
+    ...Router.reduce((acc, value) => ({
+      ...acc,
+      [value.PATH.slice(1)]: false,
+    }), {}),
+  });
   const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    navigate();
-  }, []);
 
   const navigate = () => {
     const url = window.location.href;
@@ -28,6 +31,10 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
     setPath(pathObj);
   };
 
+  useEffect(() => {
+    navigate();
+  }, []);
+
   return (
     <div className="app">
       <ProSidebar className="side-nav-fix border-right shadow" collapsed={collapsed} breakPoint="md" toggled={false}>
@@ -37,7 +44,7 @@ const SideNav = ({ children }: { children: React.ReactNode}) => {
               alt="Remy Sharp"
               className="ml-2"
               sx={{ width: 40, height: 40 }}
-              src={require('../assets/hospitalLogo.jpg')}
+              src={hospitalLogo}
             />
             {
               collapsed === false

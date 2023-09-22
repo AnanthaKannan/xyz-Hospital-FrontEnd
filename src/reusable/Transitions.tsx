@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import Fade from '@mui/material/Fade';
 // import Grow from '@mui/material/Grow';

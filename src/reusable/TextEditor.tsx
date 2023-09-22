@@ -11,7 +11,6 @@ const TextEditor = ({
       id={id}
       theme="snow"
       placeholder={placeholder}
-
       onChange={handleChange}
     />
     {errorMsg && <div id={`error-${id}`} className="text-danger">{errorMsg}</div>}

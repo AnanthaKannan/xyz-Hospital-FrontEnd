@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -22,38 +23,14 @@ const ListDoctorComp = () => {
   // const [perPage, setPerPage] = useState(10);
   const perPage = 10;
 
-  useEffect(() => {
-    listPatient(page);
-  }, [page]);
-
-  const listPatient = async (skip = 0) => {
-    setLoader(true);
-    const result = await get(doctor, `limit=${perPage}&skip=${skip}`);
-    console.log(result);
-    setLoader(false);
-    if (result.status === 200) {
-      setRowData(conversion(result.data));
-      setTotalCount(result.headers['x-total-count']);
-    } else {
-      toast.error('Oops! Something went wrong. Please try again later.');
-    }
-  };
-
-  const availableDay = (avDay) => {
-    let days = '';
-    for (const day in avDay) {
+  const availableDay = (avDay) => Object.keys(avDay)
+    .reduce((days, day) => {
       if (avDay[day]) {
-        days += `${day}, `;
+        days.push(day);
       }
-    }
-    return days.substring(0, days.length - 2);
-  };
-
-  const conversion = (data: any) => data.map((item: any) => ({
-    ...item,
-    availableDayConvert: availableDay(item.availableDay),
-    availableTimeConvert: availableTime(item.availableTime),
-  }));
+      return days;
+    }, [])
+    .join(', ');
 
   const availableTime = (availableTimeList: any) => {
     try {
@@ -68,6 +45,25 @@ const ListDoctorComp = () => {
     } catch (e) {
       console.log(e);
       return '';
+    }
+  };
+
+  const conversion = (data: any) => data.map((item: any) => ({
+    ...item,
+    availableDayConvert: availableDay(item.availableDay),
+    availableTimeConvert: availableTime(item.availableTime),
+  }));
+
+  const listPatient = async (skip = 0) => {
+    setLoader(true);
+    const result = await get(doctor, `limit=${perPage}&skip=${skip}`);
+    console.log(result);
+    setLoader(false);
+    if (result.status === 200) {
+      setRowData(conversion(result.data));
+      setTotalCount(result.headers['x-total-count']);
+    } else {
+      toast.error('Oops! Something went wrong. Please try again later.');
     }
   };
 
@@ -91,6 +87,10 @@ const ListDoctorComp = () => {
     console.log('doctorDetails', doctorDetails);
     sweetConfirmation(() => navigate('/create-doctor', { state: doctorDetails }), 'Yes, Update it!');
   };
+
+  useEffect(() => {
+    listPatient(page);
+  }, [page]);
 
   return (
     <div>

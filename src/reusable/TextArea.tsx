@@ -2,7 +2,7 @@ import React from 'react';
 import { TextAreaType } from '@type/type';
 
 const TextArea = ({
-  onChange, value, className = '', readOnly = false, type = 'text', errorMsg = '', heading = '', id, rows = 5,
+  onChange, value, className = '', readOnly = false, errorMsg = '', heading = '', id, rows = 5,
 }: TextAreaType) => (
   <div>
     <label className="text-muted" htmlFor={id}>{heading}</label>
