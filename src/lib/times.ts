@@ -5,7 +5,7 @@ type timeType = {
   index: number;
 }[]
 
-const timeList: timeType = [
+export const timeList: timeType = [
   {
     hour: '12',
     minute: '00',

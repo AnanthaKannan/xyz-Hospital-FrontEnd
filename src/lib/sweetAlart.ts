@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-const sweetConfirmation = (callBackFn: Function, confirmButtonText:string, text:string = '') => {
+export const sweetConfirmation = (callBackFn: Function, confirmButtonText:string, text:string = '') => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
