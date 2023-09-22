@@ -1,9 +1,9 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
-// @mui
 import { Card, CardHeader, Box } from '@mui/material';
-// components
 import { useTheme } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 
 // ----------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ function BaseOptionChart() {
   };
 }
 
-export default function AppWebsiteVisits({
+function AppWebsiteVisits({
   title, subheader, chartLabels, chartData, ...other
 }) {
   const chartOptions:any = merge(BaseOptionChart(), {
@@ -212,6 +212,7 @@ export default function AppWebsiteVisits({
   });
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
@@ -221,3 +222,17 @@ export default function AppWebsiteVisits({
     </Card>
   );
 }
+
+AppWebsiteVisits.propTypes = {
+  title: PropTypes.string.isRequired,
+  subheader: PropTypes.string.isRequired,
+  chartLabels: PropTypes.string.isRequired,
+  chartData: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+};
+
+export default AppWebsiteVisits;

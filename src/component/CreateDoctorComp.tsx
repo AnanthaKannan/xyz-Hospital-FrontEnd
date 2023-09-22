@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -71,32 +74,24 @@ const CreateDoctorComp = () => {
     }
   }, [location.state]);
 
-  const onSubmit = (values: any, { setErrors, setFieldValue, resetForm }: any) => {
-    values.availableTime = selectedTime;
-    values.timePerPatient = '10';
-    console.log(values);
-
-    if (values._id) updateDoctor(values, resetForm, setErrors);
-    else createDoctor(values, resetForm, setErrors);
+  const uploadImage = async (values) => {
+    console.log('uploadImage', values);
+    const path = imagePath('doctor', values.fileName).setUrl;
+    const { file } = values;
+    const result = await uploadFile({ file, path });
+    console.log('result', result);
   };
 
-  const updateDoctor = async (values: doctorValueType, resetForm: Function, setErrors: Function) => {
-    setLoader(true);
-    const result = await put(values._id, values);
-    console.log('result', result.status);
-    setLoader(false);
-    if (result.status === 200) {
-      if (values.fileName) await uploadImage(values);
-      toast.success('Doctor updated successfully');
-      navigate('/list-doctor');
-    } else if (result.status === 409) {
-      const { data } = result;
-      toast.error(data.message);
-    } else {
-      toast.error('Oops! Something went wrong. Please try again later.');
-    }
+  const handleReset = (resetForm: Function): void => {
+    if (formikInitialValue._id) navigate('/list-doctor');
+
+    resetForm();
+    console.log('selectedTime', selectedTime);
+    setSelectedTime([{ from: null, to: null }]);
+    // navigate("/dummy", { state: { backToNavigate: '/create-doctor'} });
   };
-  const createDoctor = async (values: doctorValueType, resetForm: Function, setErrors: Function) => {
+
+  const createDoctor = async (values: doctorValueType, resetForm: Function) => {
     setLoader(true);
     const result = await post(values);
     console.log('result', result.status);
@@ -116,21 +111,31 @@ const CreateDoctorComp = () => {
     handleReset(resetForm);
   };
 
-  const uploadImage = async (values) => {
-    console.log('uploadImage', values);
-    const path = imagePath('doctor', values.fileName).setUrl;
-    const { file } = values;
-    const result = await uploadFile({ file, path });
-    console.log('result', result);
+  const updateDoctor = async (values: doctorValueType) => {
+    setLoader(true);
+    const result = await put(values._id, values);
+    console.log('result', result.status);
+    setLoader(false);
+    if (result.status === 200) {
+      if (values.fileName) await uploadImage(values);
+      toast.success('Doctor updated successfully');
+      navigate('/list-doctor');
+    } else if (result.status === 409) {
+      const { data } = result;
+      toast.error(data.message);
+    } else {
+      toast.error('Oops! Something went wrong. Please try again later.');
+    }
   };
 
-  const handleReset = (resetForm: Function): void => {
-    if (formikInitialValue._id) navigate('/list-doctor');
+  const onSubmit = (values: any, { resetForm }: any) => {
+    const updatedValues = { ...values };
+    updatedValues.availableTime = selectedTime;
+    updatedValues.timePerPatient = '10';
+    console.log(updatedValues);
 
-    resetForm();
-    console.log('selectedTime', selectedTime);
-    setSelectedTime([{ from: null, to: null }]);
-    // navigate("/dummy", { state: { backToNavigate: '/create-doctor'} });
+    if (updatedValues._id) updateDoctor(updatedValues);
+    else createDoctor(updatedValues, resetForm);
   };
 
   const onHandleCheckBox = (isChecked: boolean, name: any, setFieldValue: any, _availableDays) => {
@@ -146,7 +151,7 @@ const CreateDoctorComp = () => {
     return retValue;
   };
 
-  const availableTimeValidation = (value: any) => {
+  const availableTimeValidation = () => {
     let retValue = false;
     selectedTime.forEach((item) => {
       if (item.from && item.to) retValue = true;
@@ -181,7 +186,7 @@ const CreateDoctorComp = () => {
       .test('availableTime', 'Please select doctor available time', availableTimeValidation),
   });
 
-  const addTimeSheet = (setFieldValue: any, _availableTime) => {
+  const addTimeSheet = () => {
     const lastSelectedTime = selectedTime.slice(
       selectedTime.length - 1,
       selectedTime.length,
@@ -194,7 +199,7 @@ const CreateDoctorComp = () => {
     setSelectedTime([...selectedTime, { from: null, to: null }]);
   };
 
-  const removeTimeSheet = (setFieldValue: any, _availableTime) => {
+  const removeTimeSheet = () => {
     const updatedTime = selectedTime.slice(0, selectedTime.length - 1);
     setSelectedTime([...updatedTime]);
   };
@@ -232,15 +237,15 @@ const CreateDoctorComp = () => {
                           heading="License Expiry Date"
                           id="licenseExpiryDate"
                           onChange={(id, date) => {
-                  setFieldValue(id, date);
-                }}
+                            setFieldValue(id, date);
+                          }}
                           parameter={parameter}
                           minDate={new Date(new Date().getTime() + (24 * 60 * 60 * 1000))}
                           maxDate={new Date('20-20-2120')}
                           yearsRange={{
-                  start: new Date().getFullYear(),
-                  end: new Date().getFullYear() + 10,
-                }}
+                            start: new Date().getFullYear(),
+                            end: new Date().getFullYear() + 10,
+                          }}
                         />
                       </div>
                       <div className="col-md-3">
@@ -290,7 +295,8 @@ const CreateDoctorComp = () => {
                       keyValue={day}
                       id={day.toLowerCase()}
                       checked={parameter.values.availableDay[day.toLowerCase()]}
-                      onChange={(isChecked, name) => onHandleCheckBox(isChecked, name, setFieldValue, parameter.values.availableDay)}
+                      onChange={(isChecked, name) => onHandleCheckBox(isChecked,
+                        name, setFieldValue, parameter.values.availableDay)}
                     />
                   ))}
 
@@ -302,16 +308,16 @@ const CreateDoctorComp = () => {
                     <div className="d-flex justify-content-between align-items-center">
                       <h6>Select doctor available time</h6>
                       <div className="d-flex">
-                        <h6 className="pointer mr-2" id="time-add" onClick={() => addTimeSheet(setFieldValue, selectedTime)}>
+                        <h6 className="pointer mr-2" id="time-add" onClick={() => addTimeSheet()}>
                           {' '}
                           <Icons icon="addCircle" size={20} />
                           {' '}
                         </h6>
                         {selectedTime.length > 1 && (
-                        <h6 className="pointer" id="time-sub" onClick={() => removeTimeSheet(setFieldValue, selectedTime)}>
-                <Icons icon="subCircle" size={20} />
-                {' '}
-              </h6>
+                        <h6 className="pointer" id="time-sub" onClick={() => removeTimeSheet()}>
+                          <Icons icon="subCircle" size={20} />
+                          {' '}
+                        </h6>
                         )}
                       </div>
                     </div>

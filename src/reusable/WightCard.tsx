@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 const WightCard = ({ text, number }) => (
   <div>
@@ -8,5 +8,10 @@ const WightCard = ({ text, number }) => (
     </div>
   </div>
 );
+
+WightCard.propTypes = {
+  text: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+};
 
 export default WightCard;

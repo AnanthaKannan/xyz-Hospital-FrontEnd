@@ -1,10 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
-import DropDown from '../reusable/DropDown';
+import DropDown from './DropDown';
 import { timeList } from '../lib/times';
 
 export default function TimePickerRe({
   index, setSelectedTime, selectedTime, setFieldValue,
-}: { index: number; setSelectedTime: Function; selectedTime: { from: number; to: number }[]; setFieldValue: Function; }) {
+}: { index: number; setSelectedTime: Function; selectedTime: { from: number;
+  to: number }[]; setFieldValue: Function; }) {
   const timeList_ = timeList.map((obj) => ({
     value: obj.index,
     label: `${obj.hour}: ${obj.minute} ${obj.ampm}`,
@@ -22,15 +24,12 @@ export default function TimePickerRe({
   };
 
   const getTimeList = (timeIndex: number, state: 'from' | 'to') => {
-    // console.log("timeIndex", timeIndex, "index", index);
-    // console.log("state", state);
-
+    let ti = timeIndex;
     if (state === 'from') {
       if (index !== 0) {
-        timeIndex = selectedTime[index - 1].to;
-        // console.log('first timeIndex', timeIndex)
+        ti = selectedTime[index - 1].to;
         const lastSelectedTime = timeList_.filter(
-          (obj) => obj.value > timeIndex,
+          (obj) => obj.value > ti,
         );
         return lastSelectedTime;
       }
@@ -39,8 +38,9 @@ export default function TimePickerRe({
 
     if (state === 'to') {
       if (selectedTime[index].from === null) return [];
-      return timeList_.filter((obj) => obj.value > timeIndex);
+      return timeList_.filter((obj) => obj.value > ti);
     }
+    return [];
   };
 
   return (

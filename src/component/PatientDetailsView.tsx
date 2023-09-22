@@ -1,20 +1,10 @@
-import React from 'react';
-import { imagePath, fromDateToAgeConverter, getGenderByValue } from '../lib';
-// import maleAvatar from '../assets/male_avatar.png'
-// import femaleAvatar from '../assets/female_avatar.png'
+/* eslint-disable no-underscore-dangle */
+import PropTypes from 'prop-types';
+
+import { fromDateToAgeConverter, getGenderByValue } from '../lib';
 
 const PatientDetailsView = ({ data }) => (
   <div>
-
-    {/* <div className='d-flex justify-content-center mt-5 mb-2'>
-        {
-          data.fileName ?
-            <img className='patient-img' src={imagePath('patient', data.fileName).getUrl} alt="patient Img" />
-            :
-            <img className='patient-img' src={data?.gender === 'male' ? maleAvatar : femaleAvatar} alt="patient Img" />
-        }
-      </div> */}
-
     <table className="table table-bordered font-sm">
       <tbody>
         <tr>
@@ -87,5 +77,29 @@ const PatientDetailsView = ({ data }) => (
     </table>
   </div>
 );
+
+PatientDetailsView.propTypes = {
+  data: PropTypes.shape({
+    _id: PropTypes.string,
+    id: PropTypes.string,
+    firstName: PropTypes.string,
+    middleName: PropTypes.string,
+    lastName: PropTypes.string,
+    gender: PropTypes.string,
+    dob: PropTypes.string,
+    phone: PropTypes.string,
+    aadhaarNumber: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+    idenityNo: PropTypes.string,
+    martialStatus: PropTypes.string,
+    email: PropTypes.string,
+    occupation: PropTypes.string,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    country: PropTypes.string,
+    zipCode: PropTypes.string,
+  }).isRequired,
+};
 
 export default PatientDetailsView;

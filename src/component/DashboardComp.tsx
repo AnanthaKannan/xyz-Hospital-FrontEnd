@@ -10,16 +10,16 @@ import config from '../config';
 const DashboardComp = () => {
   const { patient } = config;
 
-  useEffect(() => {
-    onInit();
-  }, []);
-
   const onInit = async () => {
     // get last 30 days details
     console.log('first-data', new Date(new Date().setDate(new Date().getDate() - 3)).toISOString());
     const visited = await get(patient, `createdAt:lt:${new Date(new Date().setDate(new Date().getDate() - 3)).toISOString()}`);
     console.log('visited', visited);
   };
+
+  useEffect(() => {
+    onInit();
+  }, []);
 
   const theme = useTheme();
   return (

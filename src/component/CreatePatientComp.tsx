@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -20,7 +21,10 @@ import AddressForm from '../reusable/AddressForm';
 const CreatePatientComp = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>(getInitialValuesFromYup({ ...createPatientValidation, file: null }));
+  const [formikInitialValue,
+    setFormikInitialValue] = useState<patientDetailsType>(getInitialValuesFromYup({
+      ...createPatientValidation, file: null,
+    }));
 
   useEffect(() => {
     // eslint-disable-next-line prefer-destructuring
@@ -39,14 +43,15 @@ const CreatePatientComp = () => {
 
   const { setLoader } = useLoadContext();
 
-  const onSubmit = (values: patientDetailsType, { setErrors, setFieldValue, resetForm }: any) => {
-    console.log(values);
-    if (values._id) updatePatient_(values, resetForm, setErrors);
-    else createPatient(values, resetForm, setErrors);
-    // resetForm();
+  const uploadImage = async (values) => {
+    console.log('uploadImage', values);
+    const path = imagePath('patient', values.fileName).setUrl;
+    const { file } = values;
+    const result = await uploadFile({ file, path });
+    console.log('result', result);
   };
 
-  const createPatient = async (values: patientDetailsType, resetForm: Function, setErrors: Function) => {
+  const createPatient = async (values: patientDetailsType, resetForm: Function) => {
     setLoader(true);
     const result = await addPatient(values);
     console.log('result', result.status);
@@ -68,7 +73,7 @@ const CreatePatientComp = () => {
     resetForm();
   };
 
-  const updatePatient_ = async (values: patientDetailsType, resetForm: Function, setErrors: Function) => {
+  const updatePatient_ = async (values: patientDetailsType) => {
     console.log('updatePatient_', values);
     setLoader(true);
     const result = await updatePatient(values._id, values);
@@ -91,12 +96,11 @@ const CreatePatientComp = () => {
     }
   };
 
-  const uploadImage = async (values) => {
-    console.log('uploadImage', values);
-    const path = imagePath('patient', values.fileName).setUrl;
-    const { file } = values;
-    const result = await uploadFile({ file, path });
-    console.log('result', result);
+  const onSubmit = (values: patientDetailsType, { resetForm }: any) => {
+    console.log(values);
+    if (values._id) updatePatient_(values);
+    else createPatient(values, resetForm);
+    // resetForm();
   };
 
   const handleReset = (setFieldValue: Function, resetForm: Function): void => {

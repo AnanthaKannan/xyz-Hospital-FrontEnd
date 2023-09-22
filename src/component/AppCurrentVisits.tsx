@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
-// @mui
+
 import { useTheme, styled } from '@mui/material/styles';
 import { Card, CardHeader } from '@mui/material';
-// utils
-// import { fNumber } from '../../../utils/formatNumber';
 
 function BaseOptionChart() {
   const theme = useTheme();
@@ -212,16 +211,9 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-AppCurrentVisits.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  chartColors: PropTypes.arrayOf(PropTypes.string),
-  chartData: PropTypes.array,
-};
-
-export default function AppCurrentVisits({
+const AppCurrentVisits = ({
   title, subheader = '', chartColors, chartData, ...other
-}) {
+}) => {
   const theme = useTheme();
 
   const chartLabels = chartData.map((i) => i.label);
@@ -249,6 +241,7 @@ export default function AppCurrentVisits({
   });
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
@@ -257,4 +250,22 @@ export default function AppCurrentVisits({
       </ChartWrapperStyle>
     </Card>
   );
-}
+};
+
+AppCurrentVisits.propTypes = {
+  title: PropTypes.string.isRequired,
+  subheader: PropTypes.string,
+  chartColors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  chartData: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+};
+
+AppCurrentVisits.defaultProps = {
+  subheader: '',
+};
+
+export default AppCurrentVisits;

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -14,9 +15,7 @@ import Icons from '../reusable/Icons';
 import config from '../config';
 import PaginationReuse from '../reusable/PaginationReuse';
 import DropDown from '../reusable/DropDown';
-import {
-  onHandleChange, handleReset, getInitialValuesFromYup, convertDate,
-} from '../lib';
+import { handleReset, getInitialValuesFromYup, convertDate } from '../lib';
 import { patientRecordValidation, createPatientValidation } from '../lib/validationSchema';
 import CheckBox from '../reusable/CheckBox';
 import DatePickerRe from '../reusable/DatePickerRe';
@@ -24,7 +23,10 @@ import ToggleSwitch from '../reusable/ToggleSwitch';
 import Transitions from '../reusable/Transitions';
 
 const PatientRecordComp = () => {
-  const [patientDetails, setPatientDetails] = useState<patientDetailsType>(getInitialValuesFromYup(createPatientValidation));
+  const [patientDetails,
+    setPatientDetails] = useState<patientDetailsType>(
+      getInitialValuesFromYup(createPatientValidation),
+    );
   const { patientRecord } = config;
   const [patientDetailsList, setPatientDetailsList] = useState([]);
   const location = useLocation();
@@ -32,9 +34,11 @@ const PatientRecordComp = () => {
   const { setLoader } = useLoadContext();
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [perPage, setPerPage] = useState(3);
   const [doctorList, setDoctorList] = useState([]);
   const [isShowAddRecord, setIsShowAddRecord] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [formikInitialValue, setFormikInitialValue] = useState<patientRecordType>({
     diagnosis: '',
     description: '',
@@ -44,19 +48,6 @@ const PatientRecordComp = () => {
     _doctorId: '',
     status: false,
   });
-
-  useEffect(() => {
-    // eslint-disable-next-line prefer-destructuring
-    const state: any = location.state;
-    console.log(state);
-    if (state._id) {
-      patientRecordList(state._id, page);
-      getDoctorList();
-      setPatientDetails({ ...state });
-    } else {
-      navigate('/list-patient');
-    }
-  }, [page]);
 
   const getDoctorList = async () => {
     const res = await get(config.doctor, 'project=name');
@@ -76,28 +67,11 @@ const PatientRecordComp = () => {
     return doc ? doc.label : '';
   };
 
-  const onSubmit = async (values: any, { setErrors, setFieldValue, resetForm }: any) => {
-    console.log('submit', values);
-    setLoader(true);
-    const result = await post(patientRecord, { ...values, _patientId: patientDetails._id, status: false });
-    console.log('result', result.status);
-    setLoader(false);
-    if (result.status !== 201) {
-      toast.error('Oops! Something went wrong. Please try again later.');
-      return;
-    }
-
-    toast.success('successfully added');
-    console.log('Patient added successfully');
-    patientRecordList(patientDetails._id);
-    resetForm();
-  };
-
-  const patientRecordList = async (patient_id, skip = 0) => {
+  const patientRecordList = async (patientId, skip = 0) => {
     setLoader(true);
     const result = await get(
       patientRecord,
-      `filter=_patientId:eq:${patient_id}&limit=${perPage}&skip=${skip}`,
+      `filter=_patientId:eq:${patientId}&limit=${perPage}&skip=${skip}`,
     );
     console.log('result', result);
     console.log('result', result.status);
@@ -110,7 +84,7 @@ const PatientRecordComp = () => {
     console.log('totalCount_', result.headers);
     setTotalCount(totalCount_);
     setPatientDetailsList(result.data);
-    totalCount_ < 1 && setIsShowAddRecord(true);
+    if (totalCount_ < 1) setIsShowAddRecord(true);
   };
 
   const onDeleteRecord = async (item) => {
@@ -127,6 +101,40 @@ const PatientRecordComp = () => {
     toast.success('successfully deleted');
     patientRecordList(_patientId);
   };
+
+  const onSubmit = async (values: any, { resetForm }: any) => {
+    console.log('submit', values);
+    setLoader(true);
+    const result = await post(patientRecord, {
+      ...values,
+      _patientId: patientDetails._id,
+      status: false,
+    });
+    console.log('result', result.status);
+    setLoader(false);
+    if (result.status !== 201) {
+      toast.error('Oops! Something went wrong. Please try again later.');
+      return;
+    }
+
+    toast.success('successfully added');
+    console.log('Patient added successfully');
+    patientRecordList(patientDetails._id);
+    resetForm();
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line prefer-destructuring
+    const state: any = location.state;
+    console.log(state);
+    if (state._id) {
+      patientRecordList(state._id, page);
+      getDoctorList();
+      setPatientDetails({ ...state });
+    } else {
+      navigate('/list-patient');
+    }
+  }, [page]);
 
   return (
     <div>
@@ -209,7 +217,7 @@ const PatientRecordComp = () => {
                         label="Is He/She Admitted?"
                         id="isAdmitted"
                         onChange={(checked, name) => {
-                          setFieldValue('isAdmitted', checked);
+                          setFieldValue(name, checked);
                         }}
                         checked={parameter.values.isAdmitted}
                       />
@@ -222,28 +230,28 @@ const PatientRecordComp = () => {
                       <div className="row">
                         <div className="col-md-3">
                           <TextBox
-                          heading="Room No"
-                          required
-                          id="roomNo"
-                          parameter={parameter}
-                        />
+                            heading="Room No"
+                            required
+                            id="roomNo"
+                            parameter={parameter}
+                          />
                         </div>
                         <div className="col-md-3">
                           <DatePickerRe
-                          required
-                          onChange={(id, date) => {
+                            required
+                            onChange={(id, date) => {
                               setFieldValue('admittedOn', date);
                             }}
-                          id="admittedOn"
-                          parameter={parameter}
-                          heading="Admitted On"
-                          minDate={new Date('20-20-1970')}
-                          maxDate={new Date()}
-                          yearsRange={{
+                            id="admittedOn"
+                            parameter={parameter}
+                            heading="Admitted On"
+                            minDate={new Date('20-20-1970')}
+                            maxDate={new Date()}
+                            yearsRange={{
                               start: 1970,
                               end: new Date().getFullYear() + 1,
                             }}
-                        />
+                          />
                         </div>
                         <div className="col-md-3" />
                       </div>
@@ -287,7 +295,7 @@ const PatientRecordComp = () => {
           </div>
         </Transitions>
 
-        {patientDetailsList.map((item: any, index: number) => (
+        {patientDetailsList.map((item: any) => (
           <div key={item._id} className="card mt-2 shadow-sm">
             <div className="">
               <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
