@@ -2,7 +2,7 @@
 This repository houses an application designed for hospital management, 
 serving as a tool to efficiently handle and organize hospital data.
 
-### Demo for the application
+#### Demo for the application
 You run the application [here](http://xyzhospital.surge.sh) http://xyzhospital.surge.sh
 
 #### Run the application in your local
