@@ -9,7 +9,6 @@ type configType = {
 
 export const config: configType = {
   apiURL: "https://5347sl44pj.execute-api.us-east-1.amazonaws.com/dev",
-  // apiURL: "http://localhost:3000/dev",
   imgURL: "https://learning-2025.s3.amazonaws.com",
   patientRecord: "patientRecord",
   patient: "patient",
