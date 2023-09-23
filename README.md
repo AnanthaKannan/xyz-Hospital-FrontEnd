@@ -9,7 +9,7 @@ You run the application [here](http://xyzhospital.surge.sh) http://xyzhospital.s
 * Install the node js and the version 14.19.0
 * clone the code in your local `git clone https://github.com/AnanthaKannan/digitalHospital-FrontEnd.git`
 * npm install
-* update your configuration [here](cypress/config) 
+* update your configuration [here](cypress/config)  and [here](src/config/index.ts)
 * npm start
 
 #### Run cypress
