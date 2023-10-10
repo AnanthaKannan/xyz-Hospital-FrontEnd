@@ -14,7 +14,7 @@ const initialValues_: profileDetailsType = {
   email: "",
   name: '',
   picture: '',
-  phone: '',
+  phone_number: '',
   address: '',
   password: '',
 }
@@ -30,7 +30,7 @@ const SignUpForm = ({isSignUp}) => {
       address: storageObj.hospitalAddress,
       email: storageObj.hospitalMailId,
       name: storageObj.hospitalName,
-      phone: storageObj.hospitalPhone,
+      phone_number: storageObj.hospitalPhone,
       picture: storageObj.hospitalPicture,
       password: ""
     }
@@ -39,19 +39,15 @@ const SignUpForm = ({isSignUp}) => {
   },[])
 
   const covertFromObjToArray = (obj: any) => {
-    // we have created phone as a custom attribute in cognito so the key should be custom:phone
-    // rest of the key are user attribute it all are predefined in cognito
     // password should not send in the request
     let attributeList: any[] = [];
     for (let key in obj) {
       if (key !== 'password') {
-        if (key === 'phone' || key === 'address' || key === 'phone')
-          key = `custom:${key}`;
-        
-        console.log('myKeys', key.replace('custom', ''))
+        let value = obj[key]
+        if (key === 'phone_number') value = `+91${obj[key]}`
         const attributeObj = {
           Name: key,
-          Value: obj[key.replace('custom:', '')]
+          Value: value
         }
         var attribute = new CognitoUserAttribute(attributeObj);
         attributeList.push(attribute)
@@ -95,7 +91,7 @@ const SignUpForm = ({isSignUp}) => {
           console.log('call result: ' + result);
           const storageData = {
             hospitalName: values.name,
-            hospitalPhone: values.phone,
+            hospitalPhone: values.phone_number,
             hospitalAddress: values.address,
             hospitalPicture: values.picture,
           }
@@ -178,7 +174,7 @@ const SignUpForm = ({isSignUp}) => {
               <div className="col-md-12">
                 <TextBox
                   heading="Phone Number"
-                  id="phone"
+                  id="phone_number"
                   parameter={parameter}
                 />
               </div>
