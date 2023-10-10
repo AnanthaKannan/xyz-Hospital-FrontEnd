@@ -19,3 +19,9 @@ Cypress is a powerful end-to-end testing framework that is often used in conjunc
 #### Run Backend
 we have used back-end service by aws. [here](https://github.com/AnanthaKannan/xyzHospital-backend)
 our reference for the backend
+
+#### environment file setup
+A .env file, short for "environment" file, is a text file used to store configuration variables and sensitive information for software applications.
+* Rename .env.test file to .env
+* update your values
+* For the github action, we have to add in [secret](https://github.com/AnanthaKannan/xyzHospital-backend/settings/secrets/actions)
