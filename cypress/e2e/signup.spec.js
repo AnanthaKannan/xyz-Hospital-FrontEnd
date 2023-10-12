@@ -16,7 +16,7 @@ describe('Signup', () => {
     cy.get('#error-email').should('not.exist');
     cy.get('#error-name').should('not.exist');
     cy.get('#error-address').should('not.exist');
-    cy.get('#error-phone').should('not.exist');
+    cy.get('#error-phone_number').should('not.exist');
     cy.get('#error-password').should('not.exist');
 
     cy.get('#signup-submit').click();  // click the submit button
@@ -24,7 +24,7 @@ describe('Signup', () => {
     cy.get('#error-email').should('have.text', 'Required');
     cy.get('#error-name').should('have.text', 'Required');
     cy.get('#error-address').should('have.text', 'Required');
-    cy.get('#error-phone').should('have.text', 'Phone is required');
+    cy.get('#error-phone_number').should('have.text', 'Phone is required');
     cy.get('#error-password').should('have.text', 'Required');
   })
 
@@ -33,7 +33,7 @@ describe('Signup', () => {
     cy.get('#email').type('emailId')
     cy.get('#name').type('hos')
     cy.get('#address').type('add')
-    cy.get('#phone').type('phone')
+    cy.get('#phone_number').type('phone')
     cy.get('#password').type('pass')
 
     cy.get('#signup-submit').click();  // click the submit button
@@ -51,7 +51,7 @@ describe('Signup', () => {
     cy.get('#email').type(faker.internet.email(undefined, undefined, 'example.com'));
     cy.get('#name').type('test-hospital')
     cy.get('#address').type('test-address')
-    cy.get('#phone').type('904214108')
+    cy.get('#phone_number').type('904214108')
     cy.get('#password').type('test-password')
 
     cy.get('#signup-submit').click();  // click the submit button
@@ -76,7 +76,7 @@ describe('Signup', () => {
     cy.get('#email').type(faker.internet.email(undefined, undefined, 'example.com'));
     cy.get('#name').type('test-hospital')
     cy.get('#address').type('test-address')
-    cy.get('#phone').type('904214108')
+    cy.get('#phone_number').type('904214108')
     cy.get('#password').type('sree@Password123')
 
     cy.get('#signup-submit').click();  // click the submit button

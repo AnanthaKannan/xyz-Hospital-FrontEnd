@@ -126,7 +126,7 @@ export type patientRecordType = {
 export type profileDetailsType = {
   email: string,
   name: string,
-  phone: string,
+  phone_number: string,
   picture: string,
   address: string,
   password: string,
