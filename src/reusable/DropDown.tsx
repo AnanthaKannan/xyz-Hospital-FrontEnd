@@ -14,7 +14,7 @@ export default function DropDown({ className, heading, errorMsg, list = [], onCh
         </option>
         {
           list.map((obj: any) => (
-            <option key={obj.value} value={obj.value}> {obj.label} </option>
+            <option key={`${obj.value}-${obj.label}`} value={obj.value}> {obj.label} </option>
           ))}
       </select>
       {/* <span className="error-txt">{errorMsg}</span> */}
