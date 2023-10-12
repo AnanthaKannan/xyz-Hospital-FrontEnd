@@ -123,5 +123,4 @@ describe('Doctor Create', () => {
     cy.get('#endTime0').find('option:selected').should('have.text', '')
     cy.get('#startTime0').find('option:selected').should('have.text', '')
   }
-
 })

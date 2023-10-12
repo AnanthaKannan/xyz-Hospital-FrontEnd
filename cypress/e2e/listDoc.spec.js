@@ -17,7 +17,7 @@ describe('#List Doctor', () => {
       // eslint-disable-next-line jest/valid-expect
       expect(statusCode).to.equal(200)
       doctorList = body;
-      docTotalCount = headers['x-total-count']
+      docTotalCount = Number(headers['x-total-count'])
     })
   })
 
@@ -36,8 +36,11 @@ describe('#List Doctor', () => {
     }
   });
 
-  it(`Total count should be ${docTotalCount}`,  () => {
-    cy.get('#totalCount').contains(`Total Records ${docTotalCount}`)
+  it('Doctor total count',  () => {
+    if (docTotalCount > 10)
+      cy.get('#totalCount').contains(`Total Records ${docTotalCount}`)
+    else
+      cy.get('#totalCount').should('not.exist')
   })
 
   it('First row values', () => {
