@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { Formik } from 'formik'
-import { SubmitButton } from '../reusable/Button'
-import TextBox from '../reusable/TextBox';
-import UserPool from '../lib/UserPool'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { profileDetailsValidation } from '../lib/validationSchema';
 import { CognitoUser, CognitoUserAttribute, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { profileDetailsType, localStorageType } from '@type/type';
-import { getStorageDetails, setStorageDetails } from '../lib'
 
-const initialValues_: profileDetailsType = {
-  email: "",
+import { SubmitButton } from '../reusable/Button';
+import TextBox from '../reusable/TextBox';
+import UserPool from '../lib/UserPool';
+import { profileDetailsValidation } from '../lib/validationSchema';
+import { getStorageDetails, setStorageDetails } from '../lib';
+
+const initValues: profileDetailsType = {
+  email: '',
   name: '',
   picture: '',
-  phone: '',
+  phone_number: '',
   address: '',
   password: '',
-}
+};
 
-const SignUpForm = ({isSignUp}) => {
-
+const SignUpForm = ({ isSignUp }) => {
   const navigate = useNavigate();
-  const [initialValues, setInitialValues] = useState(initialValues_);
+  const [initialValues, setInitialValues] = useState(initValues);
 
   useEffect(() => {
     const storageObj:localStorageType = getStorageDetails();
@@ -30,53 +31,37 @@ const SignUpForm = ({isSignUp}) => {
       address: storageObj.hospitalAddress,
       email: storageObj.hospitalMailId,
       name: storageObj.hospitalName,
-      phone: storageObj.hospitalPhone,
+      phone_number: storageObj.hospitalPhone,
       picture: storageObj.hospitalPicture,
-      password: ""
-    }
-    console.log('updatedInitialValue', updatedInitialValue)
-      setInitialValues({...updatedInitialValue})
-  },[])
+      password: '',
+    };
+    console.log('updatedInitialValue', updatedInitialValue);
+    setInitialValues({ ...updatedInitialValue });
+  }, []);
 
   const covertFromObjToArray = (obj: any) => {
-    // we have created phone as a custom attribute in cognito so the key should be custom:phone
-    // rest of the key are user attribute it all are predefined in cognito
     // password should not send in the request
-    let attributeList: any[] = [];
-    for (let key in obj) {
+    const attributeList: any[] = [];
+    Object.keys(obj).forEach((key) => {
       if (key !== 'password') {
-        if (key === 'phone' || key === 'address' || key === 'phone')
-          key = `custom:${key}`;
-        
-        console.log('myKeys', key.replace('custom', ''))
+        let value = obj[key];
+        if (key === 'phone_number') value = `+91${obj[key]}`;
         const attributeObj = {
           Name: key,
-          Value: obj[key.replace('custom:', '')]
-        }
-        var attribute = new CognitoUserAttribute(attributeObj);
-        attributeList.push(attribute)
+          Value: value,
+        };
+        const attribute = new CognitoUserAttribute(attributeObj);
+        attributeList.push(attribute);
       }
-    }
+    });
     return attributeList;
-  }
+  };
 
-  const onSubmit = (values: any, { setErrors }: any) => {
-    console.log('values', values);
-    const attributeList: any = covertFromObjToArray(values);
-    console.log('attributeList', attributeList);
-    if(isSignUp){
-      signUp(values, attributeList, setErrors);
-    }
-    else{
-      updateUserAttribute(values, attributeList)
-    }
-  }
-
-  const updateUserAttribute = (values: profileDetailsType,attributeList: any) => {
+  const updateUserAttribute = (values: profileDetailsType, attributeList: any) => {
     const { email, password } = values;
     const cognitoUser = new CognitoUser({
       Username: email,
-      Pool: UserPool
+      Pool: UserPool,
     });
 
     const authDetails = new AuthenticationDetails({
@@ -85,31 +70,30 @@ const SignUpForm = ({isSignUp}) => {
     });
     cognitoUser.authenticateUser(authDetails, {
       onSuccess: () => {
-        console.log("User authenticated");
-        cognitoUser.updateAttributes(attributeList, function (err, result) {
+        console.log('User authenticated');
+        cognitoUser.updateAttributes(attributeList, (err, result) => {
           if (err) {
-            console.log(err.message || JSON.stringify(err))
-            toast.error(err.message || JSON.stringify(err))
+            console.log(err.message || JSON.stringify(err));
+            toast.error(err.message || JSON.stringify(err));
             return;
           }
-          console.log('call result: ' + result);
+          console.log(`call result: ${result}`);
           const storageData = {
             hospitalName: values.name,
-            hospitalPhone: values.phone,
+            hospitalPhone: values.phone_number,
             hospitalAddress: values.address,
             hospitalPicture: values.picture,
-          }
+          };
           setStorageDetails(storageData);
-          toast.success('Profile Updated Successfully')
+          toast.success('Profile Updated Successfully');
         });
-
       },
       onFailure: (error) => {
-        console.log("An error happened", error);
+        console.log('An error happened', error);
         toast.error(error.message || JSON.stringify(error));
       },
-    })
-  }
+    });
+  };
 
   const signUp = (values, attributeList, setErrors: Function) => {
     const { email, password } = values;
@@ -120,18 +104,29 @@ const SignUpForm = ({isSignUp}) => {
         return toast.error(err.message);
       }
 
-        console.log('result', result);
-        toast.success('Sign up successful');
-        navigate('/confirmation-code')
-      });
+      console.log('result', result);
+      toast.success('Sign up successful');
+      return navigate('/confirmation-code');
+    });
+  };
+
+  const onSubmit = (values: any, { setErrors }: any) => {
+    console.log('values', values);
+    const attributeList: any = covertFromObjToArray(values);
+    console.log('attributeList', attributeList);
+    if (isSignUp) {
+      signUp(values, attributeList, setErrors);
+    } else {
+      updateUserAttribute(values, attributeList);
     }
+  };
 
   return (
     <div>
       <Formik
         initialValues={initialValues}
         validationSchema={profileDetailsValidation}
-        enableReinitialize={true}
+        enableReinitialize
         onSubmit={onSubmit}
       >
         {({ handleSubmit, ...parameter }) => (
@@ -143,7 +138,7 @@ const SignUpForm = ({isSignUp}) => {
                   id="email"
                   readOnly={!isSignUp}
                   parameter={parameter}
-                  required={true}
+                  required
                 />
               </div>
               <br />
@@ -152,12 +147,12 @@ const SignUpForm = ({isSignUp}) => {
                   heading="Hospital Name"
                   id="name"
                   parameter={parameter}
-                  required={true}
+                  required
                 />
               </div>
               <br />
-              <div className="col-md-3"></div>
-              <div className="col-md-3"></div>
+              <div className="col-md-3" />
+              <div className="col-md-3" />
 
               <div className="col-md-12">
                 <TextBox
@@ -171,19 +166,19 @@ const SignUpForm = ({isSignUp}) => {
                   heading="Address"
                   id="address"
                   parameter={parameter}
-                  required={true}
+                  required
                 />
               </div>
-              <div className="col-md-3"></div>
+              <div className="col-md-3" />
 
-              <div className="col-md-3"></div>
+              <div className="col-md-3" />
 
               <div className="col-md-12">
                 <TextBox
                   heading="Phone Number"
-                  id="phone"
+                  id="phone_number"
                   parameter={parameter}
-                  required={true}
+                  required
                 />
               </div>
               <div className="col-md-12">
@@ -191,22 +186,26 @@ const SignUpForm = ({isSignUp}) => {
                   heading="Passwrod"
                   id="password"
                   parameter={parameter}
-                  required={true}
+                  required
                 />
               </div>
               <br />
               <div className="col-md-3">  </div>
               <div className="col-md-3">  </div>
               <div className="col-md-3">  </div>
-            <div className="col-md-12">
-            <SubmitButton id='signup-submit' className='w-100' color='primary' text={isSignUp? 'Sing up':'Update' } />
-            </div>
+              <div className="col-md-12">
+                <SubmitButton id="signup-submit" className="w-100" color="primary" text={isSignUp ? 'Sing up' : 'Update'} />
+              </div>
             </div>
           </form>
         )}
       </Formik>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpForm
+SignUpForm.propTypes = {
+  isSignUp: PropTypes.bool.isRequired,
+};
+
+export default SignUpForm;

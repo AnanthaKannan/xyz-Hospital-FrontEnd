@@ -1,10 +1,13 @@
-
-const TextBox = ({onChange, className='', readOnly=false, type='text', heading='', id, required=false, parameter}: any) => {
-  const { values, touched, errors, handleChange } = parameter;
+const TextBox = ({
+  className = '', readOnly = false, type = 'text', heading = '', id, required = false, parameter,
+}: any) => {
+  const {
+    values, touched, errors, handleChange,
+  } = parameter;
   return (
-    <div className='mb-3'>
-     
-        <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
+    <div className="mb-3">
+
+      <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       {/* <Tooltip title="">
         <InfoIcon size={20} />
       </Tooltip> */}
@@ -14,15 +17,14 @@ const TextBox = ({onChange, className='', readOnly=false, type='text', heading='
         value={values[id]}
         onChange={handleChange}
         readOnly={readOnly}
-        autoComplete='off'
+        autoComplete="off"
         id={id}
       />
-      {touched[id] && errors[id] && <div id={`error-${id}`} className='text-danger'>{errors[id]}</div>}
+      {touched[id] && errors[id] && <div id={`error-${id}`} className="text-danger">{errors[id]}</div>}
     </div>
-  )
-}
+  );
+};
 
 export default TextBox;
 
-
- // onChange={(e) => onHandleChange(e, handleChange)}
+// onChange={(e) => onHandleChange(e, handleChange)}

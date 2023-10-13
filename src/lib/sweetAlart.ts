@@ -1,24 +1,23 @@
 import Swal from 'sweetalert2';
 
 export const sweetConfirmation = (callBackFn: Function, confirmButtonText:string, text:string = '') => {
-
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
-      cancelButton: 'btn btn-danger'
+      cancelButton: 'btn btn-danger',
     },
-    buttonsStyling: false
+    buttonsStyling: false,
   });
 
   swalWithBootstrapButtons.fire({
-   title: 'Are you sure?',
-   text: text,
-   icon: 'warning',
+    title: 'Are you sure?',
+    text,
+    icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: confirmButtonText, //'Yes, delete it!',
+    confirmButtonText, // 'Yes, delete it!',
     cancelButtonText: 'No, cancel!',
-    reverseButtons: true
-  }).then( async(result) => {
+    reverseButtons: true,
+  }).then(async (result) => {
     console.log('result', result);
     if (result.isConfirmed) {
       await callBackFn();
@@ -37,4 +36,6 @@ export const sweetConfirmation = (callBackFn: Function, confirmButtonText:string
     //   swalWithBootstrapButtons.fire( '', 'Cancelled :)', 'error' );
     // }
   });
-}
+};
+
+export default sweetConfirmation;

@@ -1,12 +1,10 @@
 import Container from '../reusable/Container';
 import VitalSignsComp from '../component/VitalSignsComp';
 
-const VitalSigns = () => {
-  return (
-    <Container title='List Patient'>
+const VitalSigns = () => (
+  <Container title="List Patient">
     <VitalSignsComp />
-</Container>
-  )
-}
+  </Container>
+);
 
-export default VitalSigns
+export default VitalSigns;
