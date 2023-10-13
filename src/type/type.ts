@@ -1,11 +1,9 @@
-import { type } from "os";
-
 export type dataType = object | null;
 
 export type TextBoxType = {
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void,
+  onChange: () => void,
   value: string,
-  className?: string | "",
+  className?: string | '',
   readOnly?: boolean,
   type?: string,
   errorMsg?: string | undefined | false,
@@ -14,7 +12,7 @@ export type TextBoxType = {
 }
 
 export type TextAreaType = {
-  onChange: (e: React.FormEvent<HTMLTextAreaElement>) => void,
+  onChange: () => void,
   value: string,
   className: string,
   readOnly: boolean,
@@ -25,9 +23,9 @@ export type TextAreaType = {
   rows: number
 }
 
-type color = "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
+type color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 export type ButtonType = {
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  onClick: () => void,
   className?: string,
   isDisable?: boolean,
   id: string,
@@ -35,9 +33,8 @@ export type ButtonType = {
   color?: color
 }
 
-
 export type SubmitButtonType = {
-  onSubmit?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  onSubmit?: () => void,
   className?: string,
   isDisable?: boolean,
   id: string,
@@ -46,7 +43,7 @@ export type SubmitButtonType = {
 }
 
 export type containerType = {
-  children: React.ReactNode,
+  children: any,
   title: string
 }
 
@@ -129,6 +126,7 @@ export type patientRecordType = {
 export type profileDetailsType = {
   email: string,
   name: string,
+  // eslint-disable-next-line camelcase
   phone_number: string,
   picture: string,
   address: string,
@@ -145,7 +143,7 @@ export type localStorageType = {
   hospitalPicture?: string
 }
 
-type icon = "edit" | "delete" | "info" | "close" | "hamburger" | "view" | "logout" | 'dashboard' | "changePassword" | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
+type icon = 'edit' | 'delete' | 'info' | 'close' | 'hamburger' | 'view' | 'logout' | 'dashboard' | 'changePassword' | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
 export type iconType = {
   icon: icon,
   className?: string,
@@ -154,7 +152,7 @@ export type iconType = {
   id?: string,
 }
 
-export type imageUploadCodeType = "patient" | "doctor"
+export type imageUploadCodeType = 'patient' | 'doctor'
 
 export type imagePathType = {
   code : imageUploadCodeType,

@@ -1,24 +1,27 @@
-import Hb from "../reusable/Hb";
-import TextBox from "../reusable/TextBox";
-import { useState, useEffect } from "react";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { ClickButton, SubmitButton } from "../reusable/Button";
-import { post, put } from "../service/doctor.service";
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-underscore-dangle */
+import { useState, useEffect } from 'react';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Hb from '../reusable/Hb';
+import TextBox from '../reusable/TextBox';
+import { ClickButton, SubmitButton } from '../reusable/Button';
+import { post, put } from '../service/doctor.service';
 import { uploadFile } from '../service/curd.service';
-import { toast } from "react-toastify";
-import { useLoadContext } from "../reusable/LoaderContext";
-import { doctorValueType } from "../type/type";
-import CheckBox from "../reusable/CheckBox";
-import Icons from "../reusable/Icons";
-import TimePicker from "../reusable/TimePickerRe";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLoadContext } from '../reusable/LoaderContext';
+import { doctorValueType } from '../type/type';
+import CheckBox from '../reusable/CheckBox';
+import Icons from '../reusable/Icons';
+import TimePicker from '../reusable/TimePickerRe';
 import DatePickerRe from '../reusable/DatePickerRe';
 import SearchSelect from '../reusable/SearchSelect';
-import { genderEnum } from '../lib/enum'
+import { genderEnum } from '../lib/enum';
 import { convertEnumToArray, imagePath } from '../lib';
-import AddressForm from "../reusable/AddressForm";
-import msg from "../lib/msg"
+import AddressForm from '../reusable/AddressForm';
+import msg from '../lib/msg';
 
 const availableDays = {
   monday: false,
@@ -30,27 +33,27 @@ const availableDays = {
   sunday: false,
 };
 
-const selectedTimeInitialState = [{ from: null, to: null }]
+const selectedTimeInitialState = [{ from: null, to: null }];
 
 const CreateDoctorComp = () => {
   const navigate = useNavigate();
   const [formikInitialValue, setFormikInitialValue] = useState<doctorValueType>(
     {
-      name: "",
-      specialist: "",
-      address: "",
+      name: '',
+      specialist: '',
+      address: '',
       availableTime: [{ from: null, to: null }],
-      timePerPatient: "",
+      timePerPatient: '',
       availableDay: availableDays,
-      licenseNo: "",
-      licenseExpiryDate: "",
-      email: "",
-      gender: "",
-      phone: "",
-      alternatePhone: "",
-      fileName: "",
-      zipCode: "",
-    }
+      licenseNo: '',
+      licenseExpiryDate: '',
+      email: '',
+      gender: '',
+      phone: '',
+      alternatePhone: '',
+      fileName: '',
+      zipCode: '',
+    },
   );
   const [selectedTime, setSelectedTime] = useState(selectedTimeInitialState);
   // const [availableDay, setAvailableDay] = useState<any>(availableDays);
@@ -58,77 +61,29 @@ const CreateDoctorComp = () => {
   const { setLoader } = useLoadContext();
 
   useEffect(() => {
+    // eslint-disable-next-line prefer-destructuring
     const state: any = location.state;
     if (state?._id) {
       setFormikInitialValue({
         ...state,
-        licenseExpiryDate: new Date(state.licenseExpiryDate)
+        licenseExpiryDate: new Date(state.licenseExpiryDate),
       });
       setSelectedTime(state.availableTime);
     } else {
-      console.log("else state is here");
+      console.log('else state is here');
     }
   }, [location.state]);
-
-  const onSubmit = (values: any, { setErrors, setFieldValue, resetForm }: any) => {
-    values.availableTime = selectedTime;
-    values.timePerPatient = "10";
-    console.log(values);
-
-    if (values._id) updateDoctor(values, resetForm, setErrors);
-    else createDoctor(values, resetForm, setErrors);
-  };
-
-  const updateDoctor = async (values: doctorValueType, resetForm: Function, setErrors: Function) => {
-    setLoader(true);
-    const result = await put(values._id, values);
-    console.log("result", result.status);
-    setLoader(false);
-    if (result.status === 200) {
-      if (values.fileName)
-        await uploadImage(values);
-      toast.success("Doctor updated successfully");
-      navigate("/list-doctor");
-    } else if (result.status === 409) {
-      const data = result.data;
-      toast.error(data.message);
-      return;
-    } else {
-      toast.error("Oops! Something went wrong. Please try again later.");
-      return;
-    }
-  };
-  const createDoctor = async (values: doctorValueType, resetForm: Function, setErrors: Function) => {
-    setLoader(true);
-    const result = await post(values);
-    console.log("result", result.status);
-    setLoader(false);
-    if (result.status === 409) {
-      toast.error("Doctor already exists");
-      return;
-    }
-    if (result.status !== 201) {
-      toast.error("Oops! Something went wrong. Please try again later.");
-      return;
-    }
-
-    toast.success("Doctor created successfully");
-
-    if (values.fileName)
-      await uploadImage(values);
-    handleReset(resetForm);
-  };
 
   const uploadImage = async (values) => {
     console.log('uploadImage', values);
     const path = imagePath('doctor', values.fileName).setUrl;
-    const file = values.file;
+    const { file } = values;
     const result = await uploadFile({ file, path });
     console.log('result', result);
-  }
+  };
 
   const handleReset = (resetForm: Function): void => {
-    if (formikInitialValue._id) navigate("/list-doctor");
+    if (formikInitialValue._id) navigate('/list-doctor');
 
     resetForm();
     console.log('selectedTime', selectedTime);
@@ -136,9 +91,56 @@ const CreateDoctorComp = () => {
     // navigate("/dummy", { state: { backToNavigate: '/create-doctor'} });
   };
 
+  const createDoctor = async (values: doctorValueType, resetForm: Function) => {
+    setLoader(true);
+    const result = await post(values);
+    console.log('result', result.status);
+    setLoader(false);
+    if (result.status === 409) {
+      toast.error('Doctor already exists');
+      return;
+    }
+    if (result.status !== 201) {
+      toast.error('Oops! Something went wrong. Please try again later.');
+      return;
+    }
+
+    toast.success('Doctor created successfully');
+
+    if (values.fileName) await uploadImage(values);
+    handleReset(resetForm);
+  };
+
+  const updateDoctor = async (values: doctorValueType) => {
+    setLoader(true);
+    const result = await put(values._id, values);
+    console.log('result', result.status);
+    setLoader(false);
+    if (result.status === 200) {
+      if (values.fileName) await uploadImage(values);
+      toast.success('Doctor updated successfully');
+      navigate('/list-doctor');
+    } else if (result.status === 409) {
+      const { data } = result;
+      toast.error(data.message);
+    } else {
+      toast.error('Oops! Something went wrong. Please try again later.');
+    }
+  };
+
+  const onSubmit = (values: any, { resetForm }: any) => {
+    const updatedValues = { ...values };
+    updatedValues.availableTime = selectedTime;
+    updatedValues.timePerPatient = '10';
+    console.log(updatedValues);
+
+    if (updatedValues._id) updateDoctor(updatedValues);
+    else createDoctor(updatedValues, resetForm);
+  };
+
   const onHandleCheckBox = (isChecked: boolean, name: any, setFieldValue: any, _availableDays) => {
     const data = { ..._availableDays, [name]: isChecked };
-    setFieldValue("availableDay", data);
+    setFieldValue('availableDay', data);
   };
 
   const availableDaysValidation = (value: any) => {
@@ -149,7 +151,7 @@ const CreateDoctorComp = () => {
     return retValue;
   };
 
-  const availableTimeValidation = (value: any) => {
+  const availableTimeValidation = () => {
     let retValue = false;
     selectedTime.forEach((item) => {
       if (item.from && item.to) retValue = true;
@@ -160,44 +162,44 @@ const CreateDoctorComp = () => {
   const validationSchema = Yup.object({
     name: Yup.string()
       .required()
-      .min(3, "Name must be at least 3 characters")
-      .max(30, "Name must be less than 30 characters"),
+      .min(3, 'Name must be at least 3 characters')
+      .max(30, 'Name must be less than 30 characters'),
     specialist: Yup.string()
       .required()
-      .min(3, "Specialist must be at least 3 characters")
-      .max(30, "Specialist must be less than 30 characters"),
+      .min(3, 'Specialist must be at least 3 characters')
+      .max(30, 'Specialist must be less than 30 characters'),
     email: Yup.string()
       .email('Invalid email'),
     licenseNo: Yup.string(),
     licenseExpiryDate: Yup.date(),
     gender: Yup.string()
       .required()
-      .oneOf(Object.keys(genderEnum)),    // ["1", "2", "3"],
+      .oneOf(Object.keys(genderEnum)), // ["1", "2", "3"],
     phone: Yup.string().required('Phone is required'),
     alternatePhone: Yup.string(),
     fileName: Yup.string(),
     availableDay: Yup.object()
-      .required("Please select at least one day")
-      .test("availableDays", msg.ERR03, availableDaysValidation),
+      .required('Please select at least one day')
+      .test('availableDays', msg.ERR03, availableDaysValidation),
     availableTime: Yup.array()
-      .required("Please select doctor available time")
-      .test("availableTime", "Please select doctor available time", availableTimeValidation),
+      .required('Please select doctor available time')
+      .test('availableTime', 'Please select doctor available time', availableTimeValidation),
   });
 
-  const addTimeSheet = (setFieldValue: any, _availableTime) => {
+  const addTimeSheet = () => {
     const lastSelectedTime = selectedTime.slice(
       selectedTime.length - 1,
-      selectedTime.length
+      selectedTime.length,
     );
     if (!lastSelectedTime[0].from || !lastSelectedTime[0].to) {
-      toast.info("Please select the From and To in the doctor available time");
+      toast.info('Please select the From and To in the doctor available time');
       return;
     }
-    console.log("lastSelectedTime", lastSelectedTime);
+    console.log('lastSelectedTime', lastSelectedTime);
     setSelectedTime([...selectedTime, { from: null, to: null }]);
   };
 
-  const removeTimeSheet = (setFieldValue: any, _availableTime) => {
+  const removeTimeSheet = () => {
     const updatedTime = selectedTime.slice(0, selectedTime.length - 1);
     setSelectedTime([...updatedTime]);
   };
@@ -209,11 +211,13 @@ const CreateDoctorComp = () => {
       <div>
         <Formik
           initialValues={formikInitialValue}
-          enableReinitialize={true}
+          enableReinitialize
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ handleSubmit, setFieldValue, setErrors, resetForm, ...parameter }) => (
+          {({
+            handleSubmit, setFieldValue, setErrors, resetForm, ...parameter
+          }) => (
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="row">
@@ -230,8 +234,8 @@ const CreateDoctorComp = () => {
                       </div>
                       <div className="col-md-3">
                         <DatePickerRe
-                          heading='License Expiry Date'
-                          id='licenseExpiryDate'
+                          heading="License Expiry Date"
+                          id="licenseExpiryDate"
                           onChange={(id, date) => {
                             setFieldValue(id, date);
                           }}
@@ -240,7 +244,7 @@ const CreateDoctorComp = () => {
                           maxDate={new Date('20-20-2120')}
                           yearsRange={{
                             start: new Date().getFullYear(),
-                            end: new Date().getFullYear() + 10
+                            end: new Date().getFullYear() + 10,
                           }}
                         />
                       </div>
@@ -248,20 +252,20 @@ const CreateDoctorComp = () => {
                         <SearchSelect
                           options={convertEnumToArray(genderEnum)}
                           setFieldValue={setFieldValue}
-                          heading='Gender'
-                          id='gender'
-                          required={true}
+                          heading="Gender"
+                          id="gender"
+                          required
                           parameter={parameter}
                         />
                       </div>
                       <div className="col-md-3">
-                        <TextBox heading='Phone' id='phone' required={true} parameter={parameter} />
+                        <TextBox heading="Phone" id="phone" required parameter={parameter} />
                       </div>
                       <div className="col-md-3">
-                        <TextBox heading='Email Id' id='email' parameter={parameter} />
+                        <TextBox heading="Email Id" id="email" parameter={parameter} />
                       </div>
                       <div className="col-md-3">
-                        <TextBox heading='Alternate Phone' id='alternatePhone' parameter={parameter} />
+                        <TextBox heading="Alternate Phone" id="alternatePhone" parameter={parameter} />
                       </div>
                     </div>
                   </div>
@@ -284,22 +288,19 @@ const CreateDoctorComp = () => {
                 <hr />
                 <div className="mt-3">
                   <h6>Select doctor available Days</h6>
-                  {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((day: string) => {
-                    return (
-                      <CheckBox
-                        label={day}
-                        name={day.toLowerCase()}
-                        keyValue={day}
-                        id={day.toLowerCase()}
-                        checked={parameter.values.availableDay[day.toLowerCase()]}
-                        onChange={(isChecked, name) =>
-                          onHandleCheckBox(isChecked, name, setFieldValue, parameter.values.availableDay)
-                        }
-                      />
-                    );
-                  })}
+                  {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day: string) => (
+                    <CheckBox
+                      label={day}
+                      name={day.toLowerCase()}
+                      keyValue={day}
+                      id={day.toLowerCase()}
+                      checked={parameter.values.availableDay[day.toLowerCase()]}
+                      onChange={(isChecked, name) => onHandleCheckBox(isChecked,
+                        name, setFieldValue, parameter.values.availableDay)}
+                    />
+                  ))}
 
-                  {parameter.touched.availableDay && (<div id='error-days' className="text-danger">{parameter.errors.availableDay}</div>)}
+                  {parameter.touched.availableDay && (<div id="error-days" className="text-danger">{parameter.errors.availableDay}</div>)}
                 </div>
 
                 <div className="col-md-6 ">
@@ -307,14 +308,16 @@ const CreateDoctorComp = () => {
                     <div className="d-flex justify-content-between align-items-center">
                       <h6>Select doctor available time</h6>
                       <div className="d-flex">
-                        <h6 className="pointer mr-2" id="time-add" onClick={() => addTimeSheet(setFieldValue, selectedTime)}>
-                          {" "}
-                          <Icons icon="addCircle" size={20} />{" "}
+                        <h6 className="pointer mr-2" id="time-add" onClick={() => addTimeSheet()}>
+                          {' '}
+                          <Icons icon="addCircle" size={20} />
+                          {' '}
                         </h6>
                         {selectedTime.length > 1 && (
-                          <h6 className="pointer" id="time-sub" onClick={() => removeTimeSheet(setFieldValue, selectedTime)}>
-                            <Icons icon="subCircle" size={20} />{" "}
-                          </h6>
+                        <h6 className="pointer" id="time-sub" onClick={() => removeTimeSheet()}>
+                          <Icons icon="subCircle" size={20} />
+                          {' '}
+                        </h6>
                         )}
                       </div>
                     </div>
@@ -332,7 +335,7 @@ const CreateDoctorComp = () => {
                   {parameter.touched.availableTime && (<div id="error-time-piker" className="text-danger">{parameter.errors.availableTime}</div>)}
                 </div>
 
-                <div className="col-md-6"></div>
+                <div className="col-md-6" />
                 <div className="col-md-6">
                   <br />
                   <div className="mt-3 d-flex justify-content-end">

@@ -7,9 +7,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Icons from './Icons'
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
+import Icons from './Icons';
 import { getStorageDetails } from '../lib';
 
 export default function AccountMenu() {
@@ -22,9 +22,12 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
   return (
-    <React.Fragment>
+    <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Typography sx={{ minWidth: 100 }}> {getStorageDetails()?.hospitalName}</Typography>
+        <Typography sx={{ minWidth: 100 }}>
+          {' '}
+          {getStorageDetails()?.hospitalName}
+        </Typography>
         {/* <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
         <Tooltip title="Account settings">
           <IconButton
@@ -35,7 +38,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>{localStorage.getItem('hospitalMailId')?.slice(0,1)}</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{localStorage.getItem('hospitalMailId')?.slice(0, 1)}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -74,29 +77,31 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-         <Link to='/profile'>
-        <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
+        <Link to="/profile">
+          <MenuItem>
+            <Avatar />
+            {' '}
+            Profile
+          </MenuItem>
         </Link>
         <Divider />
-        <Link to='/change-password'>
-        <MenuItem>
-          <ListItemIcon>
-            <Icons icon='changePassword'  />
-          </ListItemIcon>
-          Change Password
-        </MenuItem>
+        <Link to="/change-password">
+          <MenuItem>
+            <ListItemIcon>
+              <Icons icon="changePassword" />
+            </ListItemIcon>
+            Change Password
+          </MenuItem>
         </Link>
-        <Link to='/'>
-        <MenuItem>
-          <ListItemIcon>
-            <Icons icon='logout'  />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        <Link to="/">
+          <MenuItem>
+            <ListItemIcon>
+              <Icons icon="logout" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
         </Link>
       </Menu>
-    </React.Fragment>
+    </>
   );
 }

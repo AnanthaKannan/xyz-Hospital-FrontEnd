@@ -3,17 +3,17 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
-import Icons from '../reusable/Icons'
+import Icons from './Icons';
 
-
-export default function PopUpModel({ tittle, children, setIsOpen, isOpen }: any) {
-
+export default function PopUpModel({
+  tittle, children, setIsOpen, isOpen,
+}: any) {
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  const closeBtn = () => {
-    return handleClose ? 
+  const closeBtn = () => (handleClose
+    ? (
       <IconButton
         aria-label="close"
         onClick={handleClose}
@@ -24,28 +24,28 @@ export default function PopUpModel({ tittle, children, setIsOpen, isOpen }: any)
           color: (theme) => theme.palette.grey[500],
         }}
       >
-       <Icons icon="close" size={24} className='text-dark' />
+        <Icons icon="close" size={24} className="text-dark" />
       </IconButton>
-     : null
-  }
+    )
+    : null);
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
-        fullWidth={true}
-        maxWidth='md'
+        fullWidth
+        maxWidth="md"
         open={isOpen}
         onClose={handleClose}
-        id='popupModel'
+        id="popupModel"
       >
         <DialogTitle>
           {tittle}
           { closeBtn() }
         </DialogTitle>
         <DialogContent>
-          {  children }
+          { children }
         </DialogContent>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

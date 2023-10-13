@@ -1,27 +1,25 @@
-import React, { useEffect } from 'react'
-import Hb from "../reusable/Hb";
+import React, { useEffect } from 'react';
+import { useTheme } from '@mui/material/styles';
+import Hb from '../reusable/Hb';
 import AppWidgetSummary from '../reusable/AppWidgetSummary';
 import AppWebsiteVisits from './AppWebsiteVisits';
 import AppCurrentVisits from './AppCurrentVisits';
-import { get } from '../service/curd.service'
-import { useTheme } from '@mui/material/styles';
-import config from "../config";
+import { get } from '../service/curd.service';
+import config from '../config';
 
 const DashboardComp = () => {
+  const { patient } = config;
 
-  const { patient } = config; 
+  const onInit = async () => {
+    // get last 30 days details
+    console.log('first-data', new Date(new Date().setDate(new Date().getDate() - 3)).toISOString());
+    const visited = await get(patient, `createdAt:lt:${new Date(new Date().setDate(new Date().getDate() - 3)).toISOString()}`);
+    console.log('visited', visited);
+  };
 
   useEffect(() => {
     onInit();
-  }, [])
-
-  const onInit = async() => {
-    // get last 30 days details
-    console.log('first-data', new Date(new Date().setDate(new Date().getDate() - 3)).toISOString())
-    const visited = await get(patient, `createdAt:lt:${new Date(new Date().setDate(new Date().getDate() - 3)).toISOString()}`);
-    console.log('visited', visited);
-  }
-
+  }, []);
 
   const theme = useTheme();
   return (
@@ -29,18 +27,17 @@ const DashboardComp = () => {
       <Hb text="Dash Board" />
       <div className="row">
         <div className="col-md-3 col-sm-6 col-xs-12">
-          <AppWidgetSummary title="New Patients This month" total="71K" icon='users' />
+          <AppWidgetSummary title="New Patients This month" total="71K" icon="users" />
         </div>
         <div className="col-md-3 col-sm-6 col-xs-12">
-          <AppWidgetSummary title="In Hospital Patient" total="15" icon='stethoscope' />
+          <AppWidgetSummary title="In Hospital Patient" total="15" icon="stethoscope" />
         </div>
         <div className="col-md-3 col-sm-6 col-xs-12">
-          <AppWidgetSummary title="Weekly Sales" total="20" icon='users' />
+          <AppWidgetSummary title="Weekly Sales" total="20" icon="users" />
         </div>
         <div className="col-md-3 col-sm-6 col-xs-12">
-          <AppWidgetSummary title="Weekly Sales" total="31" icon='users' />
+          <AppWidgetSummary title="Weekly Sales" total="31" icon="users" />
         </div>
-
 
         <div className="col-md-8 col-sm-6 col-xs-12 mt-3">
           <AppWebsiteVisits
@@ -96,13 +93,13 @@ const DashboardComp = () => {
               theme.palette.secondary.main,
               theme.palette.error.main,
               theme.palette.info.main,
-            ]} 
+            ]}
             subheader="(+43%) than last year"
-            />
+          />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardComp
+export default DashboardComp;
