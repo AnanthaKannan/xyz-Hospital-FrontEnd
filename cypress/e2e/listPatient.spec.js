@@ -1,20 +1,19 @@
 /* eslint-disable no-undef */
-/* eslint-disable testing-library/await-async-utils */
-/// <reference types="cypress" /> 
+/// <reference types="cypress" />
 //  the above line used to auto suggestion for cypress
 
 describe('List Patient', () => {
   before(() => {
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientList')
-   
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientList');
+
     cy.login();
-    cy.get('#list-patient').click()
-    cy.wait('@getPatientList')
+    cy.get('#list-patient').click();
+    cy.wait('@getPatientList');
     cy.wait(1000); // Wait for 1 seconds
   });
 
   beforeEach(() => {
-    cy.get('.ag-body-horizontal-scroll-viewport').scrollTo('right')
+    cy.get('.ag-body-horizontal-scroll-viewport').scrollTo('right');
     cy.restoreLocalStorage();
   });
 
@@ -28,20 +27,20 @@ describe('List Patient', () => {
   });
 
   it('Patient Detail view popup model should open', () => {
-    // click the view  
+    // click the view
     cy.get('[aria-rowindex="3"] > [aria-colindex="9"] > #view-').should('be.visible').click({ multiple: true });
-    cy.get('#popupModel').should('exist')
+    cy.get('#popupModel').should('exist');
     cy.get('#mui-3').contains('Patient Details');
 
     for (let i = 1; i <= 9; i++) {
       for (let j = 1; j <= 4; j++) {
-        cy.get(`tbody > :nth-child(${i}) > :nth-child(${j})`).should('exist')
+        cy.get(`tbody > :nth-child(${i}) > :nth-child(${j})`).should('exist');
       }
     }
 
     // click the close button
-    cy.get('.MuiButtonBase-root > .pointer > path').click()
-    cy.get('#popupModel').should('not.exist')
+    cy.get('.MuiButtonBase-root > .pointer > path').click();
+    cy.get('#popupModel').should('not.exist');
   });
 
   // context('delete popup', () => {
@@ -52,7 +51,8 @@ describe('List Patient', () => {
 
   //   beforeEach(() => {
   //     // click the delete button on the first row
-  //     cy.get('.ag-row-first > [aria-colindex="11"]').should('be.visible').click({ multiple: true });
+  //     cy.get('.ag-row-first > [aria-colindex="11"]')
+  // .should('be.visible').click({ multiple: true });
   //     cy.get('.swal2-popup').should('exist');
   //   });
 
@@ -71,4 +71,4 @@ describe('List Patient', () => {
   //     cy.get('.Toastify__toast-body').should('contain', 'Patient deleted successfully')
   //   })
   // })
-})
+});

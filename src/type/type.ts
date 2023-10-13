@@ -126,6 +126,7 @@ export type patientRecordType = {
 export type profileDetailsType = {
   email: string,
   name: string,
+  // eslint-disable-next-line camelcase
   phone_number: string,
   picture: string,
   address: string,

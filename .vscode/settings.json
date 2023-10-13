@@ -3,6 +3,7 @@
     "formik",
     "Stoagedata"
   ],
+  "editor.rulers": [80, 100],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
