@@ -138,6 +138,7 @@ const SignUpForm = ({ isSignUp }) => {
                   id="email"
                   readOnly={!isSignUp}
                   parameter={parameter}
+                  required
                 />
               </div>
               <br />
@@ -146,6 +147,7 @@ const SignUpForm = ({ isSignUp }) => {
                   heading="Hospital Name"
                   id="name"
                   parameter={parameter}
+                  required
                 />
               </div>
               <br />
@@ -164,6 +166,7 @@ const SignUpForm = ({ isSignUp }) => {
                   heading="Address"
                   id="address"
                   parameter={parameter}
+                  required
                 />
               </div>
               <div className="col-md-3" />
@@ -175,6 +178,7 @@ const SignUpForm = ({ isSignUp }) => {
                   heading="Phone Number"
                   id="phone_number"
                   parameter={parameter}
+                  required
                 />
               </div>
               <div className="col-md-12">
@@ -182,6 +186,7 @@ const SignUpForm = ({ isSignUp }) => {
                   heading="Passwrod"
                   id="password"
                   parameter={parameter}
+                  required
                 />
               </div>
               <br />
@@ -192,7 +197,6 @@ const SignUpForm = ({ isSignUp }) => {
                 <SubmitButton id="signup-submit" className="w-100" color="primary" text={isSignUp ? 'Sing up' : 'Update'} />
               </div>
             </div>
-
           </form>
         )}
       </Formik>
