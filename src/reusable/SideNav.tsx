@@ -85,6 +85,12 @@ const SideNav = ({ children }: { children: ReactNode}) => {
               {' '}
               List Patient
             </MenuItem>
+            <MenuItem id="add-appoinment" active={path['add-appoinment']} icon={<Icons icon="arrowRight" size={18} />}>
+              {' '}
+              <Link to="/add-appoinment" />
+              {' '}
+              Add Appoinment
+            </MenuItem>
           </SubMenu>
           <MenuItem id="feed-back" active={path['feed-back']} icon={<Icons icon="feedback" size={18} />}>
             FeedBack

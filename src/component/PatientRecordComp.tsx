@@ -4,23 +4,19 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import parse from 'html-react-parser';
 import { Formik } from 'formik';
-import Hb from '../reusable/Hb';
-import TextBox from '../reusable/TextBox';
+
+import config from '../config';
+import {
+  Hb, TextBox, TextEditor, Icons, DatePickerRe, ToggleSwitch, Transitions, CheckBox,
+  PaginationReuse, DropDown,
+} from '../reusable';
 import { ClickButton, SubmitButton } from '../reusable/Button';
+
 import { patientDetailsType, patientRecordType } from '../type/type';
-import TextEditor from '../reusable/TextEditor';
 import { useLoadContext } from '../reusable/LoaderContext';
 import { post, get, remove } from '../service/curd.service';
-import Icons from '../reusable/Icons';
-import config from '../config';
-import PaginationReuse from '../reusable/PaginationReuse';
-import DropDown from '../reusable/DropDown';
 import { handleReset, getInitialValuesFromYup, convertDate } from '../lib';
 import { patientRecordValidation, createPatientValidation } from '../lib/validationSchema';
-import CheckBox from '../reusable/CheckBox';
-import DatePickerRe from '../reusable/DatePickerRe';
-import ToggleSwitch from '../reusable/ToggleSwitch';
-import Transitions from '../reusable/Transitions';
 
 const PatientRecordComp = () => {
   const [patientDetails,

@@ -4,6 +4,7 @@ import ListPatient from './page/ListPatient';
 import ListDoctor from './page/ListDoctor';
 import PatientRecord from './page/PatientRecord';
 import FeedBack from './page/FeedBack';
+import AddAppoinment from './page/AddAppoinment';
 
 import DummyPage from './page/Dummy';
 import Dashboard from './page/Dashboard';
@@ -23,6 +24,10 @@ type routeType = {
 }
 
 const routes: routeType[] = [
+  {
+    COMPONENT: <AddAppoinment />,
+    PATH: '/add-appoinment',
+  },
   {
     COMPONENT: <ProfileDetails />,
     PATH: '/profile',
