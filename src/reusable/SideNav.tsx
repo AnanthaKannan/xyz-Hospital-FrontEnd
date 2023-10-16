@@ -71,6 +71,11 @@ const SideNav = ({ children }: { children: ReactNode}) => {
               <Link to="/list-doctor" />
               List Doctor
             </MenuItem>
+            <MenuItem id="doc-appoinment" active={path['doc-appoinment']} icon={<Icons icon="arrowRight" size={18} />}>
+              {' '}
+              <Link to="/doc-appoinment" />
+              Doctor Appoinment
+            </MenuItem>
           </SubMenu>
           <SubMenu title="Patient" icon={<Icons icon="users" size={18} />} defaultOpen>
             <MenuItem id="create-patient" active={path['create-patient']} icon={<Icons icon="arrowRight" size={18} />}>

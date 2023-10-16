@@ -108,3 +108,7 @@ a:hover {
 .swal2-cancel{
   margin-right: 25px;
 }
+
+.calendar-container {
+  height: 80vh; /* Adjust the percentage as needed */
+}
