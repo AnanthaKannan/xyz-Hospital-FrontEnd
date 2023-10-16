@@ -15,6 +15,7 @@ const PaginationReuse = ({ setPage, totalCount, perPage }) => {
          <div className="d-flex justify-content-between">
            <p className="my-0 ml-3" id="totalCount">
              Total Records
+             {' '}
              <strong>{ totalCount }</strong>
            </p>
            <Pagination onChange={onPageChange} count={Math.ceil(totalCount / perPage)} color="primary" />
