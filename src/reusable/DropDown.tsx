@@ -1,5 +1,5 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 import faker from 'faker';
 
 export default function DropDown({
@@ -7,17 +7,15 @@ export default function DropDown({
 }: any) {
   return (
     <>
-
       <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
       <select
         key={faker.datatype.uuid()}
-        defaultValue=""
+        defaultValue={value || ''}
         id={id}
         className={`form-control mt-2 mb-1 ${className}`}
         onChange={onChange}
-        value={value}
       >
-        <option value="" disabled selected hidden>
+        <option value="" disabled hidden>
           {placeholder}
         </option>
         {
@@ -28,9 +26,8 @@ export default function DropDown({
               {' '}
             </option>
           ))
-}
+        }
       </select>
-      {/* <span className="error-txt">{errorMsg}</span> */}
       {errorMsg && <div id={`error-${id}`} className="text-danger">{errorMsg}</div>}
     </>
   );

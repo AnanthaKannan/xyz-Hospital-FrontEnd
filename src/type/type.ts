@@ -123,6 +123,12 @@ export type patientRecordType = {
   status: Boolean
 }
 
+export type patientAppoinment = {
+  _doctorId: string,
+  diagnosis: Boolean,
+  _patientId: string
+}
+
 export type profileDetailsType = {
   email: string,
   name: string,

@@ -2,6 +2,9 @@ import dateFn from 'date-fn';
 import { genderEnum } from './enum';
 import config from '../config';
 import { imageUploadCodeType, imagePathResponseType } from '../type/type';
+import * as call from './call';
+
+export { call };
 
 export const onHandleChange = (e: any, handleChange: Function) => {
   const element = {

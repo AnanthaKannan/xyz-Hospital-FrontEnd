@@ -142,3 +142,11 @@ export const profileDetailsValidation = Yup.object().shape({
     .min(6, 'Password must be at least 6 characters')
     .max(20, 'Password must be less than 20 characters'),
 });
+
+export const patientAppoinmentValidation = Yup.object().shape({
+  diagnosis: Yup.string()
+    .required(),
+  _doctorId: Yup.string(),
+  _patientId: Yup.string()
+    .required(),
+});
