@@ -22,7 +22,7 @@ export const Icons = ({
     case 'edit':
       return (
         <FiEdit
-          id={`edit-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -31,7 +31,7 @@ export const Icons = ({
     case 'delete':
       return (
         <MdOutlineDeleteOutline
-          id={`delete-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -40,7 +40,7 @@ export const Icons = ({
     case 'info':
       return (
         <BsInfo
-          id={`info-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -49,7 +49,7 @@ export const Icons = ({
     case 'hamburger':
       return (
         <GiHamburgerMenu
-          id={`hamburger-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -58,7 +58,7 @@ export const Icons = ({
     case 'view':
       return (
         <BiMessageAltDetail
-          id={`view-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           size={size}
           className="pointer"
@@ -67,7 +67,7 @@ export const Icons = ({
     case 'changePassword':
       return (
         <RiLockPasswordLine
-          id={`changePassword-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -76,7 +76,7 @@ export const Icons = ({
     case 'logout':
       return (
         <CgLogOut
-          id={`logout-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -85,7 +85,7 @@ export const Icons = ({
     case 'entry':
       return (
         <ImEnter
-          id={`entry-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -94,7 +94,7 @@ export const Icons = ({
     case 'stethoscope':
       return (
         <RiStethoscopeFill
-          id={`stethoscope-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -103,7 +103,7 @@ export const Icons = ({
     case 'feedback':
       return (
         <MdFeedback
-          id={`feedback-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -112,7 +112,7 @@ export const Icons = ({
     case 'arrowRight':
       return (
         <AiOutlineArrowRight
-          id={`arrowRight-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -121,7 +121,7 @@ export const Icons = ({
     case 'users':
       return (
         <FaUsers
-          id={`users-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -130,7 +130,7 @@ export const Icons = ({
     case 'addCircle':
       return (
         <GrAddCircle
-          id={`addCircle-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -139,7 +139,7 @@ export const Icons = ({
     case 'subCircle':
       return (
         <GrSubtractCircle
-          id={`subCircle-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -148,7 +148,7 @@ export const Icons = ({
     case 'dashboard':
       return (
         <RiDashboardFill
-          id={`dashboard-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
@@ -157,7 +157,7 @@ export const Icons = ({
     case 'close':
       return (
         <IoClose
-          id={`close-${id}`}
+          id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
           size={size}
