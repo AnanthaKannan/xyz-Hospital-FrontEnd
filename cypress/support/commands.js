@@ -91,3 +91,10 @@ Cypress.Commands.add('gender', (id) => {
   const gender = ['male', 'female', 'others'];
   cy.get(id).type(`${gender[faker.random.number(2)]}{enter}{enter}`);
 });
+
+Cypress.Commands.add('setupIntercepts', () => {
+  cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientList');
+  cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
+  cy.intercept('PUT', `${Cypress.env('apiUrl')}/patient/*`).as('putUpdatePatient');
+  // Add more intercepts as needed
+});
