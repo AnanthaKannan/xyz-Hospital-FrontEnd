@@ -110,6 +110,14 @@ const CreatePatientComp = () => {
     resetForm();
   };
 
+  const aadhaarNumber = (value) => {
+    let number = value.replace(/[^\d]+/g, '');
+    if (number.length >= 12) number = number.substring(0, 12);
+    return number;
+  };
+
+  const onlyNumbers = (value) => value.replace(/[^\d]+/g, '');
+
   return (
     <div className="">
       <Hb text="Patient Registration" />
@@ -182,7 +190,6 @@ const CreatePatientComp = () => {
                         }}
                       />
                     </div>
-
                     <div className="col-md-3">
                       <TextBox
                         heading="Age"
@@ -191,13 +198,13 @@ const CreatePatientComp = () => {
                         parameter={parameter}
                       />
                     </div>
-
                     <div className="col-md-3">
                       <TextBox
                         heading="Phone"
                         id="phone"
                         required
                         parameter={parameter}
+                        customValueFn={onlyNumbers}
                       />
                     </div>
                     <div className="col-md-3">
@@ -207,16 +214,14 @@ const CreatePatientComp = () => {
                         parameter={parameter}
                       />
                     </div>
-
                     <div className="col-md-3">
-
                       <TextBox
                         heading="Aadhaar Number"
                         id="aadhaarNumber"
                         parameter={parameter}
+                        customValueFn={aadhaarNumber}
                       />
                     </div>
-
                     <div className="col-md-3">
                       <SearchSelect
                         options={convertEnumToArray(martialStatusEnum)}
@@ -227,7 +232,6 @@ const CreatePatientComp = () => {
                         parameter={parameter}
                       />
                     </div>
-
                     <div className="col-md-3">
                       <TextBox
                         heading="Occupation"

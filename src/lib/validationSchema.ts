@@ -96,8 +96,7 @@ export const createPatientValidation = Yup.object({
   phone: Yup.string().required('Phone is required'),
   dob: Yup.string().required('Date of birth is required'),
   aadhaarNumber: Yup.string()
-    .min(12, 'Aadhaar number must be at least 12 characters')
-    .max(12, 'Aadhaar number must be less than 12 characters'),
+    .min(12, 'Aadhaar number must be at least 12 characters'),
   idenityNo: Yup.string()
     .min(3, 'Idenity No must be at least 3 characters')
     .max(12, 'Idenity No must be less than 12 characters'),
