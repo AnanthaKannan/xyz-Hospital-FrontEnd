@@ -111,12 +111,13 @@ const CreatePatientComp = () => {
   };
 
   const aadhaarNumber = (value) => {
+    if (!value) return value;
     let number = value.replace(/[^\d]+/g, '');
     if (number.length >= 12) number = number.substring(0, 12);
     return number;
   };
 
-  const onlyNumbers = (value) => value.replace(/[^\d]+/g, '');
+  const onlyNumbers = (value) => (value ? value.replace(/[^\d]+/g, '') : value);
 
   return (
     <div className="">
