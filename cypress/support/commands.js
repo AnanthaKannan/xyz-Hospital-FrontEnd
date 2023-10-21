@@ -66,6 +66,30 @@ Cypress.Commands.add('login', () => {
   cy.wait('@postLogin');
 });
 
+Cypress.Commands.add('loginAPI', (navUrl) => {
+  const email = Cypress.env('email');
+  const query = `login?email=${email}&password=${Cypress.env('password')}`;
+  cy.request({
+    method: 'GET',
+    url: `${apiUrl}/${query}`,
+  })
+    .then((resp) => {
+      const { body } = resp;
+      const { payload } = body.idToken;
+      const s = window.localStorage;
+      s.setItem('token', body.idToken.jwtToken);
+      s.setItem('hospitalMailId', email);
+      s.setItem('_hospitalId', payload.sub);
+      s.setItem('hospitalName', payload.name);
+      s.setItem('hospitalPhone', payload['custom:phone']);
+      s.setItem('hospitalAddress', payload['custom:address']);
+      s.setItem('hospitalPicture', payload.picture);
+
+      // visit the screen
+      cy.visit(`${Cypress.config('baseUrl')}/${navUrl}`);
+    });
+});
+
 Cypress.Commands.add('launchPortal', () => {
   cy.visit(Cypress.config('baseUrl'));
 });

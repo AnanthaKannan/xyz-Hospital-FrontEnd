@@ -5,7 +5,7 @@ import faker from 'faker';
 
 describe('Patient Create', () => {
   before(() => {
-    cy.login();
+    cy.loginAPI('create-patient');
     cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
     cy.get('#create-patient').click();
     cy.wait('@getAddress');
