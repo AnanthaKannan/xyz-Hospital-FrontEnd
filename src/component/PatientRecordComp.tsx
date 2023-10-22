@@ -37,7 +37,7 @@ const PatientRecordComp = () => {
   // eslint-disable-next-line no-unused-vars
   const [perPage, setPerPage] = useState(3);
   const [doctorList, setDoctorList] = useState([]);
-  const [isShowAddRecord, setIsShowAddRecord] = useState(false);
+  const [isShowAddRecord, setIsShowAddRecord] = useState(true);
   // eslint-disable-next-line no-unused-vars
   const [formikInitialValue, setFormikInitialValue] = useState<patientRecordType>({
     diagnosis: '',
@@ -94,7 +94,7 @@ const PatientRecordComp = () => {
     const result = await remove(patientRecord, _patientRecordId);
     console.log('result', result.status);
     setLoader(false);
-    if (result.status !== 200) {
+    if (result.status !== 204) {
       toast.error('Oops! Something went wrong. Please try again later.');
       return;
     }
@@ -302,6 +302,7 @@ const PatientRecordComp = () => {
                 <div>{convertDate(item.createdAt)}</div>
                 <Icons
                   icon="delete"
+                  id={item._id}
                   onClick={() => onDeleteRecord(item)}
                   className="pointer"
                 />

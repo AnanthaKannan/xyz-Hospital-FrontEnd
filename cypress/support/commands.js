@@ -93,8 +93,15 @@ Cypress.Commands.add('gender', (id) => {
 });
 
 Cypress.Commands.add('setupIntercepts', () => {
-  cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientList');
-  cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
-  cy.intercept('PUT', `${Cypress.env('apiUrl')}/patient/*`).as('putUpdatePatient');
-  // Add more intercepts as needed
+  // address
+  cy.intercept('GET', `${apiUrl}/address`).as('getAddress');
+  // patient
+  cy.intercept('GET', `${apiUrl}/patient`).as('getPatientList');
+  cy.intercept('PUT', `${apiUrl}/patient/*`).as('putUpdatePatient');
+  // patient record
+  cy.intercept('GET', `${apiUrl}/patientRecord?*`).as('getPatientRecordList');
+  cy.intercept('POST', `${apiUrl}/patientRecord`).as('postPatientRecord');
+  cy.intercept('DELETE', `${apiUrl}/patientRecord/*`).as('deletePatientRecord');
+  // doctor
+  cy.intercept('GET', `${apiUrl}/doctor?*`).as('getDoctorList');
 });
