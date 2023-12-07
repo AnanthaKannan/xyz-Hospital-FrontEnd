@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { containerType } from '@type/type';
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { useNavigate } from 'react-router-dom';
+
 import LoaderContext from './LoaderContext';
 import SideNav from './SideNav';
 
 const Container = ({ children, title }: containerType) => {
-  const [loader, setLoader] = useState(false);
-
+  const [loader, setLoader] = useState(true);
+  const { loading } = useSelector((state: any) => state);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +22,7 @@ const Container = ({ children, title }: containerType) => {
     <div className="bg-light">
       <LoaderContext.Provider value={{ loader, setLoader }}>
         <LoadingOverlay
-          active={loader}
+          active={loading}
           spinner
           text="Loading..."
         >
