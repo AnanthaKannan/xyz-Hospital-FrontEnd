@@ -4,17 +4,17 @@ import config from '../config'
 const BASE_ULR = config.apiURL
 
 const http = axios.create({
-  baseURL: 'url',
-  headers: {
-    'content-type': 'application/json',
-    Authorization: `${localStorage.getItem('token')}`,
-  }
+  baseURL: BASE_ULR,
+  headers: { 'content-type': 'application/json' }
 })
-http.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-http.interceptors.request.use(async (config) => config)
 
-export const listFeedBack = (params) => http.get(`${BASE_ULR}/feedback`,{ params });
+http.interceptors.request.use(async (config) => {
+  config.headers.Authorization = localStorage.getItem('token');
+  return config
+});
 
-export const addFeedBack = (data) => http.post(`${BASE_ULR}/feedback`, data);
+export const listFeedBack = (params) => http.get('/feedback',{ params });
 
-export const updateFeedBack = (id, data) => http.put(`${BASE_ULR}/feedback/${id}`, data);
+export const addFeedBack = (data) => http.post('/feedback', data);
+
+export const updateFeedBack = (id, data) => http.put(`/feedback/${id}`, data);
