@@ -16,14 +16,17 @@ interface AppState {
     data: any[],
     tc: number,
     error: string,
+    loading: boolean,
   };
   addFeedBack: {
     error: string,
     success: boolean,
+    loading: boolean,
   },
   updateFeedback: {
     error: string,
     success: boolean,
+    loading: boolean,
   },
 }
 
@@ -33,15 +36,18 @@ const initialState: AppState = {
   feedBackList: {
     data: [],
     tc: 0,
-    error: ''
+    error: '',
+    loading: false,
   },
   addFeedBack: {
     error: '',
-    success: true
+    success: true,
+    loading: false,
   },
   updateFeedback: {
     error: '',
-    success: true
+    success: true,
+    loading: false,
   },
 }
 
@@ -66,58 +72,70 @@ export const updateFeedBackThunk = createAsyncThunk('feedback/update', async ({ 
   return { data: result.data};
 })
 
+const addLoaderInArray = (listData: any[], id: string, loading: boolean) => {
+  return listData.map((obj) => {
+    if(id === obj._id) obj.loading = loading;
+    return obj
+  })
+}
+
 const feedBackSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    testRed: (state, { payload }) => {
+    }
+  },
   extraReducers: (builder) => {
     // list feedback
     builder.addCase(listFeedBackThunk.pending, (state) => {
-      state.loading = true;
+      state.feedBackList.loading = true;
     })
     builder.addCase(listFeedBackThunk.fulfilled, (state, { payload }) => {
-      state.loading = false;
+      state.feedBackList.loading = false;
       state.feedBackList.data = payload.data;
       state.feedBackList.tc = payload.tc;
     })
     builder.addCase(listFeedBackThunk.rejected, (state, action) => {
       console.error('Error fetching user:', action.error);
-      state.loading = false
+      state.feedBackList.loading = false
       state.feedBackList.error = action.error.message
     })
 
     // add feedback
     builder.addCase(addFeedBackThunk.pending, (state) => {
-      state.loading = true;
+      state.addFeedBack.loading = true;
     })
     builder.addCase(addFeedBackThunk.fulfilled, (state, { payload }) => {
-      state.loading = false;
+      state.addFeedBack.loading = false;
       state.addFeedBack.success = true;
       state.refresh = !state.refresh;
       toast.success('successfully added');
     })
     builder.addCase(addFeedBackThunk.rejected, (state, action) => {
       console.error('Error fetching user:', action.error);
-      state.loading = false
+      state.addFeedBack.loading = false
       state.addFeedBack.error = action.error.message
     })
 
     // add feedback
-    builder.addCase(updateFeedBackThunk.pending, (state) => {
-      state.loading = true;
+    builder.addCase(updateFeedBackThunk.pending, (state, { meta }) => {
+      state.feedBackList.data = addLoaderInArray(state.feedBackList.data, meta.arg._id, true)
+      state.updateFeedback.loading = true;
     })
     builder.addCase(updateFeedBackThunk.fulfilled, (state, { payload }) => {
-      state.loading = false;
+      state.updateFeedback.loading = false;
       state.updateFeedback.success = true;
       state.refresh = !state.refresh;
       toast.success('successfully deleted');
     })
     builder.addCase(updateFeedBackThunk.rejected, (state, action) => {
       console.error('Error fetching user:', action.error);
-      state.loading = false
+      state.feedBackList.data = addLoaderInArray(state.feedBackList.data, action.meta.arg._id, true)
+      state.updateFeedback.loading = false
       state.updateFeedback.error = action.error.message
     })
   }
 })
-
+export const { testRed } = feedBackSlice.actions
 export default feedBackSlice.reducer;

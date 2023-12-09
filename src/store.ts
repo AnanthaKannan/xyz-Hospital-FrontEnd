@@ -1,7 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import feedBackReducer from './features/feedbackSlice'
 
-// import logger from 'redux-logger'
+import logger from 'redux-logger'
 
 export const store = configureStore({
   reducer: {
