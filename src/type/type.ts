@@ -1,5 +1,12 @@
 export type dataType = object | null;
 
+export type FeedBackArg = {
+  project: string,
+  filter: string,
+  limit: number,
+  skip: number
+}
+
 export type TextBoxType = {
   onChange: () => void,
   value: string,
