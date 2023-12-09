@@ -1,39 +1,55 @@
-interface AppState {
-  refresh: boolean;
-  feedBackList: {
-    data: any[],
-    tc: number,
-    error: string,
-    loading: boolean,
-  };
-  addFeedBack: {
-    error: string,
-    success: boolean,
-    loading: boolean,
-  },
-  updateFeedback: {
-    error: string,
-    success: boolean,
-    loading: boolean,
-  },
+type CUDstateType = {
+  error: string,
+  success: boolean,
+  loading: boolean,
 }
 
-export const feedBackInitialState: AppState = {
+type ListStateType = {
+  data: any[],
+  tc: number,
+  error: string,
+  loading: boolean,
+}
+
+interface FeedBackState {
+  refresh: boolean;
+  feedBackList: ListStateType;
+  addFeedBack: CUDstateType;
+  updateFeedback: CUDstateType;
+}
+
+interface PatientState {
+  refresh: boolean;
+  patientList: ListStateType;
+  deletePatient: CUDstateType;
+  updatePatient: CUDstateType;
+  addPatient: CUDstateType;
+}
+
+const CUDstate = {
+  error: '',
+  success: true,
+  loading: false,
+}
+
+const listSate = {
+  data: [],
+  tc: 0,
+  error: '',
+  loading: false,
+}
+
+export const feedBackInitialState: FeedBackState = {
   refresh: false,
-  feedBackList: {
-    data: [],
-    tc: 0,
-    error: '',
-    loading: false,
-  },
-  addFeedBack: {
-    error: '',
-    success: true,
-    loading: false,
-  },
-  updateFeedback: {
-    error: '',
-    success: true,
-    loading: false,
-  },
+  feedBackList: listSate,
+  addFeedBack: CUDstate,
+  updateFeedback: CUDstate,
+}
+
+export const patientInitialState: PatientState = {
+  refresh: false,
+  patientList: listSate,
+  deletePatient: CUDstate,
+  updatePatient: CUDstate,
+  addPatient: CUDstate,
 }

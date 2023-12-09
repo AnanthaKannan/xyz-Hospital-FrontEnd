@@ -19,4 +19,6 @@ export const addFeedBack = (data) => http.post('/feedback', data);
 
 export const updateFeedBack = (id, data) => http.put(`/feedback/${id}`, data);
 
-// export const listDoctor = (params) => http.get('/patient');
+export const listPatient = (params) => http.get('/patient', { params });
+
+export const deletePatient = (id) => http.delete(`/patient/${id}`);

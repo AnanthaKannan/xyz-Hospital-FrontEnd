@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -6,45 +5,26 @@ import AgGirdReact from '../reusable/AgGird';
 import { deletePatient, listPatient } from '../service/patient.service';
 import { listPatientColumnDef } from './columnDef';
 import Hb from '../reusable/Hb';
-import { useLoadContext } from '../reusable/LoaderContext';
 import {
   DeleteCellRender, EditCellRender, ViewCellRender, RecordCellRender,
 } from '../reusable/CellRender';
 import { sweetConfirmation } from '../lib/sweetAlart';
 import PopUpModel from '../reusable/PopUpModel';
 import PatientDetailsView from './PatientDetailsView';
+import { useAppSelector, useAppDispatch } from '../redux/hooks'
+import { listPatientThunk, deletePatientThunk } from '../redux/thunk';
+import LoadingOverlayComp from '../reusable/LoadingOverlayComp';
 
 const ListPatientComp = () => {
-  const [rowData, setRowData] = useState<object[]>([]);
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
+
+  const { data: rowData, tc: totalCount, loading: pListLoading } = useAppSelector((state) => state.patient.patientList)
+  const { loading: pDeleteLoading } = useAppSelector((state) => state.patient.deletePatient);
+  const { refresh } = useAppSelector((state) => state.patient);
+
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [patientDetails, setPatientDetails] = useState({});
-
-  const { setLoader } = useLoadContext();
-
-  const listPatient_ = async () => {
-    setLoader(true);
-    const result = await listPatient(null);
-    console.log(result);
-    setLoader(false);
-    if (result.status === 200) {
-      setRowData(result.data);
-    } else {
-      toast.error('Oops! Something went wrong. Please try again later.');
-    }
-  };
-
-  const deletePatient_ = async (id: number) => {
-    setLoader(true);
-    const result = await deletePatient(id);
-    setLoader(false);
-    if (result.status === 204) {
-      toast.success('Patient deleted successfully.');
-      listPatient_();
-    } else {
-      toast.error('Oops! Something went wrong. Please try again later.');
-    }
-  };
 
   const onCellClicked = async (event: any) => {
     console.log(event);
@@ -61,13 +41,13 @@ const ListPatientComp = () => {
       navigate('/patient-record', { state: data });
     } else if (colDef.field === 'delete') {
       console.log('delete', data._id);
-      sweetConfirmation(() => deletePatient_(data._id), 'Yes, delete it!');
+      sweetConfirmation(() => dispatch(deletePatientThunk({id: data._id})), 'Yes, delete it!');
     }
   };
 
   useEffect(() => {
-    listPatient_();
-  }, []);
+    dispatch(listPatientThunk({}))
+  }, [refresh]);
 
   return (
     <div>
@@ -79,18 +59,19 @@ const ListPatientComp = () => {
       >
         <PatientDetailsView data={patientDetails} />
       </PopUpModel>
-
-      <AgGirdReact
-        columnDefs={listPatientColumnDef}
-        rowData={rowData}
-        onCellClicked={onCellClicked}
-        frameworkComponents={{
-          DeleteCellRender,
-          EditCellRender,
-          ViewCellRender,
-          RecordCellRender,
-        }}
-      />
+      <LoadingOverlayComp loading={pListLoading || pDeleteLoading} >
+        <AgGirdReact
+          columnDefs={listPatientColumnDef}
+          rowData={rowData}
+          onCellClicked={onCellClicked}
+          frameworkComponents={{
+            DeleteCellRender,
+            EditCellRender,
+            ViewCellRender,
+            RecordCellRender,
+          }}
+        />
+      </LoadingOverlayComp>
     </div>
   );
 };
