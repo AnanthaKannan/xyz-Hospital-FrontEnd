@@ -2,6 +2,7 @@
 /// <reference types="cypress" />
 //  the above line used to auto suggestion for cypress
 import faker from 'faker';
+const common = require('../fixtures/common.json')
 
 describe('Patient Create', () => {
   before(() => {
@@ -25,7 +26,7 @@ describe('Patient Create', () => {
     cy.get('#firstName').should('have.value', '');
     cy.get('#middleName').should('have.value', '');
     cy.get('#lastName').should('have.value', '');
-    cy.get('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#gender > ${common.dropDownCss}`).should('have.value', '');
 
     cy.get('#dob').should('have.value', '');
     cy.get('#age').should('have.value', '');
@@ -33,15 +34,15 @@ describe('Patient Create', () => {
     cy.get('#email').should('have.value', '');
 
     cy.get('#aadhaarNumber').should('have.value', '');
-    cy.get('#martialStatus > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#martialStatus > ${common.dropDownCss}`).should('have.value', '');
     cy.get('#occupation').should('have.value', '');
     cy.get('#idenityNo').should('have.value', '');
 
     // address field
     cy.get('#address').should('not.have.value');
-    cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
-    cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
-    cy.get('#city > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#country > ${common.dropDownCss}`).should('have.value', '');
+    cy.get(`#state > ${common.dropDownCss}`).should('have.value', '');
+    cy.get(`#city > ${common.dropDownCss}`).should('have.value', '');
     cy.get('#zipCode').should('not.have.value');
   }
 
@@ -155,7 +156,7 @@ describe('Patient Create', () => {
     cy.get('#firstName').type(faker.name.firstName());
     cy.get('#middleName').type(faker.name.firstName());
     cy.get('#lastName').type(faker.name.lastName());
-    cy.gender('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input');
+    cy.gender(`#gender > ${common.dropDownCss}`);
 
     cy.get('#dob').click();
     const { year, month } = getYearAndMonth();
@@ -168,7 +169,7 @@ describe('Patient Create', () => {
     cy.get('#email').type(faker.internet.email());
 
     cy.get('#aadhaarNumber').type(faker.random.number({ min: 1000000000000, max: 9999999999999 }));
-    cy.get('#martialStatus > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    cy.get(`#martialStatus > ${common.dropDownCss}`)
       .type('single{enter}{enter}');
     cy.get('#occupation').type(faker.name.firstName());
     cy.get('#idenityNo').type(faker.name.firstName());
@@ -187,7 +188,7 @@ describe('Patient Create', () => {
   it('Create the Patient with mandatory fields', () => {
     cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreatePatient');
     cy.get('#firstName').type(faker.name.firstName());
-    cy.gender('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input');
+    cy.gender(`#gender > ${common.dropDownCss}`);
 
     cy.get('#dob').click();
     const { year, month } = getYearAndMonth();
@@ -200,7 +201,7 @@ describe('Patient Create', () => {
     cy.get('#phone').type(faker.phone.phoneNumber());
 
     cy.contains('Martial status');
-    cy.get('#martialStatus > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    cy.get(`#martialStatus > ${common.dropDownCss}`)
       .type('single{enter}{enter}');
 
     // address
