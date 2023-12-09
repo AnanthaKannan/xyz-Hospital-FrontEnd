@@ -1,87 +1,14 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { FeedBackArg } from '../type/type'
-
-
-import {
-  listFeedBack,
-  addFeedBack,
-  updateFeedBack,
-} from '../service/service'
-
-interface AppState {
-  loading: boolean;
-  refresh: boolean;
-  feedBackList: {
-    data: any[],
-    tc: number,
-    error: string,
-    loading: boolean,
-  };
-  addFeedBack: {
-    error: string,
-    success: boolean,
-    loading: boolean,
-  },
-  updateFeedback: {
-    error: string,
-    success: boolean,
-    loading: boolean,
-  },
-}
-
-const initialState: AppState = {
-  loading: false,
-  refresh: false,
-  feedBackList: {
-    data: [],
-    tc: 0,
-    error: '',
-    loading: false,
-  },
-  addFeedBack: {
-    error: '',
-    success: true,
-    loading: false,
-  },
-  updateFeedback: {
-    error: '',
-    success: true,
-    loading: false,
-  },
-}
-
-const getTotalCount = (result): number => {
-  const tc: string = result.headers['x-total-count']
-  if(tc) return Number(tc)
-  return 0
-}
-
-export const listFeedBackThunk = createAsyncThunk('feedback/list', async (param: FeedBackArg) => {
-  const result = await listFeedBack(param)
-  return { data: result.data, tc: getTotalCount(result) };
-})
-
-export const addFeedBackThunk = createAsyncThunk('feedback/add', async (data: any) => {
-  const result = await addFeedBack(data)
-  return { data: result.data};
-})
-
-export const updateFeedBackThunk = createAsyncThunk('feedback/update', async ({ _id, data}: any) => {
-  const result = await updateFeedBack(_id, data)
-  return { data: result.data};
-})
-
-const addLoaderInArray = (listData: any[], id: string, loading: boolean) => {
-  return listData.map((obj) => {
-    if(id === obj._id) obj.loading = loading;
-    return obj
-  })
-}
+import { addLoaderInArray } from '../../lib'
+import { feedBackInitialState } from '../initialState'
+import {listFeedBackThunk, 
+  addFeedBackThunk, 
+  updateFeedBackThunk } from '../thunk'
 
 const feedBackSlice = createSlice({
-  name: 'user',
-  initialState,
+  name: 'feedback',
+  initialState: feedBackInitialState,
   reducers: {
     testRed: (state, { payload }) => {
     }

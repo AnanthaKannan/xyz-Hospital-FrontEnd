@@ -16,7 +16,7 @@ import {
   listFeedBackThunk,
   addFeedBackThunk,
   updateFeedBackThunk,
-} from '../features/feedbackSlice';
+} from '../redux/thunk';
 import { FeedBackArg } from '../type/type'
 
 
