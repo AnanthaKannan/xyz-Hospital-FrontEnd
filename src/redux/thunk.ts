@@ -4,7 +4,9 @@ import {
   addFeedBack,
   updateFeedBack,
   listPatient,
-  deletePatient
+  deletePatient,
+  listDoctor,
+  deleteDoctor
 } from '../service/service'
 import { FeedBackArg } from '../type/type'
 import { getTotalCount } from '../lib'
@@ -31,5 +33,15 @@ export const listPatientThunk = createAsyncThunk('patient/list', async (param: a
 
 export const deletePatientThunk = createAsyncThunk('patient/delete', async ({ id }: any) => {
   const result = await deletePatient(id)
+  return { data: result.data, tc: getTotalCount(result) };
+})
+
+export const listDoctorThunk = createAsyncThunk('doctor/list', async (param: any) => {
+  const result = await listDoctor(param)
+  return { data: result.data, tc: getTotalCount(result) };
+})
+
+export const deleteDoctorThunk = createAsyncThunk('doctor/delete', async ({ id }: any) => {
+  const result = await deleteDoctor(id)
   return { data: result.data, tc: getTotalCount(result) };
 })

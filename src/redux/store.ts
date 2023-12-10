@@ -1,13 +1,15 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import logger from 'redux-logger'
+import { configureStore } from '@reduxjs/toolkit'
+// import logger from 'redux-logger'
 
 import feedBackReducer from './slice/feedbackSlice'
 import patientSlice from './slice/patientSlice'
+import doctorSlice from './slice/doctorSlice'
 
 export const store = configureStore({
   reducer: {
     feedBack: feedBackReducer,
-    patient: patientSlice
+    patient: patientSlice,
+    doctor: doctorSlice,
   },
 })
 

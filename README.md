@@ -19,6 +19,3 @@ Cypress is a powerful end-to-end testing framework that is often used in conjunc
 #### Run Backend
 we have used back-end service by aws. [here](https://github.com/AnanthaKannan/xyzHospital-backend)
 our reference for the backend
-
-
-https://github.com/reduxjs/redux-toolkit/tree/master/examples/query/react/advanced

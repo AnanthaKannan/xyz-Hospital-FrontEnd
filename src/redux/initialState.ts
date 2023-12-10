@@ -26,6 +26,14 @@ interface PatientState {
   addPatient: CUDstateType;
 }
 
+interface DoctorState {
+  refresh: boolean;
+  doctorList: ListStateType;
+  deleteDoctor: CUDstateType;
+  updateDoctor: CUDstateType;
+  addDoctor: CUDstateType;
+}
+
 const CUDstate = {
   error: '',
   success: true,
@@ -52,4 +60,12 @@ export const patientInitialState: PatientState = {
   deletePatient: CUDstate,
   updatePatient: CUDstate,
   addPatient: CUDstate,
+}
+
+export const doctorInitialState: DoctorState = {
+  refresh: false,
+  doctorList: listSate,
+  deleteDoctor: CUDstate,
+  updateDoctor: CUDstate,
+  addDoctor: CUDstate,
 }
