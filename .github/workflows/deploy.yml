@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Set CI to false
+        run: echo "CI=false" >> $GITHUB_ENV
       - name: installing node 
         uses: actions/setup-node@v2
         with: 
