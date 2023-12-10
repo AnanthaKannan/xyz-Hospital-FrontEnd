@@ -8,9 +8,10 @@ import { BsInfo } from 'react-icons/bs';
 import { ImEnter } from 'react-icons/im';
 import { FaUsers } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlineArrowRight, AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { GrAddCircle, GrSubtractCircle } from 'react-icons/gr';
 import { IoClose } from 'react-icons/io5';
+import { IoIosSave } from "react-icons/io";
 import { iconType } from '../type/type';
 
 const SIZE = 25;
@@ -25,6 +26,23 @@ export const Icons = ({
           id={`${icon}-${id}`}
           onClick={() => onClick && onClick()}
           className={`pointer ${className}`}
+          size={size}
+        />
+      );
+    case 'save':
+      return (
+        <IoIosSave
+          id={`${icon}-${id}`}
+          onClick={() => onClick && onClick()}
+          className={`pointer ${className}`}
+          size={size}
+        />
+      );
+    case 'loader':
+      return (
+        <AiOutlineLoading3Quarters
+          id={`${icon}-${id}`}
+          className={`loading-process ${className}`}
           size={size}
         />
       );

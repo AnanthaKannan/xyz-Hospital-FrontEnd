@@ -116,3 +116,16 @@ export const getInitialValuesFromYup = (yupSchema): any => {
 export const valueRefinement = () => {
 
 };
+
+export const addLoaderInArray = (listData: any[], id: string, loading: boolean) => {
+  return listData.map((obj) => {
+    if(id === obj._id) obj.loading = loading;
+    return obj
+  })
+}
+
+export const getTotalCount = (result): number => {
+  const tc: string = result.headers['x-total-count']
+  if(tc) return Number(tc)
+  return 0
+}

@@ -2,6 +2,7 @@
 /// <reference types="cypress" />
 //  the above line used to auto suggestion for cypress
 import faker from 'faker';
+const common = require('../fixtures/common.json')
 
 describe('Doctor Create', () => {
   before(() => {
@@ -25,7 +26,7 @@ describe('Doctor Create', () => {
     cy.get('#specialist').should('have.value', '');
     cy.get('#licenseNo').should('have.value', '');
     cy.get('#licenseExpiryDate').should('have.value', '');
-    cy.get('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#gender > ${common.dropDownCss}`).should('have.value', '');
     cy.get('#phone').should('have.value', '');
     cy.get('#email').should('have.value', '');
     cy.get('#alternatePhone').should('have.value', '');
@@ -38,9 +39,9 @@ describe('Doctor Create', () => {
 
     // address field
     cy.get('#address').should('not.have.value');
-    cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
-    cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
-    cy.get('#city > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#country > ${common.dropDownCss}`).should('have.value', '');
+    cy.get(`#state > ${common.dropDownCss}`).should('have.value', '');
+    cy.get(`#city > ${common.dropDownCss}`).should('have.value', '');
     cy.get('#zipCode').should('not.have.value');
 
     // start time and end time
@@ -83,7 +84,7 @@ describe('Doctor Create', () => {
     cy.get('#name').type(faker.name.firstName());
     cy.get('#specialist').type(faker.name.lastName());
     const gender = ['male', 'female', 'others'];
-    cy.get('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    cy.get(`#gender > ${common.dropDownCss}`)
       .type(`${gender[faker.random.number(2)]}{enter}{enter}`);
     cy.get('#phone').type(faker.phone.phoneNumber());
     cy.get('#licenseNo').type(faker.finance.account());

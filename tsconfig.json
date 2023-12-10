@@ -23,5 +23,4 @@
   },
   "include": ["src/**/*",  "types", "./setupTests.js"],
   "exclude": ["node_modules", "dist"],
-  "extensions": ["ts", "js"]
 }
