@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -27,7 +26,6 @@ const CreatePatientComp = () => {
     }));
 
   useEffect(() => {
-    // eslint-disable-next-line prefer-destructuring
     const state: any = location.state;
     console.log(state);
     if (state?._id) {
