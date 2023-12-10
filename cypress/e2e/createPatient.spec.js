@@ -57,12 +57,13 @@ describe('Patient Create', () => {
 
   it('Patient validation', () => {
     cy.get('#patient-submit').click(); // click the submit button
-
+    
     cy.get('#error-firstName').should('have.text', 'firstName is a required field');
     cy.get('#error-gender').should('have.text', 'gender is a required field');
 
     cy.get('#error-dob').should('have.text', 'Date of birth is required');
     cy.get('#error-phone').should('have.text', 'Phone is required');
+    cy.get('#error-martialStatus').should('have.text', 'Martial status is required');
     cy.get('#error-address').should('have.text', 'address is a required field');
     cy.get('#error-country').should('have.text', 'country is a required field');
     cy.get('#error-state').should('have.text', 'state is a required field');
@@ -74,6 +75,7 @@ describe('Patient Create', () => {
 
     cy.get('#error-dob').should('not.exist');
     cy.get('#error-phone').should('not.exist');
+    cy.get('#error-martialStatus').should('not.exist');
     cy.get('#error-address').should('not.exist');
     cy.get('#error-country').should('not.exist');
     cy.get('#error-state').should('not.exist');
