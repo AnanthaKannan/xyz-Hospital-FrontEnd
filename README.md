@@ -2,6 +2,9 @@
 This repository houses an application designed for hospital management, 
 serving as a tool to efficiently handle and organize hospital data.
 
+## Write you query here:
+Email: sreeananthakannan@gmail.com
+
 #### Demo for the application
 You run the application [here](http://xyzhospital.surge.sh) http://xyzhospital.surge.sh
 

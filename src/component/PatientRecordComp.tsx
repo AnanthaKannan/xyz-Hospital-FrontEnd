@@ -212,7 +212,7 @@ const PatientRecordComp = () => {
                         parameter={parameter}
                       />
                     </div>
-                    <div className="col-md-3 d-flex">
+                    {/* <div className="col-md-3 d-flex">
                       <CheckBox
                         label="Is He/She Admitted?"
                         id="isAdmitted"
@@ -221,7 +221,7 @@ const PatientRecordComp = () => {
                         }}
                         checked={parameter.values.isAdmitted}
                       />
-                    </div>
+                    </div> */}
                     <div className="col-md-3" />
                     {/* <div className="col-md-3"></div> */}
 
