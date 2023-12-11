@@ -11,7 +11,6 @@
     "test": "react-scripts test",
     "cypress": "npx cypress open --env configFile=dev",
     "cypress-run": "npx cypress run",
-    "cypress-record": "npx cypress run --env configFile=dev",
     "eject": "react-scripts eject",
     "lint": "eslint cypress/ && eslint src/",
     "lint-fix": "eslint src/ --fix"
