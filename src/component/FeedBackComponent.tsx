@@ -1,134 +1,132 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import parse from 'html-react-parser';
 import Icons from '../reusable/Icons';
+
 import TextEditor from '../reusable/TextEditor';
 import Hb from '../reusable/Hb';
-import { ClickButton } from '../reusable/Button';
-import { useLoadContext } from '../reusable/LoaderContext';
+import { ClickButton, LoadingClickButton } from '../reusable/Button';
 import Hc from '../reusable/Hc';
 import { convertDate } from '../lib';
 import PaginationReuse from '../reusable/PaginationReuse';
-import {
-  post, get, put, apiRoute,
-} from '../service/api.service';
 import { sweetConfirmation } from '../lib/sweetAlart';
+import { useAppSelector, useAppDispatch } from '../redux/hooks'
+import LoadingOverlayComp from '../reusable/LoadingOverlayComp';
+import {
+  listFeedBackThunk,
+  addFeedBackThunk,
+  updateFeedBackThunk,
+} from '../redux/thunk';
+import { FeedBackArg } from '../type/type'
+
 
 const FeedBackComponent = () => {
+  const dispatch = useAppDispatch();
   const [text, setText] = useState('');
-  const [rowData, setRowData] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
   const perPage = 2;
 
-  const { setLoader } = useLoadContext();
+  const { data: rowData, tc: totalCount, loading: fbListLoading } = useAppSelector((state) => state.feedBack.feedBackList);
+  const { refresh } = useAppSelector((state) => state.feedBack);
+  const { loading: fbAddLoading } = useAppSelector((state) => state.feedBack.addFeedBack);
+  // const { loading: fbUpdateLoading } = useAppSelector((state) => state.feedBack.addFeedBack);
+  console.log('rowData', rowData)
+
 
   const feedBackList = async (skip = 0) => {
-    setLoader(true);
-    const params = {
+    const params: FeedBackArg = {
       project: 'message,createdAt',
       filter: 'isDeleted:eq:false',
       limit: perPage,
       skip,
-    };
-    const { isSuccess, data } = await get(apiRoute.feedback, params);
-    setLoader(false);
-    if (!isSuccess) return;
-    setTotalCount(totalCount);
-    setRowData(data);
+    }
+    dispatch(listFeedBackThunk(params));
   };
 
   const onHandleSubmit = async () => {
     console.log('submit');
     if (!text) return;
-    setLoader(true);
-    const { isSuccess } = await post(apiRoute.feedback, {
+    const sendData = {
       message: text,
       subject: 'Feedback',
-      _hospitalId: sessionStorage.getItem('hospitalId'),
-    });
-    setLoader(false);
-    if (!isSuccess) return;
-
-    toast.success('successfully added');
-    console.log('Patient added successfully');
-    feedBackList();
-    setText('');
+      _hospitalId: localStorage.getItem('hospitalId'),
+    }
+    dispatch(addFeedBackThunk(sendData))
   };
 
   useEffect(() => {
+    setText('');
     feedBackList(page);
-  }, [page]);
+  }, [page, refresh]);
 
   /* In the frontend we can see this as a delete,
   but in the backend itself it is consider as a delete
    we just change the status from delete to false */
   const onUpdateStatus = async (_id) => {
     console.log('update', _id);
-    setLoader(true);
     sweetConfirmation(async () => {
-      const { isSuccess } = await put(apiRoute.feedback, _id, { isDeleted: true });
-      setLoader(false);
-      if (!isSuccess) return;
-      toast.success('successfully deleted');
-      feedBackList();
+      dispatch(updateFeedBackThunk({ _id, data: { isDeleted: true } }))
     }, 'Yes, delete it!');
-    setLoader(false);
   };
-
-  const handleChange = (textContent) => setText(textContent);
 
   return (
     <div>
+
       <Hb text="Share your feedback" />
-      <TextEditor
-        id="feedback"
-        handleChange={handleChange}
-        placeholder="Enter your feedback here"
-        value={text}
-      />
-
-      <br />
-      <div className="d-flex justify-content-end">
-        <ClickButton
-          className="mx-4"
-          onClick={() => setText('')}
-          text="Cancel"
-          id="patient-cancel"
+      <LoadingOverlayComp loading={fbAddLoading} >
+        <TextEditor
+          id="feedback"
+          handleChange={(textContent) => setText(textContent)}
+          placeholder="Enter your feedback here"
+          value={text}
         />
-        <ClickButton
-          className=""
-          onClick={onHandleSubmit}
-          text="Submit"
-          color="primary"
-          id="submit"
-        />
-      </div>
 
-      <div className="patient-description">
-        { rowData.length > 0 && <Hc text="Feedback's" /> }
-        {
-      rowData.map((item: any) => (
-        <div key={item._id} className="card mt-2 shadow-sm">
-          <div className="">
-            <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
-              <div>{ convertDate(item.createdAt) }</div>
-              <Icons icon="delete" onClick={() => onUpdateStatus(item._id)} size={25} className="pointer" />
-            </div>
-            <div className="p-3">{ item.message ? parse(item.message) : ''}</div>
-          </div>
+        <br />
+        <div className="d-flex justify-content-end">
+          <ClickButton
+            className="mx-4"
+            onClick={() => setText('')}
+            text="Cancel"
+            id="patient-cancel"
+          />
+          <LoadingClickButton
+            className=""
+            onClick={onHandleSubmit}
+            text="Submit"
+            color="primary"
+            id="submit"
+            loading={fbAddLoading}
+          />
         </div>
-      ))
-}
-      </div>
-      <br />
-      <PaginationReuse
-        perPage={perPage}
-        totalCount={totalCount}
-        setPage={setPage}
-      />
-      <br />
+      </LoadingOverlayComp>
+
+      <LoadingOverlayComp loading={fbListLoading} >
+        <div className="patient-description">
+          {rowData.length > 0 && <Hc text="Feedback's" />}
+          {
+            rowData.map((item: any) => (
+              <div key={item._id} className="card mt-2 shadow-sm">
+                <div className="">
+                  <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
+                    <div>{convertDate(item.createdAt)}</div>
+                    <Icons icon={item.loading ? 'loader' : 'delete'} 
+                    onClick={() => onUpdateStatus(item._id)} size={25} className="pointer" />
+                  </div>
+                  <div className="p-3">{item.message ? parse(item.message) : ''}</div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <br />
+        <PaginationReuse
+          perPage={perPage}
+          totalCount={totalCount}
+          setPage={setPage}
+        />
+        <br />
+      </LoadingOverlayComp>
+
     </div>
   );
 };

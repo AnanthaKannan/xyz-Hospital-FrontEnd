@@ -1,26 +1,26 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { get, remove } from '../service/curd.service';
 import Hb from '../reusable/Hb';
-import { useLoadContext } from '../reusable/LoaderContext';
+import Hc from '../reusable/Hc';
 import Icons from '../reusable/Icons';
 import { sweetConfirmation } from '../lib/sweetAlart';
 import PaginationReuse from '../reusable/PaginationReuse';
-import config from '../config';
 import { timeList } from '../lib/times';
 import { convertDate } from '../lib';
+import { useAppSelector, useAppDispatch } from '../redux/hooks'
+import { deleteDoctorThunk, listDoctorThunk } from '../redux/thunk';
+import LoadingOverlayComp from '../reusable/LoadingOverlayComp';
+
 
 const ListDoctorComp = () => {
-  const { doctor } = config;
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const [rowData, setRowData] = useState<any[]>([]);
-  const { setLoader } = useLoadContext();
-  const [totalCount, setTotalCount] = useState(0);
+  const { data: rowData, tc: totalCount, loading: dListLoading } = useAppSelector((state) => state.doctor.doctorList);
+  const { refresh } = useAppSelector((state) => state.doctor);
+  const { loading: dDeleteLoading } = useAppSelector((state) => state.doctor.deleteDoctor);
+
   const [page, setPage] = useState(0);
-  // const [perPage, setPerPage] = useState(10);
   const perPage = 10;
 
   const availableDay = (avDay) => Object.keys(avDay)
@@ -54,33 +54,12 @@ const ListDoctorComp = () => {
     availableTimeConvert: availableTime(item.availableTime),
   }));
 
-  const listPatient = async (skip = 0) => {
-    setLoader(true);
-    const result = await get(doctor, `limit=${perPage}&skip=${skip}`);
-    console.log(result);
-    setLoader(false);
-    if (result.status === 200) {
-      setRowData(conversion(result.data));
-      setTotalCount(result.headers['x-total-count']);
-    } else {
-      toast.error('Oops! Something went wrong. Please try again later.');
-    }
-  };
-
-  const deleteDoctor = async (_doctorId: number) => {
-    setLoader(true);
-    const result = await remove(doctor, _doctorId);
-    setLoader(false);
-    if (result.status !== 204) {
-      toast.error('Oops! Something went wrong. Please try again later.');
-      return;
-    }
-    toast.success('Doctor deleted successfully');
-    listPatient();
-  };
-
   const onHandleDelete = async (_doctorId) => {
-    sweetConfirmation(() => deleteDoctor(_doctorId), 'Yes, delete it!');
+    sweetConfirmation(async () => {
+     const result = await dispatch(deleteDoctorThunk({ id: _doctorId }));
+     if (result?.meta?.requestStatus === 'fulfilled') setPage(0)
+     console.log('result', result)
+    }, 'Yes, delete it!');
   };
 
   const onHandleUpdate = (doctorDetails) => {
@@ -89,7 +68,11 @@ const ListDoctorComp = () => {
   };
 
   useEffect(() => {
-    listPatient(page);
+    const params = {
+      limit: perPage,
+      skip: page
+    }
+    dispatch(listDoctorThunk(params))
   }, [page]);
 
   return (
@@ -97,47 +80,54 @@ const ListDoctorComp = () => {
       <Hb text="Doctors" />
 
       <div className="row">
-        <table className="table table-bordered font-sm">
-          <thead>
-            <tr>
-              <th scope="col">Doctor Id</th>
-              <th scope="col">Name</th>
-              <th scope="col">Specialist</th>
-              <th scope="col">Available Days</th>
-              <th scope="col">Available Time</th>
-              <th scope="col">Record created</th>
-              <th scope="col">Update</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rowData.map((obj) => (
-              <tr>
-                <th>{obj.id}</th>
-                <td>{obj.name}</td>
-                <td>{obj.specialist}</td>
-                <td>{obj.availableDayConvert}</td>
-                <td>{obj.availableTimeConvert}</td>
-                <td>{convertDate(obj.createdAt)}</td>
-                <td>
-                  <Icons
-                    icon="edit"
-                    onClick={() => onHandleUpdate(obj)}
-                    size={20}
-                  />
-                </td>
-                <td>
-                  <Icons
-                    icon="delete"
-                    onClick={() => onHandleDelete(obj._id)}
-                    size={20}
-                    className="mx-3 pointer"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {/* {
+          rowData.length < 1 ?
+            <Hc className='text-center mt-5' text='No Record Found...' />
+            : */}
+            <LoadingOverlayComp loading={dListLoading || dDeleteLoading}>
+              <table className="table table-bordered font-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">Doctor Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Specialist</th>
+                    <th scope="col">Available Days</th>
+                    <th scope="col">Available Time</th>
+                    <th scope="col">Record created</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {conversion(rowData).map((obj) => (
+                    <tr>
+                      <th>{obj.id}</th>
+                      <td>{obj.name}</td>
+                      <td>{obj.specialist}</td>
+                      <td>{obj.availableDayConvert}</td>
+                      <td>{obj.availableTimeConvert}</td>
+                      <td>{convertDate(obj.createdAt)}</td>
+                      <td>
+                        <Icons
+                          icon="edit"
+                          onClick={() => onHandleUpdate(obj)}
+                          size={20}
+                        />
+                      </td>
+                      <td>
+                        <Icons
+                          icon="delete"
+                          onClick={() => onHandleDelete(obj._id)}
+                          size={20}
+                          className="mx-3 pointer"
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </LoadingOverlayComp>
+        {/* } */}
       </div>
       <br />
       <PaginationReuse

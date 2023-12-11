@@ -2,8 +2,9 @@
 /// <reference types="cypress" />
 //  the above line used to auto suggestion for cypress
 import faker from 'faker';
+const common = require('../fixtures/common.json')
 
-describe('Doctor Create', () => {
+describe('Patient Create', () => {
   before(() => {
     cy.login();
     cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
@@ -25,7 +26,7 @@ describe('Doctor Create', () => {
     cy.get('#firstName').should('have.value', '');
     cy.get('#middleName').should('have.value', '');
     cy.get('#lastName').should('have.value', '');
-    cy.get('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#gender > ${common.dropDownCss}`).should('have.value', '');
 
     cy.get('#dob').should('have.value', '');
     cy.get('#age').should('have.value', '');
@@ -33,15 +34,15 @@ describe('Doctor Create', () => {
     cy.get('#email').should('have.value', '');
 
     cy.get('#aadhaarNumber').should('have.value', '');
-    cy.get('#martialStatus > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#martialStatus > ${common.dropDownCss}`).should('have.value', '');
     cy.get('#occupation').should('have.value', '');
     cy.get('#idenityNo').should('have.value', '');
 
     // address field
     cy.get('#address').should('not.have.value');
-    cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
-    cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
-    cy.get('#city > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input').should('have.value', '');
+    cy.get(`#country > ${common.dropDownCss}`).should('have.value', '');
+    cy.get(`#state > ${common.dropDownCss}`).should('have.value', '');
+    cy.get(`#city > ${common.dropDownCss}`).should('have.value', '');
     cy.get('#zipCode').should('not.have.value');
   }
 
@@ -56,11 +57,13 @@ describe('Doctor Create', () => {
 
   it('Patient validation', () => {
     cy.get('#patient-submit').click(); // click the submit button
+    
     cy.get('#error-firstName').should('have.text', 'firstName is a required field');
     cy.get('#error-gender').should('have.text', 'gender is a required field');
 
     cy.get('#error-dob').should('have.text', 'Date of birth is required');
     cy.get('#error-phone').should('have.text', 'Phone is required');
+    cy.get('#error-martialStatus').should('have.text', 'Martial status is required');
     cy.get('#error-address').should('have.text', 'address is a required field');
     cy.get('#error-country').should('have.text', 'country is a required field');
     cy.get('#error-state').should('have.text', 'state is a required field');
@@ -72,17 +75,56 @@ describe('Doctor Create', () => {
 
     cy.get('#error-dob').should('not.exist');
     cy.get('#error-phone').should('not.exist');
+    cy.get('#error-martialStatus').should('not.exist');
     cy.get('#error-address').should('not.exist');
     cy.get('#error-country').should('not.exist');
     cy.get('#error-state').should('not.exist');
     cy.get('#error-city').should('not.exist');
   });
 
+  describe('Aaadhaar number validation', () => {
+    beforeEach(() => {
+      cy.get('#patient-cancel').click();
+    });
+
+    it('should show the error message with invalid Aadhaar Number', () => {
+      cy.get('#aadhaarNumber').type('12121');
+      cy.get('#patient-submit').click();
+      cy.get('#error-aadhaarNumber').should('have.text', 'Aadhaar number must be at least 12 characters');
+    });
+
+    it('should not allow characters', () => {
+      cy.get('#aadhaarNumber').type('abcdefgh');
+      cy.get('#aadhaarNumber').should('have.text', '');
+    });
+
+    it('should allow only numbers', () => {
+      cy.get('#aadhaarNumber').type('abcd111111fish');
+      cy.get('#aadhaarNumber').should('have.value', '111111');
+    });
+  });
+
+  describe('Phone number validation', () => {
+    beforeEach(() => {
+      cy.get('#patient-cancel').click();
+    });
+
+    it('should not allow characters', () => {
+      cy.get('#phone').type('abcdefgh');
+      cy.get('#phone').should('have.text', '');
+    });
+
+    it('should allow only numbers', () => {
+      cy.get('#phone').type('abcd111111fish');
+      cy.get('#phone').should('have.value', '111111');
+    });
+  });
+
   const getYearAndMonth = () => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
       'August', 'September', 'October', 'November', 'December'];
     /* we have selected last year, because if we select this
-     year and if the month selected in feature then it will fail */
+   year and if the month selected in feature then it will fail */
     const lastYear = new Date().getFullYear() - 1;
     const randomYear = faker.random.number({ min: 1970, max: lastYear });
     const selectMonth = months[faker.random.number({ min: 0, max: 11 })];
@@ -110,13 +152,13 @@ describe('Doctor Create', () => {
     cy.contains('Pin code');
   });
 
-  it('Create Doctor with all the fields', () => {
-    cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreateDoctor');
+  it('Create Patient with all the fields', () => {
+    cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreatePatient');
 
     cy.get('#firstName').type(faker.name.firstName());
     cy.get('#middleName').type(faker.name.firstName());
     cy.get('#lastName').type(faker.name.lastName());
-    cy.gender('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input');
+    cy.gender(`#gender > ${common.dropDownCss}`);
 
     cy.get('#dob').click();
     const { year, month } = getYearAndMonth();
@@ -128,8 +170,8 @@ describe('Doctor Create', () => {
     cy.get('#phone').type(faker.phone.phoneNumber());
     cy.get('#email').type(faker.internet.email());
 
-    cy.get('#aadhaarNumber').type(faker.datatype.uuid().slice(0, 12)); // some random sting
-    cy.get('#martialStatus > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    cy.get('#aadhaarNumber').type(faker.random.number({ min: 1000000000000, max: 9999999999999 }));
+    cy.get(`#martialStatus > ${common.dropDownCss}`)
       .type('single{enter}{enter}');
     cy.get('#occupation').type(faker.name.firstName());
     cy.get('#idenityNo').type(faker.name.firstName());
@@ -139,17 +181,16 @@ describe('Doctor Create', () => {
 
     // submit button
     cy.get('#patient-submit').click();
-    cy.wait('@postCreateDoctor');
+    cy.wait('@postCreatePatient');
     cy.contains('Patient created successfully');
 
     checkAllFieldsEmpty();
   });
 
   it('Create the Patient with mandatory fields', () => {
-    cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreateDoctor');
+    cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreatePatient');
     cy.get('#firstName').type(faker.name.firstName());
-    cy.contains('Gender');
-    cy.gender('#gender > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input');
+    cy.gender(`#gender > ${common.dropDownCss}`);
 
     cy.get('#dob').click();
     const { year, month } = getYearAndMonth();
@@ -162,7 +203,7 @@ describe('Doctor Create', () => {
     cy.get('#phone').type(faker.phone.phoneNumber());
 
     cy.contains('Martial status');
-    cy.get('#martialStatus > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+    cy.get(`#martialStatus > ${common.dropDownCss}`)
       .type('single{enter}{enter}');
 
     // address
@@ -170,7 +211,7 @@ describe('Doctor Create', () => {
 
     // submit button
     cy.get('#patient-submit').click();
-    cy.wait('@postCreateDoctor');
+    cy.wait('@postCreatePatient');
     cy.contains('Patient created successfully');
 
     checkAllFieldsEmpty();

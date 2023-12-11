@@ -1,5 +1,12 @@
 export type dataType = object | null;
 
+export type FeedBackArg = {
+  project: string,
+  filter: string,
+  limit: number,
+  skip: number
+}
+
 export type TextBoxType = {
   onChange: () => void,
   value: string,
@@ -143,7 +150,8 @@ export type localStorageType = {
   hospitalPicture?: string
 }
 
-type icon = 'edit' | 'delete' | 'info' | 'close' | 'hamburger' | 'view' | 'logout' | 'dashboard' | 'changePassword' | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
+type icon = 'edit' | 'delete' | 'info' | 'close' | 'hamburger' | 'view' | 'logout' | 'save' | 'loader'
+| 'dashboard' | 'changePassword' | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
 export type iconType = {
   icon: icon,
   className?: string,

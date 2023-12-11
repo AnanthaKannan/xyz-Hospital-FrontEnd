@@ -43,6 +43,7 @@ const LOCAL_STORAGE_MEMORY = {};
 const apiUrl = Cypress.env('apiUrl');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const faker = require('faker');
+const common = require('../fixtures/common.json')
 
 Cypress.Commands.add('saveLocalStorage', () => {
   Object.keys(localStorage).forEach((key) => {
@@ -77,13 +78,13 @@ Cypress.Commands.add('address', () => {
 
   cy.get('#zipCode').type(faker.phone.phoneNumber());
   cy.get('#address').type(faker.address.streetName());
-  cy.get('#country > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+  cy.get(`#country > ${common.dropDownCss}`)
     .type('India{downArrow}{enter}');
   cy.wait('@getState');
-  cy.get('#state > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+  cy.get(`#state > ${common.dropDownCss}`)
     .type('Tamil Nadu{enter}{enter}');
   cy.wait('@getCity');
-  cy.get('#city > .css-1s2u09g-control > .css-319lph-ValueContainer > .css-6j8wv5-Input')
+  cy.get(`#city > ${common.dropDownCss}`)
     .type('Chennai{enter}{enter}');
 });
 
