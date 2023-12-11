@@ -22,7 +22,9 @@ jobs:
           wait-on: 'http://localhost:3000'
           # wait for 2 minutes for the server to respond
           wait-on-timeout: 120  
-          command: npx cypress run
+          record: true
+          parallel: true
+          command: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
   # lint:
   #     runs-on: ubuntu-latest
   #     strategy:
