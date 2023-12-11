@@ -5,6 +5,6 @@
   ],
   "editor.rulers": [80, 100],
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
 }

@@ -8,9 +8,10 @@ You run the application [here](http://xyzhospital.surge.sh) http://xyzhospital.s
 #### Run the application in your local
 * Install the node js and the version 14.19.0
 * clone the code in your local `git clone https://github.com/AnanthaKannan/digitalHospital-FrontEnd.git`
-* npm install
-* update your configuration [here](cypress/config)  and [here](src/config/index.ts)
-* npm start
+* Run the command `npm install`
+* Rename the `example.env` file to `.env` and populate it with the appropriate values 
+* update your configuration [here](cypress/config) for cypress
+* Run the command to start the application `npm start`
 
 #### Run cypress
 Cypress is a powerful end-to-end testing framework that is often used in conjunction with React.js to ensure the reliability and functionality of web applications. It allows developers to write and execute automated tests for React.js applications in a user-friendly and intuitive manner.

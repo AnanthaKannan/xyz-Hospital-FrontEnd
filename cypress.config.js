@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 module.exports = defineConfig({
+  projectId: 'q6gbda',
   viewportHeight: 600,
   viewportWidth: 1000,
   e2e: {
@@ -22,5 +23,6 @@ module.exports = defineConfig({
       const pathToConfigFile = path.resolve('', 'cypress/config', `${file}.json`);
       return fs.readJson(pathToConfigFile);
     },
+    projectId: 'q6gbda'
   },
 });

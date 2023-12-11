@@ -89,6 +89,7 @@ export const createPatientValidation = Yup.object({
     .required()
     .oneOf(Object.keys(genderEnum)), // ["1", "2", "3"]
   martialStatus: Yup.string()
+    .required('Martial status is required')
     .oneOf(Object.keys(martialStatusEnum)), // ["1", "2", "3"]
   age: Yup.string(),
   email: Yup.string()

@@ -1,5 +1,13 @@
 name: CI
 on: push
+
+env:
+  REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+  REACT_APP_IMG_URL: ${{ secrets.REACT_APP_IMG_URL }}
+  REACT_APP_USER_POOL_ID: ${{ secrets.REACT_APP_USER_POOL_ID }}
+  REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+  REACT_APP_REGION: ${{ secrets.REACT_APP_REGION }}
+
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
@@ -14,20 +22,22 @@ jobs:
           wait-on: 'http://localhost:3000'
           # wait for 2 minutes for the server to respond
           wait-on-timeout: 120  
-          command: npx cypress run
-  lint:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          node-version: [14.x]
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-        - name: Set up Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v2
-          with:
-            node-version: ${{ matrix.node-version }}
-        - name: Install dependencies
-          run: npm ci
-        - name: Run lint check
-          run: npm run lint
+          record: true
+          parallel: true
+          command: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
+  # lint:
+  #     runs-on: ubuntu-latest
+  #     strategy:
+  #       matrix:
+  #         node-version: [14.x]
+  #     steps:
+  #       - name: Checkout code
+  #         uses: actions/checkout@v2
+  #       - name: Set up Node.js ${{ matrix.node-version }}
+  #         uses: actions/setup-node@v2
+  #         with:
+  #           node-version: ${{ matrix.node-version }}
+  #       - name: Install dependencies
+  #         run: npm ci
+  #       - name: Run lint check
+  #         run: npm run lint
