@@ -30,7 +30,7 @@ const FeedBackComponent = () => {
   const { refresh } = useAppSelector((state) => state.feedBack);
   const { loading: fbAddLoading } = useAppSelector((state) => state.feedBack.addFeedBack);
   // const { loading: fbUpdateLoading } = useAppSelector((state) => state.feedBack.addFeedBack);
-  console.log('rowData', rowData)
+
 
 
   const feedBackList = async (skip = 0) => {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { addLoaderInArray } from '../../lib'
+// import { addLoaderInArray } from '../../lib'
 import { doctorInitialState } from '../initialState'
 import { listDoctorThunk, deleteDoctorThunk } from '../thunk'
 

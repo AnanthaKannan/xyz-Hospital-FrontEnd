@@ -33,7 +33,7 @@ const feedBackSlice = createSlice({
     builder.addCase(addFeedBackThunk.pending, (state) => {
       state.addFeedBack.loading = true;
     })
-    builder.addCase(addFeedBackThunk.fulfilled, (state, { payload }) => {
+    builder.addCase(addFeedBackThunk.fulfilled, (state) => {
       state.addFeedBack.loading = false;
       state.addFeedBack.success = true;
       state.refresh = !state.refresh;
@@ -45,12 +45,12 @@ const feedBackSlice = createSlice({
       state.addFeedBack.error = action.error.message
     })
 
-    // add feedback
+    // update feedback
     builder.addCase(updateFeedBackThunk.pending, (state, { meta }) => {
       state.feedBackList.data = addLoaderInArray(state.feedBackList.data, meta.arg._id, true)
       state.updateFeedback.loading = true;
     })
-    builder.addCase(updateFeedBackThunk.fulfilled, (state, { payload }) => {
+    builder.addCase(updateFeedBackThunk.fulfilled, (state) => {
       state.updateFeedback.loading = false;
       state.updateFeedback.success = true;
       state.refresh = !state.refresh;

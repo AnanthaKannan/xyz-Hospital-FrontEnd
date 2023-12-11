@@ -13,6 +13,14 @@ http.interceptors.request.use(async (config) => {
   return config
 });
 
+http.interceptors.response.use((response) => response, 
+(error) => {
+  if(error.response.status === 401) {
+    window.location.href = 'login';
+  }
+  return Promise.reject(error); 
+});
+
 export const listFeedBack = (params) => http.get('/feedback',{ params });
 
 export const addFeedBack = (data) => http.post('/feedback', data);
