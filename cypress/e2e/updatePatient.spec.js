@@ -28,6 +28,11 @@ describe('Patient Update', () => {
   it('update the values', () => {
     cy.get('.swal2-confirm').click();
     cy.wait('@getAddress');
+    cy.get('#firstName').then(($input) => {
+      cy.log(`Is the element disabled? ${$input.prop('disabled')}`);
+      // ... rest of your test script
+    });
+    cy.wait(1000);
     cy.get('#firstName').clear().type(updateName);
     cy.get('#patient-submit').click();
     cy.wait('@putUpdatePatient');
