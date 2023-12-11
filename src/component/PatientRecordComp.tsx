@@ -34,11 +34,9 @@ const PatientRecordComp = () => {
   const { setLoader } = useLoadContext();
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [perPage, setPerPage] = useState(3);
   const [doctorList, setDoctorList] = useState([]);
   const [isShowAddRecord, setIsShowAddRecord] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [formikInitialValue, setFormikInitialValue] = useState<patientRecordType>({
     diagnosis: '',
     description: '',
