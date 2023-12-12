@@ -60,6 +60,10 @@ export const loginValidation = Yup.object().shape({
     .max(20, 'Password must be less than 20 characters'),
 });
 
+const passwordMatch = {
+  regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).*$/,
+  errorMessage: 'Password must contain at least one number, one lowercase letter, one uppercase letter, and one special character'
+}
 export const changePasswordValidation = Yup.object().shape({
   oldPassword: Yup.string()
     .required('Required')
@@ -68,7 +72,8 @@ export const changePasswordValidation = Yup.object().shape({
   newPassword: Yup.string()
     .required('Required')
     .min(6, 'Password must be at least 6 characters')
-    .max(20, 'Password must be less than 20 characters'),
+    .max(20, 'Password must be less than 20 characters')
+    .matches(passwordMatch.regex, passwordMatch.errorMessage),
   confirmPassword: Yup.string()
     .required('Required')
     .oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
@@ -140,5 +145,6 @@ export const profileDetailsValidation = Yup.object().shape({
   password: Yup.string()
     .required('Required')
     .min(6, 'Password must be at least 6 characters')
-    .max(20, 'Password must be less than 20 characters'),
+    .max(20, 'Password must be less than 20 characters')
+    .matches(passwordMatch.regex, passwordMatch.errorMessage),
 });

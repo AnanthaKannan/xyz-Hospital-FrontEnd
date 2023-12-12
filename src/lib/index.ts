@@ -129,3 +129,5 @@ export const getTotalCount = (result): number => {
   if(tc) return Number(tc)
   return 0
 }
+
+export const onlyNumbers = (value) => (value ? value.replace(/[^\d]+/g, '') : value);

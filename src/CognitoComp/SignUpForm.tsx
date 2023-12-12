@@ -10,7 +10,7 @@ import { SubmitButton } from '../reusable/Button';
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
 import { profileDetailsValidation } from '../lib/validationSchema';
-import { getStorageDetails, setStorageDetails } from '../lib';
+import { getStorageDetails, setStorageDetails, onlyNumbers } from '../lib';
 
 const initValues: profileDetailsType = {
   email: '',
@@ -26,7 +26,7 @@ const SignUpForm = ({ isSignUp }) => {
   const [initialValues, setInitialValues] = useState(initValues);
 
   useEffect(() => {
-    const storageObj:localStorageType = getStorageDetails();
+    const storageObj: localStorageType = getStorageDetails();
     const updatedInitialValue = {
       address: storageObj.hospitalAddress,
       email: storageObj.hospitalMailId,
@@ -97,10 +97,10 @@ const SignUpForm = ({ isSignUp }) => {
 
   const signUp = (values, attributeList, setErrors: Function) => {
     const { email, password } = values;
-    UserPool.signUp(email, password, attributeList, null, (err:any, result:any) => {
+    UserPool.signUp(email, password, attributeList, null, (err: any, result: any) => {
       if (err) {
         console.log('err', err);
-        setErrors({ email: err.message });
+        setErrors({ address: err.message });
         return toast.error(err.message);
       }
 
@@ -111,6 +111,7 @@ const SignUpForm = ({ isSignUp }) => {
   };
 
   const onSubmit = (values: any, { setErrors }: any) => {
+    values.picture = 'picture';
     console.log('values', values);
     const attributeList: any = covertFromObjToArray(values);
     console.log('attributeList', attributeList);
@@ -131,8 +132,8 @@ const SignUpForm = ({ isSignUp }) => {
       >
         {({ handleSubmit, ...parameter }) => (
           <form onSubmit={handleSubmit}>
-            <div className="row">
-              <div className="col-md-12">
+            <div className="row mt-3">
+              <div className="col-md-6">
                 <TextBox
                   heading="Hospital Email"
                   id="email"
@@ -142,7 +143,7 @@ const SignUpForm = ({ isSignUp }) => {
                 />
               </div>
               <br />
-              <div className="col-md-12">
+              <div className="col-md-6">
                 <TextBox
                   heading="Hospital Name"
                   id="name"
@@ -151,16 +152,36 @@ const SignUpForm = ({ isSignUp }) => {
                 />
               </div>
               <br />
-              <div className="col-md-3" />
-              <div className="col-md-3" />
-
-              <div className="col-md-12">
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <TextBox
+                  heading="Phone Number"
+                  id="phone_number"
+                  parameter={parameter}
+                  required
+                  customValueFn={onlyNumbers}
+                />
+              </div>
+              <div className="col-md-6">
+                <TextBox
+                  heading="Passwrod"
+                  id="password"
+                  type="password"
+                  parameter={parameter}
+                  required
+                />
+              </div>
+              <br />
+            </div>
+            <div className="row mb-2">
+              {/* <div className="col-md-12">
                 <TextBox
                   heading="Hospital Logo"
                   id="picture"
                   parameter={parameter}
                 />
-              </div>
+              </div> */}
               <div className="col-md-12">
                 <TextBox
                   heading="Address"
@@ -169,30 +190,10 @@ const SignUpForm = ({ isSignUp }) => {
                   required
                 />
               </div>
-              <div className="col-md-3" />
-
-              <div className="col-md-3" />
-
-              <div className="col-md-12">
-                <TextBox
-                  heading="Phone Number"
-                  id="phone_number"
-                  parameter={parameter}
-                  required
-                />
-              </div>
-              <div className="col-md-12">
-                <TextBox
-                  heading="Passwrod"
-                  id="password"
-                  parameter={parameter}
-                  required
-                />
-              </div>
               <br />
-              <div className="col-md-3">  </div>
-              <div className="col-md-3">  </div>
-              <div className="col-md-3">  </div>
+            </div>
+
+            <div className="row">
               <div className="col-md-12">
                 <SubmitButton id="signup-submit" className="w-100" color="primary" text={isSignUp ? 'Sing up' : 'Update'} />
               </div>
