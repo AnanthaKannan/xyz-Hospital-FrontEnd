@@ -12,6 +12,7 @@ module.exports = defineConfig({
       'cypress/e2e/createDoc.spec.js',
       'cypress/e2e/listDoc.spec.js',
       'cypress/e2e/createPatient.spec.js',
+      // 'cypress/e2e/updatePatient.spec.js', // command the line until back mock api get fix
       'cypress/e2e/listPatient.spec.js',
       'cypress/e2e/feedback.spec.js',
       'cypress/e2e/signup.spec.js',
