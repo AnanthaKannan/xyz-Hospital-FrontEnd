@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect } from 'react';
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { Formik } from 'formik';
@@ -8,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { SubmitButton } from '../reusable/Button';
 import TextBox from '../reusable/TextBox';
-import UserPool from '../lib/UserPool';
+import UserPool, { forgotPassword } from '../lib/UserPool';
 import LoginBackground from '../reusable/LoginBackground';
 import { loginValidation } from '../lib/validationSchema';
 import { setStorageDetails } from '../lib';
@@ -67,20 +64,6 @@ const LoginComp = () => {
     });
   };
 
-  const forgotPassword = (email) => {
-    const cognitoUser = new CognitoUser({ Username: email, Pool: UserPool });
-    cognitoUser.forgotPassword({
-      onSuccess(data:any) {
-        console.log(`CodeDeliveryData from forgotPassword:${data}`);
-        toast.success('Verification Code has been sent to your email');
-      },
-      onFailure(err:any) {
-        console.log(`error: ${err}`);
-        toast.error(err.message);
-      },
-    });
-  };
-
   const onHandleForgotPassword = (values, setErrors) => {
     console.log('values', values);
     if (!values.email) {
@@ -96,7 +79,7 @@ const LoginComp = () => {
     <div>
       <LoginBackground title="Login">
         <Formik
-          initialValues={{ email: 'sreeananthakannan@gmail.com', password: 'Kannan$7500' }}
+          initialValues={{ email: 'sreeananthakannan@gmail.com', password: 'Hero@123Xyz' }}
       // initialValues={{ email: '', password: '' }}
           validationSchema={loginValidation}
           onSubmit={onSubmit}
@@ -126,7 +109,7 @@ const LoginComp = () => {
                   <label className="link" id="signup">  Not a user? sing up</label>
                 </Link>
                 {/* <Link onClick={() =>onHandleForgotPassword(values, setErrors)} to="/" >  */}
-                <label className="link" onClick={() => onHandleForgotPassword(parameter.values, setErrors)}> Forgot password </label>
+                <label className="link mt-1" onClick={() => onHandleForgotPassword(parameter.values, setErrors)}> Forgot password </label>
                 {/* </Link> */}
 
               </div>

@@ -54,6 +54,10 @@ a:hover {
   cursor: pointer;
 }
 
+.send-code {
+  font-size: 12px;
+}
+
 .bg-image {
   background-image: url("assets/doctor.png");
   background-color: #cccccc;
