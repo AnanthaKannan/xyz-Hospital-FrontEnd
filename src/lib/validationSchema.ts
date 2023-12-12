@@ -139,8 +139,8 @@ export const profileDetailsValidation = Yup.object().shape({
   picture: Yup.string(),
   address: Yup.string()
     .required('Required')
-    .min(6, 'Password must be at least 6 characters')
-    .max(20, 'Password must be less than 20 characters'),
+    .min(6, 'Address must be at least 6 characters')
+    .max(100, 'Address must be less than 100 characters'),
   phone_number: Yup.string().required('Phone is required'),
   password: Yup.string()
     .required('Required')

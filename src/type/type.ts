@@ -7,6 +7,14 @@ export type FeedBackArg = {
   skip: number
 }
 
+export type HospitalDetailsType = {
+  email: string,
+  phoneNumber: string,
+  hospitalName: string,
+  address: string,
+  picture: string,
+}
+
 export type TextBoxType = {
   onChange: () => void,
   value: string,

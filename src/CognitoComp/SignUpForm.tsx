@@ -4,13 +4,13 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { CognitoUser, CognitoUserAttribute, AuthenticationDetails } from 'amazon-cognito-identity-js';
-import { profileDetailsType, localStorageType } from '@type/type';
+import { profileDetailsType, HospitalDetailsType } from '@type/type';
 
 import { SubmitButton } from '../reusable/Button';
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
 import { profileDetailsValidation } from '../lib/validationSchema';
-import { getStorageDetails, setStorageDetails, onlyNumbers } from '../lib';
+import { setStorageDetails, onlyNumbers, decodeJwtToken } from '../lib';
 
 const initValues: profileDetailsType = {
   email: '',
@@ -21,18 +21,18 @@ const initValues: profileDetailsType = {
   password: '',
 };
 
-const SignUpForm = ({ isSignUp }) => {
+const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
   const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState(initValues);
 
   useEffect(() => {
-    const storageObj: localStorageType = getStorageDetails();
+    const hospitalDetails: HospitalDetailsType = decodeJwtToken()
     const updatedInitialValue = {
-      address: storageObj.hospitalAddress,
-      email: storageObj.hospitalMailId,
-      name: storageObj.hospitalName,
-      phone_number: storageObj.hospitalPhone,
-      picture: storageObj.hospitalPicture,
+      address: hospitalDetails.address,
+      email: hospitalDetails.email,
+      name: hospitalDetails.hospitalName,
+      phone_number: hospitalDetails.phoneNumber,
+      picture: hospitalDetails.picture,
       password: '',
     };
     console.log('updatedInitialValue', updatedInitialValue);
@@ -68,6 +68,7 @@ const SignUpForm = ({ isSignUp }) => {
       Username: email,
       Password: password,
     });
+
     cognitoUser.authenticateUser(authDetails, {
       onSuccess: () => {
         console.log('User authenticated');
@@ -113,12 +114,12 @@ const SignUpForm = ({ isSignUp }) => {
   const onSubmit = (values: any, { setErrors }: any) => {
     values.picture = 'picture';
     console.log('values', values);
-    const attributeList: any = covertFromObjToArray(values);
-    console.log('attributeList', attributeList);
     if (isSignUp) {
-      signUp(values, attributeList, setErrors);
+      signUp(values, covertFromObjToArray(values), setErrors);
     } else {
-      updateUserAttribute(values, attributeList);
+      const updatedValue = {...values}
+      delete updatedValue.email;  // should not send email for update
+      updateUserAttribute(values, covertFromObjToArray(updatedValue));
     }
   };
 
@@ -164,13 +165,13 @@ const SignUpForm = ({ isSignUp }) => {
                 />
               </div>
               <div className="col-md-6">
-                <TextBox
-                  heading="Passwrod"
-                  id="password"
-                  type="password"
-                  parameter={parameter}
-                  required
-                />
+                  <TextBox
+                    heading={ isSignUp ? "Passwrod" : "Passwrod (current password)" }
+                    id="password"
+                    type="password"
+                    parameter={parameter}
+                    required
+                  />
               </div>
               <br />
             </div>

@@ -7,7 +7,7 @@ import SignUpForm from './SignUpForm';
 const SignUpComp = () => (
   <div>
     <LoginBackground classNameA='col-md-6' classNameB='col-md-5' title="Sign Up">
-      <SignUpForm isSignUp />
+      <SignUpForm isSignUp={true} />
       <div className="d-flex justify-content-between mt-2">
         <Link to="/login">
           <label className="link"> Already Have a account? Login</label>
