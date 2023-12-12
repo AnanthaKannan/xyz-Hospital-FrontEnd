@@ -4,13 +4,13 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { CognitoUser, CognitoUserAttribute, AuthenticationDetails } from 'amazon-cognito-identity-js';
-import { profileDetailsType, localStorageType } from '@type/type';
+import { profileDetailsType, HospitalDetailsType } from '@type/type';
 
 import { SubmitButton } from '../reusable/Button';
 import TextBox from '../reusable/TextBox';
 import UserPool from '../lib/UserPool';
 import { profileDetailsValidation } from '../lib/validationSchema';
-import { getStorageDetails, setStorageDetails } from '../lib';
+import { setStorageDetails, onlyNumbers, decodeJwtToken } from '../lib';
 
 const initValues: profileDetailsType = {
   email: '',
@@ -21,18 +21,18 @@ const initValues: profileDetailsType = {
   password: '',
 };
 
-const SignUpForm = ({ isSignUp }) => {
+const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
   const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState(initValues);
 
   useEffect(() => {
-    const storageObj:localStorageType = getStorageDetails();
+    const hospitalDetails: HospitalDetailsType = decodeJwtToken()
     const updatedInitialValue = {
-      address: storageObj.hospitalAddress,
-      email: storageObj.hospitalMailId,
-      name: storageObj.hospitalName,
-      phone_number: storageObj.hospitalPhone,
-      picture: storageObj.hospitalPicture,
+      address: hospitalDetails.address,
+      email: hospitalDetails.email,
+      name: hospitalDetails.hospitalName,
+      phone_number: hospitalDetails.phoneNumber,
+      picture: hospitalDetails.picture,
       password: '',
     };
     console.log('updatedInitialValue', updatedInitialValue);
@@ -68,6 +68,7 @@ const SignUpForm = ({ isSignUp }) => {
       Username: email,
       Password: password,
     });
+
     cognitoUser.authenticateUser(authDetails, {
       onSuccess: () => {
         console.log('User authenticated');
@@ -97,10 +98,10 @@ const SignUpForm = ({ isSignUp }) => {
 
   const signUp = (values, attributeList, setErrors: Function) => {
     const { email, password } = values;
-    UserPool.signUp(email, password, attributeList, null, (err:any, result:any) => {
+    UserPool.signUp(email, password, attributeList, null, (err: any, result: any) => {
       if (err) {
         console.log('err', err);
-        setErrors({ email: err.message });
+        setErrors({ address: err.message });
         return toast.error(err.message);
       }
 
@@ -111,13 +112,14 @@ const SignUpForm = ({ isSignUp }) => {
   };
 
   const onSubmit = (values: any, { setErrors }: any) => {
+    values.picture = 'picture';
     console.log('values', values);
-    const attributeList: any = covertFromObjToArray(values);
-    console.log('attributeList', attributeList);
     if (isSignUp) {
-      signUp(values, attributeList, setErrors);
+      signUp(values, covertFromObjToArray(values), setErrors);
     } else {
-      updateUserAttribute(values, attributeList);
+      const updatedValue = {...values}
+      delete updatedValue.email;  // should not send email for update
+      updateUserAttribute(values, covertFromObjToArray(updatedValue));
     }
   };
 
@@ -131,8 +133,8 @@ const SignUpForm = ({ isSignUp }) => {
       >
         {({ handleSubmit, ...parameter }) => (
           <form onSubmit={handleSubmit}>
-            <div className="row">
-              <div className="col-md-12">
+            <div className="row mt-3">
+              <div className="col-md-6">
                 <TextBox
                   heading="Hospital Email"
                   id="email"
@@ -142,7 +144,7 @@ const SignUpForm = ({ isSignUp }) => {
                 />
               </div>
               <br />
-              <div className="col-md-12">
+              <div className="col-md-6">
                 <TextBox
                   heading="Hospital Name"
                   id="name"
@@ -151,16 +153,36 @@ const SignUpForm = ({ isSignUp }) => {
                 />
               </div>
               <br />
-              <div className="col-md-3" />
-              <div className="col-md-3" />
-
-              <div className="col-md-12">
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <TextBox
+                  heading="Phone Number"
+                  id="phone_number"
+                  parameter={parameter}
+                  required
+                  customValueFn={onlyNumbers}
+                />
+              </div>
+              <div className="col-md-6">
+                  <TextBox
+                    heading={ isSignUp ? "Passwrod" : "Passwrod (current password)" }
+                    id="password"
+                    type="password"
+                    parameter={parameter}
+                    required
+                  />
+              </div>
+              <br />
+            </div>
+            <div className="row mb-2">
+              {/* <div className="col-md-12">
                 <TextBox
                   heading="Hospital Logo"
                   id="picture"
                   parameter={parameter}
                 />
-              </div>
+              </div> */}
               <div className="col-md-12">
                 <TextBox
                   heading="Address"
@@ -169,30 +191,10 @@ const SignUpForm = ({ isSignUp }) => {
                   required
                 />
               </div>
-              <div className="col-md-3" />
-
-              <div className="col-md-3" />
-
-              <div className="col-md-12">
-                <TextBox
-                  heading="Phone Number"
-                  id="phone_number"
-                  parameter={parameter}
-                  required
-                />
-              </div>
-              <div className="col-md-12">
-                <TextBox
-                  heading="Passwrod"
-                  id="password"
-                  parameter={parameter}
-                  required
-                />
-              </div>
               <br />
-              <div className="col-md-3">  </div>
-              <div className="col-md-3">  </div>
-              <div className="col-md-3">  </div>
+            </div>
+
+            <div className="row">
               <div className="col-md-12">
                 <SubmitButton id="signup-submit" className="w-100" color="primary" text={isSignUp ? 'Sing up' : 'Update'} />
               </div>

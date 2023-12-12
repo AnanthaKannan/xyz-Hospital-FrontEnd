@@ -1,7 +1,9 @@
 import dateFn from 'date-fn';
+import { decodeToken } from "react-jwt";
+
 import { genderEnum } from './enum';
 import config from '../config';
-import { imageUploadCodeType, imagePathResponseType } from '../type/type';
+import { imageUploadCodeType, imagePathResponseType, HospitalDetailsType } from '../type/type';
 
 export const onHandleChange = (e: any, handleChange: Function) => {
   const element = {
@@ -128,4 +130,23 @@ export const getTotalCount = (result): number => {
   const tc: string = result.headers['x-total-count']
   if(tc) return Number(tc)
   return 0
+}
+
+export const onlyNumbers = (value) => (value ? value.replace(/[^\d]+/g, '') : value);
+
+export const decodeJwtToken = (): HospitalDetailsType => {
+  try {
+    const token = localStorage.getItem('token')
+    const payload = decodeToken(token);
+    return {
+      email: payload['email'],
+      phoneNumber: payload['phone_number']?.replace('+91', ''),
+      hospitalName: payload['name'],
+      address: payload['address']['formatted'],
+      picture: 'picture'
+    }
+  } catch (error) {
+    console.error('Error decoding the token:', error.message);
+    return { email: '', phoneNumber: '', hospitalName: '', address: '', picture: ''}
+  }
 }

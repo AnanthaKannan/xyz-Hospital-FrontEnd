@@ -6,6 +6,7 @@ import Hb from '../reusable/Hb';
 import TextBox from '../reusable/TextBox';
 import { ClickButton, SubmitButton } from '../reusable/Button';
 import {
+  onlyNumbers,
   imagePath, convertEnumToArray, fromDateToAgeConverter, getInitialValuesFromYup,
 } from '../lib';
 import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
@@ -114,8 +115,6 @@ const CreatePatientComp = () => {
     if (number.length >= 12) number = number.substring(0, 12);
     return number;
   };
-
-  const onlyNumbers = (value) => (value ? value.replace(/[^\d]+/g, '') : value);
 
   return (
     <div className="">
