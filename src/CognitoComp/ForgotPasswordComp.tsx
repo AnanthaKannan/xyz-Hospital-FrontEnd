@@ -6,21 +6,17 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { SubmitButton } from '../reusable/Button';
 import TextBox from '../reusable/TextBox';
-import UserPool from '../lib/UserPool';
+import UserPool, { forgotPassword } from '../lib/UserPool';
 import LoginBackground from '../reusable/LoginBackground';
 import { forgotPasswordValidation } from '../lib/validationSchema';
 
 const ForgotPasswordComp = () => {
-  const [hospitalEmail, setHospitalEmail] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // eslint-disable-next-line prefer-destructuring
     const state: any = location.state;
-    if (state && state.email) {
-      setHospitalEmail(state.email);
-    } else {
+    if (!state && !state.email) {
       navigate('/login');
     }
   }, [location.state, navigate]);
@@ -28,7 +24,7 @@ const ForgotPasswordComp = () => {
   const onSubmit = (values: any) => {
     console.log(values);
     const cognitoUser = new CognitoUser({
-      Username: hospitalEmail,
+      Username: location.state.email,
       Pool: UserPool,
     });
 
@@ -72,7 +68,8 @@ const ForgotPasswordComp = () => {
               type="password"
               parameter={parameter}
             />
-            <br />
+            <label className='mb-2 send-code'> Resend Verification code : 
+             <label className='link' onClick={() => forgotPassword(location.state.email)} > SEND </label> </label>
             <div className="d-flex justify-content-between">
               <SubmitButton id="forgot-password-submit" className="w-100" color="primary" text="Submit" />
             </div>

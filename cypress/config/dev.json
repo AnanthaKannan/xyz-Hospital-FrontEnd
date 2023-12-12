@@ -3,7 +3,7 @@
   "baseUrl": "http://localhost:3000",
   "env": {
     "email": "sreeananthakannan@gmail.com",
-    "password": "Kannan$7500",
+    "password": "Hero@123Xyz",
     "apiUrl": "https://uk9216o26e.execute-api.us-east-1.amazonaws.com/dev"
   }
 }
