@@ -10,10 +10,10 @@ const SignUpComp = () => (
       <SignUpForm isSignUp={true} />
       <div className="d-flex justify-content-between mt-2">
         <Link to="/login">
-          <label className="link"> Already Have a account? Login</label>
+          <label className="link" id="login"> Already Have a account? Login</label>
         </Link>
         <Link to="/confirmation-code">
-          <label className="link"> Already Sign up? code </label>
+          <label className="link" id="confirmation-code"> Already Sign up? code </label>
         </Link>
       </div>
     </LoginBackground>

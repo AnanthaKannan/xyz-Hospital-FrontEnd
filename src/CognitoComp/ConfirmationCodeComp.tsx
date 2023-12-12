@@ -38,7 +38,8 @@ const ConfirmationCodeComp = () => {
       .email('Invalid email'),
     code: Yup.string()
       .required('Required')
-      .min(3, 'Invalid code'),
+      .min(3, 'Invalid code')
+      .max(10, 'Invalid code'),
   });
 
   return (
