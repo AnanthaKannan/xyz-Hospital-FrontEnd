@@ -44,7 +44,7 @@ describe('Signup', () => {
 
   it('Failed signup', () => {
     const errorMessage = 'Invalid phone number format.'
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
+    cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
       req.reply({
         statusCode: 400,
         body: {
@@ -68,7 +68,7 @@ describe('Signup', () => {
   });
 
   it('Successfully signup', () => {
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
+    cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
       // mock the response
       req.reply({
         CodeDeliveryDetails: {
@@ -120,11 +120,11 @@ describe('Confirmation', () => {
     cy.get('#confirmation-code-submit').click();  // click the submit button
 
     cy.get('#error-email').should('have.text', 'Invalid email');
-    cy.get('#error-code').should('have.text', 'Invalid code');    
+    cy.get('#error-code').should('have.text', 'Invalid code');
   });
 
   it('Failed with not found email Id', () => {
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
+    cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
       req.reply({
         statusCode: 400,
         body: {
@@ -144,7 +144,7 @@ describe('Confirmation', () => {
   });
 
   it('Failed with Invalid verification', () => {
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
+    cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
       req.reply({
         statusCode: 400,
         body: {
@@ -164,7 +164,7 @@ describe('Confirmation', () => {
   });
 
   it('Sucess code submission', () => {
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
+    cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
       req.reply({})
     }).as('callCodeSubmit');
 
@@ -173,79 +173,120 @@ describe('Confirmation', () => {
 
     cy.get('#confirmation-code-submit').click();  // click the submit button
     cy.wait('@callCodeSubmit');
-    cy.get('.Toastify__toast-body > :nth-child(2)').contains('Successfully confirmed')
+    cy.contains('Successfully confirmed')
   });
 })
 
 describe('ForgotPassword', () => {
-  beforeEach(() => {
-    cy.launchPortal();
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
-      req.reply({
-        statusCode: 200,
-        body: {"CodeDeliveryDetails":{"AttributeName":"email","DeliveryMedium":"EMAIL","Destination":"s***@m***"}}
-      })
-    }).as('requestedCode');
-    cy.get('#forgot-password').click();
-    cy.wait('@requestedCode');
-    cy.get('.Toastify__toast-body > :nth-child(2)').contains('Verification Code has been sent to your email');
+  describe('ForgotPasswordFailed', () => {
+    beforeEach(() => {
+      cy.launchPortal()
+    });
+
+    it('Should fail with out emailId', () => {
+      cy.get('#email').clear();
+      cy.get('#forgot-password').click();
+      cy.contains('Please enter email');
+    });
+
+    it('Should fail with wrong email Id', () => {
+      const message = 'Invalid verification code provided, please try again.'
+      cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
+        req.reply({
+          statusCode: 400,
+          body: { "__type": "CodeMismatchException", "message": message }
+        })
+      }).as('callCode');
+
+      cy.get('#forgot-password').click();
+      cy.wait('@callCode');
+      cy.contains(message);
+    });
   });
 
-  it('Error validation', () => {
-    cy.get('#error-code').should('not.exist');
-    cy.get('#error-password').should('not.exist');
-    cy.get('#error-confirmPassword').should('not.exist');
+  describe('ForgotPasswordAllScenario', () => {
+    beforeEach(() => {
+      cy.launchPortal();
+      cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
+        req.reply({
+          statusCode: 200,
+          body: { "CodeDeliveryDetails": { "AttributeName": "email", "DeliveryMedium": "EMAIL", "Destination": "s***@m***" } }
+        })
+      }).as('requestedCode');
+      cy.get('#forgot-password').click();
+      cy.wait('@requestedCode');
+      cy.contains('Verification Code has been sent to your email');
+    });
 
-    cy.get('#forgot-password-submit').click();  // click the submit button
+    it('Error validation', () => {
+      cy.get('#error-code').should('not.exist');
+      cy.get('#error-password').should('not.exist');
+      cy.get('#error-confirmPassword').should('not.exist');
 
-    cy.get('#error-code').should('have.text', 'Required');
-    cy.get('#error-password').should('have.text', 'Required');
-    cy.get('#error-confirmPassword').should('have.text', 'Required');
-  });
+      cy.get('#forgot-password-submit').click();  // click the submit button
 
-  it('Error validation by submit wrong value', () => {
-    cy.get('#code').type('12');
-    cy.get('#password').type('password');
-    cy.get('#confirmPassword').type('123');
+      cy.get('#error-code').should('have.text', 'Required');
+      cy.get('#error-password').should('have.text', 'Required');
+      cy.get('#error-confirmPassword').should('have.text', 'Required');
+    });
 
-    cy.get('#forgot-password-submit').click();  // click the submit button
+    it('Error validation by submit wrong value', () => {
+      cy.get('#code').type('12');
+      cy.get('#password').type('password');
+      cy.get('#confirmPassword').type('123');
 
-    cy.get('#error-code').should('have.text', 'confirmation code not valid');
-    cy.get('#error-password').should('have.text', 'Password must contain at least one number, one lowercase letter, one uppercase letter, and one special character');    
-    cy.get('#error-confirmPassword').should('have.text', 'Passwords must match');
-  });
+      cy.get('#forgot-password-submit').click();  // click the submit button
 
-  it('Failed with not found email Id', () => {
-    const message = 'Invalid verification code provided, please try again.'
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
-      req.reply({
-        statusCode: 400,
-        body: {"__type":"CodeMismatchException","message": message}
-      })
-    }).as('callCode');
+      cy.get('#error-code').should('have.text', 'confirmation code not valid');
+      cy.get('#error-password').should('have.text', 'Password must contain at least one number, one lowercase letter, one uppercase letter, and one special character');
+      cy.get('#error-confirmPassword').should('have.text', 'Passwords must match');
+    });
 
-    cy.get('#code').type('12345');
-    cy.get('#password').type('Qwed$1209');
-    cy.get('#confirmPassword').type('Qwed$1209');
+    it('Failed with Invalid verification code', () => {
+      const message = 'Invalid verification code provided, please try again.'
+      cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
+        req.reply({
+          statusCode: 400,
+          body: { "__type": "CodeMismatchException", "message": message }
+        })
+      }).as('callCodeFail');
 
-    cy.get('#forgot-password-submit').click();  // click the submit button
-    cy.wait('@callCode');
-    cy.wait(100)
-    cy.get('.Toastify__toast-body > :nth-child(2)').contains(message);
-  });
+      cy.get('#code').type('12345');
+      cy.get('#password').type('Qwed$1209');
+      cy.get('#confirmPassword').type('Qwed$1209');
 
-  it('Sucess code submission', () => {
-    cy.intercept('POST', 'https://cognito-idp.us-east-1.amazonaws.com/', (req) => {
-      req.reply({})
-    }).as('callCodeSubmit');
+      cy.get('#forgot-password-submit').click();  // click the submit button
+      cy.wait('@callCodeFail');
+      cy.contains(message);
+    });
 
-    cy.get('#code').type('12345');
-    cy.get('#password').type('Qwed$1209');
-    cy.get('#confirmPassword').type('Qwed$1209');
+    it('Resent code', () => {
+      cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
+        req.reply({})
+      }).as('callCode');
 
-    cy.get('#forgot-password-submit').click();  // click the submit button
-    cy.wait('@callCodeSubmit');
+      cy.get('#code').type('12345');
+      cy.get('#password').type('Qwed$1209');
+      cy.get('#confirmPassword').type('Qwed$1209');
 
-    cy.get('.Toastify__toast-body > :nth-child(2)').contains('Password changed successfully');
+      cy.get('#forgot-password-submit').click();  // click the submit button
+      cy.wait('@callCode');
+      cy.contains('Verification Code has been sent to your email');
+    });
+
+    it('Sucess code submission', () => {
+      cy.intercept('POST', "https://cognito-idp.us-east-1.amazonaws.com/", (req) => {
+        req.reply({})
+      }).as('callCodeSubmit');
+
+      cy.get('#code').type('12345');
+      cy.get('#password').type('Qwed$1209');
+      cy.get('#confirmPassword').type('Qwed$1209');
+
+      cy.get('#forgot-password-submit').click();  // click the submit button
+      cy.wait('@callCodeSubmit');
+
+      cy.contains('Password changed successfully');
+    });
   });
 })
