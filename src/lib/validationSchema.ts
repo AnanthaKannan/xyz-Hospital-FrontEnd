@@ -1,6 +1,11 @@
 import * as Yup from 'yup';
 import { genderEnum, martialStatusEnum } from './enum';
 
+const passwordMatch = {
+  regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).*$/,
+  errorMessage: 'Password must contain at least one number, one lowercase letter, one uppercase letter, and one special character'
+}
+
 export const patientRecordValidation = Yup.object({
   diagnosis: Yup.string()
     .required()
@@ -26,11 +31,12 @@ export const patientRecordValidation = Yup.object({
 export const forgotPasswordValidation = Yup.object().shape({
   code: Yup.string()
     .required('Required')
-    .min(3, ' confirmation code not valid'),
+    .min(3, 'confirmation code not valid'),
   password: Yup.string()
     .required('Required')
     .min(6, 'Password must be at least 6 characters')
-    .max(20, 'Password must be less than 20 characters'),
+    .max(20, 'Password must be less than 20 characters')
+    .matches(passwordMatch.regex, passwordMatch.errorMessage),
   confirmPassword: Yup.string()
     .required('Required')
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
@@ -43,11 +49,11 @@ export const signUpValidation = Yup.object().shape({
   password: Yup.string()
     .required('Required')
     .min(6, 'Password must be at least 6 characters')
-    .max(20, 'Password must be less than 20 characters'),
+    .max(20, 'Password must be less than 20 characters')
+    .matches(passwordMatch.regex, passwordMatch.errorMessage),
   confirmPassword: Yup.string()
     .required('Required')
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-
 });
 
 export const loginValidation = Yup.object().shape({
@@ -60,10 +66,6 @@ export const loginValidation = Yup.object().shape({
     .max(20, 'Password must be less than 20 characters'),
 });
 
-const passwordMatch = {
-  regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).*$/,
-  errorMessage: 'Password must contain at least one number, one lowercase letter, one uppercase letter, and one special character'
-}
 export const changePasswordValidation = Yup.object().shape({
   oldPassword: Yup.string()
     .required('Required')
@@ -141,7 +143,10 @@ export const profileDetailsValidation = Yup.object().shape({
     .required('Required')
     .min(6, 'Address must be at least 6 characters')
     .max(100, 'Address must be less than 100 characters'),
-  phone_number: Yup.string().required('Phone is required'),
+  phone_number: Yup.string()
+    .required('Phone is required')
+    .min(6, 'Phone Number must be at least 6 digit')
+    .max(15, 'Phone Number must be less than 15 digit'),
   password: Yup.string()
     .required('Required')
     .min(6, 'Password must be at least 6 characters')

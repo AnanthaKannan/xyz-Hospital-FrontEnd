@@ -109,7 +109,7 @@ const LoginComp = () => {
                   <label className="link" id="signup">  Not a user? sing up</label>
                 </Link>
                 {/* <Link onClick={() =>onHandleForgotPassword(values, setErrors)} to="/" >  */}
-                <label className="link mt-1" onClick={() => onHandleForgotPassword(parameter.values, setErrors)}> Forgot password </label>
+                <label className="link mt-1" id='forgot-password' onClick={() => onHandleForgotPassword(parameter.values, setErrors)}> Forgot password </label>
                 {/* </Link> */}
 
               </div>
