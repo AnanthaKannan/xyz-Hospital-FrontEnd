@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { Suspense } from 'react';
+
 import routes from './Router';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,7 +19,9 @@ function App() {
       <ToastContainer />
       <Routes>
         {
-       routes.map((route) => <Route key={route.PATH} path={route.PATH} element={route.COMPONENT} />)
+       routes.map((route) => <Route key={route.PATH} path={route.PATH} 
+       element={ <Suspense fallback="Loading...."> { route.COMPONENT } </Suspense> } 
+       />)
      }
       </Routes>
     </Router>
@@ -25,3 +29,5 @@ function App() {
 }
 
 export default App;
+
+

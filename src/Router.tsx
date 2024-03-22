@@ -1,3 +1,4 @@
+import { lazy } from 'react'
 import CreateDoctor from './page/CreateDoctor';
 import CreatePatient from './page/CreatePatient';
 import ListPatient from './page/ListPatient';
@@ -16,6 +17,25 @@ import ChangePassword from './page/ChangePassword';
 import ProfileDetails from './page/ProfileDetails';
 import VitalSigns from './page/VitalSigns';
 import Page404 from './page/Page404';
+
+// const CreateDoctor = lazy(() => import('./page/CreateDoctor'));
+// const CreatePatient = lazy(() => import('./page/CreatePatient'));
+// const ListPatient = lazy(() => import('./page/ListPatient'));
+// const ListDoctor = lazy(() => import('./page/ListDoctor'));
+// const PatientRecord = lazy(() => import('./page/PatientRecord'));
+// const FeedBack = lazy(() => import('./page/FeedBack'));
+
+// const DummyPage = lazy(() => import('./page/Dummy'));
+// const Dashboard = lazy(() => import('./page/Dashboard'));
+
+// const LoginComp = lazy(() => import('./CognitoComp/LoginComp'));
+// const SignUpComp = lazy(() => import('./CognitoComp/SignUpComp'));
+// const ConfirmationCodeComp = lazy(() => import('./CognitoComp/ConfirmationCodeComp'));
+// const ForgotPasswordComp = lazy(() => import('./CognitoComp/ForgotPasswordComp'));
+// const ChangePassword = lazy(() => import('./page/ChangePassword'));
+// const ProfileDetails = lazy(() => import('./page/ProfileDetails'));
+// const VitalSigns = lazy(() => import('./page/VitalSigns'));
+// const Page404 = lazy(() => import('./page/Page404'));
 
 type routeType = {
   PATH: string,
