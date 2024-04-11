@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 //  the above line used to auto suggestion for cypress
-import faker from 'faker';
+import faker, { random } from 'faker';
 const common = require('../fixtures/common.json')
 
 describe('Patient Create', () => {
@@ -10,7 +10,6 @@ describe('Patient Create', () => {
     cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
     cy.get('#create-patient').click();
     cy.wait('@getAddress');
-    // cy.visit('http://localhost:3000/create-patient')
   });
 
   beforeEach(() => {
@@ -121,14 +120,11 @@ describe('Patient Create', () => {
   });
 
   const getYearAndMonth = () => {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-      'August', 'September', 'October', 'November', 'December'];
-    /* we have selected last year, because if we select this
-   year and if the month selected in feature then it will fail */
-    const lastYear = new Date().getFullYear() - 1;
-    const randomYear = faker.random.number({ min: 1970, max: lastYear });
-    const selectMonth = months[faker.random.number({ min: 0, max: 11 })];
-    return { year: randomYear, month: selectMonth };
+    const { number } = random;
+    const date = number({ min: 10, max: 28 });
+    const month = number({ min: 0, max: 11 });
+    const year = number({ min: 1970, max: new Date().getFullYear() - 1 });
+    return `${date}/${month}/${year}`
   };
 
   it('Text contain validation', () => {
@@ -160,13 +156,7 @@ describe('Patient Create', () => {
     cy.get('#lastName').type(faker.name.lastName());
     cy.gender(`#gender > ${common.dropDownCss}`);
 
-    cy.get('#dob').click();
-    const { year, month } = getYearAndMonth();
-    cy.get('#dob-year').focus().select(`${year}`);
-    cy.get('#dob-month').focus().select(month);
-    // TODO: The value 24 need to change as dynamic.
-    // issue, if the calender contains two 1's, t
-    cy.contains('24').click(); // select the date of 24
+    cy.get('#dob').type(getYearAndMonth())
     cy.get('#phone').type(faker.phone.phoneNumber());
     cy.get('#email').type(faker.internet.email());
 
@@ -192,13 +182,7 @@ describe('Patient Create', () => {
     cy.get('#firstName').type(faker.name.firstName());
     cy.gender(`#gender > ${common.dropDownCss}`);
 
-    cy.get('#dob').click();
-    const { year, month } = getYearAndMonth();
-    cy.get('#dob-year').focus().select(`${year}`);
-    cy.get('#dob-month').focus().select(month);
-    // TODO: The value 24 need to change as dynamic.
-    // issue, if the calender contains two 1's, t
-    cy.contains('24').click(); // select the date of 24
+    cy.get('#dob').type(getYearAndMonth())
     cy.contains('Phone');
     cy.get('#phone').type(faker.phone.phoneNumber());
 

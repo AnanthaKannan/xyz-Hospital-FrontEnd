@@ -30,7 +30,7 @@ describe('List Patient', () => {
     // click the view
     cy.get('[aria-rowindex="3"] > [aria-colindex="9"] > #view-').should('be.visible').click({ multiple: true });
     cy.get('#popupModel').should('exist');
-    cy.get('#mui-3').contains('Patient Details');
+    cy.get('.MuiPaper-root').contains('Patient Details');
 
     for (let i = 1; i <= 9; i++) {
       for (let j = 1; j <= 4; j++) {
