@@ -1,12 +1,15 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@config/*": ["src/config/*"],
+      "@libs/*": ["lib/*", "lib/index.ts"],
+      "@page/*": ["./src/page/*"],
+      "@service/*": ["src/service/*"],
+      "@type/*": ["src/type/*"]
+    },
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,6 +24,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*",  "types", "./setupTests.js"],
-  "exclude": ["node_modules", "dist"],
+  "include": ["src/**/*", "types", "./setupTests.js"],
+  "exclude": ["node_modules", "dist"]
 }

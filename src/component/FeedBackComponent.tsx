@@ -7,7 +7,7 @@ import TextEditor from '../reusable/TextEditor';
 import Hb from '../reusable/Hb';
 import { ClickButton, LoadingClickButton } from '../reusable/Button';
 import Hc from '../reusable/Hc';
-import { convertDate } from '../lib';
+import { convertDate } from '@libs/';
 import PaginationReuse from '../reusable/PaginationReuse';
 import { sweetConfirmation } from '../lib/sweetAlart';
 import { useAppSelector, useAppDispatch } from '../redux/hooks'
@@ -109,8 +109,8 @@ const FeedBackComponent = () => {
                 <div className="">
                   <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
                     <div>{convertDate(item.createdAt)}</div>
-                    <Icons icon={item.loading ? 'loader' : 'delete'} 
-                    onClick={() => onUpdateStatus(item._id)} size={25} className="pointer" />
+                    <Icons icon={item.loading ? 'loader' : 'delete'}
+                      onClick={() => onUpdateStatus(item._id)} size={25} className="pointer" />
                   </div>
                   <div className="p-3">{item.message ? parse(item.message) : ''}</div>
                 </div>

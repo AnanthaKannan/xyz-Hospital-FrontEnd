@@ -29,3 +29,6 @@ Cypress is a powerful end-to-end testing framework that is often used in conjunc
 #### Run Backend
 we have used back-end service by aws. [here](https://github.com/AnanthaKannan/xyzHospital-backend)
 our reference for the backend
+
+#### VS CODE
+1. Install `Prettier` to follow code format
