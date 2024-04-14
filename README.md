@@ -9,7 +9,7 @@ Email: sreeananthakannan@gmail.com
 You run the application [here](http://xyzhospital.surge.sh) http://xyzhospital.surge.sh
 
 #### Run the application in your local
-* Install the node js V21.x and NPM V10
+* Install the node js V14.21.3 and NPM V6.14.18
 * clone the code in your local `git clone https://github.com/AnanthaKannan/digitalHospital-FrontEnd.git`
 * Run the command `npm install`
 * Rename the `example.env` file to `.env` and populate it with the appropriate values 
