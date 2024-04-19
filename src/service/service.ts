@@ -1,5 +1,7 @@
 import axios from 'axios';
 import config from '../config'
+import { refreshTokenService } from '../lib/UserPool'
+import { setStorageDetails } from '../lib';
 
 const BASE_ULR = config.apiURL
 
@@ -14,11 +16,16 @@ http.interceptors.request.use(async (config) => {
 });
 
 http.interceptors.response.use((response) => response, 
-(error) => {
-  if(error.response.status === 401) {
+async(error) => {
+  const originalRequest = error.config;
+  if (error.response.status === 401 && !originalRequest._retry) {
+    originalRequest._retry = true;
+    const resp: any = await refreshTokenService();
+    setStorageDetails({ token: resp.idToken.jwtToken })
+    return http(originalRequest);
+  } else if(error.response.status === 401){
     window.location.href = 'login';
   }
-  return Promise.reject(error); 
 });
 
 export const listFeedBack = (params) => http.get('/feedback',{ params });

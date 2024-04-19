@@ -1,4 +1,4 @@
-import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
+import { CognitoUserPool, CognitoUser, CognitoUserSession } from 'amazon-cognito-identity-js';
 import { toast } from 'react-toastify';
 
 import config from '../config';
@@ -20,3 +20,45 @@ export const forgotPassword = (email) => {
     },
   });
 };
+
+export function getSessionService() {
+  const cognitoUser = UserPool.getCurrentUser();
+  return new Promise<CognitoUserSession>((resolve, reject) => {
+    if (!cognitoUser) {
+      reject(new Error("No user found"));
+      return;
+    }
+    cognitoUser.getSession((err: Error | null, session: CognitoUserSession | null) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      if (!session) {
+        reject(new Error("No session found"));
+        return;
+      }
+      resolve(session);
+    })
+  })
+}
+
+export const refreshTokenService = async() => {
+  const cognitoUserSession = await getSessionService();
+  console.log('cognitoUserSession', cognitoUserSession)
+  return new Promise(async (resolve, reject) => {
+    const refreshToken: any  = cognitoUserSession.getRefreshToken();
+    const cognitoUser = new CognitoUser({
+      Username: localStorage.getItem('CognitoIdentityServiceProvider.7b9nc4bje1pmfkgqtrqu70od78.LastAuthUser'),
+      Pool: UserPool,
+      Storage: window.localStorage
+    });
+    cognitoUser.refreshSession(refreshToken, (err, result) => {
+      console.log({err, result})
+      if (err) {
+        reject(err)
+        return
+      }
+      resolve(result);
+    });
+  });
+}
