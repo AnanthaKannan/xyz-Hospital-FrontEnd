@@ -117,7 +117,6 @@ const ListDoctorComp = () => {
 
   const listDoctor = () => {
     const { page, pageSize } = paginationModel;
-    console.log("am called----------");
     const params = {
       limit: pageSize,
       skip: page * pageSize,
