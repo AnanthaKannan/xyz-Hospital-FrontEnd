@@ -1,189 +1,92 @@
-import React from 'react';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { CgLogOut } from 'react-icons/cg';
-import { RiDashboardFill, RiLockPasswordLine, RiStethoscopeFill } from 'react-icons/ri';
-import { MdFeedback, MdOutlineDeleteOutline } from 'react-icons/md';
-import { BiMessageAltDetail } from 'react-icons/bi';
-import { BsInfo } from 'react-icons/bs';
-import { ImEnter } from 'react-icons/im';
-import { FaUsers } from 'react-icons/fa';
-import { FiEdit } from 'react-icons/fi';
-import { AiOutlineArrowRight, AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { GrAddCircle, GrSubtractCircle } from 'react-icons/gr';
-import { IoClose } from 'react-icons/io5';
+import React from "react";
+import PropTypes from "prop-types";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { CgLogOut } from "react-icons/cg";
+import {
+  RiDashboardFill,
+  RiLockPasswordLine,
+  RiStethoscopeFill,
+} from "react-icons/ri";
+import { MdFeedback, MdOutlineDeleteOutline } from "react-icons/md";
+import { BiMessageAltDetail } from "react-icons/bi";
+import { BsInfo } from "react-icons/bs";
+import { ImEnter } from "react-icons/im";
+import { FaUsers } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+import { AiOutlineArrowRight, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { GrAddCircle, GrSubtractCircle } from "react-icons/gr";
+import { IoClose } from "react-icons/io5";
 import { IoIosSave } from "react-icons/io";
-import { iconType } from '../type/type';
+import { iconType } from "../type/type";
 
-const SIZE = 25;
+const Icons = ({ size, onClick, className, icon, id }: iconType) => {
+  const commonProps = {
+    id: `${icon}-${id}`,
+    onClick,
+    className: `pointer ${className}`,
+    size,
+  };
 
-export const Icons = ({
-  size = SIZE, onClick = null, className = '', icon, id = '',
-}: iconType) => {
   switch (icon) {
-    case 'edit':
-      return (
-        <FiEdit
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'save':
-      return (
-        <IoIosSave
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'loader':
+    case "edit":
+      return <FiEdit {...commonProps} />;
+    case "save":
+      return <IoIosSave {...commonProps} />;
+    case "loader":
       return (
         <AiOutlineLoading3Quarters
-          id={`${icon}-${id}`}
+          {...commonProps}
           className={`loading-process ${className}`}
-          size={size}
         />
       );
-    case 'delete':
-      return (
-        <MdOutlineDeleteOutline
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'info':
-      return (
-        <BsInfo
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'hamburger':
-      return (
-        <GiHamburgerMenu
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'view':
-      return (
-        <BiMessageAltDetail
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          size={size}
-          className="pointer"
-        />
-      );
-    case 'changePassword':
-      return (
-        <RiLockPasswordLine
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'logout':
-      return (
-        <CgLogOut
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'entry':
-      return (
-        <ImEnter
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'stethoscope':
-      return (
-        <RiStethoscopeFill
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'feedback':
-      return (
-        <MdFeedback
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'arrowRight':
-      return (
-        <AiOutlineArrowRight
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'users':
-      return (
-        <FaUsers
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'addCircle':
-      return (
-        <GrAddCircle
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'subCircle':
-      return (
-        <GrSubtractCircle
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'dashboard':
-      return (
-        <RiDashboardFill
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
-    case 'close':
-      return (
-        <IoClose
-          id={`${icon}-${id}`}
-          onClick={() => onClick && onClick()}
-          className={`pointer ${className}`}
-          size={size}
-        />
-      );
+    case "delete":
+      return <MdOutlineDeleteOutline {...commonProps} />;
+    case "info":
+      return <BsInfo {...commonProps} />;
+    case "hamburger":
+      return <GiHamburgerMenu {...commonProps} />;
+    case "view":
+      return <BiMessageAltDetail {...commonProps} />;
+    case "changePassword":
+      return <RiLockPasswordLine {...commonProps} />;
+    case "logout":
+      return <CgLogOut {...commonProps} />;
+    case "entry":
+      return <ImEnter {...commonProps} />;
+    case "stethoscope":
+      return <RiStethoscopeFill {...commonProps} />;
+    case "feedback":
+      return <MdFeedback {...commonProps} />;
+    case "arrowRight":
+      return <AiOutlineArrowRight {...commonProps} />;
+    case "users":
+      return <FaUsers {...commonProps} />;
+    case "addCircle":
+      return <GrAddCircle {...commonProps} />;
+    case "subCircle":
+      return <GrSubtractCircle {...commonProps} />;
+    case "dashboard":
+      return <RiDashboardFill {...commonProps} />;
+    case "close":
+      return <IoClose {...commonProps} />;
     default:
-      return (<div />);
+      return <div />;
   }
+};
+
+Icons.prototype = {
+  size: PropTypes.number,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  icon: PropTypes.string.isRequired,
+  id: PropTypes.string,
+};
+
+Icons.defaultProps = {
+  size: 25,
+  onClick: () => {},
+  className: "",
+  id: "",
 };
 
 export default Icons;
