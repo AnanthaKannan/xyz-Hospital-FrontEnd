@@ -106,7 +106,8 @@ const ListDoctorComp = () => {
     }, "Yes, delete it!");
   };
 
-  const onHandleUpdate = (doctorDetails) => {
+  const onHandleUpdate = (doctorId) => {
+    const doctorDetails = rowData.find((row) => row._id === doctorId);
     console.log("doctorDetails", doctorDetails);
     sweetConfirmation(
       () => navigate("/create-doctor", { state: doctorDetails }),
@@ -133,7 +134,7 @@ const ListDoctorComp = () => {
   };
 
   const onCellClick = ({ field, row }) => {
-    if (field === "edit") onHandleUpdate(row);
+    if (field === "edit") onHandleUpdate(row._id);
     else if (field === "delete") onHandleDelete(row._id);
   };
 
