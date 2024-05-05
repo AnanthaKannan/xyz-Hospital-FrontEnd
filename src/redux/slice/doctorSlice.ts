@@ -8,6 +8,10 @@ const feedBackSlice = createSlice({
   name: 'doctor',
   initialState: doctorInitialState,
   reducers: {
+    manipulateDocListData: (state, { payload }) => {
+      console.log('payload', payload)
+      state.doctorList.data = payload
+    }
   },
   extraReducers: (builder) => {
     // list Doctor
@@ -63,4 +67,5 @@ const feedBackSlice = createSlice({
   }
 })
 
+export const { manipulateDocListData } = feedBackSlice.actions
 export default feedBackSlice.reducer;
