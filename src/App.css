@@ -139,10 +139,3 @@ a:hover {
   padding-top: 10px;
   margin-top: 20px;
 }
-
-.containerx {
-  min-height: 100vh; /* Set container to full height of the viewport */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Space between header and version */
-}
