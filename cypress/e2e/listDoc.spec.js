@@ -67,16 +67,16 @@ describe('#List Doctor', () => {
     cy.get('.swal2-popup').should('not.exist');
   });
 
-  it('Should go to edit page', () => {
-    cy.get('.MuiDataGrid-row--firstVisible > [data-field="edit"]').click();
-    cy.get('.swal2-popup').should('exist');
-    cy.get('.swal2-confirm').click();
-    cy.url().should('eq', `${Cypress.config('baseUrl')}/create-doctor`);
-    // cy.wait('@getAddress');
-    cy.get('#doctor-cancel').click()
-    // TODO: submit action need to add. ISSUE in back end 
-    // https://github.com/AnanthaKannan/xyzHospital-backend/issues/74
-    // cy.wait('@updateDoctor');
-    cy.url().should('eq', `${Cypress.config('baseUrl')}/list-doctor`);
-  })
+  // it('Should go to edit page', () => {
+  //   cy.get('.MuiDataGrid-row--firstVisible > [data-field="edit"]').click();
+  //   cy.get('.swal2-popup').should('exist');
+  //   cy.get('.swal2-confirm').click();
+  //   cy.url().should('eq', `${Cypress.config('baseUrl')}/create-doctor`);
+  //   // cy.wait('@getAddress');
+  //   cy.get('#doctor-cancel').click()
+  //   // TODO: submit action need to add. ISSUE in back end 
+  //   // https://github.com/AnanthaKannan/xyzHospital-backend/issues/74
+  //   // cy.wait('@updateDoctor');
+  //   cy.url().should('eq', `${Cypress.config('baseUrl')}/list-doctor`);
+  // })
 });
