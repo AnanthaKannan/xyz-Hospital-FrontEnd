@@ -1,12 +1,13 @@
 {
   "name": "digitalHospital",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "private": true,
   "node_version": "14.21.3",
   "author": "Sree Anantha Kannan <sreeananthakannan@gmail.com>",
   "repository": "https://github.com/AnanthaKannan/digitalHospital-FrontEnd",
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "node checkVersion.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress": "npx cypress open --env configFile=dev",
