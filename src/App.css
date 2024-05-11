@@ -109,7 +109,7 @@ a:hover {
   background-color: #d1e9fc;
 }
 
-.swal2-cancel{
+.swal2-cancel {
   margin-right: 25px;
 }
 
@@ -130,4 +130,19 @@ a:hover {
 
 .css-lzr3bi-LoadingOverlayWrapperBase {
   border-radius: 5px;
+}
+
+.version {
+  text-align: center;
+  color: #333;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  margin-top: 20px;
+}
+
+.containerx {
+  min-height: 100vh; /* Set container to full height of the viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space between header and version */
 }
