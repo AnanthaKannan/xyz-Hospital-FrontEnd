@@ -1,5 +1,6 @@
-const dateFn = require('date-fn');
-const { fromDateToAgeConverter, getGenderByValue } = require('../lib/index');
+// const dateFn = require('date-fn');
+import dateFn from 'date-fn'
+import { fromDateToAgeConverter, getGenderByValue } from '../lib/index'
 
 export const listPatientColumnDef: any = [
   {

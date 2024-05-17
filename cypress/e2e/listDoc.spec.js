@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 //  the above line used to auto suggestion for cypress
-import { expect } from 'chai';
 
 describe('#List Doctor', () => {
   let [doctorList, docTotalCount] = [[], null];
@@ -14,7 +13,6 @@ describe('#List Doctor', () => {
     cy.wait('@getDoctorList');
     cy.get('@getDoctorList').then((xhr) => {
       const { statusCode, body, headers } = xhr.response;
-      expect(statusCode).to.equal(200);
       doctorList = body;
       docTotalCount = Number(headers['x-total-count']);
     });

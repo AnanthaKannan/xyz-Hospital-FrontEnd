@@ -1,10 +1,7 @@
 {
-  "cSpell.words": [
-    "formik",
-    "Stoagedata"
-  ],
-  "editor.rulers": [80, 100],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
+  "cSpell.words": ["formik", "Stoagedata"],
+  "editor.rulers": [80, 100]
+  // "editor.codeActionsOnSave": {
+  //   "source.fixAll.eslint": "explicit"
+  // },
 }

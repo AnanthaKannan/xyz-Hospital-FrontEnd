@@ -47,7 +47,7 @@ const ListDoctorComp = () => {
     data: rowData,
     tc: totalCount,
     loading: dListLoading,
-  } = useAppSelector((state) => state.doctor.doctorList);
+  } = useAppSelector((state) => state?.doctor?.doctorList);
 
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
