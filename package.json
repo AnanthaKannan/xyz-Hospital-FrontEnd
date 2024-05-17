@@ -1,8 +1,9 @@
 {
   "name": "xyz-hospital-frontend",
   "version": "2.1.0",
-  "private": true,
-  "node_version": "14.21.3",
+  "packageManager": "pnpm@9.1.1",
+  "node_version": "20.13.1",
+  "private": false,
   "author": "Sree Anantha Kannan <sreeananthakannan@gmail.com>",
   "repository": "https://github.com/AnanthaKannan/digitalHospital-FrontEnd",
   "scripts": {
