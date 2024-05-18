@@ -159,3 +159,18 @@ export const isFulfilled = (result): Boolean => {
     return true
   return false
 }
+
+interface PageConParams {
+  pageSize: number;
+  page: number;
+}
+
+interface pageConRes {
+  limit: number;
+  skip: number;
+}
+
+export const pageConversion = ({ pageSize, page }: PageConParams): pageConRes => ({
+  limit: pageSize,
+  skip: page * pageSize,
+})

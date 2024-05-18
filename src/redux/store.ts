@@ -1,5 +1,6 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit'
 import { feedBackApi } from "../service/feedback";
+import { patientApi } from "../service/patient";
 import feedBackReducer from './slice/feedbackSlice'
 import patientSlice from './slice/patientSlice'
 import doctorSlice from './slice/doctorSlice'
@@ -12,10 +13,11 @@ export const createStore = (
       feedBack: feedBackReducer,
       patient: patientSlice,
       doctor: doctorSlice,
-      [feedBackApi.reducerPath]: feedBackApi.reducer
+      [feedBackApi.reducerPath]: feedBackApi.reducer,
+      [patientApi.reducerPath]: patientApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(feedBackApi.middleware),
+      getDefaultMiddleware().concat([feedBackApi.middleware, patientApi.middleware]),
     ...options
   });
 

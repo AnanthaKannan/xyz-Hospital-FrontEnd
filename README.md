@@ -34,3 +34,4 @@ our reference for the backend
 
 ## Reference
 https://redux-toolkit.js.org/rtk-query/usage/examples
+https://www.apollographql.com/docs/react/data/queries/#manual-execution-with-uselazyquery

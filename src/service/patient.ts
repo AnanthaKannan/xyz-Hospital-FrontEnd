@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-export interface FeedBack {
+export interface Patient {
   _id: string;
   id: number;
   isDeleted: boolean;
@@ -9,16 +9,24 @@ export interface FeedBack {
 }
 
 export interface QueryParams {
-  project: string;
-  filter: string;
-  limit: number;
-  skip: number;
+  project?: string;
+  filter?: string;
+  limit?: number;
+  skip?: number;
 }
 
-type FeedBacksResponse = FeedBack[]
+type PatinetResponse = {
+  data: Patient[],
+  tc: number
+}
 
-export const feedBackApi = createApi({
-  reducerPath: "feedback",
+// const transformResponse = (response, meta) => ({
+//   data: response,
+//   tc: meta?.response?.headers.get('X-Total-Count')
+// })
+
+export const patientApi = createApi({
+  reducerPath: "patients",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://u2f00s7xt0.execute-api.us-east-1.amazonaws.com/dev/",
     prepareHeaders: (headers) => {
@@ -27,20 +35,20 @@ export const feedBackApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    getFeedBacks: build.query<FeedBacksResponse, QueryParams>({
+    getPatients: build.query<PatinetResponse, QueryParams>({
       query: (params) => ({
-        url: 'feedback',
+        url: 'patient',
         method: 'GET',
         params,
       }),
-      transformResponse: (response) => {
+      transformResponse: (response, meta) => {
         return {
           data: response,
           tc: meta?.response?.headers.get('X-Total-Count')
         }
-      }
+      },
     }),
-    getPost: build.query<FeedBack, number>({
+    getPost: build.query<Patient, number>({
       query: (id) => `feedback/${id}`,
     }),
   })
@@ -48,6 +56,7 @@ export const feedBackApi = createApi({
 
 
 export const {
-  useGetFeedBacksQuery,
+  useGetPatientsQuery,
+  useLazyGetPatientsQuery,
   useGetPostQuery,
-} = feedBackApi;
+} = patientApi;

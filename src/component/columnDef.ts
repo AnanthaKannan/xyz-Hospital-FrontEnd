@@ -97,4 +97,3 @@ export const listPatientColumnDef: any = [
   },
 ];
 
-export default listPatientColumnDef;
