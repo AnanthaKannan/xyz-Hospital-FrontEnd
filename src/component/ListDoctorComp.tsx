@@ -124,10 +124,6 @@ const ListDoctorComp = () => {
     listDoctor();
   }, [paginationModel]);
 
-  const onPageChange = (props) => {
-    setPaginationModel(props);
-  };
-
   const onCellClick = ({ field, row }) => {
     if (field === "edit") onHandleUpdate(row._id);
     else if (field === "delete") onHandleDelete(row._id);
@@ -141,7 +137,7 @@ const ListDoctorComp = () => {
         rows={conversion(rowData)}
         rowCount={totalCount}
         columns={columns}
-        onPageChange={onPageChange}
+        setPaginationModel={setPaginationModel}
         onCellClick={onCellClick}
         loading={dListLoading}
       />

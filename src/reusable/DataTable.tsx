@@ -5,15 +5,20 @@ import Box from "@mui/material/Box";
 const DataTable = ({
   rows,
   columns,
-  onPageChange,
   onCellClick,
   rowCount,
   paginationModel,
+  setPaginationModel,
   loading,
 }) => {
+  const onPageChange = (props) => {
+    setPaginationModel(props);
+  };
+
   return (
     <DataGrid
       sx={{ margin: 0, padding: 0 }}
+      rowHeight={40}
       rowCount={rowCount}
       paginationMode="server"
       onPaginationModelChange={onPageChange}
@@ -34,7 +39,7 @@ DataTable.prototype = {
   loading: PropTypes.bool,
   rowCount: PropTypes.number.isRequired,
   rows: PropTypes.array.isRequired,
-  onPageChange: PropTypes.func.isRequired,
+  setPaginationModel: PropTypes.func.isRequired,
   onCellClick: PropTypes.func,
   columns: PropTypes.any.isRequired, // TODO: needs to provide proper type
   paginationModel: PropTypes.shape({

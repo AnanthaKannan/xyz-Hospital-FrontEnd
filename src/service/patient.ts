@@ -47,16 +47,20 @@ export const patientApi = createApi({
           tc: meta?.response?.headers.get('X-Total-Count')
         }
       },
+      providesTags: [{ type: 'Patients', id: 'LIST' }],
     }),
-    getPost: build.query<Patient, number>({
-      query: (id) => `feedback/${id}`,
-    }),
+    deletePatient: build.mutation({
+      query: ({ id }) => ({
+        url: `patient/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Patients', id: 'LIST' }],
+    })
   })
 });
-
 
 export const {
   useGetPatientsQuery,
   useLazyGetPatientsQuery,
-  useGetPostQuery,
+  useDeletePatientMutation,
 } = patientApi;
