@@ -1,7 +1,7 @@
 name: Deployment
 on:
   push:
-    branches: [ master ]
+    branches: [ ci-deploy-bug-fixed ]
 
 env:
   VITE_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
@@ -25,7 +25,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm@9.1.1
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install
       - name: creating build
         run: pnpm run build
         
