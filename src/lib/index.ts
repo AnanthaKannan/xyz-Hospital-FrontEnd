@@ -5,6 +5,9 @@ import { genderEnum } from './enum';
 import config from '../config';
 import { imageUploadCodeType, imagePathResponseType, HospitalDetailsType } from '../type/type';
 
+export { default as sweetConfirmation } from './sweetAlart'
+export { default as timeList } from './times'
+
 export const onHandleChange = (e: any, handleChange: Function) => {
   const element = {
     target: {
@@ -102,7 +105,7 @@ export const fromDateToAgeConverter = (date: Date): string => {
 export const getInitialValuesFromYup = (yupSchema): any => {
   const { fields } = yupSchema;
   const initialValues = Object.keys(fields).reduce((result, key) => {
-    let value:any = '';
+    let value: any = '';
     const { type } = fields[key];
     if (type === 'boolean') value = true;
     else if (type === 'number') value = 0;
@@ -121,14 +124,14 @@ export const valueRefinement = () => {
 
 export const addLoaderInArray = (listData: any[], id: string, loading: boolean) => {
   return listData.map((obj) => {
-    if(id === obj._id) obj.loading = loading;
+    if (id === obj._id) obj.loading = loading;
     return obj
   })
 }
 
 export const getTotalCount = (result): number => {
   const tc: string = result.headers['x-total-count']
-  if(tc) return Number(tc)
+  if (tc) return Number(tc)
   return 0
 }
 
@@ -147,6 +150,27 @@ export const decodeJwtToken = (): HospitalDetailsType => {
     }
   } catch (error) {
     console.error('Error decoding the token:', error.message);
-    return { email: '', phoneNumber: '', hospitalName: '', address: '', picture: ''}
+    return { email: '', phoneNumber: '', hospitalName: '', address: '', picture: '' }
   }
 }
+
+export const isFulfilled = (result): Boolean => {
+  if (result?.meta?.requestStatus === 'fulfilled')
+    return true
+  return false
+}
+
+interface PageConParams {
+  pageSize: number;
+  page: number;
+}
+
+interface pageConRes {
+  limit: number;
+  skip: number;
+}
+
+export const pageConversion = ({ pageSize, page }: PageConParams): pageConRes => ({
+  limit: pageSize,
+  skip: page * pageSize,
+})

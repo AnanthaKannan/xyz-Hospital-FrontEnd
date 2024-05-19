@@ -2,9 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { addLoaderInArray } from '../../lib'
 import { feedBackInitialState } from '../initialState'
-import {listFeedBackThunk, 
-  addFeedBackThunk, 
-  updateFeedBackThunk } from '../thunk'
+import {
+  listFeedBackThunk,
+  addFeedBackThunk,
+  updateFeedBackThunk
+} from '../thunk'
 
 const feedBackSlice = createSlice({
   name: 'feedback',

@@ -2,10 +2,15 @@ import PropTypes from "prop-types";
 
 import Ha from "./Ha";
 
-const LoginBackground = ({ children, title, classNameA='col-md-7', classNameB='col-md-3' }) => (
+const LoginBackground = ({
+  children,
+  title,
+  classNameA = "col-md-7",
+  classNameB = "col-md-3",
+}) => (
   <div className="bg-image container-fluid">
     <div className="row no-flip login-height">
-       <div className={classNameA} />
+      <div className={classNameA} />
       <div className={`${classNameB} d-flex align-items-center`}>
         <div className="border shadow p-5 rounded border border-light">
           <Ha text={title} className="text-center" />

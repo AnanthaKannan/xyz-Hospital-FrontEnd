@@ -4,7 +4,7 @@
 
 describe('List Patient', () => {
   before(() => {
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientList');
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/patient?*`).as('getPatientList');
 
     cy.login();
     cy.get('#list-patient').click();
@@ -13,7 +13,7 @@ describe('List Patient', () => {
   });
 
   beforeEach(() => {
-    cy.get('.ag-body-horizontal-scroll-viewport').scrollTo('right');
+    // cy.get('.ag-body-horizontal-scroll-viewport').scrollTo('right');
     cy.restoreLocalStorage();
   });
 
@@ -21,10 +21,10 @@ describe('List Patient', () => {
     cy.saveLocalStorage();
   });
 
-  it('should render ag-gird', () => {
-    // ensures that the ag-grid has rendered
-    cy.get('.ag-root-wrapper').should('be.visible');
-  });
+  // it('should render ag-gird', () => {
+  //   // ensures that the ag-grid has rendered
+  //   cy.get('.ag-root-wrapper').should('be.visible');
+  // });
 
   it('Patient Detail view popup model should open', () => {
     // click the view

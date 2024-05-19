@@ -1,4 +1,4 @@
-import Icons from './Icons';
+import { Icons } from "../reusable";
 
 const size = 20;
 

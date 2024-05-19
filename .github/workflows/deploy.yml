@@ -4,11 +4,11 @@ on:
     branches: [ master ]
 
 env:
-  REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
-  REACT_APP_IMG_URL: ${{ secrets.REACT_APP_IMG_URL }}
-  REACT_APP_USER_POOL_ID: ${{ secrets.REACT_APP_USER_POOL_ID }}
-  REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
-  REACT_APP_REGION: ${{ secrets.REACT_APP_REGION }}
+  VITE_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+  VITE_APP_IMG_URL: ${{ secrets.REACT_APP_IMG_URL }}
+  VITE_APP_USER_POOL_ID: ${{ secrets.REACT_APP_USER_POOL_ID }}
+  VITE_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+  VITE_APP_REGION: ${{ secrets.REACT_APP_REGION }}
 
 jobs:
   surge:
@@ -19,19 +19,21 @@ jobs:
       - name: Set CI to false
         run: echo "CI=false" >> $GITHUB_ENV
       - name: installing node 
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with: 
-          node-version: '14'
+          node-version: '20'
+      - name: Install pnpm
+        run: npm install -g pnpm@9.1.1
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
       - name: creating build
-        run: npm run build
+        run: pnpm run build
         
       - name: Deploy to srurge
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: 'xyzhospital.surge.sh'
-          project: './build'
+          project: './dist'
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
 

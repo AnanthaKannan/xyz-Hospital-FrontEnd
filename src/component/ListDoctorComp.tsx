@@ -1,40 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Hb from '../reusable/Hb';
-import Hc from '../reusable/Hc';
-import Icons from '../reusable/Icons';
-import { sweetConfirmation } from '../lib/sweetAlart';
-import PaginationReuse from '../reusable/PaginationReuse';
-import { timeList } from '../lib/times';
-import { convertDate } from '../lib';
-import { useAppSelector, useAppDispatch } from '../redux/hooks'
-import { deleteDoctorThunk, listDoctorThunk } from '../redux/thunk';
-import LoadingOverlayComp from '../reusable/LoadingOverlayComp';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { GridColDef } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 
+import { pageConversion, sweetConfirmation, timeList } from "@/lib";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { deleteDoctorThunk, listDoctorThunk } from "../redux/thunk";
+import { manipulateDocListData } from "../redux/slice/doctorSlice";
+import { DataTable, Hb, Icons } from "@/reusable";
+
+const RenderDelete = ({ row }) => {
+  return (
+    <>
+      {row.loading ? (
+        <Icons icon="loader" size={22} />
+      ) : (
+        <Icons icon="delete" size={22} />
+      )}
+    </>
+  );
+};
+
+const columns: GridColDef[] = [
+  { field: "id", headerName: "Doctor Id" },
+  { field: "name", headerName: "Name" },
+  { field: "specialist", headerName: "Specialist", flex: 1 },
+  { field: "availableDayConvert", headerName: "Available Days", flex: 1 },
+  { field: "availableTimeConvert", headerName: "Available Time", flex: 1 },
+  {
+    field: "edit",
+    headerName: "Edit",
+    renderCell: () => <Icons icon="edit" size={20} />,
+    display: "flex" as const, // DON'T KNOW USE OF THIS
+  },
+  {
+    field: "delete",
+    headerName: "Delete",
+    renderCell: RenderDelete,
+  },
+];
 
 const ListDoctorComp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { data: rowData, tc: totalCount, loading: dListLoading } = useAppSelector((state) => state.doctor.doctorList);
-  const { refresh } = useAppSelector((state) => state.doctor);
-  const { loading: dDeleteLoading } = useAppSelector((state) => state.doctor.deleteDoctor);
+  const {
+    data: rowData,
+    tc: totalCount,
+    loading: dListLoading,
+  } = useAppSelector((state) => state?.doctor?.doctorList);
 
-  const [page, setPage] = useState(0);
-  const perPage = 10;
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
 
-  const availableDay = (avDay) => Object.keys(avDay)
-    .reduce((days, day) => {
-      if (avDay[day]) {
-        days.push(day);
-      }
-      return days;
-    }, [])
-    .join(', ');
+  const availableDay = (avDay) =>
+    Object.keys(avDay)
+      .reduce((days, day) => {
+        if (avDay[day]) {
+          days.push(day);
+        }
+        return days;
+      }, [])
+      .join(", ");
 
   const availableTime = (availableTimeList: any) => {
     try {
-      let time = '';
+      let time = "";
       availableTimeList.forEach((item) => {
         const { from, to } = item;
         const fromObj = timeList[Number(from)];
@@ -44,99 +77,75 @@ const ListDoctorComp = () => {
       return time.substring(0, time.length - 2);
     } catch (e) {
       console.log(e);
-      return '';
+      return "";
     }
   };
 
-  const conversion = (data: any) => data.map((item: any) => ({
-    ...item,
-    availableDayConvert: availableDay(item.availableDay),
-    availableTimeConvert: availableTime(item.availableTime),
-  }));
+  const conversion = (data: any) =>
+    data.map((item: any) => ({
+      ...item,
+      availableDayConvert: availableDay(item.availableDay),
+      availableTimeConvert: availableTime(item.availableTime),
+    }));
 
   const onHandleDelete = async (_doctorId) => {
     sweetConfirmation(async () => {
-     const result = await dispatch(deleteDoctorThunk({ id: _doctorId }));
-     if (result?.meta?.requestStatus === 'fulfilled') setPage(0)
-     console.log('result', result)
-    }, 'Yes, delete it!');
+      const updatedRow = rowData.map((row) =>
+        row._id === _doctorId ? { ...row, loading: true } : { ...row }
+      );
+      dispatch(manipulateDocListData(updatedRow));
+
+      dispatch(deleteDoctorThunk({ id: _doctorId }))
+        .then(() => listDoctor())
+        .catch(() => {
+          const updatedRow = rowData.map((row) => ({
+            ...row,
+            loading: false,
+          }));
+          dispatch(manipulateDocListData(updatedRow));
+        });
+    }, "Yes, delete it!");
   };
 
-  const onHandleUpdate = (doctorDetails) => {
-    console.log('doctorDetails', doctorDetails);
-    sweetConfirmation(() => navigate('/create-doctor', { state: doctorDetails }), 'Yes, Update it!');
+  const onHandleUpdate = (doctorId) => {
+    const doctorDetails = rowData.find((row) => row._id === doctorId);
+    console.log("doctorDetails", doctorDetails);
+    sweetConfirmation(
+      () => navigate("/create-doctor", { state: doctorDetails }),
+      "Yes, Update it!"
+    );
+  };
+
+  const listDoctor = () => {
+    dispatch(listDoctorThunk(pageConversion(paginationModel)));
   };
 
   useEffect(() => {
-    const params = {
-      limit: perPage,
-      skip: page
-    }
-    dispatch(listDoctorThunk(params))
-  }, [page]);
+    listDoctor();
+  }, [paginationModel]);
+
+  const onPageChange = (props) => {
+    setPaginationModel(props);
+  };
+
+  const onCellClick = ({ field, row }) => {
+    if (field === "edit") onHandleUpdate(row._id);
+    else if (field === "delete") onHandleDelete(row._id);
+  };
 
   return (
-    <div>
+    <Box>
       <Hb text="Doctors" />
-
-      <div className="row">
-        {/* {
-          rowData.length < 1 ?
-            <Hc className='text-center mt-5' text='No Record Found...' />
-            : */}
-            <LoadingOverlayComp loading={dListLoading || dDeleteLoading}>
-              <table className="table table-bordered font-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">Doctor Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Specialist</th>
-                    <th scope="col">Available Days</th>
-                    <th scope="col">Available Time</th>
-                    <th scope="col">Record created</th>
-                    <th scope="col">Update</th>
-                    <th scope="col">Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {conversion(rowData).map((obj) => (
-                    <tr>
-                      <th>{obj.id}</th>
-                      <td>{obj.name}</td>
-                      <td>{obj.specialist}</td>
-                      <td>{obj.availableDayConvert}</td>
-                      <td>{obj.availableTimeConvert}</td>
-                      <td>{convertDate(obj.createdAt)}</td>
-                      <td>
-                        <Icons
-                          icon="edit"
-                          onClick={() => onHandleUpdate(obj)}
-                          size={20}
-                        />
-                      </td>
-                      <td>
-                        <Icons
-                          icon="delete"
-                          onClick={() => onHandleDelete(obj._id)}
-                          size={20}
-                          className="mx-3 pointer"
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </LoadingOverlayComp>
-        {/* } */}
-      </div>
-      <br />
-      <PaginationReuse
-        perPage={perPage}
-        totalCount={totalCount}
-        setPage={setPage}
+      <DataTable
+        paginationModel={paginationModel}
+        rows={conversion(rowData)}
+        rowCount={totalCount}
+        columns={columns}
+        onPageChange={onPageChange}
+        onCellClick={onCellClick}
+        loading={dListLoading}
       />
-      <br />
-    </div>
+    </Box>
   );
 };
 

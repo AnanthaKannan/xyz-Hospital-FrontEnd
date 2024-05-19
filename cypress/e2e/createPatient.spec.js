@@ -56,7 +56,7 @@ describe('Patient Create', () => {
 
   it('Patient validation', () => {
     cy.get('#patient-submit').click(); // click the submit button
-    
+
     cy.get('#error-firstName').should('have.text', 'firstName is a required field');
     cy.get('#error-gender').should('have.text', 'gender is a required field');
 

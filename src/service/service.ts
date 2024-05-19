@@ -5,9 +5,9 @@ import { setStorageDetails } from '../lib';
 
 const BASE_ULR = config.apiURL
 
-const http = axios.create({
+export const http = axios.create({
   baseURL: BASE_ULR,
-  headers: { 'content-type': 'application/json' }
+  headers: { 'content-type': 'application/json' },
 })
 
 http.interceptors.request.use(async (config) => {
@@ -15,20 +15,20 @@ http.interceptors.request.use(async (config) => {
   return config
 });
 
-http.interceptors.response.use((response) => response, 
-async(error) => {
-  const originalRequest = error.config;
-  if (error.response.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true;
-    const resp: any = await refreshTokenService();
-    setStorageDetails({ token: resp.idToken.jwtToken })
-    return http(originalRequest);
-  } else if(error.response.status === 401){
-    window.location.href = 'login';
-  }
-});
+http.interceptors.response.use((response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const resp: any = await refreshTokenService();
+      setStorageDetails({ token: resp.idToken.jwtToken })
+      return http(originalRequest);
+    } else if (error.response.status === 401) {
+      window.location.href = 'login';
+    }
+  });
 
-export const listFeedBack = (params) => http.get('/feedback',{ params });
+export const listFeedBack = (params) => http.get('/feedback', { params });
 
 export const addFeedBack = (data) => http.post('/feedback', data);
 
