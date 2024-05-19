@@ -15,7 +15,10 @@ export interface QueryParams {
   skip: number;
 }
 
-type FeedBacksResponse = FeedBack[]
+type FeedBacksResponse = {
+  data: FeedBack[],
+  tc: number
+}
 
 export const feedBackApi = createApi({
   reducerPath: "feedback",
@@ -33,21 +36,36 @@ export const feedBackApi = createApi({
         method: 'GET',
         params,
       }),
-      transformResponse: (response) => {
+      transformResponse: (response, meta) => {
         return {
           data: response,
           tc: meta?.response?.headers.get('X-Total-Count')
         }
-      }
+      },
+      providesTags: [{ type: 'Feedback', id: 'LIST' }],
     }),
-    getPost: build.query<FeedBack, number>({
-      query: (id) => `feedback/${id}`,
+    updateFeedback: build.mutation({
+      query: ({ id, body }) => ({
+        url: `feedback/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Feedback', id: 'LIST' }],
     }),
+    addFeedback: build.mutation({
+      query: (body) => ({
+        url: 'feedback',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Feedback', id: 'LIST' }],
+    })
   })
 });
 
 
 export const {
   useGetFeedBacksQuery,
-  useGetPostQuery,
+  useUpdateFeedbackMutation,
+  useAddFeedbackMutation
 } = feedBackApi;

@@ -1,62 +1,42 @@
-/* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import parse from "html-react-parser";
-import Icons from "../reusable/Icons";
+import { toast } from "react-toastify";
 
-import TextEditor from "../reusable/TextEditor";
-import Hb from "../reusable/Hb";
-import { ClickButton, LoadingClickButton } from "../reusable/Button";
-import Hc from "../reusable/Hc";
-import { convertDate } from "../lib";
-import PaginationReuse from "../reusable/PaginationReuse";
-import { sweetConfirmation } from "../lib/sweetAlart";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import LoadingOverlayComp from "../reusable/LoadingOverlayComp";
-import { useGetFeedBacksQuery } from "../service/feedback";
+import { convertDate, sweetConfirmation } from "@/lib";
 import {
-  listFeedBackThunk,
-  addFeedBackThunk,
-  updateFeedBackThunk,
-} from "../redux/thunk";
-import { FeedBackArg } from "../type/type";
+  LoadingOverlayComp,
+  ClickButton,
+  LoadingClickButton,
+  TextEditor,
+  Hb,
+  Hc,
+  Icons,
+  PaginationReuse,
+} from "@/reusable";
+import {
+  useGetFeedBacksQuery,
+  useUpdateFeedbackMutation,
+  useAddFeedbackMutation,
+} from "@/service";
 
 const FeedBackComponent = () => {
-  const dispatch = useAppDispatch();
   const [text, setText] = useState("");
   const [page, setPage] = useState(0);
   const perPage = 2;
 
-  // const {
-  //   data: rowData = [],
-  //   tc: totalCount = 50,
-  //   isLoading: fbListLoading,
-  //   isFetching: fbListLoading,
-  // } = useGetFeedBacksQuery({
-  //   project: "message,createdAt",
-  //   filter: "isDeleted:eq:false",
-  //   limit: perPage,
-  //   skip: page,
-  // });
-
   const {
-    data: rowData,
-    tc: totalCount,
-    loading: fbListLoading,
-  } = useAppSelector((state) => state.feedBack.feedBackList);
-  const { refresh } = useAppSelector((state) => state.feedBack);
-  const { loading: fbAddLoading } = useAppSelector(
-    (state) => state.feedBack.addFeedBack
-  );
+    data: { data: rowData = [], tc: totalCount = 0 } = {},
+    isFetching: isFeedbackFetching,
+  } = useGetFeedBacksQuery({
+    project: "message,createdAt",
+    filter: "isDeleted:eq:false",
+    limit: perPage,
+    skip: page,
+  });
 
-  const feedBackList = async (skip = 0) => {
-    const params: FeedBackArg = {
-      project: "message,createdAt",
-      filter: "isDeleted:eq:false",
-      limit: perPage,
-      skip,
-    };
-    dispatch(listFeedBackThunk(params));
-  };
+  const [updateFeedBack, { isLoading: isUpdating }] =
+    useUpdateFeedbackMutation();
+  const [addFeedBack, { isLoading: isAdding }] = useAddFeedbackMutation();
 
   const onHandleSubmit = async () => {
     console.log("submit");
@@ -66,28 +46,39 @@ const FeedBackComponent = () => {
       subject: "Feedback",
       _hospitalId: localStorage.getItem("hospitalId"),
     };
-    dispatch(addFeedBackThunk(sendData));
+    addFeedBack(sendData)
+      .unwrap()
+      .then(() => {
+        setText("");
+        toast.success("successfully added");
+      })
+      .catch((rejected) => {
+        console.error(rejected);
+        toast.error("Oops! Something went wrong. Please try again later.");
+      });
+    // dispatch(addFeedBackThunk(sendData));
   };
-
-  useEffect(() => {
-    setText("");
-    feedBackList(page);
-  }, [page, refresh]);
 
   /* In the frontend we can see this as a delete,
   but in the backend itself it is consider as a delete
    we just change the status from delete to false */
-  const onUpdateStatus = async (_id) => {
+  const onUpdateStatus = async (_id: string) => {
     console.log("update", _id);
     sweetConfirmation(async () => {
-      dispatch(updateFeedBackThunk({ _id, data: { isDeleted: true } }));
+      updateFeedBack({ id: _id, body: { isDeleted: true } })
+        .unwrap()
+        .then(() => toast.success("successfully deleted"))
+        .catch((rejected) => {
+          console.error(rejected);
+          toast.error("Oops! Something went wrong. Please try again later.");
+        });
     }, "Yes, delete it!");
   };
 
   return (
     <div>
       <Hb text="Share your feedback" />
-      <LoadingOverlayComp loading={fbAddLoading}>
+      <LoadingOverlayComp loading={isAdding}>
         <TextEditor
           id="feedback"
           handleChange={(textContent) => setText(textContent)}
@@ -109,12 +100,12 @@ const FeedBackComponent = () => {
             text="Submit"
             color="primary"
             id="submit"
-            loading={fbAddLoading}
+            loading={isAdding}
           />
         </div>
       </LoadingOverlayComp>
 
-      <LoadingOverlayComp loading={fbListLoading}>
+      <LoadingOverlayComp loading={isFeedbackFetching || isUpdating}>
         <div className="patient-description">
           {rowData.length > 0 && <Hc text="Feedback's" />}
           {rowData.map((item: any) => (
