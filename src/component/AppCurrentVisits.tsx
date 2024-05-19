@@ -1,17 +1,17 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import merge from 'lodash/merge';
-import ReactApexChart from 'react-apexcharts';
+import merge from "lodash/merge";
+import ReactApexChart from "react-apexcharts";
 
-import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader } from '@mui/material';
+import { useTheme, styled } from "@mui/material/styles";
+import { Card, CardHeader } from "@mui/material";
 
 function BaseOptionChart() {
   const theme = useTheme();
 
   const LABEL_TOTAL = {
     show: true,
-    label: 'Total',
+    label: "Total",
     color: theme.palette.text.secondary,
     ...theme.typography.subtitle2,
   };
@@ -46,13 +46,13 @@ function BaseOptionChart() {
     states: {
       hover: {
         filter: {
-          type: 'lighten',
+          type: "lighten",
           value: 0.04,
         },
       },
       active: {
         filter: {
-          type: 'darken',
+          type: "darken",
           value: 0.88,
         },
       },
@@ -62,7 +62,7 @@ function BaseOptionChart() {
     fill: {
       opacity: 1,
       gradient: {
-        type: 'vertical',
+        type: "vertical",
         shadeIntensity: 0,
         opacityFrom: 0.4,
         opacityTo: 0,
@@ -76,8 +76,8 @@ function BaseOptionChart() {
     // Stroke
     stroke: {
       width: 3,
-      curve: 'smooth',
-      lineCap: 'round',
+      curve: "smooth",
+      lineCap: "round",
     },
 
     // Grid
@@ -109,8 +109,8 @@ function BaseOptionChart() {
     legend: {
       show: true,
       fontSize: 13,
-      position: 'top',
-      horizontalAlign: 'right',
+      position: "top",
+      horizontalAlign: "right",
       markers: {
         radius: 12,
       },
@@ -125,7 +125,7 @@ function BaseOptionChart() {
     plotOptions: {
       // Bar
       bar: {
-        columnWidth: '28%',
+        columnWidth: "28%",
         borderRadius: 4,
       },
       // Pie + Donut
@@ -141,7 +141,7 @@ function BaseOptionChart() {
       // Radialbar
       radialBar: {
         track: {
-          strokeWidth: '100%',
+          strokeWidth: "100%",
           background: theme.palette.grey[500_16],
         },
         dataLabels: {
@@ -152,7 +152,7 @@ function BaseOptionChart() {
       // Radar
       radar: {
         polygons: {
-          fill: { colors: ['transparent'] },
+          fill: { colors: ["transparent"] },
           strokeColors: theme.palette.divider,
           connectorColors: theme.palette.divider,
         },
@@ -174,14 +174,14 @@ function BaseOptionChart() {
         // sm
         breakpoint: theme.breakpoints.values.sm,
         options: {
-          plotOptions: { bar: { columnWidth: '40%' } },
+          plotOptions: { bar: { columnWidth: "40%" } },
         },
       },
       {
         // md
         breakpoint: theme.breakpoints.values.md,
         options: {
-          plotOptions: { bar: { columnWidth: '32%' } },
+          plotOptions: { bar: { columnWidth: "32%" } },
         },
       },
     ],
@@ -193,17 +193,17 @@ function BaseOptionChart() {
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
 
-const ChartWrapperStyle = styled('div')(({ theme }) => ({
+const ChartWrapperStyle = styled("div")(({ theme }) => ({
   height: CHART_HEIGHT,
   marginTop: theme.spacing(5),
-  '& .apexcharts-canvas svg': { height: CHART_HEIGHT },
-  '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
-    overflow: 'visible',
+  "& .apexcharts-canvas svg": { height: CHART_HEIGHT },
+  "& .apexcharts-canvas svg,.apexcharts-canvas foreignObject": {
+    overflow: "visible",
   },
-  '& .apexcharts-legend': {
+  "& .apexcharts-legend": {
     height: LEGEND_HEIGHT,
-    alignContent: 'center',
-    position: 'relative !important',
+    alignContent: "center",
+    position: "relative !important",
     borderTop: `solid 1px ${theme.palette.divider}`,
     top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`,
   },
@@ -212,7 +212,11 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const AppCurrentVisits = ({
-  title, subheader = '', chartColors, chartData, ...other
+  title,
+  subheader = "",
+  chartColors,
+  chartData,
+  ...other
 }) => {
   const theme = useTheme();
 
@@ -220,11 +224,11 @@ const AppCurrentVisits = ({
 
   const chartSeries = chartData.map((i) => i.value);
 
-  const chartOptions:any = merge(BaseOptionChart(), {
+  const chartOptions: any = merge(BaseOptionChart(), {
     colors: chartColors,
     labels: chartLabels,
     stroke: { colors: [theme.palette.background.paper] },
-    legend: { floating: true, horizontalAlign: 'center' },
+    legend: { floating: true, horizontalAlign: "center" },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
     tooltip: {
       fillSeriesColor: false,
@@ -246,7 +250,12 @@ const AppCurrentVisits = ({
       <CardHeader title={title} subheader={subheader} />
 
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={chartSeries} options={chartOptions} height={280} />
+        <ReactApexChart
+          type="pie"
+          series={chartSeries}
+          options={chartOptions}
+          height={280}
+        />
       </ChartWrapperStyle>
     </Card>
   );
@@ -260,12 +269,12 @@ AppCurrentVisits.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
-    }),
+    })
   ).isRequired,
 };
 
 AppCurrentVisits.defaultProps = {
-  subheader: '',
+  subheader: "",
 };
 
 export default AppCurrentVisits;
