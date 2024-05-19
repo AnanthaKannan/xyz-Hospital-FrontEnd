@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import dateFn from "date-fn";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { GridColDef } from "@mui/x-data-grid";
+
 import {
   fromDateToAgeConverter,
   getGenderByValue,
   pageConversion,
+  sweetConfirmation,
 } from "@/lib";
-import { sweetConfirmation } from "../lib/sweetAlart";
-import PopUpModel from "../reusable/PopUpModel";
-import PatientDetailsView from "./PatientDetailsView";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { deletePatientThunk } from "../redux/thunk";
-import { DataTable, Hb, Icons } from "@/reusable";
-import { useGetPatientsQuery } from "../service/patient";
+import { PatientDetailsView } from "@/component";
+import { DataTable, Hb, Icons, PopUpModel } from "@/reusable";
+import { useGetPatientsQuery, useDeletePatientMutation } from "@/service";
 
 const ListPatientComp = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+  const [patientDetails, setPatientDetails] = useState({});
 
   const {
     data: { data: rowData = [], tc: totalCount = 0 } = {},
@@ -33,12 +32,7 @@ const ListPatientComp = () => {
     { skip: !paginationModel }
   );
 
-  const { loading: pDeleteLoading } = useAppSelector(
-    (state) => state.patient.deletePatient
-  );
-
-  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
-  const [patientDetails, setPatientDetails] = useState({});
+  const [deletePatient, { isLoading: isDeleting }] = useDeletePatientMutation();
 
   const onCellClick = async ({ field, row }) => {
     if (field === "edit") {
@@ -56,7 +50,16 @@ const ListPatientComp = () => {
     } else if (field === "delete") {
       console.log("delete", row._id);
       sweetConfirmation(
-        () => dispatch(deletePatientThunk({ id: row._id })),
+        () =>
+          deletePatient({ id: row._id })
+            .unwrap()
+            .then(() => toast.success("Patient deleted successfully."))
+            .catch((rejected) => {
+              console.error(rejected);
+              toast.error(
+                "Oops! Something went wrong. Please try again later."
+              );
+            }),
         "Yes, delete it!"
       );
     }
@@ -119,11 +122,6 @@ const ListPatientComp = () => {
     },
   ];
 
-  // TODO: make it common place. should be in DataTable place
-  const onPageChange = (props) => {
-    setPaginationModel(props);
-  };
-
   return (
     <div>
       <Hb text="Patients" />
@@ -139,9 +137,9 @@ const ListPatientComp = () => {
         rows={rowData.map((row) => ({ ...row, id: row._id }))}
         rowCount={totalCount}
         columns={columns}
-        onPageChange={onPageChange}
+        setPaginationModel={setPaginationModel}
         onCellClick={onCellClick}
-        loading={pListLoading || pDeleteLoading}
+        loading={pListLoading || isDeleting}
       />
     </div>
   );

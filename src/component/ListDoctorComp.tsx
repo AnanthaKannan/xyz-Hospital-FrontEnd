@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GridColDef } from "@mui/x-data-grid";
-import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
 
 import { pageConversion, sweetConfirmation, timeList } from "@/lib";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { deleteDoctorThunk, listDoctorThunk } from "../redux/thunk";
-import { manipulateDocListData } from "../redux/slice/doctorSlice";
 import { DataTable, Hb, Icons } from "@/reusable";
+import { useGetDoctorsQuery, useDeleteDoctorMutation } from "@/service";
 
 const RenderDelete = ({ row }) => {
   return (
@@ -42,18 +40,20 @@ const columns: GridColDef[] = [
 
 const ListDoctorComp = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const {
-    data: rowData,
-    tc: totalCount,
-    loading: dListLoading,
-  } = useAppSelector((state) => state?.doctor?.doctorList);
 
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
+
+  const {
+    data: { data: rowData = [], tc: totalCount = 0 } = {},
+    isFetching: dListLoading,
+  } = useGetDoctorsQuery(
+    { ...pageConversion(paginationModel) },
+    { skip: !paginationModel }
+  );
+  const [deleteDoctor, { isLoading: isDeleting }] = useDeleteDoctorMutation();
 
   const availableDay = (avDay) =>
     Object.keys(avDay)
@@ -88,21 +88,14 @@ const ListDoctorComp = () => {
       availableTimeConvert: availableTime(item.availableTime),
     }));
 
-  const onHandleDelete = async (_doctorId) => {
+  const onHandleDelete = async (_doctorId: string) => {
     sweetConfirmation(async () => {
-      const updatedRow = rowData.map((row) =>
-        row._id === _doctorId ? { ...row, loading: true } : { ...row }
-      );
-      dispatch(manipulateDocListData(updatedRow));
-
-      dispatch(deleteDoctorThunk({ id: _doctorId }))
-        .then(() => listDoctor())
-        .catch(() => {
-          const updatedRow = rowData.map((row) => ({
-            ...row,
-            loading: false,
-          }));
-          dispatch(manipulateDocListData(updatedRow));
+      deleteDoctor({ id: _doctorId })
+        .unwrap()
+        .then(() => toast.success("Doctor deleted successfully"))
+        .catch((rejected) => {
+          console.error(rejected);
+          toast.error("Oops! Something went wrong. Please try again later.");
         });
     }, "Yes, delete it!");
   };
@@ -116,36 +109,24 @@ const ListDoctorComp = () => {
     );
   };
 
-  const listDoctor = () => {
-    dispatch(listDoctorThunk(pageConversion(paginationModel)));
-  };
-
-  useEffect(() => {
-    listDoctor();
-  }, [paginationModel]);
-
-  const onPageChange = (props) => {
-    setPaginationModel(props);
-  };
-
   const onCellClick = ({ field, row }) => {
     if (field === "edit") onHandleUpdate(row._id);
     else if (field === "delete") onHandleDelete(row._id);
   };
 
   return (
-    <Box>
+    <>
       <Hb text="Doctors" />
       <DataTable
         paginationModel={paginationModel}
         rows={conversion(rowData)}
         rowCount={totalCount}
         columns={columns}
-        onPageChange={onPageChange}
+        setPaginationModel={setPaginationModel}
         onCellClick={onCellClick}
-        loading={dListLoading}
+        loading={dListLoading || isDeleting}
       />
-    </Box>
+    </>
   );
 };
 
