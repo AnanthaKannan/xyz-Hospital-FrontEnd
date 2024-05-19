@@ -25,7 +25,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm@9.1.1
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install
       - name: creating build
         run: pnpm run build
         
@@ -33,7 +33,7 @@ jobs:
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: 'xyzhospital.surge.sh'
-          project: './build'
+          project: './dist'
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
 
