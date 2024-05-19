@@ -3,7 +3,7 @@
 
 ### Install npm for cypress
 ``
-npm install cypress --save-dev
+pnpm install cypress@^10.2.0 --save-dev
 ``
 ### To Open the cypress in the chore browser
 ``

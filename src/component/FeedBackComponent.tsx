@@ -1,61 +1,76 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
-import parse from 'html-react-parser';
-import Icons from '../reusable/Icons';
+import React, { useEffect, useState } from "react";
+import parse from "html-react-parser";
+import Icons from "../reusable/Icons";
 
-import TextEditor from '../reusable/TextEditor';
-import Hb from '../reusable/Hb';
-import { ClickButton, LoadingClickButton } from '../reusable/Button';
-import Hc from '../reusable/Hc';
-import { convertDate } from '../lib';
-import PaginationReuse from '../reusable/PaginationReuse';
-import { sweetConfirmation } from '../lib/sweetAlart';
-import { useAppSelector, useAppDispatch } from '../redux/hooks'
-import LoadingOverlayComp from '../reusable/LoadingOverlayComp';
+import TextEditor from "../reusable/TextEditor";
+import Hb from "../reusable/Hb";
+import { ClickButton, LoadingClickButton } from "../reusable/Button";
+import Hc from "../reusable/Hc";
+import { convertDate } from "../lib";
+import PaginationReuse from "../reusable/PaginationReuse";
+import { sweetConfirmation } from "../lib/sweetAlart";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import LoadingOverlayComp from "../reusable/LoadingOverlayComp";
+import { useGetFeedBacksQuery } from "../service/feedback";
 import {
   listFeedBackThunk,
   addFeedBackThunk,
   updateFeedBackThunk,
-} from '../redux/thunk';
-import { FeedBackArg } from '../type/type'
-
+} from "../redux/thunk";
+import { FeedBackArg } from "../type/type";
 
 const FeedBackComponent = () => {
   const dispatch = useAppDispatch();
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [page, setPage] = useState(0);
   const perPage = 2;
 
-  const { data: rowData, tc: totalCount, loading: fbListLoading } = useAppSelector((state) => state.feedBack.feedBackList);
+  // const {
+  //   data: rowData = [],
+  //   tc: totalCount = 50,
+  //   isLoading: fbListLoading,
+  //   isFetching: fbListLoading,
+  // } = useGetFeedBacksQuery({
+  //   project: "message,createdAt",
+  //   filter: "isDeleted:eq:false",
+  //   limit: perPage,
+  //   skip: page,
+  // });
+
+  const {
+    data: rowData,
+    tc: totalCount,
+    loading: fbListLoading,
+  } = useAppSelector((state) => state.feedBack.feedBackList);
   const { refresh } = useAppSelector((state) => state.feedBack);
-  const { loading: fbAddLoading } = useAppSelector((state) => state.feedBack.addFeedBack);
-  // const { loading: fbUpdateLoading } = useAppSelector((state) => state.feedBack.addFeedBack);
-
-
+  const { loading: fbAddLoading } = useAppSelector(
+    (state) => state.feedBack.addFeedBack
+  );
 
   const feedBackList = async (skip = 0) => {
     const params: FeedBackArg = {
-      project: 'message,createdAt',
-      filter: 'isDeleted:eq:false',
+      project: "message,createdAt",
+      filter: "isDeleted:eq:false",
       limit: perPage,
       skip,
-    }
+    };
     dispatch(listFeedBackThunk(params));
   };
 
   const onHandleSubmit = async () => {
-    console.log('submit');
+    console.log("submit");
     if (!text) return;
     const sendData = {
       message: text,
-      subject: 'Feedback',
-      _hospitalId: localStorage.getItem('hospitalId'),
-    }
-    dispatch(addFeedBackThunk(sendData))
+      subject: "Feedback",
+      _hospitalId: localStorage.getItem("hospitalId"),
+    };
+    dispatch(addFeedBackThunk(sendData));
   };
 
   useEffect(() => {
-    setText('');
+    setText("");
     feedBackList(page);
   }, [page, refresh]);
 
@@ -63,17 +78,16 @@ const FeedBackComponent = () => {
   but in the backend itself it is consider as a delete
    we just change the status from delete to false */
   const onUpdateStatus = async (_id) => {
-    console.log('update', _id);
+    console.log("update", _id);
     sweetConfirmation(async () => {
-      dispatch(updateFeedBackThunk({ _id, data: { isDeleted: true } }))
-    }, 'Yes, delete it!');
+      dispatch(updateFeedBackThunk({ _id, data: { isDeleted: true } }));
+    }, "Yes, delete it!");
   };
 
   return (
     <div>
-
       <Hb text="Share your feedback" />
-      <LoadingOverlayComp loading={fbAddLoading} >
+      <LoadingOverlayComp loading={fbAddLoading}>
         <TextEditor
           id="feedback"
           handleChange={(textContent) => setText(textContent)}
@@ -85,7 +99,7 @@ const FeedBackComponent = () => {
         <div className="d-flex justify-content-end">
           <ClickButton
             className="mx-4"
-            onClick={() => setText('')}
+            onClick={() => setText("")}
             text="Cancel"
             id="patient-cancel"
           />
@@ -100,23 +114,27 @@ const FeedBackComponent = () => {
         </div>
       </LoadingOverlayComp>
 
-      <LoadingOverlayComp loading={fbListLoading} >
+      <LoadingOverlayComp loading={fbListLoading}>
         <div className="patient-description">
           {rowData.length > 0 && <Hc text="Feedback's" />}
-          {
-            rowData.map((item: any) => (
-              <div key={item._id} className="card mt-2 shadow-sm">
-                <div className="">
-                  <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
-                    <div>{convertDate(item.createdAt)}</div>
-                    <Icons icon={item.loading ? 'loader' : 'delete'} 
-                    onClick={() => onUpdateStatus(item._id)} size={25} className="pointer" />
-                  </div>
-                  <div className="p-3">{item.message ? parse(item.message) : ''}</div>
+          {rowData.map((item: any) => (
+            <div key={item._id} className="card mt-2 shadow-sm">
+              <div className="">
+                <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
+                  <div>{convertDate(item.createdAt)}</div>
+                  <Icons
+                    icon={item.loading ? "loader" : "delete"}
+                    onClick={() => onUpdateStatus(item._id)}
+                    size={25}
+                    className="pointer"
+                  />
+                </div>
+                <div className="p-3">
+                  {item.message ? parse(item.message) : ""}
                 </div>
               </div>
-            ))
-          }
+            </div>
+          ))}
         </div>
         <br />
         <PaginationReuse
@@ -126,7 +144,6 @@ const FeedBackComponent = () => {
         />
         <br />
       </LoadingOverlayComp>
-
     </div>
   );
 };

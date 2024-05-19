@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { DataGrid } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 
 const DataTable = ({
   rows,
@@ -11,22 +12,21 @@ const DataTable = ({
   loading,
 }) => {
   return (
-    <div style={{ width: "100%" }}>
-      <DataGrid
-        rowCount={rowCount}
-        paginationMode="server"
-        onPaginationModelChange={onPageChange}
-        onCellClick={onCellClick}
-        loading={loading}
-        // onRowCountChange={onRowCountChange}
-        rows={rows}
-        columns={columns}
-        autoHeight
-        paginationModel={paginationModel}
-        // pageSizeOptions={[5, 10]}
-        checkboxSelection={false}
-      />
-    </div>
+    <DataGrid
+      sx={{ margin: 0, padding: 0 }}
+      rowCount={rowCount}
+      paginationMode="server"
+      onPaginationModelChange={onPageChange}
+      onCellClick={onCellClick}
+      loading={loading}
+      // onRowCountChange={onRowCountChange}
+      rows={rows}
+      columns={columns}
+      autoHeight
+      paginationModel={paginationModel}
+      // pageSizeOptions={[5, 10]}
+      checkboxSelection={false}
+    />
   );
 };
 

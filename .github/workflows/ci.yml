@@ -2,24 +2,33 @@ name: CI
 on: push
 
 env:
-  REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
-  REACT_APP_IMG_URL: ${{ secrets.REACT_APP_IMG_URL }}
-  REACT_APP_USER_POOL_ID: ${{ secrets.REACT_APP_USER_POOL_ID }}
-  REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
-  REACT_APP_REGION: ${{ secrets.REACT_APP_REGION }}
+  VITE_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+  VITE_APP_IMG_URL: ${{ secrets.REACT_APP_IMG_URL }}
+  VITE_APP_USER_POOL_ID: ${{ secrets.REACT_APP_USER_POOL_ID }}
+  VITE_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+  VITE_APP_REGION: ${{ secrets.REACT_APP_REGION }}
 
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install pnpm
+        run: npm install -g pnpm@9.1.1
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           # Linux and MacOS
-          start: npm start
-          wait-on: 'http://localhost:3000'
+          start: pnpm run dev
+          wait-on: 'http://localhost:5173'
           # wait for 2 minutes for the server to respond
           wait-on-timeout: 120  
           record: true

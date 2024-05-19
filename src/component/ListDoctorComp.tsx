@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GridColDef } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 
-import { sweetConfirmation, timeList } from "../lib";
+import { pageConversion, sweetConfirmation, timeList } from "@/lib";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { deleteDoctorThunk, listDoctorThunk } from "../redux/thunk";
 import { manipulateDocListData } from "../redux/slice/doctorSlice";
-import { DataTable, Hb, Icons } from "../reusable";
+import { DataTable, Hb, Icons } from "@/reusable";
 
 const RenderDelete = ({ row }) => {
   return (
@@ -47,7 +48,7 @@ const ListDoctorComp = () => {
     data: rowData,
     tc: totalCount,
     loading: dListLoading,
-  } = useAppSelector((state) => state.doctor.doctorList);
+  } = useAppSelector((state) => state?.doctor?.doctorList);
 
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
@@ -116,12 +117,7 @@ const ListDoctorComp = () => {
   };
 
   const listDoctor = () => {
-    const { page, pageSize } = paginationModel;
-    const params = {
-      limit: pageSize,
-      skip: page * pageSize,
-    };
-    dispatch(listDoctorThunk(params));
+    dispatch(listDoctorThunk(pageConversion(paginationModel)));
   };
 
   useEffect(() => {
@@ -138,20 +134,18 @@ const ListDoctorComp = () => {
   };
 
   return (
-    <div>
+    <Box>
       <Hb text="Doctors" />
-      <div className="row">
-        <DataTable
-          paginationModel={paginationModel}
-          rows={conversion(rowData)}
-          rowCount={totalCount}
-          columns={columns}
-          onPageChange={onPageChange}
-          onCellClick={onCellClick}
-          loading={dListLoading}
-        />
-      </div>
-    </div>
+      <DataTable
+        paginationModel={paginationModel}
+        rows={conversion(rowData)}
+        rowCount={totalCount}
+        columns={columns}
+        onPageChange={onPageChange}
+        onCellClick={onCellClick}
+        loading={dListLoading}
+      />
+    </Box>
   );
 };
 
