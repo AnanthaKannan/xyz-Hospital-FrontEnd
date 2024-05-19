@@ -12,7 +12,6 @@ import {
 } from "@/lib";
 import { PatientDetailsView } from "@/component";
 import { DataTable, Hb, Icons, PopUpModel } from "@/reusable";
-
 import { useGetPatientsQuery, useDeletePatientMutation } from "@/service";
 
 const ListPatientComp = () => {
