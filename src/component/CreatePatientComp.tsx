@@ -2,28 +2,34 @@ import { useState, useEffect } from "react";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-import Hb from "../reusable/Hb";
-import TextBox from "../reusable/TextBox";
-import { ClickButton, SubmitButton } from "../reusable/Button";
+
+import {
+  TextBox,
+  Hb,
+  ClickButton,
+  SubmitButton,
+  DatePickerRe,
+  SearchSelect,
+  AddressForm,
+} from "@/reusable";
 import {
   onlyNumbers,
   imagePath,
   convertEnumToArray,
   fromDateToAgeConverter,
   getInitialValuesFromYup,
-} from "../lib";
+} from "@/lib";
+import { patientDetailsType } from "@/type/type";
+import { GENDER, MATERIAL_STATUS } from "@/const";
+
+import { createPatientValidation } from "@/lib";
+
 import {
   addPatient,
   updatePatient,
   uploadFile,
 } from "../service/patient.service";
 import { useLoadContext } from "../reusable/LoaderContext";
-import { patientDetailsType } from "../type/type";
-import DatePickerRe from "../reusable/DatePickerRe";
-import { createPatientValidation } from "../lib/validationSchema";
-import SearchSelect from "../reusable/SearchSelect";
-import { genderEnum, martialStatusEnum } from "../lib/enum";
-import AddressForm from "../reusable/AddressForm";
 
 const CreatePatientComp = () => {
   const location = useLocation();
@@ -177,7 +183,7 @@ const CreatePatientComp = () => {
                     </div>
                     <div className="col-md-3">
                       <SearchSelect
-                        options={convertEnumToArray(genderEnum)}
+                        options={convertEnumToArray(GENDER)}
                         setFieldValue={setFieldValue}
                         heading="Gender"
                         id="gender"
@@ -237,7 +243,7 @@ const CreatePatientComp = () => {
                     </div>
                     <div className="col-md-3">
                       <SearchSelect
-                        options={convertEnumToArray(martialStatusEnum)}
+                        options={convertEnumToArray(MATERIAL_STATUS)}
                         setFieldValue={setFieldValue}
                         heading="Martial status"
                         id="martialStatus"
