@@ -5,11 +5,15 @@ import faker from 'faker';
 
 describe('Feedback', () => {
   let feedbackId = null;
+
+  beforeEach(() => {
+    cy.setupIntercepts()
+  });
+
   before(() => {
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?project=message,createdAt&filter=isDeleted:eq:false&limit=2&skip=0`).as('feedback');
     cy.login();
     cy.get('#feed-back').click();
-    cy.wait('@feedback');
+
   });
 
   beforeEach(() => {
@@ -20,7 +24,9 @@ describe('Feedback', () => {
     cy.saveLocalStorage();
   });
 
+  // this test case should be first. because @feedback is waiting in the beginning only
   it('Text validation', () => {
+    cy.wait('@feedback');
     cy.get('h4').contains('Share your feedback');
   });
 
@@ -29,8 +35,7 @@ describe('Feedback', () => {
   });
 
   it('Add feedback', () => {
-    cy.intercept('POST', `${Cypress.env('apiUrl')}/feedback`).as('postFeedback');
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?project=message,createdAt&filter=isDeleted:eq:false&limit=2&skip=0`).as('feedback');
+
 
     const text = faker.lorem.paragraph();
     cy.get('.ql-editor > p').type(text);
@@ -56,7 +61,7 @@ describe('Feedback', () => {
   });
 
   it('Delete feedback', () => {
-    cy.intercept('PUT', `${Cypress.env('apiUrl')}/feedback/${feedbackId}`).as('updateFeedback');
+    cy.setupInterceptsId(feedbackId)
 
     cy.get('#delete-').click();
     cy.get('.swal2-popup').should('exist');

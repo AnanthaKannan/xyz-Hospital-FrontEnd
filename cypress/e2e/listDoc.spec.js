@@ -6,7 +6,7 @@ describe('#List Doctor', () => {
   let [doctorList, docTotalCount] = [[], null];
   before(() => {
     cy.login();
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/doctor?limit=10&skip=0`).as('getDoctorList');
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/doctor?*`).as('getDoctorList');
     cy.intercept('PUT', `${Cypress.env('apiUrl')}/doctor/*`).as('updateDoctor');
     cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
     cy.get('#list-doctor').click();
@@ -50,11 +50,13 @@ describe('#List Doctor', () => {
 
   it('Delete the doctor', () => {
     cy.intercept('DELETE', `${Cypress.env('apiUrl')}/doctor/*`).as('deleteDoctor');
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/doctor?*`).as('getDoctorList1');
     cy.get(':nth-child(1) > :nth-child(8) > .pointer').click();
     cy.get('.swal2-popup').should('exist');
     cy.get('.swal2-confirm').click();
     cy.wait('@deleteDoctor')
     cy.contains('Doctor deleted successfully');
+    cy.wait('@getDoctorList1');
     cy.get('.swal2-popup').should('not.exist');
   });
 

@@ -24,16 +24,23 @@ const columns: GridColDef[] = [
   { field: "name", headerName: "Name" },
   { field: "specialist", headerName: "Specialist", flex: 1 },
   { field: "availableDayConvert", headerName: "Available Days", flex: 1 },
-  { field: "availableTimeConvert", headerName: "Available Time", flex: 1 },
+  {
+    field: "availableTimeConvert",
+    headerName: "Available Time",
+    flex: 1,
+    sortable: false,
+  },
   {
     field: "edit",
     headerName: "Edit",
+    sortable: false,
     renderCell: () => <Icons icon="edit" size={20} />,
     display: "flex" as const, // DON'T KNOW USE OF THIS
   },
   {
     field: "delete",
     headerName: "Delete",
+    sortable: false,
     renderCell: RenderDelete,
   },
 ];
