@@ -6,7 +6,7 @@ import faker from 'faker';
 describe('Feedback', () => {
   let feedbackId = null;
   before(() => {
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?project=message,createdAt&filter=isDeleted:eq:false&limit=2&skip=0`).as('feedback');
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?*`).as('feedback');
     cy.login();
     cy.get('#feed-back').click();
     cy.wait('@feedback');
@@ -30,7 +30,7 @@ describe('Feedback', () => {
 
   it('Add feedback', () => {
     cy.intercept('POST', `${Cypress.env('apiUrl')}/feedback`).as('postFeedback');
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?project=message,createdAt&filter=isDeleted:eq:false&limit=2&skip=0`).as('feedback');
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?*`).as('feedback');
 
     const text = faker.lorem.paragraph();
     cy.get('.ql-editor > p').type(text);
