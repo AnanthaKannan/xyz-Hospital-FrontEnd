@@ -31,6 +31,7 @@ export const generalApi = createApi({
         method: 'GET',
         params,
       }),
+      keepUnusedDataFor: 3600,  // 1 hour cache
       transformResponse: (response: Country[]) => {
         return response
       },
