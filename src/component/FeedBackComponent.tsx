@@ -39,7 +39,6 @@ const FeedBackComponent = () => {
   const [addFeedBack, { isLoading: isAdding }] = useAddFeedbackMutation();
 
   const onHandleSubmit = async () => {
-    console.log("submit");
     if (!text) return;
     const sendData = {
       message: text,

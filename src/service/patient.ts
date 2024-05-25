@@ -55,6 +55,22 @@ export const patientApi = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Patients', id: 'LIST' }],
+    }),
+    addPatient: build.mutation({
+      query: (body) => ({
+        url: 'patient',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Patients', id: 'LIST' }],
+    }),
+    updatePatient: build.mutation({
+      query: ({ id, body }) => ({
+        url: `patient/${id}`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'Patients', id: 'LIST' }],
     })
   })
 });
@@ -63,4 +79,6 @@ export const {
   useGetPatientsQuery,
   useLazyGetPatientsQuery,
   useDeletePatientMutation,
+  useUpdatePatientMutation,
+  useAddPatientMutation
 } = patientApi;

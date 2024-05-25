@@ -7,13 +7,12 @@ const common = require('../fixtures/common.json')
 describe('Patient Create', () => {
   before(() => {
     cy.login();
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
     cy.get('#create-patient').click();
-    cy.wait('@getAddress');
   });
 
   beforeEach(() => {
     cy.restoreLocalStorage();
+    cy.setupIntercepts();
   });
 
   afterEach(() => {
@@ -46,6 +45,7 @@ describe('Patient Create', () => {
   }
 
   it('All field should be empty', () => {
+    cy.wait('@getCountry');
     checkAllFieldsEmpty();
   });
 
@@ -149,8 +149,6 @@ describe('Patient Create', () => {
   });
 
   it('Create Patient with all the fields', () => {
-    cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreatePatient');
-
     cy.get('#firstName').type(faker.name.firstName());
     cy.get('#middleName').type(faker.name.firstName());
     cy.get('#lastName').type(faker.name.lastName());
@@ -178,7 +176,6 @@ describe('Patient Create', () => {
   });
 
   it('Create the Patient with mandatory fields', () => {
-    cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreatePatient');
     cy.get('#firstName').type(faker.name.firstName());
     cy.gender(`#gender > ${common.dropDownCss}`);
 
@@ -191,7 +188,7 @@ describe('Patient Create', () => {
       .type('single{enter}{enter}');
 
     // address
-    cy.address();
+    cy.address(false);
 
     // submit button
     cy.get('#patient-submit').click();
