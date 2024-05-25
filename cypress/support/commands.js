@@ -71,21 +71,19 @@ Cypress.Commands.add('launchPortal', () => {
   cy.visit(Cypress.config('baseUrl'));
 });
 
-Cypress.Commands.add('address', () => {
+Cypress.Commands.add('address', (apiCall = true) => {
   // address
-  cy.intercept('GET', `${apiUrl}/address?country_code=IN`).as('getState');
-  cy.intercept('GET', `${apiUrl}/address?country_code=IN&state_code=TN`).as('getCity');
-
   cy.get('#zipCode').type(faker.phone.phoneNumber());
   cy.get('#address').type(faker.address.streetName());
-  cy.get(`#country > ${common.dropDownCss}`)
-    .type('India{downArrow}{enter}');
-  cy.wait('@getState');
+  cy.get(`#country > ${common.dropDownCss}`).type('India{downArrow}')
+    .trigger('keydown', { keyCode: 13, which: 13, key: 'Enter' });
+  apiCall && cy.wait('@getState');
   cy.get(`#state > ${common.dropDownCss}`)
-    .type('Tamil Nadu{enter}{enter}');
-  cy.wait('@getCity');
+    .type('Tamil Nadu', { delay: 200 }).trigger('keydown', { keyCode: 13, which: 13, key: 'Enter' });
+  apiCall && cy.wait('@getCity');
   cy.get(`#city > ${common.dropDownCss}`)
-    .type('Chennai{enter}{enter}');
+    .type('chennai', { delay: 200 }).click().type('{enter}');
+
 });
 
 Cypress.Commands.add('gender', (id) => {
@@ -96,7 +94,11 @@ Cypress.Commands.add('gender', (id) => {
 Cypress.Commands.add('setupIntercepts', () => {
   cy.intercept('GET', `${Cypress.env('apiUrl')}/patient`).as('getPatientList');
   cy.intercept('PUT', `${Cypress.env('apiUrl')}/patient/*`).as('putUpdatePatient');
-  cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
+  cy.intercept('POST', `${Cypress.env('apiUrl')}/patient`).as('postCreatePatient');
+
+  cy.intercept('GET', `${Cypress.env('apiUrl')}/address?*`).as('getCountry');
+  cy.intercept('GET', `${Cypress.env('apiUrl')}/address?*`).as('getState');
+  cy.intercept('GET', `${Cypress.env('apiUrl')}/address?*`).as('getCity');
 
   cy.intercept('GET', `${Cypress.env('apiUrl')}/feedback?*`).as('feedback');
   cy.intercept('POST', `${Cypress.env('apiUrl')}/feedback`).as('postFeedback');

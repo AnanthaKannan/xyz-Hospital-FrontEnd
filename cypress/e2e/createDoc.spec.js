@@ -7,12 +7,11 @@ const common = require('../fixtures/common.json')
 describe('Doctor Create', () => {
   before(() => {
     cy.login();
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/address`).as('getAddress');
     cy.get('#create-doctor').click();
-    cy.wait('@getAddress');
   });
 
   beforeEach(() => {
+    cy.setupIntercepts()
     cy.restoreLocalStorage();
   });
 
@@ -50,6 +49,7 @@ describe('Doctor Create', () => {
   }
 
   it('All field should be empty', () => {
+    cy.wait('@getCountry');
     checkAllFieldsEmpty();
   });
 
