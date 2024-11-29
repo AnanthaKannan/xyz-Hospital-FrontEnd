@@ -1,24 +1,27 @@
-import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
-import Icons from './Icons';
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import Icons from "./Icons";
 
 export default function PopUpModel({
-  tittle, children, setIsOpen, isOpen,
+  tittle,
+  children,
+  setIsOpen,
+  isOpen,
 }: any) {
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  const closeBtn = () => (handleClose
-    ? (
+  const closeBtn = () =>
+    handleClose ? (
       <IconButton
         aria-label="close"
         onClick={handleClose}
         sx={{
-          position: 'absolute',
+          position: "absolute",
           right: 8,
           top: 8,
           color: (theme) => theme.palette.grey[500],
@@ -26,8 +29,7 @@ export default function PopUpModel({
       >
         <Icons icon="close" size={24} className="text-dark" />
       </IconButton>
-    )
-    : null);
+    ) : null;
 
   return (
     <>
@@ -40,11 +42,9 @@ export default function PopUpModel({
       >
         <DialogTitle>
           {tittle}
-          { closeBtn() }
+          {closeBtn()}
         </DialogTitle>
-        <DialogContent>
-          { children }
-        </DialogContent>
+        <DialogContent>{children}</DialogContent>
       </Dialog>
     </>
   );

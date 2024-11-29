@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const Ha = ({ text, className = '' }: {text: string, className?:string}) => (
+const Ha = ({ text, className = "" }: { text: string; className?: string }) => (
   <h3 className={className}>{text}</h3>
 );
 
@@ -10,7 +10,7 @@ Ha.propTypes = {
 };
 
 Ha.defaultProps = {
-  className: '',
+  className: "",
 };
 
 export default Ha;

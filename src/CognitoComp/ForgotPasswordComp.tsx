@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { Formik } from 'formik';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { SubmitButton } from '../reusable/Button';
-import TextBox from '../reusable/TextBox';
-import UserPool, { forgotPassword } from '../lib/UserPool';
-import LoginBackground from '../reusable/LoginBackground';
-import { forgotPasswordValidation } from '../lib/validationSchema';
+import React, { useEffect, useState } from "react";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { Formik } from "formik";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { SubmitButton } from "../reusable/Button";
+import TextBox from "../reusable/TextBox";
+import UserPool, { forgotPassword } from "../lib/UserPool";
+import LoginBackground from "../reusable/LoginBackground";
+import { forgotPasswordValidation } from "../lib/validationSchema";
 
 const ForgotPasswordComp = () => {
   const location = useLocation();
@@ -17,7 +17,7 @@ const ForgotPasswordComp = () => {
   useEffect(() => {
     const state: any = location.state;
     if (!state && !state.email) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [location.state, navigate]);
 
@@ -31,21 +31,20 @@ const ForgotPasswordComp = () => {
     cognitoUser.confirmPassword(values.code, values.password, {
       onFailure(err) {
         toast.error(err.message);
-        console.log('failure', err);
+        console.log("failure", err);
       },
       onSuccess() {
-        console.log('success');
-        toast.success('Password changed successfully');
-        navigate('/login');
+        console.log("success");
+        toast.success("Password changed successfully");
+        navigate("/login");
       },
     });
   };
 
   return (
     <LoginBackground title="Forgot Password">
-
       <Formik
-        initialValues={{ code: '', password: '', confirmPassword: '' }}
+        initialValues={{ code: "", password: "", confirmPassword: "" }}
         validationSchema={forgotPasswordValidation}
         onSubmit={onSubmit}
       >
@@ -68,10 +67,24 @@ const ForgotPasswordComp = () => {
               type="password"
               parameter={parameter}
             />
-            <label className='mb-2 send-code'> Resend Verification code : 
-             <label className='link' onClick={() => forgotPassword(location.state.email)} > SEND </label> </label>
+            <label className="mb-2 send-code">
+              {" "}
+              Resend Verification code :
+              <label
+                className="link"
+                onClick={() => forgotPassword(location.state.email)}
+              >
+                {" "}
+                SEND{" "}
+              </label>{" "}
+            </label>
             <div className="d-flex justify-content-between">
-              <SubmitButton id="forgot-password-submit" className="w-100" color="primary" text="Submit" />
+              <SubmitButton
+                id="forgot-password-submit"
+                className="w-100"
+                color="primary"
+                text="Submit"
+              />
             </div>
           </form>
         )}

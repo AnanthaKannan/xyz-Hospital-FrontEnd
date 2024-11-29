@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { fromDateToAgeConverter, getGenderByValue } from '../lib';
+import { fromDateToAgeConverter, getGenderByValue } from "../lib";
 
 const PatientDetailsView = ({ data }) => (
   <div>
@@ -16,25 +16,16 @@ const PatientDetailsView = ({ data }) => (
         <tr>
           <th>Name</th>
           <td>
-            {data?.firstName}
-            {' '}
-            {data?.middleName}
-            {' '}
-            {data?.lastName}
+            {data?.firstName} {data?.middleName} {data?.lastName}
           </td>
           <th>Gender</th>
           <td>{getGenderByValue(data?.gender)}</td>
-
         </tr>
         <tr>
           <th>Date Of Birth</th>
           <td>{data?.dob}</td>
           <th>Age</th>
-          <td>
-            {' '}
-            {fromDateToAgeConverter(data?.dob)}
-          </td>
-
+          <td> {fromDateToAgeConverter(data?.dob)}</td>
         </tr>
         <tr>
           <th>Phone</th>
@@ -72,7 +63,6 @@ const PatientDetailsView = ({ data }) => (
           <th>zipCode</th>
           <td>{data?.zipCode}</td>
         </tr>
-
       </tbody>
     </table>
   </div>

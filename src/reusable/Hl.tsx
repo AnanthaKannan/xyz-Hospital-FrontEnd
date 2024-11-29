@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const Hl = ({ text, className = '' }) => (
-  <h1 className={className}>{text}</h1>
-);
+const Hl = ({ text, className = "" }) => <h1 className={className}>{text}</h1>;
 
 Hl.propTypes = {
   text: PropTypes.string.isRequired,
@@ -10,7 +8,7 @@ Hl.propTypes = {
 };
 
 Hl.defaultProps = {
-  className: '',
+  className: "",
 };
 
 export default Hl;

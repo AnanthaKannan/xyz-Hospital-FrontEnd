@@ -1,11 +1,15 @@
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import PropTypes from 'prop-types';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import PropTypes from "prop-types";
 
-const ToggleSwitch = ({ checked = false, label = '', onClick }) => (
+const ToggleSwitch = ({ checked = false, label = "", onClick }) => (
   <FormGroup>
-    <FormControlLabel label={label} onClick={onClick} control={<Switch checked={checked} />} />
+    <FormControlLabel
+      label={label}
+      onClick={onClick}
+      control={<Switch checked={checked} />}
+    />
   </FormGroup>
 );
 
@@ -18,7 +22,7 @@ ToggleSwitch.propTypes = {
 // Add defaultProps for non-required props
 ToggleSwitch.defaultProps = {
   checked: false,
-  label: '',
+  label: "",
   onClick: PropTypes.func,
 };
 

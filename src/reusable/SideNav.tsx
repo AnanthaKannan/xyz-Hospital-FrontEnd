@@ -7,7 +7,7 @@ import {
   MenuItem,
   SubMenu,
 } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import "react-pro-sidebar/dist/css/styles.css";
 import packageJson from "../../package.json";
@@ -19,6 +19,7 @@ import Router from "../Router";
 import hospitalLogo from "../assets/hospitalLogo.jpg"; // Import the image using import
 
 const SideNav = ({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate();
   const [path, setPath] = useState({
     ...Router.reduce(
       (acc, value) => ({
@@ -30,18 +31,21 @@ const SideNav = ({ children }: { children: ReactNode }) => {
   });
   const [collapsed, setCollapsed] = useState(false);
 
-  const navigate = () => {
+  const updatePath = () => {
     const url = window.location.href;
     const splitUrl = url.split("/");
     const endPath = splitUrl[splitUrl.length - 1];
+    // make existing false
+    for (const key in path) {
+      path[key] = false;
+    }
     const pathObj = { ...path, [endPath]: true };
-    // console.log('pathObj', pathObj)
     setPath(pathObj);
   };
 
   useEffect(() => {
-    navigate();
-  }, []);
+    updatePath();
+  }, [navigate]);
 
   return (
     <div className="app">

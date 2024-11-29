@@ -5,6 +5,8 @@ import { genderEnum } from './enum';
 import config from '../config';
 import { imageUploadCodeType, imagePathResponseType, HospitalDetailsType } from '../type/type';
 
+export * from './validationSchema'
+
 export { default as sweetConfirmation } from './sweetAlart'
 export { default as timeList } from './times'
 
@@ -174,3 +176,5 @@ export const pageConversion = ({ pageSize, page }: PageConParams): pageConRes =>
   limit: pageSize,
   skip: page * pageSize,
 })
+
+export const dateConversion = (date: string) => dateFn.date(date, 104, "-")

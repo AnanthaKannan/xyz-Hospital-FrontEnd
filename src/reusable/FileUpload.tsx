@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './css/fileUpload.css';
-import maleAvatar from '../assets/male_avatar.png';
-import { imagePath } from '../lib';
-import { avatarUploadType } from '../type/type';
+import React, { useEffect, useState } from "react";
+import "./css/fileUpload.css";
+import maleAvatar from "../assets/male_avatar.png";
+import { imagePath } from "../lib";
+import { avatarUploadType } from "../type/type";
 
 // const FileUpload = ({
 //   // eslint-disable-next-line react/prop-types
@@ -33,7 +33,11 @@ const initialState = {
 };
 
 const AvatarUpload = ({
-  id, parameter, setFieldValue, className = '', code,
+  id,
+  parameter,
+  setFieldValue,
+  className = "",
+  code,
 }: avatarUploadType) => {
   const { values } = parameter;
   const [fileState, setFileState] = useState<any>(initialState);
@@ -55,7 +59,7 @@ const AvatarUpload = ({
       setFileState(initialState);
     } else if (values.fileName && !fileState.fileName) {
       const imagePreviewUrl = imagePath(code, values.fileName).getUrl;
-      console.log('imagePreviewUrl', imagePreviewUrl);
+      console.log("imagePreviewUrl", imagePreviewUrl);
       setFileState({
         file: null,
         imagePreviewUrl,
@@ -64,7 +68,7 @@ const AvatarUpload = ({
   }, [values.fileName]);
 
   const photoUpload = (e) => {
-    console.log('e', e);
+    console.log("e", e);
     const reader = new FileReader();
     const file = e.target.files[0];
     reader.onloadend = () => {
@@ -77,14 +81,18 @@ const AvatarUpload = ({
     // eslint-disable-next-line prefer-destructuring
     values.file = e.target.files[0];
     // setFieldValue('fileName', e.target.files[0].name)
-    setFieldValue('fileName', Date.now());
+    setFieldValue("fileName", Date.now());
   };
 
   return (
     <div className={className}>
       <label htmlFor={id} className="custom-file-upload fas">
         <div className="img-wrap img-upload">
-          <img className="profile-img" alt="profile-img" src={fileState.imagePreviewUrl} />
+          <img
+            className="profile-img"
+            alt="profile-img"
+            src={fileState.imagePreviewUrl}
+          />
         </div>
         <input className="d-none" id={id} type="file" onChange={photoUpload} />
       </label>

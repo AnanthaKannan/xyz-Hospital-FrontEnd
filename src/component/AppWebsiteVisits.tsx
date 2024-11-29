@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import merge from 'lodash/merge';
-import ReactApexChart from 'react-apexcharts';
-import { Card, CardHeader, Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import PropTypes from 'prop-types';
+import merge from "lodash/merge";
+import ReactApexChart from "react-apexcharts";
+import { Card, CardHeader, Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import PropTypes from "prop-types";
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ function BaseOptionChart() {
 
   const LABEL_TOTAL = {
     show: true,
-    label: 'Total',
+    label: "Total",
     color: theme.palette.text.secondary,
     ...theme.typography.subtitle2,
   };
@@ -47,13 +47,13 @@ function BaseOptionChart() {
     states: {
       hover: {
         filter: {
-          type: 'lighten',
+          type: "lighten",
           value: 0.04,
         },
       },
       active: {
         filter: {
-          type: 'darken',
+          type: "darken",
           value: 0.88,
         },
       },
@@ -63,7 +63,7 @@ function BaseOptionChart() {
     fill: {
       opacity: 1,
       gradient: {
-        type: 'vertical',
+        type: "vertical",
         shadeIntensity: 0,
         opacityFrom: 0.4,
         opacityTo: 0,
@@ -77,8 +77,8 @@ function BaseOptionChart() {
     // Stroke
     stroke: {
       width: 3,
-      curve: 'smooth',
-      lineCap: 'round',
+      curve: "smooth",
+      lineCap: "round",
     },
 
     // Grid
@@ -110,8 +110,8 @@ function BaseOptionChart() {
     legend: {
       show: true,
       fontSize: 13,
-      position: 'top',
-      horizontalAlign: 'right',
+      position: "top",
+      horizontalAlign: "right",
       markers: {
         radius: 12,
       },
@@ -126,7 +126,7 @@ function BaseOptionChart() {
     plotOptions: {
       // Bar
       bar: {
-        columnWidth: '28%',
+        columnWidth: "28%",
         borderRadius: 4,
       },
       // Pie + Donut
@@ -142,7 +142,7 @@ function BaseOptionChart() {
       // Radialbar
       radialBar: {
         track: {
-          strokeWidth: '100%',
+          strokeWidth: "100%",
           background: theme.palette.grey[500_16],
         },
         dataLabels: {
@@ -153,7 +153,7 @@ function BaseOptionChart() {
       // Radar
       radar: {
         polygons: {
-          fill: { colors: ['transparent'] },
+          fill: { colors: ["transparent"] },
           strokeColors: theme.palette.divider,
           connectorColors: theme.palette.divider,
         },
@@ -175,14 +175,14 @@ function BaseOptionChart() {
         // sm
         breakpoint: theme.breakpoints.values.sm,
         options: {
-          plotOptions: { bar: { columnWidth: '40%' } },
+          plotOptions: { bar: { columnWidth: "40%" } },
         },
       },
       {
         // md
         breakpoint: theme.breakpoints.values.md,
         options: {
-          plotOptions: { bar: { columnWidth: '32%' } },
+          plotOptions: { bar: { columnWidth: "32%" } },
         },
       },
     ],
@@ -190,19 +190,23 @@ function BaseOptionChart() {
 }
 
 function AppWebsiteVisits({
-  title, subheader, chartLabels, chartData, ...other
+  title,
+  subheader,
+  chartLabels,
+  chartData,
+  ...other
 }) {
-  const chartOptions:any = merge(BaseOptionChart(), {
-    plotOptions: { bar: { columnWidth: '16%' } },
+  const chartOptions: any = merge(BaseOptionChart(), {
+    plotOptions: { bar: { columnWidth: "16%" } },
     fill: { type: chartData.map((i) => i.fill) },
     labels: chartLabels,
-    xaxis: { type: 'datetime' },
+    xaxis: { type: "datetime" },
     tooltip: {
       shared: true,
       intersect: false,
       y: {
         formatter: (y) => {
-          if (typeof y !== 'undefined') {
+          if (typeof y !== "undefined") {
             return `${y.toFixed(0)} visits`;
           }
           return y;
@@ -217,7 +221,12 @@ function AppWebsiteVisits({
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
-        <ReactApexChart type="line" series={chartData} options={chartOptions} height={364} />
+        <ReactApexChart
+          type="line"
+          series={chartData}
+          options={chartOptions}
+          height={364}
+        />
       </Box>
     </Card>
   );
@@ -231,7 +240,7 @@ AppWebsiteVisits.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
-    }),
+    })
   ).isRequired,
 };
 
