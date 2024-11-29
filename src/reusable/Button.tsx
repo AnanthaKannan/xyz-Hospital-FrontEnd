@@ -1,11 +1,16 @@
-import React from 'react';
-import Button from '@mui/material/Button';
-import { ButtonType, SubmitButtonType } from '../type/type';
-import LoadingButton from '@mui/lab/LoadingButton';
-import Icons from './Icons'
+import React from "react";
+import Button from "@mui/material/Button";
+import { ButtonType, SubmitButtonType } from "../type/type";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Icons from "./Icons";
 
 export const ClickButton = ({
-  onClick, className = '', id = '', isDisable = false, text = 'click', color = 'info',
+  onClick,
+  className = "",
+  id = "",
+  isDisable = false,
+  text = "click",
+  color = "info",
 }: ButtonType) => (
   <Button
     className={className}
@@ -21,7 +26,12 @@ export const ClickButton = ({
 );
 
 export function SubmitButton({
-  onSubmit, className = '', id = '', isDisable = false, text = 'SUBMIT', color = 'primary',
+  onSubmit,
+  className = "",
+  id = "",
+  isDisable = false,
+  text = "SUBMIT",
+  color = "primary",
 }: SubmitButtonType) {
   return (
     <Button
@@ -38,9 +48,14 @@ export function SubmitButton({
   );
 }
 
-
 export const LoadingClickButton = ({
-  onClick, className = '', id = '', isDisable = false, text = 'click', color = 'info', loading = false
+  onClick,
+  className = "",
+  id = "",
+  isDisable = false,
+  text = "click",
+  color = "info",
+  loading = false,
 }: any) => (
   <LoadingButton
     className={className}
@@ -50,7 +65,7 @@ export const LoadingClickButton = ({
     variant="contained"
     type="button"
     color={color}
-    startIcon={<Icons icon='save' />  }
+    startIcon={<Icons icon="save" />}
     loading={loading}
     loadingPosition="start"
   >

@@ -1,10 +1,17 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function DatePickerRe({
-  onChange, heading, id, yearsRange,
-  className = '', required = false, parameter, minDate, maxDate,
+  onChange,
+  heading,
+  id,
+  yearsRange,
+  className = "",
+  required = false,
+  parameter,
+  minDate,
+  maxDate,
 }: any) {
   const { values, touched, errors } = parameter;
 
@@ -12,7 +19,7 @@ export default function DatePickerRe({
 
   const range = (start: number, end: number, step: number) => {
     const length = Math.floor((end - start) / step);
-    return Array.from({ length }, (_, i) => start + (i * step));
+    return Array.from({ length }, (_, i) => start + i * step);
   };
 
   const years = range(yearsRange.start, yearsRange.end, 1);
@@ -20,38 +27,39 @@ export default function DatePickerRe({
   const getMonth = (date: Date) => date.getMonth();
 
   const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   return (
     <>
-      <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
+      <label
+        className={`text-muted ${required ? "required" : ""}`}
+        htmlFor={id}
+      >
+        {heading}
+      </label>
       <DatePicker
         autoComplete="off"
         id={id}
         minDate={minDate}
         maxDate={maxDate}
         className={`form-control mt-2 mb-1 ${className}`}
-        renderCustomHeader={({
-          date,
-          changeYear,
-          changeMonth,
-        }) => (
+        renderCustomHeader={({ date, changeYear, changeMonth }) => (
           <div
             style={{
               margin: 10,
-              display: 'flex',
-              justifyContent: 'center',
+              display: "flex",
+              justifyContent: "center",
             }}
           >
             {/* <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
@@ -74,7 +82,9 @@ export default function DatePickerRe({
               className="form-control-sm mx-2"
               id={`${id}-month`}
               value={months[getMonth(date)]}
-              onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
+              onChange={({ target: { value } }) =>
+                changeMonth(months.indexOf(value))
+              }
             >
               {months.map((option) => (
                 <option key={option} value={option}>
@@ -90,7 +100,11 @@ export default function DatePickerRe({
         selected={values[id]}
         onChange={(date: any) => onChange(id, date)}
       />
-      {touched[id] && errors[id] && <div id={`error-${id}`} className="text-danger">{errors[id]}</div>}
+      {touched[id] && errors[id] && (
+        <div id={`error-${id}`} className="text-danger">
+          {errors[id]}
+        </div>
+      )}
     </>
   );
 }

@@ -1,10 +1,16 @@
 /* eslint-disable react/forbid-prop-types */
-import Select from 'react-select';
-import PropTypes from 'prop-types';
+import Select from "react-select";
+import PropTypes from "prop-types";
 
 const SearchSelect = ({
-  heading = '', className = '', id, options = [],
-  required = false, parameter, setFieldValue, placeholder = '',
+  heading = "",
+  className = "",
+  id,
+  options = [],
+  required = false,
+  parameter,
+  setFieldValue,
+  placeholder = "",
 }) => {
   const { values, touched, errors } = parameter;
   // const options = [
@@ -18,16 +24,25 @@ const SearchSelect = ({
 
   return (
     <div className="mb-3">
-      <label className={`text-muted ${required ? 'required' : ''}`} htmlFor={id}>{heading}</label>
+      <label
+        className={`text-muted ${required ? "required" : ""}`}
+        htmlFor={id}
+      >
+        {heading}
+      </label>
       <Select
         id={id}
         placeholder={placeholder}
         className={`mt-2 mb-1 ${className}`}
-        value={options.find((obj) => obj.value === values[id]) || ''}
+        value={options.find((obj) => obj.value === values[id]) || ""}
         onChange={handleChange}
-        options={[...options, { values: '', label: '' }]}
+        options={[...options, { values: "", label: "" }]}
       />
-      {touched[id] && errors[id] && <div id={`error-${id}`} className="text-danger">{errors[id]}</div>}
+      {touched[id] && errors[id] && (
+        <div id={`error-${id}`} className="text-danger">
+          {errors[id]}
+        </div>
+      )}
     </div>
   );
 };
@@ -53,11 +68,11 @@ SearchSelect.propTypes = {
 };
 
 SearchSelect.defaultProps = {
-  heading: '',
-  className: '',
+  heading: "",
+  className: "",
   options: [],
   required: false,
-  placeholder: '',
+  placeholder: "",
 };
 
 export default SearchSelect;

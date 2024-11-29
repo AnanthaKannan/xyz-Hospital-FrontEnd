@@ -1,15 +1,11 @@
-import React from 'react';
-import LoadingOverlay from 'react-loading-overlay-ts';
+import React from "react";
+import LoadingOverlay from "react-loading-overlay-ts";
 
-const Container = ({ children, loading=false }) => {
+const Container = ({ children, loading = false }) => {
   return (
-        <LoadingOverlay
-          active={loading}
-          spinner
-          text="Loading..."
-        >
-            {children}
-        </LoadingOverlay>
+    <LoadingOverlay active={loading} spinner text="Loading...">
+      {children}
+    </LoadingOverlay>
   );
 };
 

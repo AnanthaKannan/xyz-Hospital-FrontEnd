@@ -1,41 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Formik } from 'formik';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { CognitoUser, CognitoUserAttribute, AuthenticationDetails } from 'amazon-cognito-identity-js';
-import { profileDetailsType, HospitalDetailsType } from '@type/type';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Formik } from "formik";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import {
+  CognitoUser,
+  CognitoUserAttribute,
+  AuthenticationDetails,
+} from "amazon-cognito-identity-js";
+import { profileDetailsType, HospitalDetailsType } from "@type/type";
 
-import { SubmitButton } from '../reusable/Button';
-import TextBox from '../reusable/TextBox';
-import UserPool from '../lib/UserPool';
-import { profileDetailsValidation } from '../lib/validationSchema';
-import { setStorageDetails, onlyNumbers, decodeJwtToken } from '../lib';
+import { SubmitButton } from "../reusable/Button";
+import TextBox from "../reusable/TextBox";
+import UserPool from "../lib/UserPool";
+import { profileDetailsValidation } from "../lib/validationSchema";
+import { setStorageDetails, onlyNumbers, decodeJwtToken } from "../lib";
 
 const initValues: profileDetailsType = {
-  email: '',
-  name: '',
-  picture: '',
-  phone_number: '',
-  address: '',
-  password: '',
+  email: "",
+  name: "",
+  picture: "",
+  phone_number: "",
+  address: "",
+  password: "",
 };
 
-const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
+const SignUpForm = ({ isSignUp }: { isSignUp: boolean }) => {
   const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState(initValues);
 
   useEffect(() => {
-    const hospitalDetails: HospitalDetailsType = decodeJwtToken()
+    const hospitalDetails: HospitalDetailsType = decodeJwtToken();
     const updatedInitialValue = {
       address: hospitalDetails.address,
       email: hospitalDetails.email,
       name: hospitalDetails.hospitalName,
       phone_number: hospitalDetails.phoneNumber,
       picture: hospitalDetails.picture,
-      password: '',
+      password: "",
     };
-    console.log('updatedInitialValue', updatedInitialValue);
+    console.log("updatedInitialValue", updatedInitialValue);
     setInitialValues({ ...updatedInitialValue });
   }, []);
 
@@ -43,9 +47,9 @@ const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
     // password should not send in the request
     const attributeList: any[] = [];
     Object.keys(obj).forEach((key) => {
-      if (key !== 'password') {
+      if (key !== "password") {
         let value = obj[key];
-        if (key === 'phone_number') value = `+91${obj[key]}`;
+        if (key === "phone_number") value = `+91${obj[key]}`;
         const attributeObj = {
           Name: key,
           Value: value,
@@ -57,7 +61,10 @@ const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
     return attributeList;
   };
 
-  const updateUserAttribute = (values: profileDetailsType, attributeList: any) => {
+  const updateUserAttribute = (
+    values: profileDetailsType,
+    attributeList: any
+  ) => {
     const { email, password } = values;
     const cognitoUser = new CognitoUser({
       Username: email,
@@ -71,7 +78,7 @@ const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
 
     cognitoUser.authenticateUser(authDetails, {
       onSuccess: () => {
-        console.log('User authenticated');
+        console.log("User authenticated");
         cognitoUser.updateAttributes(attributeList, (err, result) => {
           if (err) {
             console.log(err.message || JSON.stringify(err));
@@ -86,11 +93,11 @@ const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
             hospitalPicture: values.picture,
           };
           setStorageDetails(storageData);
-          toast.success('Profile Updated Successfully');
+          toast.success("Profile Updated Successfully");
         });
       },
       onFailure: (error) => {
-        console.log('An error happened', error);
+        console.log("An error happened", error);
         toast.error(error.message || JSON.stringify(error));
       },
     });
@@ -98,27 +105,33 @@ const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
 
   const signUp = (values, attributeList, setErrors: Function) => {
     const { email, password } = values;
-    UserPool.signUp(email, password, attributeList, null, (err: any, result: any) => {
-      if (err) {
-        console.log('err', err);
-        setErrors({ address: err.message });
-        return toast.error(err.message);
-      }
+    UserPool.signUp(
+      email,
+      password,
+      attributeList,
+      null,
+      (err: any, result: any) => {
+        if (err) {
+          console.log("err", err);
+          setErrors({ address: err.message });
+          return toast.error(err.message);
+        }
 
-      console.log('result', result);
-      toast.success('Sign up successful');
-      return navigate('/confirmation-code');
-    });
+        console.log("result", result);
+        toast.success("Sign up successful");
+        return navigate("/confirmation-code");
+      }
+    );
   };
 
   const onSubmit = (values: any, { setErrors }: any) => {
-    values.picture = 'picture';
-    console.log('values', values);
+    values.picture = "picture";
+    console.log("values", values);
     if (isSignUp) {
       signUp(values, covertFromObjToArray(values), setErrors);
     } else {
-      const updatedValue = {...values}
-      delete updatedValue.email;  // should not send email for update
+      const updatedValue = { ...values };
+      delete updatedValue.email; // should not send email for update
       updateUserAttribute(values, covertFromObjToArray(updatedValue));
     }
   };
@@ -165,13 +178,15 @@ const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
                 />
               </div>
               <div className="col-md-6">
-                  <TextBox
-                    heading={ isSignUp ? "Passwrod" : "Passwrod (current password)" }
-                    id="password"
-                    type="password"
-                    parameter={parameter}
-                    required
-                  />
+                <TextBox
+                  heading={
+                    isSignUp ? "Passwrod" : "Passwrod (current password)"
+                  }
+                  id="password"
+                  type="password"
+                  parameter={parameter}
+                  required
+                />
               </div>
               <br />
             </div>
@@ -196,7 +211,12 @@ const SignUpForm = ({ isSignUp }: { isSignUp: boolean}) => {
 
             <div className="row">
               <div className="col-md-12">
-                <SubmitButton id="signup-submit" className="w-100" color="primary" text={isSignUp ? 'Sing up' : 'Update'} />
+                <SubmitButton
+                  id="signup-submit"
+                  className="w-100"
+                  color="primary"
+                  text={isSignUp ? "Sing up" : "Update"}
+                />
               </div>
             </div>
           </form>

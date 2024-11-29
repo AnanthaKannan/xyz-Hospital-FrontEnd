@@ -1,31 +1,39 @@
 /* eslint-disable no-underscore-dangle */
-import { useState, useEffect } from 'react';
-import { Formik } from 'formik';
-import { toast } from 'react-toastify';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Hb from '../reusable/Hb';
-import TextBox from '../reusable/TextBox';
-import { ClickButton, SubmitButton } from '../reusable/Button';
+import { useState, useEffect } from "react";
+import { Formik } from "formik";
+import { toast } from "react-toastify";
+import { useLocation, useNavigate } from "react-router-dom";
+import Hb from "../reusable/Hb";
+import TextBox from "../reusable/TextBox";
+import { ClickButton, SubmitButton } from "../reusable/Button";
 import {
-  imagePath, convertEnumToArray, fromDateToAgeConverter, getInitialValuesFromYup,
-} from '../lib';
-import { addPatient, updatePatient, uploadFile } from '../service/patient.service';
-import { useLoadContext } from '../reusable/LoaderContext';
-import { patientDetailsType } from '../type/type';
-import DatePickerRe from '../reusable/DatePickerRe';
-import { createPatientValidation } from '../lib/validationSchema';
-import SearchSelect from '../reusable/SearchSelect';
-import { genderEnum, martialStatusEnum } from '../lib/enum';
+  imagePath,
+  convertEnumToArray,
+  fromDateToAgeConverter,
+  getInitialValuesFromYup,
+} from "../lib";
+import {
+  addPatient,
+  updatePatient,
+  uploadFile,
+} from "../service/patient.service";
+import { useLoadContext } from "../reusable/LoaderContext";
+import { patientDetailsType } from "../type/type";
+import DatePickerRe from "../reusable/DatePickerRe";
+import { createPatientValidation } from "../lib/validationSchema";
+import SearchSelect from "../reusable/SearchSelect";
+import { genderEnum, martialStatusEnum } from "../lib/enum";
 
 const VitalSignsComp = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [formikInitialValue, setFormikInitialValue] = useState<patientDetailsType>(
-    getInitialValuesFromYup({
-      ...createPatientValidation,
-      file: null,
-    }),
-  );
+  const [formikInitialValue, setFormikInitialValue] =
+    useState<patientDetailsType>(
+      getInitialValuesFromYup({
+        ...createPatientValidation,
+        file: null,
+      })
+    );
 
   useEffect(() => {
     // eslint-disable-next-line prefer-destructuring
@@ -38,25 +46,27 @@ const VitalSignsComp = () => {
         dob: new Date(state.dob),
       });
     } else {
-      console.log('else state is here');
+      console.log("else state is here");
     }
   }, []);
 
   const { setLoader } = useLoadContext();
 
   const uploadImage = async (values) => {
-    console.log('uploadImage', values);
-    const path = imagePath('patient', values.fileName).setUrl;
+    console.log("uploadImage", values);
+    const path = imagePath("patient", values.fileName).setUrl;
     const { file } = values;
     const result = await uploadFile({ file, path });
-    console.log('result', result);
+    console.log("result", result);
   };
 
-  const createPatient = async (values: patientDetailsType,
-    resetForm: Function) => {
+  const createPatient = async (
+    values: patientDetailsType,
+    resetForm: Function
+  ) => {
     setLoader(true);
     const result = await addPatient(values);
-    console.log('result', result.status);
+    console.log("result", result.status);
     setLoader(false);
     if (result.status === 409) {
       const { data } = result;
@@ -64,22 +74,24 @@ const VitalSignsComp = () => {
       return;
     }
     if (result.status !== 201) {
-      toast.error('Oops! Something went wrong. Please try again later.');
+      toast.error("Oops! Something went wrong. Please try again later.");
       return;
     }
 
-    toast.success('Patient created successfully.');
-    console.log('Patient added successfully');
-    if (values.fileName) { await uploadImage(values); }
+    toast.success("Patient created successfully.");
+    console.log("Patient added successfully");
+    if (values.fileName) {
+      await uploadImage(values);
+    }
 
     resetForm();
   };
 
   const updatePatient_ = async (values: patientDetailsType) => {
-    console.log('updatePatient_', values);
+    console.log("updatePatient_", values);
     setLoader(true);
     const result = await updatePatient(values._id, values);
-    console.log('result', result.status);
+    console.log("result", result.status);
     setLoader(false);
     if (result.status === 409) {
       const { data } = result;
@@ -87,20 +99,20 @@ const VitalSignsComp = () => {
       return;
     }
     if (result.status !== 200) {
-      toast.error('Oops! Something went wrong. Please try again later.');
+      toast.error("Oops! Something went wrong. Please try again later.");
       return;
     }
 
     if (result.status === 200) {
-      toast.success('Patient updated successfully.');
+      toast.success("Patient updated successfully.");
       if (values.fileName) await uploadImage(values);
-      navigate('/list-patient');
+      navigate("/list-patient");
     }
   };
 
   const handleReset = (setFieldValue: Function, resetForm: Function): void => {
-    if (document.getElementById('fileName')) {
-      (document.getElementById('fileName') as HTMLInputElement).value = '';
+    if (document.getElementById("fileName")) {
+      (document.getElementById("fileName") as HTMLInputElement).value = "";
     }
     resetForm();
   };
@@ -124,15 +136,17 @@ const VitalSignsComp = () => {
           onSubmit={onSubmit}
         >
           {({
-            handleSubmit, setFieldValue, setErrors, resetForm, ...parameter
+            handleSubmit,
+            setFieldValue,
+            setErrors,
+            resetForm,
+            ...parameter
           }) => (
             <form onSubmit={handleSubmit}>
-
               <div className="row">
                 <div className="col-md-9">
                   <div className="row">
                     <div className="col-md-3">
-
                       <TextBox
                         heading="First Name"
                         required
@@ -141,7 +155,6 @@ const VitalSignsComp = () => {
                       />
                     </div>
                     <div className="col-md-3">
-
                       <TextBox
                         heading="Middle Name"
                         id="middleName"
@@ -149,7 +162,6 @@ const VitalSignsComp = () => {
                       />
                     </div>
                     <div className="col-md-3">
-
                       <TextBox
                         heading="Last Name"
                         id="lastName"
@@ -170,8 +182,8 @@ const VitalSignsComp = () => {
                       <DatePickerRe
                         required
                         onChange={(id, date) => {
-                          setFieldValue('age', fromDateToAgeConverter(date));
-                          setFieldValue('dob', date);
+                          setFieldValue("age", fromDateToAgeConverter(date));
+                          setFieldValue("dob", date);
                         }}
                         parameter={parameter}
                         id="dob"
@@ -205,7 +217,6 @@ const VitalSignsComp = () => {
                     </div>
 
                     <div className="col-md-3">
-
                       <TextBox
                         heading="Aadhaar Number"
                         id="aadhaarNumber"
@@ -240,45 +251,41 @@ const VitalSignsComp = () => {
                     </div>
                   </div>
                 </div>
-
               </div>
 
               <div className="row">
-
                 <div className="col-md-9">
                   <div className="mt-3 d-flex justify-content-end">
-                    {
-                      formikInitialValue._id
-                        ? (
-                          <div>
-                            <ClickButton className="mx-4" onClick={() => navigate('/list-patient')} text="Cancel" id="patient-cancel" />
-                            <SubmitButton
-                              text="Update"
-                              id="patient-submit"
-                            />
-                          </div>
-                        )
-                        : (
-                          <div>
-                            <ClickButton className="mx-4" onClick={() => handleReset(setFieldValue, resetForm)} text="Cancel" id="patient-cancel" />
-                            <SubmitButton
-                              id="patient-submit"
-                            />
-                          </div>
-                        )
-                    }
-
+                    {formikInitialValue._id ? (
+                      <div>
+                        <ClickButton
+                          className="mx-4"
+                          onClick={() => navigate("/list-patient")}
+                          text="Cancel"
+                          id="patient-cancel"
+                        />
+                        <SubmitButton text="Update" id="patient-submit" />
+                      </div>
+                    ) : (
+                      <div>
+                        <ClickButton
+                          className="mx-4"
+                          onClick={() => handleReset(setFieldValue, resetForm)}
+                          text="Cancel"
+                          id="patient-cancel"
+                        />
+                        <SubmitButton id="patient-submit" />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-
             </form>
           )}
         </Formik>
       </div>
       <br />
       <br />
-
     </div>
   );
 };

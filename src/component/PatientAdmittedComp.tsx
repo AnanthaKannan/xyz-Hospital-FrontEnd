@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 
-const PatientAdmittedComp = () => (
-  <div>PatientAdmittedComp</div>
-);
+const PatientAdmittedComp = () => <div>PatientAdmittedComp</div>;
 
 export default PatientAdmittedComp;

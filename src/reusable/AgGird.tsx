@@ -1,9 +1,12 @@
-import React, { useCallback } from 'react';
-import { AgGridReact } from 'ag-grid-react';
-import { agGirdReactType } from '../type/type';
+import React, { useCallback } from "react";
+import { AgGridReact } from "ag-grid-react";
+import { agGirdReactType } from "../type/type";
 
 const AgGirdReact = ({
-  columnDefs, onCellClicked, frameworkComponents = {}, rowData,
+  columnDefs,
+  onCellClicked,
+  frameworkComponents = {},
+  rowData,
 }: agGirdReactType) => {
   const onCellClickedEvent = (event: any) => {
     try {
@@ -17,9 +20,9 @@ const AgGirdReact = ({
     // console.log('event', event)
     const sortState = event.columnApi
       .getColumnState()
-      .find((column:any) => (column.sort !== undefined && column.sort !== null));
-    console.log('sortState', sortState);
-    console.log('again-state', event.api.paginationGetCurrentPage());
+      .find((column: any) => column.sort !== undefined && column.sort !== null);
+    console.log("sortState", sortState);
+    console.log("again-state", event.api.paginationGetCurrentPage());
   }, []);
 
   // const onPaginationChanged = useCallback((event: any) => {
@@ -28,11 +31,11 @@ const AgGirdReact = ({
   // }, [])
 
   const onFilterChanged = useCallback((event: any) => {
-    console.log('onFilterChanged', event.api.getFilterModel());
+    console.log("onFilterChanged", event.api.getFilterModel());
   }, []);
 
   const onFirstDataRendered = useCallback((params) => {
-    console.log('------------------------------', params);
+    console.log("------------------------------", params);
     // params.api.paginationGoToPage(1);
     // params.api.paginationSetPageSize(1);
   }, []);
@@ -55,7 +58,7 @@ const AgGirdReact = ({
         // onPaginationChanged={(e: any) => console.log('onPaginationChanged', e)}
         // onPaginationChanged={(e) => onPaginationChanged(e)}
         frameworkComponents={frameworkComponents}
-        sortingOrder={['asc', 'desc']}
+        sortingOrder={["asc", "desc"]}
       />
     </div>
   );

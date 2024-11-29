@@ -2,13 +2,15 @@
 /// <reference types="cypress" />
 //  the above line used to auto suggestion for cypress
 
-describe('List Patient', () => {
+describe("List Patient", () => {
   before(() => {
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/patient?*`).as('getPatientList');
+    cy.intercept("GET", `${Cypress.env("apiUrl")}/patient?*`).as(
+      "getPatientList"
+    );
 
     cy.login();
-    cy.get('#list-patient').click();
-    cy.wait('@getPatientList');
+    cy.get("#list-patient").click();
+    cy.wait("@getPatientList");
     cy.wait(1000); // Wait for 1 seconds
   });
 
@@ -26,21 +28,23 @@ describe('List Patient', () => {
   //   cy.get('.ag-root-wrapper').should('be.visible');
   // });
 
-  it('Patient Detail view popup model should open', () => {
+  it("Patient Detail view popup model should open", () => {
     // click the view
-    cy.get('[aria-rowindex="3"] > [aria-colindex="9"] > #view-').should('be.visible').click({ multiple: true });
-    cy.get('#popupModel').should('exist');
-    cy.get('.MuiPaper-root').contains('Patient Details');
+    cy.get('[aria-rowindex="3"] > [aria-colindex="9"] > #view-')
+      .should("be.visible")
+      .click({ multiple: true });
+    cy.get("#popupModel").should("exist");
+    cy.get(".MuiPaper-root").contains("Patient Details");
 
     for (let i = 1; i <= 9; i++) {
       for (let j = 1; j <= 4; j++) {
-        cy.get(`tbody > :nth-child(${i}) > :nth-child(${j})`).should('exist');
+        cy.get(`tbody > :nth-child(${i}) > :nth-child(${j})`).should("exist");
       }
     }
 
     // click the close button
-    cy.get('.MuiButtonBase-root > .pointer > path').click();
-    cy.get('#popupModel').should('not.exist');
+    cy.get(".MuiButtonBase-root > .pointer > path").click();
+    cy.get("#popupModel").should("not.exist");
   });
 
   // context('delete popup', () => {
