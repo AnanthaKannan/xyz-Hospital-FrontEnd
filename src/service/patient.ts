@@ -1,4 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "./baseQuery"
+
 export interface Patient {
   _id: string;
   id: number;
@@ -27,13 +29,7 @@ type PatinetResponse = {
 
 export const patientApi = createApi({
   reducerPath: "patients",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://u2f00s7xt0.execute-api.us-east-1.amazonaws.com/dev/",
-    prepareHeaders: (headers) => {
-      headers.set('authorization', `${localStorage.getItem('token')}`);
-      return headers;
-    },
-  }),
+  baseQuery,
   endpoints: (build) => ({
     getPatients: build.query<PatinetResponse, QueryParams>({
       query: (params) => ({

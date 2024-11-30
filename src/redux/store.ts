@@ -3,7 +3,6 @@ import { feedBackApi } from "../service/feedback";
 import { patientApi } from "../service/patient";
 import { doctorApi } from "../service/doctor";
 import { generalApi } from "../service/general";
-import feedBackReducer from './slice/feedbackSlice'
 import patientSlice from './slice/patientSlice'
 import doctorSlice from './slice/doctorSlice'
 
@@ -12,7 +11,6 @@ export const createStore = (
 ) =>
   configureStore({
     reducer: {
-      feedBack: feedBackReducer,
       patient: patientSlice,
       doctor: doctorSlice,
       [feedBackApi.reducerPath]: feedBackApi.reducer,

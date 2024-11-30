@@ -1,4 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "./baseQuery"
+
 export interface Country {
   code: string;
   country: string;
@@ -17,13 +19,7 @@ export interface QueryParams {
 
 export const generalApi = createApi({
   reducerPath: "general",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://u2f00s7xt0.execute-api.us-east-1.amazonaws.com/dev/",
-    prepareHeaders: (headers) => {
-      headers.set('authorization', `${localStorage.getItem('token')}`);
-      return headers;
-    },
-  }),
+  baseQuery,
   endpoints: (build) => ({
     getAddress: build.query<Country[], QueryParams>({
       query: (params) => ({

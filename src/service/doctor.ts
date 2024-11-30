@@ -1,4 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi,  } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "./baseQuery"
+
 type WeekDaysAvailability = {
   sunday: boolean;
   monday: boolean;
@@ -46,13 +48,7 @@ type DoctorResponse = {
 
 export const doctorApi = createApi({
   reducerPath: "doctors",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://u2f00s7xt0.execute-api.us-east-1.amazonaws.com/dev/",
-    prepareHeaders: (headers) => {
-      headers.set('authorization', `${localStorage.getItem('token')}`);
-      return headers;
-    },
-  }),
+  baseQuery,
   endpoints: (build) => ({
     getDoctors: build.query<DoctorResponse, QueryParams>({
       query: (params) => ({
