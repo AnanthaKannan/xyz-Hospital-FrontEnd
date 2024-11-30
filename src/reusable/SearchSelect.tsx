@@ -11,13 +11,10 @@ const SearchSelect = ({
   parameter,
   setFieldValue,
   placeholder = "",
+  isLoading = false,
 }) => {
   const { values, touched, errors } = parameter;
-  // const options = [
-  //   { value: 'chocolate', label: 'Chocolate' },
-  //   { value: 'strawberry', label: 'Strawberry' },
-  //   { value: 'vanilla', label: 'Vanilla' },
-  // ];
+
   const handleChange = (selectedOption) => {
     setFieldValue(id, selectedOption.value);
   };
@@ -37,6 +34,7 @@ const SearchSelect = ({
         value={options.find((obj) => obj.value === values[id]) || ""}
         onChange={handleChange}
         options={[...options, { values: "", label: "" }]}
+        isLoading={isLoading}
       />
       {touched[id] && errors[id] && (
         <div id={`error-${id}`} className="text-danger">
@@ -65,14 +63,7 @@ SearchSelect.propTypes = {
   }).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-};
-
-SearchSelect.defaultProps = {
-  heading: "",
-  className: "",
-  options: [],
-  required: false,
-  placeholder: "",
+  isLoading: PropTypes.boolean,
 };
 
 export default SearchSelect;

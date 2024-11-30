@@ -4,12 +4,14 @@ import TextBox from "./TextBox";
 import { useGetAddressQuery } from "@/service";
 
 const AddressForm = ({ parameter, setFieldValue }) => {
-  const { data: countryList = [] } = useGetAddressQuery({});
-  const { data: stateList = [] } = useGetAddressQuery(
-    { country_code: parameter.values.country },
-    { skip: !parameter?.values?.country }
-  );
-  const { data: cityList = [] } = useGetAddressQuery(
+  const { data: countryList = [], isFetching: isCountryLoading } =
+    useGetAddressQuery({});
+  const { data: stateList = [], isFetching: isStateLoading } =
+    useGetAddressQuery(
+      { country_code: parameter.values.country },
+      { skip: !parameter?.values?.country }
+    );
+  const { data: cityList = [], isFetching: isCityLoading } = useGetAddressQuery(
     {
       state_code: parameter.values.state,
       country_code: parameter.values.country,
@@ -39,6 +41,7 @@ const AddressForm = ({ parameter, setFieldValue }) => {
           required
           setFieldValue={setFieldValue}
           parameter={parameter}
+          isLoading={isCountryLoading}
         />
       </div>
       <div className="col-md-3">
@@ -49,6 +52,7 @@ const AddressForm = ({ parameter, setFieldValue }) => {
           required
           setFieldValue={setFieldValue}
           parameter={parameter}
+          isLoading={isStateLoading}
         />
       </div>
       <div className="col-md-3" />
@@ -60,6 +64,7 @@ const AddressForm = ({ parameter, setFieldValue }) => {
           required
           setFieldValue={setFieldValue}
           parameter={parameter}
+          isLoading={isCityLoading}
         />
       </div>
 

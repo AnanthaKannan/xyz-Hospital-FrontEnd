@@ -39,6 +39,7 @@ export interface QueryParams {
   filter?: string;
   limit?: number;
   skip?: number;
+  id?: string;
 }
 
 type DoctorResponse = {
@@ -50,6 +51,22 @@ export const doctorApi = createApi({
   reducerPath: "doctors",
   baseQuery,
   endpoints: (build) => ({
+    addDoctor: build.mutation({
+      query: (body) => ({
+        url: 'doctor',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Doctor', id: 'LIST' }, { type: 'Doctor', id: 'Details' }],
+    }),
+    updateDoctor: build.mutation({
+      query: ({id, body}) => ({
+        url: `doctor/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Doctor', id: 'LIST' }, { type: 'Doctor', id: 'Details' }],
+    }),
     getDoctors: build.query<DoctorResponse, QueryParams>({
       query: (params) => ({
         url: 'doctor',
@@ -64,17 +81,28 @@ export const doctorApi = createApi({
       },
       providesTags: [{ type: 'Doctor', id: 'LIST' }],
     }),
+    getDoctorsById: build.query<Doctor, QueryParams>({
+      query: ({id, params}) => ({
+        url: `doctor/${id}`,
+        method: 'GET',
+        params,
+      }),
+      providesTags: [{ type: 'Doctor', id: 'Details' }],
+    }),
     deleteDoctor: build.mutation({
       query: ({ id }) => ({
         url: `doctor/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Doctor', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Doctor', id: 'LIST' }, { type: 'Doctor', id: 'Details' }],
     })
   })
 });
 
 export const {
   useGetDoctorsQuery,
+  useGetDoctorsByIdQuery,
   useDeleteDoctorMutation,
+  useAddDoctorMutation,
+  useUpdateDoctorMutation
 } = doctorApi;

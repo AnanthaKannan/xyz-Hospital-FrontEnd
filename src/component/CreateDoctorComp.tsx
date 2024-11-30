@@ -1,27 +1,35 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate } from "react-router-dom";
-import Hb from "../reusable/Hb";
-import TextBox from "../reusable/TextBox";
-import { ClickButton, SubmitButton } from "../reusable/Button";
+
+import {
+  Hb,
+  TextBox,
+  CheckBox,
+  Icons,
+  TimePicker,
+  DatePickerRe,
+  SearchSelect,
+  AddressForm,
+  ClickButton,
+  SubmitButton,
+  FullScreenLoader,
+} from "@/reusable";
 import { post, put } from "../service/doctor.service";
 import { uploadFile } from "../service/curd.service";
 import { useLoadContext } from "../reusable/LoaderContext";
 import { doctorValueType } from "../type/type";
-import CheckBox from "../reusable/CheckBox";
-import Icons from "../reusable/Icons";
-import TimePicker from "../reusable/TimePickerRe";
-import DatePickerRe from "../reusable/DatePickerRe";
-import SearchSelect from "../reusable/SearchSelect";
-import { genderEnum } from "../lib/enum";
-import { convertEnumToArray, imagePath } from "../lib";
-import AddressForm from "../reusable/AddressForm";
+import { genderEnum } from "@/lib/enum";
+import { convertEnumToArray, imagePath } from "@/lib";
 import msg from "../lib/msg";
+
+import {
+  useGetDoctorsByIdQuery,
+  useAddDoctorMutation,
+  useUpdateDoctorMutation,
+} from "@/service";
 
 const availableDays = {
   monday: false,
@@ -37,6 +45,8 @@ const selectedTimeInitialState = [{ from: null, to: null }];
 
 const CreateDoctorComp = () => {
   const navigate = useNavigate();
+  const { doctorId } = useParams();
+
   const [formikInitialValue, setFormikInitialValue] = useState<doctorValueType>(
     {
       name: "",
@@ -56,74 +66,64 @@ const CreateDoctorComp = () => {
     }
   );
   const [selectedTime, setSelectedTime] = useState(selectedTimeInitialState);
-  const location = useLocation();
-  const { setLoader } = useLoadContext();
+
+  const [addDoctor, { isLoading: isAddingDoctor }] = useAddDoctorMutation();
+  const [updateDoctorDetail, { isLoading: isUpdatingDoctor }] =
+    useUpdateDoctorMutation();
+  const { data: doctorDetails, isFetching: isDoctorDetailFetching } =
+    useGetDoctorsByIdQuery({ id: doctorId }, { skip: !doctorId });
 
   useEffect(() => {
-    const state: any = location.state;
-    if (state?._id) {
-      setFormikInitialValue({
-        ...state,
-        licenseExpiryDate: state.licenseExpiryDate
-          ? new Date(state.licenseExpiryDate)
-          : null,
-      });
-      setSelectedTime(state.availableTime);
-    } else {
-      console.log("else state is here");
-    }
-  }, [location.state]);
+    if (!doctorDetails) return;
+
+    setFormikInitialValue({
+      ...doctorDetails,
+      licenseExpiryDate: doctorDetails.licenseExpiryDate
+        ? new Date(doctorDetails.licenseExpiryDate)
+        : null,
+    });
+    setSelectedTime(doctorDetails.availableTime);
+  }, [doctorDetails]);
 
   const uploadImage = async (values) => {
-    console.log("uploadImage", values);
     const path = imagePath("doctor", values.fileName).setUrl;
     const { file } = values;
-    const result = await uploadFile({ file, path });
-    console.log("result", result);
   };
 
   const handleReset = (resetForm: Function): void => {
     if (formikInitialValue._id) navigate("/list-doctor");
 
     resetForm();
-    console.log("selectedTime", selectedTime);
     setSelectedTime([{ from: null, to: null }]);
-    // navigate("/dummy", { state: { backToNavigate: '/create-doctor'} });
   };
 
   const createDoctor = async (values: doctorValueType, resetForm: Function) => {
-    setLoader(true);
-    const result = await post(values);
-    console.log("result", result.status);
-    setLoader(false);
-    if (result.status === 409) {
-      toast.error("Doctor already exists");
-      return;
-    }
-    if (result.status !== 201) {
+    try {
+      const result = await addDoctor(values).unwrap();
+      toast.success("Doctor created successfully");
+    } catch (error) {
+      if (error?.response?.status === 409) {
+        toast.error("Doctor already exists");
+        return;
+      }
       toast.error("Oops! Something went wrong. Please try again later.");
-      return;
     }
-
-    toast.success("Doctor created successfully");
 
     if (values.fileName) await uploadImage(values);
     handleReset(resetForm);
   };
 
   const updateDoctor = async (values: doctorValueType) => {
-    setLoader(true);
-    const result = await put(values._id, values);
-    console.log("result", result.status);
-    setLoader(false);
-    if (result.status === 200) {
+    try {
+      const result = await updateDoctorDetail({
+        id: values._id,
+        body: values,
+      }).unwrap();
       if (values.fileName) await uploadImage(values);
       toast.success("Doctor updated successfully");
       navigate("/list-doctor");
-    } else if (result.status === 409) {
-      const { data } = result;
-      toast.error(data.message);
-    } else {
+    } catch (error) {
+      if (error?.response?.data) toast.error(data.message);
       toast.error("Oops! Something went wrong. Please try again later.");
     }
   };
@@ -132,7 +132,6 @@ const CreateDoctorComp = () => {
     const updatedValues = { ...values };
     updatedValues.availableTime = selectedTime;
     updatedValues.timePerPatient = "10";
-    console.log(updatedValues);
 
     if (updatedValues._id) updateDoctor(updatedValues);
     else createDoctor(updatedValues, resetForm);
@@ -201,7 +200,7 @@ const CreateDoctorComp = () => {
       toast.info("Please select the From and To in the doctor available time");
       return;
     }
-    console.log("lastSelectedTime", lastSelectedTime);
+
     setSelectedTime([...selectedTime, { from: null, to: null }]);
   };
 
@@ -212,6 +211,11 @@ const CreateDoctorComp = () => {
 
   return (
     <div className="">
+      <FullScreenLoader
+        isFetching={
+          isAddingDoctor || isUpdatingDoctor || isDoctorDetailFetching
+        }
+      />
       <Hb text="Create Doctor" />
       <hr />
       <div>
