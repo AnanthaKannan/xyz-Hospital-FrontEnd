@@ -1,4 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi,  } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "./baseQuery"
+
 export interface FeedBack {
   _id: string;
   id: number;
@@ -22,13 +24,7 @@ type FeedBacksResponse = {
 
 export const feedBackApi = createApi({
   reducerPath: "feedback",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://u2f00s7xt0.execute-api.us-east-1.amazonaws.com/dev/",
-    prepareHeaders: (headers) => {
-      headers.set('authorization', `${localStorage.getItem('token')}`);
-      return headers;
-    },
-  }),
+  baseQuery,
   endpoints: (build) => ({
     getFeedBacks: build.query<FeedBacksResponse, QueryParams>({
       query: (params) => ({

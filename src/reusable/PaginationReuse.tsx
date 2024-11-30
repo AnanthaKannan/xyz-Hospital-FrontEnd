@@ -26,9 +26,9 @@ const PaginationReuse = ({ setPage, totalCount, perPage }) => {
 };
 
 PaginationReuse.propTypes = {
-  setPage: PropTypes.func.isRequired, // Ensure setPage is a function and is required
-  totalCount: PropTypes.number.isRequired, // Ensure totalCount is a number and is required
-  perPage: PropTypes.number.isRequired, // Ensure perPage is a number and is required
+  setPage: PropTypes.func.isRequired,
+  totalCount: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
 };
 
 export default PaginationReuse;

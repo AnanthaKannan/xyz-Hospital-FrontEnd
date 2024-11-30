@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import parse from "html-react-parser";
 import { toast } from "react-toastify";
 
@@ -21,7 +21,7 @@ import {
 
 const FeedBackComponent = () => {
   const [text, setText] = useState("");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const perPage = 2;
 
   const {
@@ -51,26 +51,22 @@ const FeedBackComponent = () => {
         setText("");
         toast.success("successfully added");
       })
-      .catch((rejected) => {
-        console.error(rejected);
+      .catch(() => {
         toast.error("Oops! Something went wrong. Please try again later.");
       });
-    // dispatch(addFeedBackThunk(sendData));
   };
 
   /* In the frontend we can see this as a delete,
   but in the backend itself it is consider as a delete
    we just change the status from delete to false */
   const onUpdateStatus = async (_id: string) => {
-    console.log("update", _id);
     sweetConfirmation(async () => {
-      updateFeedBack({ id: _id, body: { isDeleted: true } })
-        .unwrap()
-        .then(() => toast.success("successfully deleted"))
-        .catch((rejected) => {
-          console.error(rejected);
-          toast.error("Oops! Something went wrong. Please try again later.");
-        });
+      try {
+        await updateFeedBack({ id: _id, body: { isDeleted: true } }).unwrap();
+        toast.success("successfully deleted");
+      } catch (error) {
+        toast.error("Oops! Something went wrong. Please try again later.");
+      }
     }, "Yes, delete it!");
   };
 
