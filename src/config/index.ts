@@ -1,14 +1,14 @@
 type configType = {
   apiURL: string;
   patientRecord: string;
-  poolData: Object;
+  poolData: object;
   imgURL: string;
   doctor: string;
   patient: string;
 }
 
 export const config: configType = {
-  apiURL: 'https://u2f00s7xt0.execute-api.us-east-1.amazonaws.com/dev',
+  apiURL: import.meta.env.VITE_APP_API_URL,
   imgURL: import.meta.env.VITE_APP_IMG_URL,
   patientRecord: 'patientRecord',
   patient: 'patient',

@@ -1,7 +1,8 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import config from "@/config"
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://u2f00s7xt0.execute-api.us-east-1.amazonaws.com/dev/",
+  baseUrl: config.apiURL,
   prepareHeaders: (headers) => {
     headers.set("authorization", `${localStorage.getItem("token")}`);
     return headers;
