@@ -21,7 +21,7 @@ import {
 
 const FeedBackComponent = () => {
   const [text, setText] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const perPage = 2;
 
   const {
