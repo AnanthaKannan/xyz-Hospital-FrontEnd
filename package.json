@@ -1,6 +1,6 @@
 {
   "name": "xyz-hospital-frontend",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "packageManager": "pnpm@9.1.1",
   "node_version": "20.13.1",
   "private": false,
