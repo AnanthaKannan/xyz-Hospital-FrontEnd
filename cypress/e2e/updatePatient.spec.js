@@ -36,7 +36,7 @@ describe("Patient Update", () => {
     cy.wait("@putUpdatePatient");
     cy.contains("Patient updated successfully");
     cy.wait("@getPatientList");
-    cy.url().should("eq", `${Cypress.config("baseUrl")}/list-patient`);
+    cy.url().should("eq", `${Cypress.config("baseUrl")}/#/list-patient`);
     cy.contains(updateName);
   });
 
@@ -44,6 +44,6 @@ describe("Patient Update", () => {
     cy.get(".swal2-confirm").click();
     cy.wait("@getAddress");
     cy.get("#patient-cancel").click();
-    cy.url().should("eq", `${Cypress.config("baseUrl")}/list-patient`);
+    cy.url().should("eq", `${Cypress.config("baseUrl")}/#/list-patient`);
   });
 });
