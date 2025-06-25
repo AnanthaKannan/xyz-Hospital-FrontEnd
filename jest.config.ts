@@ -12,6 +12,11 @@ const config = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.css$': '<rootDir>/test/mocks/styleMock.js',
   },
+  reporters: [
+    "default",
+    ["jest-junit", { "outputDirectory": "test-results", "outputName": "junit.xml" }]
+  ]
+
 }
 
 export default config
