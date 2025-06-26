@@ -115,7 +115,7 @@ describe("Signup", () => {
     cy.wait("@signup");
 
     cy.contains("Sign up successful");
-    cy.url().should("eq", `${Cypress.config("baseUrl")}/confirmation-code`);
+    cy.url().should("eq", `${Cypress.config("baseUrl")}/#/confirmation-code`);
   });
 });
 
