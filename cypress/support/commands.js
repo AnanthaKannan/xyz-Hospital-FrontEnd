@@ -109,6 +109,10 @@ Cypress.Commands.add("setupIntercepts", () => {
 
   cy.intercept("GET", `${Cypress.env("apiUrl")}/feedback?*`).as("feedback");
   cy.intercept("POST", `${Cypress.env("apiUrl")}/feedback`).as("postFeedback");
+
+  cy.intercept("GET", `${Cypress.env("apiUrl")}/doctor/*`).as(
+    "getDoctorDetail"
+  );
 });
 
 Cypress.Commands.add("setupInterceptsId", (id) => {

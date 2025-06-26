@@ -111,7 +111,7 @@ const ListDoctorComp = () => {
     const doctorDetails = rowData.find((row) => row._id === doctorId);
     console.log("doctorDetails", doctorDetails);
     sweetConfirmation(
-      () => navigate("/create-doctor", { state: doctorDetails }),
+      () => navigate(`/update-doctor/${doctorDetails?._id}`),
       "Yes, Update it!"
     );
   };

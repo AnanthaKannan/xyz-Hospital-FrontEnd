@@ -103,6 +103,12 @@ const routes: routeType[] = [
     NAV: true,
   },
   {
+    COMPONENT: <CreateDoctor />,
+    PATH: "/update-doctor/:doctorId",
+    TITLE: "Update Doctor",
+    NAV: true,
+  },
+  {
     COMPONENT: <ListDoctor />,
     PATH: "/list-doctor",
     TITLE: "List Doctor",

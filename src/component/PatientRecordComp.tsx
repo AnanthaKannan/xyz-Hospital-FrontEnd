@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -20,7 +19,6 @@ import {
   patientRecordValidation,
   createPatientValidation,
 } from "../lib/validationSchema";
-import CheckBox from "../reusable/CheckBox";
 import DatePickerRe from "../reusable/DatePickerRe";
 import ToggleSwitch from "../reusable/ToggleSwitch";
 import Transitions from "../reusable/Transitions";
@@ -211,20 +209,7 @@ const PatientRecordComp = () => {
                         parameter={parameter}
                       />
                     </div>
-                    {/* <div className="col-md-3 d-flex">
-                      <CheckBox
-                        label="Is He/She Admitted?"
-                        id="isAdmitted"
-                        onChange={(checked, name) => {
-                          setFieldValue(name, checked);
-                        }}
-                        checked={parameter.values.isAdmitted}
-                      />
-                    </div> */}
                     <div className="col-md-3" />
-                    {/* <div className="col-md-3"></div> */}
-
-                    {/* {parameter.values.isAdmitted && ( */}
                     <Transitions isChecked={parameter.values.isAdmitted}>
                       <div className="row">
                         <div className="col-md-3">
