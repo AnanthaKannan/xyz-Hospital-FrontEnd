@@ -1,13 +1,11 @@
-import { createApi,  } from "@reduxjs/toolkit/query/react";
+import { createApi, } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./baseQuery"
 
 export interface FeedBack {
   _id: string;
-  id: number;
-  isDeleted: boolean;
   message: string;
-  subject: string;
-  updatedAt: string;
+  createdAt: string;
+  loading: boolean; // it is not received from backend
 }
 
 export interface QueryParams {

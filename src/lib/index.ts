@@ -41,9 +41,8 @@ export const imagePath = (code: imageUploadCodeType, fileName: string): imagePat
   return { setUrl: '', getUrl: '' };
 };
 
-export const pageChange = (page: number, perPage: number) => {
+export const pageChange = (page: number, perPage: number): number => {
   let updatedPage = page;
-  console.log('page change', updatedPage);
   if (page === 1) {
     updatedPage = 0;
   } else {
@@ -52,11 +51,11 @@ export const pageChange = (page: number, perPage: number) => {
   return updatedPage;
 };
 
-export const convertDate = (date: string): Date => {
+export const convertDate = (date: string): string => {
   try {
     return dateFn.date(date, 102, '-');
   } catch (e) {
-    return new Date();
+    return dateFn.date();
   }
 };
 

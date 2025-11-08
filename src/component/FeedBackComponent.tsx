@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import parse from "html-react-parser";
 import { toast } from "react-toastify";
 
@@ -19,10 +19,11 @@ import {
   useAddFeedbackMutation,
 } from "@/service";
 
+const PER_PAGE = 2;
+
 const FeedBackComponent = () => {
-  const [text, setText] = useState("");
-  const [page, setPage] = useState(0);
-  const perPage = 2;
+  const [text, setText] = useState<string>("");
+  const [page, setPage] = useState<number>(0);
 
   const {
     data: { data: rowData = [], tc: totalCount = 0 } = {},
@@ -30,7 +31,7 @@ const FeedBackComponent = () => {
   } = useGetFeedBacksQuery({
     project: "message,createdAt",
     filter: "isDeleted:eq:false",
-    limit: perPage,
+    limit: PER_PAGE,
     skip: page,
   });
 
@@ -103,7 +104,7 @@ const FeedBackComponent = () => {
       <LoadingOverlayComp loading={isFeedbackFetching || isUpdating}>
         <div className="patient-description">
           {rowData.length > 0 && <Hc text="Feedback's" />}
-          {rowData.map((item: any) => (
+          {rowData.map((item) => (
             <div key={item._id} className="card mt-2 shadow-sm">
               <div className="">
                 <div className="d-flex justify-content-between bg-hos rounded-top py-2 px-3">
@@ -124,7 +125,7 @@ const FeedBackComponent = () => {
         </div>
         <br />
         <PaginationReuse
-          perPage={perPage}
+          perPage={PER_PAGE}
           totalCount={totalCount}
           setPage={setPage}
         />
