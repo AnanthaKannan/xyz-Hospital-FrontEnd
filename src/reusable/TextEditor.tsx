@@ -1,14 +1,22 @@
-import React from "react";
+import { FC } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ES6
 
-const TextEditor = ({
+export type TextEditorProps = {
+  value?: string;
+  id: string;
+  placeholder?: string;
+  handleChange: (content: string) => void;
+  errorMsg?: string;
+};
+
+const TextEditor: FC<TextEditorProps> = ({
   value,
   placeholder = "",
   id = "",
   handleChange,
   errorMsg = "",
-}: any) => (
+}) => (
   <div className="bg-white">
     <ReactQuill
       value={value}
@@ -18,7 +26,11 @@ const TextEditor = ({
       onChange={handleChange}
     />
     {errorMsg && (
-      <div id={`error-${id}`} className="text-danger">
+      <div
+        id={`error-${id}`}
+        data-testid={`error-${id}`}
+        className="text-danger"
+      >
         {errorMsg}
       </div>
     )}

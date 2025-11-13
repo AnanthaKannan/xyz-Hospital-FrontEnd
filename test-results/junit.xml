@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="5" failures="0" errors="0" time="1.283">
+  <testsuite name="TextEditor Component" errors="0" failures="0" skipped="4" timestamp="2025-11-13T17:45:29" time="0.708" tests="5">
+    <testcase classname="TextEditor Component renders the editor with correct initial value and placeholder" name="TextEditor Component renders the editor with correct initial value and placeholder" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="TextEditor Component calls handleChange when typing in the editor" name="TextEditor Component calls handleChange when typing in the editor" time="0.103">
+    </testcase>
+    <testcase classname="TextEditor Component does not render an error message when errorMsg is empty" name="TextEditor Component does not render an error message when errorMsg is empty" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="TextEditor Component renders an error message when errorMsg is provided" name="TextEditor Component renders an error message when errorMsg is provided" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="TextEditor Component click cancel button after entering the text" name="TextEditor Component click cancel button after entering the text" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+</testsuites>

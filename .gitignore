@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Test coverage
+coverage
+test-result
+
 
 
 

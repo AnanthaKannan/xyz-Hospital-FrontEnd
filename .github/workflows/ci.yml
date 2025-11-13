@@ -34,6 +34,32 @@ jobs:
           record: true
           parallel: true
           command: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
+
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set CI to false
+        run: echo "CI=false" >> $GITHUB_ENV
+      - name: installing node 
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '20'
+      - name: Install pnpm
+        run: npm install -g pnpm@9.1.1
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run unit tests and generate report
+        run: pnpm run test
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-results
+          path: test-results/junit.xml
+        
+
   # lint:
   #     runs-on: ubuntu-latest
   #     strategy:

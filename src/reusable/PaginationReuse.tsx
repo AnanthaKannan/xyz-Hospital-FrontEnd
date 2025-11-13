@@ -2,8 +2,18 @@ import PropTypes from "prop-types";
 import Pagination from "@mui/material/Pagination";
 import { pageChange } from "../lib";
 
-const PaginationReuse = ({ setPage, totalCount, perPage }) => {
-  const onPageChange = (e, page) => {
+type PaginationReuseProp = {
+  setPage: (number: number) => void;
+  totalCount: number;
+  perPage: number;
+};
+
+const PaginationReuse = ({
+  setPage,
+  totalCount,
+  perPage,
+}: PaginationReuseProp) => {
+  const onPageChange = (e, page: number) => {
     setPage(pageChange(page, perPage));
   };
 

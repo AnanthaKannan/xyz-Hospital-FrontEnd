@@ -15,3 +15,13 @@ const enums = {
   martialStatusEnum,
 };
 export default enums;
+
+export enum MuiColor {
+  "primary",
+  "secondary",
+  "error",
+  "info",
+  "success",
+  "warning",
+  "default"
+}
