@@ -1,3 +1,6 @@
+
+import { MuiColor as MuiColorEnum } from '@/lib/enum'
+
 export type dataType = object | null;
 
 export type FeedBackArg = {
@@ -38,7 +41,11 @@ export type TextAreaType = {
   rows: number
 }
 
-type color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+
+
+export type color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+
+
 export type ButtonType = {
   onClick: () => void,
   className?: string,
@@ -61,6 +68,15 @@ export type containerType = {
   children: any,
   title: string
 }
+
+export type MuiColor =
+  | "primary"
+  | "secondary"
+  | "error"
+  | "info"
+  | "success"
+  | "warning"
+  | "default";
 
 export type targetType = { target: HTMLInputElement }
 
@@ -123,7 +139,7 @@ export type patientDetailsType = {
   city: string,
   state: string,
   country: string,
-  zipCode? : string,
+  zipCode?: string,
   fileName?: string,
   file?: File | null,
 }
@@ -159,7 +175,7 @@ export type localStorageType = {
 }
 
 type icon = 'edit' | 'delete' | 'info' | 'close' | 'hamburger' | 'view' | 'logout' | 'save' | 'loader'
-| 'dashboard' | 'changePassword' | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
+  | 'dashboard' | 'changePassword' | 'entry' | 'stethoscope' | 'feedback' | 'arrowRight' | 'users' | 'addCircle' | 'subCircle'
 export type iconType = {
   icon: icon,
   className?: string,
@@ -171,7 +187,7 @@ export type iconType = {
 export type imageUploadCodeType = 'patient' | 'doctor'
 
 export type imagePathType = {
-  code : imageUploadCodeType,
+  code: imageUploadCodeType,
   fileName: string
 }
 

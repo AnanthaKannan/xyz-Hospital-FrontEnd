@@ -1,9 +1,18 @@
-import React from "react";
-// import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import { type FC } from "react";
+import { FormControlLabel, Checkbox } from "@mui/material";
+import { MuiColor } from "@/type/type";
 
-export default function CheckBox({
+type CheckBoxProps = {
+  name: string;
+  id?: string;
+  color?: MuiColor;
+  label: string;
+  onChange: (checked: boolean, name: string) => void;
+  checked: boolean;
+  keyValue: string;
+};
+
+const CheckBox: FC<CheckBoxProps> = ({
   name,
   id = "",
   color = "primary",
@@ -11,7 +20,7 @@ export default function CheckBox({
   onChange,
   checked,
   keyValue = "",
-}: any) {
+}) => {
   return (
     <FormControlLabel
       control={
@@ -27,4 +36,6 @@ export default function CheckBox({
       label={label}
     />
   );
-}
+};
+
+export default CheckBox;

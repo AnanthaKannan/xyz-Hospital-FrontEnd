@@ -10,3 +10,8 @@ include": ["src", "test"],
 3. update tsconfig.app.json
 "types": ["@testing-library/jest-dom", "node"]
 4. create jest.config.ts and update the same
+
+------------- get elements-------------
+* getByRole
+* getByText(/about/i)  // <a href="/about">About ℹ️</a>
+* getByTestId('custom-element') // <div data-testid="custom-element" />

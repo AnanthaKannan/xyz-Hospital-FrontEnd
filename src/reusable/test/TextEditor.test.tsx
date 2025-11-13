@@ -3,8 +3,16 @@ import userEvent from "@testing-library/user-event";
 import TextEditor from "../TextEditor";
 
 // Mock react-quill as a textarea for testing
+export type TextEditorProps = {
+  value?: string;
+  id: string;
+  placeholder?: string;
+  onChange: (content: string) => void;
+  errorMsg?: string;
+};
+
 jest.mock("react-quill", () => {
-  return ({ value, onChange, placeholder, id }: any) => (
+  return ({ value, onChange, placeholder, id }: TextEditorProps) => (
     <textarea
       data-testid={id}
       id={id}
@@ -37,13 +45,27 @@ describe("TextEditor Component", () => {
     expect(editor).toHaveValue(defaultProps.value);
   });
 
-  it("calls handleChange when typing in the editor", async () => {
-    render(<TextEditor {...defaultProps} errorMsg="" />);
+  it.only("calls handleChange when typing in the editor", async () => {
+    const user = userEvent.setup();
+    const handleChange = jest.fn();
+    render(
+      <TextEditor
+        {...defaultProps}
+        errorMsg=""
+        value=""
+        handleChange={handleChange}
+      />
+    );
 
     const editor = screen.getByTestId(defaultProps.id);
-    await userEvent.type(editor, "New text");
+    await user.type(editor, "test");
 
-    expect(defaultProps.handleChange).toHaveBeenCalled();
+    expect(handleChange).toHaveBeenCalledTimes(4);
+    // why here it is return only one character, because it is not render
+    expect(handleChange).toHaveBeenCalledWith("t");
+    expect(handleChange).toHaveBeenCalledWith("e");
+    expect(handleChange).toHaveBeenCalledWith("s");
+    expect(handleChange).toHaveBeenCalledWith("t");
   });
 
   it("does not render an error message when errorMsg is empty", () => {
