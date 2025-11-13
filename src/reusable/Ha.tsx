@@ -1,16 +1,12 @@
-import PropTypes from "prop-types";
+import { type FC } from "react";
 
-const Ha = ({ text, className = "" }: { text: string; className?: string }) => (
+type HaProps = {
+  text: string;
+  className?: string;
+};
+
+const Ha: FC<HaProps> = ({ text, className = "" }) => (
   <h3 className={className}>{text}</h3>
 );
-
-Ha.propTypes = {
-  text: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
-
-Ha.defaultProps = {
-  className: "",
-};
 
 export default Ha;

@@ -45,7 +45,7 @@ describe("TextEditor Component", () => {
     expect(editor).toHaveValue(defaultProps.value);
   });
 
-  it.only("calls handleChange when typing in the editor", async () => {
+  it("calls handleChange when typing in the editor", async () => {
     const user = userEvent.setup();
     const handleChange = jest.fn();
     render(

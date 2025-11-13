@@ -1,9 +1,24 @@
-import React from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import faker from "faker";
+import { type FC, type ChangeEvent } from "react";
 
-export default function DropDown({
-  className,
+export type Option = {
+  value: string | number;
+  label: string;
+};
+
+type DropDownProps = {
+  className?: string;
+  heading?: string;
+  errorMsg?: string;
+  list: Option[];
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  id?: string;
+  placeholder?: string;
+  value: string | number;
+  required?: boolean;
+};
+
+const DropDown: FC<DropDownProps> = ({
+  className = "",
   heading,
   errorMsg,
   list = [],
@@ -12,7 +27,7 @@ export default function DropDown({
   placeholder = "",
   value,
   required = false,
-}: any) {
+}) => {
   return (
     <>
       <label
@@ -22,7 +37,6 @@ export default function DropDown({
         {heading}
       </label>
       <select
-        key={faker.datatype.uuid()}
         defaultValue=""
         id={id}
         className={`form-control mt-2 mb-1 ${className}`}
@@ -32,14 +46,13 @@ export default function DropDown({
         <option value="" disabled selected hidden>
           {placeholder}
         </option>
-        {list.map((obj: any) => (
-          <option key={obj.value} value={obj.value}>
-            {" "}
-            {obj.label}{" "}
+        {list.map((item: Option) => (
+          <option key={item.value} value={item.value}>
+            {item.label}
           </option>
         ))}
       </select>
-      {/* <span className="error-txt">{errorMsg}</span> */}
+
       {errorMsg && (
         <div id={`error-${id}`} className="text-danger">
           {errorMsg}
@@ -47,4 +60,6 @@ export default function DropDown({
       )}
     </>
   );
-}
+};
+
+export default DropDown;

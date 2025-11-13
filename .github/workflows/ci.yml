@@ -35,7 +35,7 @@ jobs:
           parallel: true
           command: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
 
-  unittest:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

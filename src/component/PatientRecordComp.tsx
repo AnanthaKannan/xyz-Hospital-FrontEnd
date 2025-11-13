@@ -14,13 +14,12 @@ import { post, get, remove } from "../service/curd.service";
 import Icons from "../reusable/Icons";
 import config from "../config";
 import PaginationReuse from "../reusable/PaginationReuse";
-import DropDown from "../reusable/DropDown";
+import DropDown, { Option as OptionType } from "../reusable/DropDown";
 import { handleReset, getInitialValuesFromYup, convertDate } from "../lib";
 import {
   patientRecordValidation,
   createPatientValidation,
 } from "../lib/validationSchema";
-import CheckBox from "../reusable/CheckBox";
 import DatePickerRe from "../reusable/DatePickerRe";
 import ToggleSwitch from "../reusable/ToggleSwitch";
 import Transitions from "../reusable/Transitions";
@@ -37,7 +36,7 @@ const PatientRecordComp = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(3);
-  const [doctorList, setDoctorList] = useState([]);
+  const [doctorList, setDoctorList] = useState<OptionType[]>([]);
   const [isShowAddRecord, setIsShowAddRecord] = useState(false);
   const [formikInitialValue, setFormikInitialValue] =
     useState<patientRecordType>({
@@ -195,10 +194,6 @@ const PatientRecordComp = () => {
                         value={parameter.values._doctorId}
                         heading="Doctors"
                         id="_doctorId"
-                        errorMsg={
-                          parameter.touched._doctorId &&
-                          parameter.errors._doctorId
-                        }
                         onChange={parameter.handleChange}
                       />
                     </div>

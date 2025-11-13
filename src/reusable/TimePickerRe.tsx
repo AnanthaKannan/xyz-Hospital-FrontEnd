@@ -1,6 +1,5 @@
-/* eslint-disable no-underscore-dangle */
-import React from "react";
-import DropDown from "./DropDown";
+import { type FC, type ChangeEvent } from "react";
+import DropDown, { Option as OptionType } from "./DropDown";
 import { timeList } from "../lib/times";
 
 export default function TimePickerRe({
@@ -14,7 +13,7 @@ export default function TimePickerRe({
   selectedTime: { from: number; to: number }[];
   setFieldValue: Function;
 }) {
-  const timeList_ = timeList.map((obj) => ({
+  const timeList_: OptionType[] = timeList.map((obj) => ({
     value: obj.index,
     label: `${obj.hour}: ${obj.minute} ${obj.ampm}`,
   }));
@@ -30,7 +29,10 @@ export default function TimePickerRe({
     setFieldValue("availableTime", [...time]);
   };
 
-  const getTimeList = (timeIndex: number, state: "from" | "to") => {
+  const getTimeList = (
+    timeIndex: number,
+    state: "from" | "to"
+  ): OptionType[] => {
     let ti = timeIndex;
     if (state === "from") {
       if (index !== 0) {
@@ -58,7 +60,7 @@ export default function TimePickerRe({
           value={selectedTime[index].from}
           heading="Start Time"
           id={`startTime${index}`}
-          onChange={(e: any) => onChange(e, "from")}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e, "from")}
         />
       </div>
       <div className="col-md-6">
@@ -69,7 +71,7 @@ export default function TimePickerRe({
           heading="End Time"
           value={selectedTime[index].to}
           id={`endTime${index}`}
-          onChange={(e: any) => onChange(e, "to")}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e, "to")}
         />
       </div>
     </div>

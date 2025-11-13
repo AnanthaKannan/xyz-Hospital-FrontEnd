@@ -1,8 +1,25 @@
-import React from "react";
+import { type FC } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function DatePickerRe({
+export type YearsRange = {
+  start: number;
+  end: number;
+};
+
+type DatePickerProps = {
+  onChange: (id: string, date: Date) => void;
+  heading: string;
+  id: string;
+  yearsRange: YearsRange;
+  className?: string;
+  required?: boolean;
+  parameter: any;
+  minDate: Date;
+  maxDate: Date;
+};
+
+const DatePickerRe: FC<DatePickerProps> = ({
   onChange,
   heading,
   id,
@@ -12,7 +29,7 @@ export default function DatePickerRe({
   parameter,
   minDate,
   maxDate,
-}: any) {
+}: DatePickerProps) => {
   const { values, touched, errors } = parameter;
 
   const getYear = (date: Date) => date.getFullYear();
@@ -54,7 +71,15 @@ export default function DatePickerRe({
         minDate={minDate}
         maxDate={maxDate}
         className={`form-control mt-2 mb-1 ${className}`}
-        renderCustomHeader={({ date, changeYear, changeMonth }) => (
+        renderCustomHeader={({
+          date,
+          changeYear,
+          changeMonth,
+        }: {
+          date: Date;
+          changeYear: (year: number) => void;
+          changeMonth: (month: number) => void;
+        }) => (
           <div
             style={{
               margin: 10,
@@ -62,9 +87,6 @@ export default function DatePickerRe({
               justifyContent: "center",
             }}
           >
-            {/* <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-              {"<"}
-            </button> */}
             <select
               className="form-control-sm mx-2"
               id={`${id}-year`}
@@ -92,13 +114,10 @@ export default function DatePickerRe({
                 </option>
               ))}
             </select>
-            {/* <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-              {">"}
-            </button> */}
           </div>
         )}
         selected={values[id]}
-        onChange={(date: any) => onChange(id, date)}
+        onChange={(date: Date) => onChange(id, date)}
       />
       {touched[id] && errors[id] && (
         <div id={`error-${id}`} className="text-danger">
@@ -107,4 +126,6 @@ export default function DatePickerRe({
       )}
     </>
   );
-}
+};
+
+export default DatePickerRe;

@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="5" failures="0" errors="0" time="1.283">
-  <testsuite name="TextEditor Component" errors="0" failures="0" skipped="4" timestamp="2025-11-13T17:45:29" time="0.708" tests="5">
-    <testcase classname="TextEditor Component renders the editor with correct initial value and placeholder" name="TextEditor Component renders the editor with correct initial value and placeholder" time="0">
-      <skipped/>
+<testsuites name="jest tests" tests="2" failures="1" errors="0" time="1.145">
+  <testsuite name="Ha Component" errors="0" failures="1" skipped="0" timestamp="2025-11-13T18:11:47" time="0.556" tests="2">
+    <testcase classname="Ha Component should render the Ha with initial property" name="Ha Component should render the Ha with initial property" time="0.026">
     </testcase>
-    <testcase classname="TextEditor Component calls handleChange when typing in the editor" name="TextEditor Component calls handleChange when typing in the editor" time="0.103">
-    </testcase>
-    <testcase classname="TextEditor Component does not render an error message when errorMsg is empty" name="TextEditor Component does not render an error message when errorMsg is empty" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="TextEditor Component renders an error message when errorMsg is provided" name="TextEditor Component renders an error message when errorMsg is provided" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="TextEditor Component click cancel button after entering the text" name="TextEditor Component click cancel button after entering the text" time="0">
-      <skipped/>
+    <testcase classname="Ha Component should have correct className" name="Ha Component should have correct className" time="0.004">
+      <failure>Error: expect(element).toHaveAttribute(&quot;class&quot;, &quot;bg-primsary&quot;) // element.getAttribute(&quot;class&quot;) === &quot;bg-primsary&quot;
+
+Expected the element to have attribute:
+  class=&quot;bg-primsary&quot;
+Received:
+  class=&quot;bg-primary&quot;
+    at Object.&lt;anonymous&gt; (D:\Coding\xyz-Hospital-FrontEnd\src\reusable\test\Ha.test.tsx:16:20)
+    at Promise.finally.completed (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:1559:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:1499:10)
+    at _callCircusTest (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:1009:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async _runTest (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:949:3)
+    at async _runTestsForDescribeBlock (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:839:13)
+    at async _runTestsForDescribeBlock (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:829:11)
+    at async run (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:757:3)
+    at async runAndTransformResultsToJestFormat (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\jestAdapterInit.js:1920:21)
+    at async jestAdapter (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-circus@30.0.3_babel-plugin-macros@3.1.0\node_modules\jest-circus\build\runner.js:101:19)
+    at async runTestInternal (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-runner@30.0.3\node_modules\jest-runner\build\index.js:272:16)
+    at async runTest (D:\Coding\xyz-Hospital-FrontEnd\node_modules\.pnpm\jest-runner@30.0.3\node_modules\jest-runner\build\index.js:340:7)</failure>
     </testcase>
   </testsuite>
 </testsuites>
