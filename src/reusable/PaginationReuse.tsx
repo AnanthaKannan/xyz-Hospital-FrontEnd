@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import { type FC, type ChangeEvent } from "react";
 import Pagination from "@mui/material/Pagination";
 import { pageChange } from "../lib";
 
@@ -8,12 +8,12 @@ type PaginationReuseProp = {
   perPage: number;
 };
 
-const PaginationReuse = ({
+const PaginationReuse: FC<PaginationReuseProp> = ({
   setPage,
   totalCount,
   perPage,
-}: PaginationReuseProp) => {
-  const onPageChange = (e, page: number) => {
+}) => {
+  const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
     setPage(pageChange(page, perPage));
   };
 
@@ -33,12 +33,6 @@ const PaginationReuse = ({
       )}
     </>
   );
-};
-
-PaginationReuse.propTypes = {
-  setPage: PropTypes.func.isRequired,
-  totalCount: PropTypes.number.isRequired,
-  perPage: PropTypes.number.isRequired,
 };
 
 export default PaginationReuse;

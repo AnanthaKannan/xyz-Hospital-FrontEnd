@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { type FC } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgLogOut } from "react-icons/cg";
 import {
@@ -19,7 +18,7 @@ import { IoClose } from "react-icons/io5";
 import { IoIosSave } from "react-icons/io";
 import { iconType } from "../type/type";
 
-const Icons = ({ size, onClick, className, icon, id }: iconType) => {
+const Icons: FC<iconType> = ({ size, onClick, className, icon, id }) => {
   const commonProps = {
     id: `${icon}-${id}`,
     onClick,
@@ -72,21 +71,6 @@ const Icons = ({ size, onClick, className, icon, id }: iconType) => {
     default:
       return <div />;
   }
-};
-
-Icons.prototype = {
-  size: PropTypes.number,
-  onClick: PropTypes.func,
-  className: PropTypes.string,
-  icon: PropTypes.string.isRequired,
-  id: PropTypes.string,
-};
-
-Icons.defaultProps = {
-  size: 25,
-  onClick: () => {},
-  className: "",
-  id: "",
 };
 
 export default Icons;

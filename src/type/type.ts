@@ -43,26 +43,7 @@ export type TextAreaType = {
 
 
 
-export type color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
-
-
-export type ButtonType = {
-  onClick: () => void,
-  className?: string,
-  isDisable?: boolean,
-  id: string,
-  text?: string,
-  color?: color
-}
-
-export type SubmitButtonType = {
-  onSubmit?: () => void,
-  className?: string,
-  isDisable?: boolean,
-  id: string,
-  text?: string,
-  color?: color
-}
+export type ButtonColor = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 
 export type containerType = {
   children: any,

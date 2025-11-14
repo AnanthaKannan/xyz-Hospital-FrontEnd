@@ -1,17 +1,26 @@
-import React from "react";
+import { type FC } from "react";
 import Button from "@mui/material/Button";
-import { ButtonType, SubmitButtonType } from "../type/type";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Icons from "./Icons";
+import Icons from "@/reusable/Icons";
+import { ButtonColor } from "@/type/type";
 
-export const ClickButton = ({
+export type ButtonType = {
+  onClick: () => void;
+  className?: string;
+  isDisable?: boolean;
+  id: string;
+  text?: string;
+  color?: ButtonColor;
+};
+
+export const ClickButton: FC<ButtonType> = ({
   onClick,
   className = "",
   id = "",
   isDisable = false,
   text = "click",
   color = "info",
-}: ButtonType) => (
+}) => (
   <Button
     className={className}
     id={id}
@@ -25,20 +34,26 @@ export const ClickButton = ({
   </Button>
 );
 
-export function SubmitButton({
-  onSubmit,
+export type SubmitButtonType = {
+  className?: string;
+  isDisable?: boolean;
+  id?: string;
+  text?: string;
+  color?: ButtonColor;
+};
+
+export const SubmitButton: FC<SubmitButtonType> = ({
   className = "",
   id = "",
   isDisable = false,
   text = "SUBMIT",
   color = "primary",
-}: SubmitButtonType) {
+}) => {
   return (
     <Button
       className={className}
       type="submit"
       id={id}
-      onSubmit={onSubmit}
       disabled={isDisable}
       variant="contained"
       color={color}
@@ -46,9 +61,19 @@ export function SubmitButton({
       {text}
     </Button>
   );
-}
+};
 
-export const LoadingClickButton = ({
+export type LoadingButtonType = {
+  onClick: () => void;
+  className?: string;
+  isDisable?: boolean;
+  id: string;
+  text?: string;
+  color?: ButtonColor;
+  loading?: boolean;
+};
+
+export const LoadingClickButton: FC<LoadingButtonType> = ({
   onClick,
   className = "",
   id = "",
@@ -56,7 +81,7 @@ export const LoadingClickButton = ({
   text = "click",
   color = "info",
   loading = false,
-}: any) => (
+}) => (
   <LoadingButton
     className={className}
     id={id}
